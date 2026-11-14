@@ -69,12 +69,27 @@ Build the functions first (`cd functions && npm run build`); the Functions emula
 
 ### Trying image uploads (M02)
 
-Sign in as an owner and open **`/dev/media`** (a developer page, not registered in prod builds). It has
-the logo and cover pickers. Pick an image, crop it, and watch it go *Uploading → Processing → preview*.
+Sign in as an owner and open **Settings → Restaurant profile** (`/settings/profile`; the M02 developer
+page `/dev/media` was removed in M03). It has the logo and cover pickers. Pick an image, crop it, and
+watch it go *Uploading → Processing → preview*.
 The Functions emulator runs `processImage` (see Terminal 1). The Emulator UI → Storage shows
 `restaurants/{rid}/images/{id}/` with `original.*` and `w320/w640/w1280.webp`, and Firestore shows the
 `logo` / `cover` image object. Files over 5 MB, renamed non-images and images below the minimum size
 (logo 256 × 256, cover 1200 × 400) are refused with a message.
+
+### Trying onboarding and the restaurant profile (M03)
+
+- A newly registered owner lands in the **setup wizard** (`/setup`): profile basics → logo and cover →
+  "Build your menu". Finishing or "Skip for now" sets `setupCompletedAt`, and the dashboard (`/`) then shows
+  the setup checklist, the menu status and the QR shortcut.
+- **Settings** lists the restaurant profile, opening hours, currency and time zone, and the menu link.
+  Edits save to the draft 1 s after you stop typing (watch "Saving… / Saved"); invalid fields are not
+  saved. Firestore → `restaurants/{rid}` shows the fields and `draftUpdatedAt`.
+- **Currency:** the FR-103 warning appears once the menu has been published (or has items). To see
+  `pricesNeedReview`, set `publishedVersion: 1` on the restaurant in the Emulator UI, then change the
+  currency; `onRestaurantUpdated` sets the flag and a banner appears.
+- **Menu link:** try `admin` (reserved) or another restaurant's slug (taken). A successful change keeps the
+  old `slugs/{old}` doc with `current: false` and writes an `auditLogs` entry.
 
 On the Android emulator the apps reach the host at `10.0.2.2` automatically. On a physical device add
 `--dart-define=EMULATOR_HOST=<your computer's LAN IP>`.

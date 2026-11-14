@@ -19,6 +19,7 @@ M07.
 ## Inputs from other modules
 
 - M07: public page and the `?src=qr` marker from the `/q/` redirect.
+- M03 (done 2026-11-14): `timezone` (IANA) is owner-editable on `restaurants/{rid}`; the day key for `analyticsDaily` uses the zone at event time (`TimeService.dayKey` in core).
 - M10 (later): `limits.analyticsDays` (Free 7, Pro 365).
 
 ## Scope

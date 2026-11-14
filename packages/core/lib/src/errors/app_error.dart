@@ -15,6 +15,9 @@ enum AppErrorCode {
   alreadyExists('already-exists'),
   registrationIncomplete('registration-incomplete'),
   mfaRequired('mfa-required'),
+  slugInvalid('slug-invalid'),
+  slugReserved('slug-reserved'),
+  slugTaken('slug-taken'),
   network('network'),
   unknown('unknown');
 
@@ -42,6 +45,9 @@ extension AppErrorMessage on CoreLocalizations {
     AppErrorCode.alreadyExists => errorAlreadyExists,
     AppErrorCode.registrationIncomplete => errorRegistrationIncomplete,
     AppErrorCode.mfaRequired => errorMfaRequired,
+    AppErrorCode.slugInvalid => errorSlugInvalid,
+    AppErrorCode.slugReserved => errorSlugReserved,
+    AppErrorCode.slugTaken => errorSlugTaken,
     AppErrorCode.network => errorNetwork,
     AppErrorCode.unknown => errorUnknown,
   };

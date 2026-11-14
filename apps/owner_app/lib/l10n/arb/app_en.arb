@@ -1,130 +1,921 @@
 {
   "@@locale": "en",
   "appTitle": "EazySuvai",
-  "@appTitle": { "description": "Product name shown in the browser tab and app bar." },
+  "@appTitle": {
+    "description": "Product name shown in the browser tab and app bar."
+  },
   "navHome": "Home",
-  "@navHome": { "description": "Navigation: owner dashboard." },
+  "@navHome": {
+    "description": "Navigation: owner dashboard."
+  },
   "navMenu": "Menu",
-  "@navMenu": { "description": "Navigation: categories and items." },
+  "@navMenu": {
+    "description": "Navigation: categories and items."
+  },
   "navShare": "QR & share",
-  "@navShare": { "description": "Navigation: QR codes and sharing." },
+  "@navShare": {
+    "description": "Navigation: QR codes and sharing."
+  },
   "navSettings": "Settings",
-  "@navSettings": { "description": "Navigation: restaurant profile and account settings." },
+  "@navSettings": {
+    "description": "Navigation: restaurant profile and account settings."
+  },
   "placeholderMessage": "This screen is coming soon.",
-  "@placeholderMessage": { "description": "Body of a placeholder screen that a later module replaces." },
+  "@placeholderMessage": {
+    "description": "Body of a placeholder screen that a later module replaces."
+  },
   "layoutLabel": "Layout: {layout}",
   "@layoutLabel": {
     "description": "Shows the current responsive layout class on placeholder screens.",
-    "placeholders": { "layout": { "type": "String" } }
+    "placeholders": {
+      "layout": {
+        "type": "String"
+      }
+    }
   },
   "layoutCompact": "compact",
-  "@layoutCompact": { "description": "Responsive layout name below 600 px." },
+  "@layoutCompact": {
+    "description": "Responsive layout name below 600 px."
+  },
   "layoutMedium": "medium",
-  "@layoutMedium": { "description": "Responsive layout name from 600 to 1023 px." },
+  "@layoutMedium": {
+    "description": "Responsive layout name from 600 to 1023 px."
+  },
   "layoutExpanded": "expanded",
-  "@layoutExpanded": { "description": "Responsive layout name from 1024 px." },
+  "@layoutExpanded": {
+    "description": "Responsive layout name from 1024 px."
+  },
   "signInTitle": "Sign in",
-  "@signInTitle": { "description": "Title of the sign-in screen." },
+  "@signInTitle": {
+    "description": "Title of the sign-in screen."
+  },
   "notFoundTitle": "Page not found",
-  "@notFoundTitle": { "description": "Title shown for an unknown route." },
+  "@notFoundTitle": {
+    "description": "Title shown for an unknown route."
+  },
   "actionGoHome": "Go to home",
-  "@actionGoHome": { "description": "Button that returns to the home screen." },
-
+  "@actionGoHome": {
+    "description": "Button that returns to the home screen."
+  },
   "authTagline": "Your menu, live in minutes. Scan, browse, enjoy.",
-  "@authTagline": { "description": "Tagline in the brand panel of the sign-in and sign-up screens." },
+  "@authTagline": {
+    "description": "Tagline in the brand panel of the sign-in and sign-up screens."
+  },
   "signInSubtitle": "Welcome back. Sign in to manage your menu.",
-  "@signInSubtitle": { "description": "Subtitle of the sign-in screen." },
+  "@signInSubtitle": {
+    "description": "Subtitle of the sign-in screen."
+  },
   "fieldEmail": "Email",
-  "@fieldEmail": { "description": "Email address field label." },
+  "@fieldEmail": {
+    "description": "Email address field label."
+  },
   "fieldPassword": "Password",
-  "@fieldPassword": { "description": "Password field label." },
+  "@fieldPassword": {
+    "description": "Password field label."
+  },
   "actionSignIn": "Sign in",
-  "@actionSignIn": { "description": "Button that signs in." },
+  "@actionSignIn": {
+    "description": "Button that signs in."
+  },
   "actionForgotPassword": "Forgot password?",
-  "@actionForgotPassword": { "description": "Link to the password reset screen." },
+  "@actionForgotPassword": {
+    "description": "Link to the password reset screen."
+  },
   "signInNoAccount": "New to EazySuvai?",
-  "@signInNoAccount": { "description": "Text before the link to sign up." },
+  "@signInNoAccount": {
+    "description": "Text before the link to sign up."
+  },
   "actionSignUp": "Create an account",
-  "@actionSignUp": { "description": "Link or button to the sign-up screen." },
+  "@actionSignUp": {
+    "description": "Link or button to the sign-up screen."
+  },
   "actionSignOut": "Sign out",
-  "@actionSignOut": { "description": "Signs the user out." },
-
+  "@actionSignOut": {
+    "description": "Signs the user out."
+  },
   "signUpTitle": "Create your account",
-  "@signUpTitle": { "description": "Title of the sign-up screen." },
+  "@signUpTitle": {
+    "description": "Title of the sign-up screen."
+  },
   "signUpSubtitle": "Start free. Your restaurant gets its own menu link and QR code.",
-  "@signUpSubtitle": { "description": "Subtitle of the sign-up screen." },
+  "@signUpSubtitle": {
+    "description": "Subtitle of the sign-up screen."
+  },
   "signUpSectionRestaurant": "Your restaurant",
-  "@signUpSectionRestaurant": { "description": "Sign-up section heading for restaurant details." },
+  "@signUpSectionRestaurant": {
+    "description": "Sign-up section heading for restaurant details."
+  },
   "signUpSectionOwner": "About you",
-  "@signUpSectionOwner": { "description": "Sign-up section heading for the owner's details." },
+  "@signUpSectionOwner": {
+    "description": "Sign-up section heading for the owner's details."
+  },
   "fieldRestaurantName": "Restaurant name",
-  "@fieldRestaurantName": { "description": "Field label." },
+  "@fieldRestaurantName": {
+    "description": "Field label."
+  },
   "fieldBusinessType": "Business type",
-  "@fieldBusinessType": { "description": "Field label." },
+  "@fieldBusinessType": {
+    "description": "Field label."
+  },
   "fieldCountry": "Country",
-  "@fieldCountry": { "description": "Field label." },
+  "@fieldCountry": {
+    "description": "Field label."
+  },
   "fieldCity": "City (optional)",
-  "@fieldCity": { "description": "Field label for the optional city." },
+  "@fieldCity": {
+    "description": "Field label for the optional city."
+  },
   "fieldCityHelper": "Helps keep your menu link unique.",
-  "@fieldCityHelper": { "description": "Helper text explaining why we ask for the city (slug suffix, FR-092)." },
+  "@fieldCityHelper": {
+    "description": "Helper text explaining why we ask for the city (slug suffix, FR-092)."
+  },
   "fieldOwnerName": "Your name",
-  "@fieldOwnerName": { "description": "Field label for the owner's name." },
+  "@fieldOwnerName": {
+    "description": "Field label for the owner's name."
+  },
   "fieldMobile": "Mobile number",
-  "@fieldMobile": { "description": "Field label." },
+  "@fieldMobile": {
+    "description": "Field label."
+  },
   "fieldPasswordHelper": "At least 8 characters.",
-  "@fieldPasswordHelper": { "description": "Password rule shown under the new-password field." },
+  "@fieldPasswordHelper": {
+    "description": "Password rule shown under the new-password field."
+  },
   "actionCreateAccount": "Create account",
-  "@actionCreateAccount": { "description": "Submit button of the sign-up form." },
+  "@actionCreateAccount": {
+    "description": "Submit button of the sign-up form."
+  },
   "signUpHaveAccount": "Already have an account?",
-  "@signUpHaveAccount": { "description": "Text before the link to sign in." },
+  "@signUpHaveAccount": {
+    "description": "Text before the link to sign in."
+  },
   "signUpCompleteTitle": "Finish setting up",
-  "@signUpCompleteTitle": { "description": "Title when a signed-in owner still needs to add restaurant details." },
+  "@signUpCompleteTitle": {
+    "description": "Title when a signed-in owner still needs to add restaurant details."
+  },
   "signUpCompleteSubtitle": "Add your restaurant details to finish creating your account.",
-  "@signUpCompleteSubtitle": { "description": "Subtitle of the complete-registration form." },
+  "@signUpCompleteSubtitle": {
+    "description": "Subtitle of the complete-registration form."
+  },
   "actionFinishSetup": "Finish setup",
-  "@actionFinishSetup": { "description": "Submit button of the complete-registration form." },
-
+  "@actionFinishSetup": {
+    "description": "Submit button of the complete-registration form."
+  },
   "verifyTitle": "Check your email",
-  "@verifyTitle": { "description": "Title of the verify-email screen." },
+  "@verifyTitle": {
+    "description": "Title of the verify-email screen."
+  },
   "verifyBody": "We sent a verification link to {email}. Open it to activate your account, then sign in.",
-  "@verifyBody": { "description": "Verify-email message.", "placeholders": { "email": { "type": "String" } } },
+  "@verifyBody": {
+    "description": "Verify-email message.",
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
   "verifyBodyNoEmail": "We sent you a verification link. Open it to activate your account, then sign in.",
-  "@verifyBodyNoEmail": { "description": "Verify-email message when the address is unknown." },
+  "@verifyBodyNoEmail": {
+    "description": "Verify-email message when the address is unknown."
+  },
   "verifyRequired": "Verify your email address before you sign in. Didn't get the email? Send it again.",
-  "@verifyRequired": { "description": "Shown when an unverified owner tries to sign in (FR-091)." },
+  "@verifyRequired": {
+    "description": "Shown when an unverified owner tries to sign in (FR-091)."
+  },
   "verifyHint": "Can't find it? Check your spam folder. Unverified accounts are removed after 7 days.",
-  "@verifyHint": { "description": "Help text on the verify-email screen." },
+  "@verifyHint": {
+    "description": "Help text on the verify-email screen."
+  },
   "actionResend": "Resend email",
-  "@actionResend": { "description": "Button that sends the verification email again." },
+  "@actionResend": {
+    "description": "Button that sends the verification email again."
+  },
   "actionResendIn": "Resend in {seconds}s",
-  "@actionResendIn": { "description": "Disabled resend button with countdown.", "placeholders": { "seconds": { "type": "int" } } },
+  "@actionResendIn": {
+    "description": "Disabled resend button with countdown.",
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
   "verifySent": "We sent a new verification link.",
-  "@verifySent": { "description": "Confirmation after resending the verification email." },
+  "@verifySent": {
+    "description": "Confirmation after resending the verification email."
+  },
   "verifySignInToResend": "To get a new link, sign in again.",
-  "@verifySignInToResend": { "description": "Shown when the resend button cannot be used (for example after a page reload)." },
+  "@verifySignInToResend": {
+    "description": "Shown when the resend button cannot be used (for example after a page reload)."
+  },
   "actionBackToSignIn": "Back to sign in",
-  "@actionBackToSignIn": { "description": "Button that returns to the sign-in screen." },
-
+  "@actionBackToSignIn": {
+    "description": "Button that returns to the sign-in screen."
+  },
   "forgotTitle": "Reset your password",
-  "@forgotTitle": { "description": "Title of the forgot-password screen." },
+  "@forgotTitle": {
+    "description": "Title of the forgot-password screen."
+  },
   "forgotSubtitle": "Enter your account email. We'll send you a link to choose a new password.",
-  "@forgotSubtitle": { "description": "Subtitle of the forgot-password screen." },
+  "@forgotSubtitle": {
+    "description": "Subtitle of the forgot-password screen."
+  },
   "actionSendResetLink": "Send reset link",
-  "@actionSendResetLink": { "description": "Button that sends the password reset email." },
+  "@actionSendResetLink": {
+    "description": "Button that sends the password reset email."
+  },
   "forgotSent": "If an account exists for {email}, we've sent a reset link. It works once and expires in 1 hour.",
-  "@forgotSent": { "description": "Confirmation after requesting a reset (does not reveal whether the account exists).", "placeholders": { "email": { "type": "String" } } },
-
+  "@forgotSent": {
+    "description": "Confirmation after requesting a reset (does not reveal whether the account exists).",
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
   "finishingTitle": "Finishing setup…",
-  "@finishingTitle": { "description": "Title while the app waits for the account to be ready." },
+  "@finishingTitle": {
+    "description": "Title while the app waits for the account to be ready."
+  },
   "finishingBody": "We're getting your restaurant ready. This takes a few seconds.",
-  "@finishingBody": { "description": "Body while waiting for the account claims." },
-
-  "devMediaTitle": "Image upload test",
-  "@devMediaTitle": { "description": "Title of the developer-only page for trying image uploads (not in production)." },
-  "devMediaIntro": "Developer page. Images uploaded here become your restaurant's logo and cover.",
-  "@devMediaIntro": { "description": "Intro text on the developer-only image upload page." },
-  "devMediaLogo": "Logo",
-  "@devMediaLogo": { "description": "Label of the logo image field." },
-  "devMediaCover": "Cover image",
-  "@devMediaCover": { "description": "Label of the cover image field." }
+  "@finishingBody": {
+    "description": "Body while waiting for the account claims."
+  },
+  "actionBack": "Back",
+  "@actionBack": {
+    "description": "Goes to the previous step."
+  },
+  "actionNext": "Next",
+  "@actionNext": {
+    "description": "Goes to the next step."
+  },
+  "actionDone": "Done",
+  "@actionDone": {
+    "description": "Confirms a choice and closes the sheet."
+  },
+  "actionSaveNow": "Save now",
+  "@actionSaveNow": {
+    "description": "Saves draft changes immediately instead of waiting for autosave."
+  },
+  "saveAuto": "Changes save automatically",
+  "@saveAuto": {
+    "description": "Save indicator before any change."
+  },
+  "saveSaving": "Saving…",
+  "@saveSaving": {
+    "description": "Save indicator while changes are waiting or being written."
+  },
+  "saveSaved": "Saved",
+  "@saveSaved": {
+    "description": "Save indicator after changes were stored in the draft."
+  },
+  "saveFailed": "Couldn't save your changes",
+  "@saveFailed": {
+    "description": "Save indicator when the last save failed."
+  },
+  "saveInvalid": "Fix the highlighted fields to save",
+  "@saveInvalid": {
+    "description": "Save indicator when some fields are not valid."
+  },
+  "profileTitle": "Restaurant profile",
+  "@profileTitle": {
+    "description": "Title of the profile editor."
+  },
+  "profileSectionBasics": "Basics",
+  "@profileSectionBasics": {
+    "description": "Profile section: name, business type, description."
+  },
+  "profileSectionImages": "Logo and cover",
+  "@profileSectionImages": {
+    "description": "Profile section: images."
+  },
+  "profileSectionContact": "Contact",
+  "@profileSectionContact": {
+    "description": "Profile section: phone, email, website."
+  },
+  "profileSectionAddress": "Address",
+  "@profileSectionAddress": {
+    "description": "Profile section: address."
+  },
+  "profileSectionHours": "Opening hours",
+  "@profileSectionHours": {
+    "description": "Profile section: opening hours summary."
+  },
+  "profileSectionSocial": "Social links",
+  "@profileSectionSocial": {
+    "description": "Profile section: social network links."
+  },
+  "profileSectionSocialHelp": "Paste a link, or type @yourname for Instagram, X and YouTube.",
+  "@profileSectionSocialHelp": {
+    "description": "Help text for the social links section."
+  },
+  "profileSectionVisibility": "Show on your menu",
+  "@profileSectionVisibility": {
+    "description": "Profile section: which details the public menu shows (FR-013)."
+  },
+  "profileSectionVisibilityHelp": "Turn off anything you don't want customers to see. Your details stay saved.",
+  "@profileSectionVisibilityHelp": {
+    "description": "Help text for the visibility switches."
+  },
+  "fieldDescription": "Description",
+  "@fieldDescription": {
+    "description": "Field label: restaurant description."
+  },
+  "fieldDescriptionHelper": "What makes your place special? Up to 500 characters.",
+  "@fieldDescriptionHelper": {
+    "description": "Helper under the description field."
+  },
+  "fieldLogo": "Logo",
+  "@fieldLogo": {
+    "description": "Image field label: restaurant logo."
+  },
+  "fieldCover": "Cover image",
+  "@fieldCover": {
+    "description": "Image field label: wide cover image."
+  },
+  "fieldPhone": "Contact number",
+  "@fieldPhone": {
+    "description": "Field label: public phone number."
+  },
+  "fieldPhoneHelper": "Mobile or landline, for customers to call.",
+  "@fieldPhoneHelper": {
+    "description": "Helper under the contact number field."
+  },
+  "fieldPublicEmail": "Public email",
+  "@fieldPublicEmail": {
+    "description": "Field label: public business email."
+  },
+  "fieldWebsite": "Website",
+  "@fieldWebsite": {
+    "description": "Field label: website (https)."
+  },
+  "fieldAddress": "Street address",
+  "@fieldAddress": {
+    "description": "Field label: address line."
+  },
+  "fieldAddressHelper": "Building, street and area.",
+  "@fieldAddressHelper": {
+    "description": "Helper under the address field."
+  },
+  "fieldCityPlain": "City",
+  "@fieldCityPlain": {
+    "description": "Field label: city."
+  },
+  "fieldSocialHint": "Link or @handle",
+  "@fieldSocialHint": {
+    "description": "Hint in a social link field."
+  },
+  "fieldMapsHint": "Link from Google Maps → Share",
+  "@fieldMapsHint": {
+    "description": "Hint in the Google Maps link field."
+  },
+  "fieldCurrency": "Currency",
+  "@fieldCurrency": {
+    "description": "Field label: menu currency."
+  },
+  "visibilityPhone": "Contact number",
+  "@visibilityPhone": {
+    "description": "Visibility switch and preview label."
+  },
+  "visibilityEmail": "Email",
+  "@visibilityEmail": {
+    "description": "Visibility switch and preview label."
+  },
+  "visibilityAddress": "Address",
+  "@visibilityAddress": {
+    "description": "Visibility switch and preview label."
+  },
+  "visibilityHours": "Opening hours",
+  "@visibilityHours": {
+    "description": "Visibility switch and preview label."
+  },
+  "visibilitySocial": "Social links",
+  "@visibilitySocial": {
+    "description": "Visibility switch and preview label."
+  },
+  "previewTitle": "Menu preview",
+  "@previewTitle": {
+    "description": "Title of the live preview of the public menu header."
+  },
+  "previewNoName": "Your restaurant",
+  "@previewNoName": {
+    "description": "Preview placeholder when the name is empty."
+  },
+  "previewHoursToday": "Today: {hours}",
+  "@previewHoursToday": {
+    "description": "Preview: today's opening hours.",
+    "placeholders": {
+      "hours": {
+        "type": "String"
+      }
+    }
+  },
+  "previewClosedToday": "Closed today",
+  "@previewClosedToday": {
+    "description": "Preview: the restaurant is closed today."
+  },
+  "previewHidden": "Hidden from customers: {fields}",
+  "@previewHidden": {
+    "description": "Preview: which details are hidden (FR-013).",
+    "placeholders": {
+      "fields": {
+        "type": "String"
+      }
+    }
+  },
+  "hoursTitle": "Opening hours",
+  "@hoursTitle": {
+    "description": "Title of the opening hours screen."
+  },
+  "hoursIntro": "Times are in your restaurant's time zone ({zone}). Add up to 3 time slots a day, or mark a day as closed.",
+  "@hoursIntro": {
+    "description": "Intro on the opening hours screen.",
+    "placeholders": {
+      "zone": {
+        "type": "String"
+      }
+    }
+  },
+  "hoursNotSet": "No opening hours yet",
+  "@hoursNotSet": {
+    "description": "Shown when no opening hours were added."
+  },
+  "hoursSet": "Added",
+  "@hoursSet": {
+    "description": "Settings summary when opening hours exist."
+  },
+  "hoursEmptyMessage": "Tell customers when you're open. We'll start with every day 9:00 to 22:00; adjust it to fit.",
+  "@hoursEmptyMessage": {
+    "description": "Body of the empty opening hours state."
+  },
+  "hoursAdd": "Add opening hours",
+  "@hoursAdd": {
+    "description": "Button that adds opening hours."
+  },
+  "hoursEdit": "Edit opening hours",
+  "@hoursEdit": {
+    "description": "Button that opens the opening hours editor."
+  },
+  "hoursOpen": "Open",
+  "@hoursOpen": {
+    "description": "A day is open."
+  },
+  "hoursClosed": "Closed",
+  "@hoursClosed": {
+    "description": "A day is closed."
+  },
+  "hoursAllDay": "Open 24 hours",
+  "@hoursAllDay": {
+    "description": "A day is open all day."
+  },
+  "hoursOpenOn": "Open on {day}",
+  "@hoursOpenOn": {
+    "description": "Screen-reader label of the open/closed switch.",
+    "placeholders": {
+      "day": {
+        "type": "String"
+      }
+    }
+  },
+  "hoursOpens": "Opens",
+  "@hoursOpens": {
+    "description": "Time field label."
+  },
+  "hoursCloses": "Closes",
+  "@hoursCloses": {
+    "description": "Time field label."
+  },
+  "hoursAddSlot": "Add time slot",
+  "@hoursAddSlot": {
+    "description": "Adds another time slot to a day."
+  },
+  "hoursRemoveSlot": "Remove time slot",
+  "@hoursRemoveSlot": {
+    "description": "Removes a time slot."
+  },
+  "hoursCopyToAll": "Copy {day}'s hours to every day",
+  "@hoursCopyToAll": {
+    "description": "Copies one day's hours to all days.",
+    "placeholders": {
+      "day": {
+        "type": "String"
+      }
+    }
+  },
+  "hoursSheetTitle": "{day} hours",
+  "@hoursSheetTitle": {
+    "description": "Title of the bottom sheet with time pickers.",
+    "placeholders": {
+      "day": {
+        "type": "String"
+      }
+    }
+  },
+  "hoursOvernightHint": "A closing time earlier than the opening time runs past midnight.",
+  "@hoursOvernightHint": {
+    "description": "Hint in the time picker sheet."
+  },
+  "hoursTimeFormat": "Use 24-hour time, like 09:30",
+  "@hoursTimeFormat": {
+    "description": "Error for a badly formatted time."
+  },
+  "hoursRemoveAll": "Remove opening hours",
+  "@hoursRemoveAll": {
+    "description": "Removes all opening hours."
+  },
+  "hoursRemoveAllTitle": "Remove opening hours?",
+  "@hoursRemoveAllTitle": {
+    "description": "Confirm dialog title."
+  },
+  "hoursRemoveAllMessage": "Your menu will no longer show when you're open. You can add hours again at any time.",
+  "@hoursRemoveAllMessage": {
+    "description": "Confirm dialog body."
+  },
+  "regionalTitle": "Currency and time zone",
+  "@regionalTitle": {
+    "description": "Title of the regional settings screen."
+  },
+  "regionalSectionCountry": "Country",
+  "@regionalSectionCountry": {
+    "description": "Section title."
+  },
+  "regionalCountryLocked": "Set when you signed up. Contact support to change it.",
+  "@regionalCountryLocked": {
+    "description": "Explains the country is read-only."
+  },
+  "regionalSectionCurrency": "Currency",
+  "@regionalSectionCurrency": {
+    "description": "Section title."
+  },
+  "regionalCurrencyHelp": "Your menu shows every price in this currency.",
+  "@regionalCurrencyHelp": {
+    "description": "Help text for the currency."
+  },
+  "regionalSectionTimezone": "Time zone",
+  "@regionalSectionTimezone": {
+    "description": "Section title."
+  },
+  "regionalTimezoneHelp": "Used for your opening hours and for analytics days.",
+  "@regionalTimezoneHelp": {
+    "description": "Help text for the time zone."
+  },
+  "regionalTimezonePick": "Choose a time zone",
+  "@regionalTimezonePick": {
+    "description": "Title of the time zone picker."
+  },
+  "regionalTimezoneSearch": "Search, for example Kolkata",
+  "@regionalTimezoneSearch": {
+    "description": "Search field in the time zone picker."
+  },
+  "regionalTimezoneSuggested": "Suggested for your country",
+  "@regionalTimezoneSuggested": {
+    "description": "Heading in the time zone picker."
+  },
+  "regionalTimezoneAll": "All time zones",
+  "@regionalTimezoneAll": {
+    "description": "Heading in the time zone picker."
+  },
+  "regionalPricesNeedReview": "You changed the currency after publishing. Prices were not converted: review every price before you publish again.",
+  "@regionalPricesNeedReview": {
+    "description": "Banner when pricesNeedReview is set (FR-103)."
+  },
+  "currencyOption": "{name} ({code})",
+  "@currencyOption": {
+    "description": "Currency dropdown item.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "currencyWarningTitle": "Switch to {code}?",
+  "@currencyWarningTitle": {
+    "description": "FR-103 dialog title.",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "currencyWarningPublished": "Prices are not converted. A price of 100 {from} becomes 100 {to}. Your live menu keeps {from} until you publish, and you'll need to review every price before the next publish.",
+  "@currencyWarningPublished": {
+    "description": "FR-103 warning after the first publish.",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "currencyWarningDraft": "Prices are not converted. A price of 100 {from} becomes 100 {to}. Check your item prices after the change.",
+  "@currencyWarningDraft": {
+    "description": "Currency change warning when items exist but the menu was never published.",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "currencyWarningConfirm": "Change currency",
+  "@currencyWarningConfirm": {
+    "description": "Confirms the currency change."
+  },
+  "menuLinkTitle": "Menu link",
+  "@menuLinkTitle": {
+    "description": "Title of the menu link (slug) screen."
+  },
+  "menuLinkCurrent": "Your menu link",
+  "@menuLinkCurrent": {
+    "description": "Section with the current public menu URL."
+  },
+  "menuLinkQrNote": "Your QR code always works, even if you change this link.",
+  "@menuLinkQrNote": {
+    "description": "Note that QR codes never change (BR-006)."
+  },
+  "menuLinkCopy": "Copy link",
+  "@menuLinkCopy": {
+    "description": "Copies the menu link."
+  },
+  "menuLinkCopied": "Link copied",
+  "@menuLinkCopied": {
+    "description": "Snackbar after copying the link."
+  },
+  "menuLinkChange": "Change the link",
+  "@menuLinkChange": {
+    "description": "Section to change the slug."
+  },
+  "menuLinkRules": "3 to 60 lowercase letters, numbers and hyphens. Your old link will keep working and send customers to the new one.",
+  "@menuLinkRules": {
+    "description": "FR-092/093 rules for the slug."
+  },
+  "menuLinkNew": "New link",
+  "@menuLinkNew": {
+    "description": "Field label: new slug."
+  },
+  "menuLinkChecking": "Checking…",
+  "@menuLinkChecking": {
+    "description": "Availability check in progress."
+  },
+  "menuLinkAvailable": "This link is available.",
+  "@menuLinkAvailable": {
+    "description": "Availability check succeeded."
+  },
+  "menuLinkSave": "Change link",
+  "@menuLinkSave": {
+    "description": "Saves the new slug."
+  },
+  "menuLinkConfirmTitle": "Change your menu link?",
+  "@menuLinkConfirmTitle": {
+    "description": "Confirm dialog title."
+  },
+  "menuLinkConfirmMessage": "Your menu will move to {newUrl}. The old link {oldUrl} keeps working and redirects there, and your QR code does not change.",
+  "@menuLinkConfirmMessage": {
+    "description": "Confirm dialog body.",
+    "placeholders": {
+      "newUrl": {
+        "type": "String"
+      },
+      "oldUrl": {
+        "type": "String"
+      }
+    }
+  },
+  "menuLinkConfirmAction": "Change link",
+  "@menuLinkConfirmAction": {
+    "description": "Confirms the slug change."
+  },
+  "menuLinkChanged": "Your menu link was changed.",
+  "@menuLinkChanged": {
+    "description": "Snackbar after a successful slug change."
+  },
+  "checklistTitle": "Get your menu ready",
+  "@checklistTitle": {
+    "description": "Setup checklist title."
+  },
+  "checklistDoneTitle": "Your menu is set up",
+  "@checklistDoneTitle": {
+    "description": "Setup checklist title when everything is done."
+  },
+  "checklistProgress": "{done} of {total} done",
+  "@checklistProgress": {
+    "description": "Setup checklist progress.",
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "checklistStepDone": "Done",
+  "@checklistStepDone": {
+    "description": "Screen-reader label: step done."
+  },
+  "checklistStepTodo": "To do",
+  "@checklistStepTodo": {
+    "description": "Screen-reader label: step not done."
+  },
+  "checklistProfile": "Complete your profile",
+  "@checklistProfile": {
+    "description": "Checklist step."
+  },
+  "checklistProfileHint": "Add a description, a phone number or email, and your address.",
+  "@checklistProfileHint": {
+    "description": "Checklist hint."
+  },
+  "checklistLogo": "Add your logo",
+  "@checklistLogo": {
+    "description": "Checklist step."
+  },
+  "checklistLogoHint": "A square logo, at least 256 × 256 px.",
+  "@checklistLogoHint": {
+    "description": "Checklist hint."
+  },
+  "checklistCategories": "Add menu categories",
+  "@checklistCategories": {
+    "description": "Checklist step."
+  },
+  "checklistCategoriesHint": "For example Starters, Mains, Desserts.",
+  "@checklistCategoriesHint": {
+    "description": "Checklist hint."
+  },
+  "checklistItems": "Add dishes",
+  "@checklistItems": {
+    "description": "Checklist step."
+  },
+  "checklistItemsHint": "Add names, prices and photos.",
+  "@checklistItemsHint": {
+    "description": "Checklist hint."
+  },
+  "checklistTheme": "Choose a theme",
+  "@checklistTheme": {
+    "description": "Checklist step."
+  },
+  "checklistThemeHint": "Pick colours and fonts that match your brand.",
+  "@checklistThemeHint": {
+    "description": "Checklist hint."
+  },
+  "checklistPublish": "Publish your menu",
+  "@checklistPublish": {
+    "description": "Checklist step."
+  },
+  "checklistPublishHint": "Customers see your menu once it's published.",
+  "@checklistPublishHint": {
+    "description": "Checklist hint."
+  },
+  "statusTitle": "Menu status",
+  "@statusTitle": {
+    "description": "Dashboard card title."
+  },
+  "statusDraft": "Draft",
+  "@statusDraft": {
+    "description": "Menu not published yet."
+  },
+  "statusLive": "Live · version {version}",
+  "@statusLive": {
+    "description": "Menu published.",
+    "placeholders": {
+      "version": {
+        "type": "int"
+      }
+    }
+  },
+  "statusDraftHelp": "Customers can't see your menu yet. Changes are saved as a draft until you publish.",
+  "@statusDraftHelp": {
+    "description": "Explains the draft state (FR-012)."
+  },
+  "statusLiveHelp": "Customers see your last published version. New changes wait in the draft until you publish.",
+  "@statusLiveHelp": {
+    "description": "Explains the live state."
+  },
+  "statusCounts": "Categories: {categories} · Dishes: {items}",
+  "@statusCounts": {
+    "description": "Counts of categories and items.",
+    "placeholders": {
+      "categories": {
+        "type": "int"
+      },
+      "items": {
+        "type": "int"
+      }
+    }
+  },
+  "statusLastEdit": "Last change: {time}",
+  "@statusLastEdit": {
+    "description": "When the draft was last changed, in the restaurant time zone.",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "statusOpenMenu": "Open menu",
+  "@statusOpenMenu": {
+    "description": "Button to the menu section."
+  },
+  "qrTitle": "QR code and link",
+  "@qrTitle": {
+    "description": "Dashboard card title."
+  },
+  "qrHelp": "Customers scan your QR code or open this link to see your menu.",
+  "@qrHelp": {
+    "description": "Dashboard card body."
+  },
+  "qrCode": "QR code: {code}",
+  "@qrCode": {
+    "description": "The restaurant QR short code.",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "qrOpenShare": "QR & share",
+  "@qrOpenShare": {
+    "description": "Button to the QR section."
+  },
+  "qrChangeLink": "Change link",
+  "@qrChangeLink": {
+    "description": "Button to the menu link screen."
+  },
+  "wizardTitle": "Set up your restaurant",
+  "@wizardTitle": {
+    "description": "Setup wizard title."
+  },
+  "wizardSkip": "Skip for now",
+  "@wizardSkip": {
+    "description": "Skips the setup wizard."
+  },
+  "wizardSkipStep": "Skip",
+  "@wizardSkipStep": {
+    "description": "Skips an optional wizard step."
+  },
+  "wizardStepOf": "Step {step} of {total}",
+  "@wizardStepOf": {
+    "description": "Wizard progress.",
+    "placeholders": {
+      "step": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "wizardStepProfile": "Your restaurant",
+  "@wizardStepProfile": {
+    "description": "Wizard step 1 title."
+  },
+  "wizardStepImages": "Logo and cover",
+  "@wizardStepImages": {
+    "description": "Wizard step 2 title."
+  },
+  "wizardStepMenu": "Build your menu",
+  "@wizardStepMenu": {
+    "description": "Wizard step 3 title."
+  },
+  "wizardProfileIntro": "Tell customers about your place. You can change everything later in Settings.",
+  "@wizardProfileIntro": {
+    "description": "Wizard step 1 intro."
+  },
+  "wizardImagesIntro": "A logo and a wide cover photo make your menu look like yours. Both are optional.",
+  "@wizardImagesIntro": {
+    "description": "Wizard step 2 intro."
+  },
+  "wizardMenuIntro": "Next, build your menu. Here's how it works:",
+  "@wizardMenuIntro": {
+    "description": "Wizard step 3 intro."
+  },
+  "wizardMenuCategories": "Create categories such as Starters, Mains and Drinks.",
+  "@wizardMenuCategories": {
+    "description": "Wizard step 3 bullet."
+  },
+  "wizardMenuItems": "Add dishes with prices, photos and dietary labels.",
+  "@wizardMenuItems": {
+    "description": "Wizard step 3 bullet."
+  },
+  "wizardMenuTheme": "Choose a theme to match your brand.",
+  "@wizardMenuTheme": {
+    "description": "Wizard step 3 bullet."
+  },
+  "wizardMenuPublish": "Preview, then publish. Your QR code starts working at once.",
+  "@wizardMenuPublish": {
+    "description": "Wizard step 3 bullet."
+  },
+  "wizardToMenu": "Start my menu",
+  "@wizardToMenu": {
+    "description": "Finishes the wizard and opens the menu section."
+  },
+  "wizardToDashboard": "Go to dashboard",
+  "@wizardToDashboard": {
+    "description": "Finishes the wizard and opens the dashboard."
+  }
 }

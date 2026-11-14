@@ -18,3 +18,4 @@ initializeApp();
 
 export { cleanupUnverifiedUsers, completeRegistration } from "./auth";
 export { processImage } from "./media";
+export { changeSlug, onRestaurantUpdated } from "./restaurant";

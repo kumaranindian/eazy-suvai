@@ -43,9 +43,16 @@ extension OwnerSectionView on OwnerSection {
 
 /// The owner app shell: [ResponsiveScaffold] around the current branch.
 class OwnerShell extends ConsumerWidget {
-  const OwnerShell({super.key, required this.navigationShell});
+  const OwnerShell({
+    super.key,
+    required this.navigationShell,
+    this.showAppBar = true,
+  });
 
   final StatefulNavigationShell navigationShell;
+
+  /// False on detail pages that have their own app bar.
+  final bool showAppBar;
 
   static const signOutKey = ValueKey('shell.signOut');
 
@@ -55,6 +62,7 @@ class OwnerShell extends ConsumerWidget {
     final section = OwnerSection.values[navigationShell.currentIndex];
     return ResponsiveScaffold(
       title: section.label(l10n),
+      showAppBar: showAppBar,
       actions: [
         AppIconButton(
           key: signOutKey,

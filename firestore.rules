@@ -44,16 +44,131 @@ service cloud.firestore {
       allow write: if false;
     }
 
-    // Tenant root. Created by completeRegistration. M03 opens owner updates
-    // of the allowed profile fields.
+    // Tenant root. Created by completeRegistration (M01). Owners update the
+    // draft profile fields below directly (M03, architecture §5); everything
+    // else (status, planId, slug, qrCode, counts, publishedVersion,
+    // pricesNeedReview, nameLower, owner fields, country, subscription) is
+    // written only by Functions.
     match /restaurants/{rid} {
       allow get: if isOwner(rid) || isAdmin();
       allow list: if isAdmin();
-      allow write: if false;
+      allow update: if isOwner(rid) && validOwnerUpdate();
+      allow create, delete: if false;
     }
 
-    // slugs/{slug}, qrCodes/{code}, config/platform, auditLogs: Functions
-    // only for now (no match = denied).
+    // ---- M03: restaurant profile (FR-011 to FR-013, FR-103) --------------
+    //
+    // Budget: rules stop evaluating a request after a fixed amount of work
+    // (measured on the emulator: a week of 21 opening-hour slots as maps,
+    // checked field by field, did not fit next to the other fields). So
+    // opening hours, contact details and social links are each checked with
+    // ONE regex over their joined values, and a value of the wrong type
+    // makes `matches()` / `keys()` / `size()` / `+` fail, which denies the
+    // request without an explicit `is` check. "The heaviest update" in
+    // restaurant-profile.test.js writes every field at once; keep it green
+    // when adding checks (M05: theme).
+
+    function validOwnerUpdate() {
+      let next = request.resource.data;
+      let changed = next.diff(resource.data).affectedKeys();
+      // Profile and theme fields: the draft (FR-012). Changing any of them
+      // must stamp draftUpdatedAt with the server time. setupCompletedAt:
+      // the first-run wizard was finished or skipped.
+      let draft = ['name', 'businessType', 'description', 'logo', 'cover', 'contact',
+                   'openingHours', 'visibility', 'currency', 'timezone', 'themeId',
+                   'themeSettings'];
+      return changed.hasOnly(draft.concat(['draftUpdatedAt', 'setupCompletedAt']))
+        && (!changed.hasAny(draft.concat(['draftUpdatedAt']))
+            || next.draftUpdatedAt == request.time)
+        && (!('setupCompletedAt' in changed) || next.setupCompletedAt == request.time)
+        && (!('name' in changed) || validName(next.name))
+        && (!('businessType' in changed) || validBusinessType(next.businessType))
+        && (!('description' in changed) || next.description.size() <= 500 && next.description is string)
+        // Image objects are written only by processImage (M02); owners may
+        // only remove an image.
+        && (!('logo' in changed) || next.logo == null)
+        && (!('cover' in changed) || next.cover == null)
+        && (!('contact' in changed) || validContact(next.contact))
+        && (!('openingHours' in changed) || next.openingHours == null || validHours(next.openingHours))
+        && (!('visibility' in changed) || validVisibility(next.visibility))
+        && (!('currency' in changed) || next.currency.matches('^[A-Z]{3}$'))
+        && (!('timezone' in changed) || validTimezone(next.timezone))
+        // M05 adds the theme checks.
+        && (!('themeId' in changed) || next.themeId == null || next.themeId.matches('^[A-Za-z0-9_-]{1,64}$'))
+        && (!('themeSettings' in changed) || next.themeSettings is map);
+    }
+
+    function validName(v) {
+      return v.size() <= 80 && v.trim().size() > 0 && v is string;
+    }
+
+    // Keep in sync with BUSINESS_TYPES (functions) and BusinessType (core).
+    function validBusinessType(v) {
+      return v in ['restaurant', 'cafe', 'bakery', 'cloudKitchen', 'sweetShop',
+                   'juiceBar', 'foodTruck', 'bar', 'hotel', 'other'];
+    }
+
+    // contact: {phone (E.164), email, address, city, postalCode, website
+    // (https), social {instagram, facebook, x, youtube, googleMaps} (https)}.
+    // Empty values are left out. The apps also check the phone number and
+    // postal code against the country.
+    //
+    // One regex over "phone|email|postalCode|website", each part empty or
+    // valid, and one over the five social links joined the same way. No
+    // part can contain '|', so a value cannot spill into its neighbour.
+    function validContact(c) {
+      let url = '(https://[^\\s|/?#]+[.][^\\s|/?#]+([/?#][^\\s|]*)?)?';
+      let joined = c.get('phone', '') + '|' + c.get('email', '') + '|'
+        + c.get('postalCode', '') + '|' + c.get('website', '');
+      let s = c.get('social', {});
+      let links = s.get('instagram', '') + '|' + s.get('facebook', '') + '|'
+        + s.get('x', '') + '|' + s.get('youtube', '') + '|' + s.get('googleMaps', '');
+      return c.keys().hasOnly(['phone', 'email', 'address', 'city', 'postalCode', 'website', 'social'])
+        && c.get('email', '').size() <= 254
+        && c.get('website', '').size() <= 300
+        && c.get('address', '').size() <= 200 && c.get('address', '') is string
+        && c.get('city', '').size() <= 60 && c.get('city', '') is string
+        && joined.matches('^([+][1-9][0-9]{6,14})?'
+            + '[|]([^@\\s|]+@[^@\\s|]+[.][^@\\s|]+)?'
+            + '[|]([A-Za-z0-9][A-Za-z0-9 -]{1,11})?'
+            + '[|]' + url + '$')
+        && s.keys().hasOnly(['instagram', 'facebook', 'x', 'youtube', 'googleMaps'])
+        && links.size() <= 1500
+        && links.matches('^' + url + '[|]' + url + '[|]' + url + '[|]' + url + '[|]' + url + '$');
+    }
+
+    // FR-013: which contact details the public menu shows.
+    function validVisibility(v) {
+      return v.keys().hasOnly(['phone', 'email', 'address', 'hours', 'social'])
+        && (!('phone' in v) || v.phone is bool)
+        && (!('email' in v) || v.email is bool)
+        && (!('address' in v) || v.address is bool)
+        && (!('hours' in v) || v.hours is bool)
+        && (!('social' in v) || v.social is bool);
+    }
+
+    // FR-011: per weekday up to 3 slots "HH:mm-HH:mm" joined with ',', or
+    // "" for closed: {mon: "07:00-11:00,18:00-23:30", tue: "", ...}. Times
+    // are in the restaurant's time zone; a close earlier than the open runs
+    // past midnight, and "24:00" is not used ("00:00" as a close means
+    // midnight). Order and overlaps are checked in the apps.
+    //
+    // One string per day so the whole week is checked with ONE regex; a
+    // list of slot maps did not fit the rules budget (see above).
+    function validHours(h) {
+      let t = '([01][0-9]|2[0-3]):[0-5][0-9]';
+      let day = '(' + t + '-' + t + '(,' + t + '-' + t + '){0,2})?';
+      let week = h.get('mon', '') + ';' + h.get('tue', '') + ';' + h.get('wed', '') + ';'
+        + h.get('thu', '') + ';' + h.get('fri', '') + ';' + h.get('sat', '') + ';' + h.get('sun', '');
+      return h.keys().hasOnly(['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'])
+        && week.size() <= 300
+        && week.matches('^' + day + ';' + day + ';' + day + ';' + day + ';' + day + ';' + day + ';' + day + '$');
+    }
+
+    // IANA name such as Asia/Kolkata or America/Argentina/Buenos_Aires.
+    function validTimezone(v) {
+      return v.size() <= 64 && v.matches('^(UTC|[A-Z][A-Za-z]+(/[A-Za-z0-9_+-]+){1,2})$');
+    }
 
     // ---- Default: deny ----------------------------------------------------
     match /{document=**} {

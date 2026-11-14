@@ -69,6 +69,13 @@ class AppEnv {
       ? demoProjectId
       : (isProd ? 'eazysuvai-prod' : 'eazy-suvai-dev');
 
+  /// Base URL of the public menu (architecture §1; the final domain is an
+  /// open decision). A restaurant's menu is `$menuBaseUrl/$slug`. Builds
+  /// on the emulators use the dev site's address for display only.
+  String get menuBaseUrl => isProd
+      ? 'https://menu.eazysuvai.com'
+      : 'https://eazy-suvai-dev-menu.web.app';
+
   /// Demo project used with the Emulator Suite. A `demo-` prefix makes the
   /// emulators refuse to reach any real Google service.
   static const demoProjectId = 'demo-eazysuvai';

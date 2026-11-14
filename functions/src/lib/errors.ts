@@ -20,6 +20,12 @@ export const AppErrorCode = {
   registrationIncomplete: "registration-incomplete",
   /** Admin signed in without a second factor (FR-084). */
   mfaRequired: "mfa-required",
+  /** Slug breaks the FR-092 format (M03). */
+  slugInvalid: "slug-invalid",
+  /** Slug is a reserved word (FR-092, M03). */
+  slugReserved: "slug-reserved",
+  /** Slug is used, now or before, by another restaurant (FR-093, M03). */
+  slugTaken: "slug-taken",
   unknown: "unknown",
 } as const;
 
@@ -37,6 +43,9 @@ const httpsCodeFor: Record<AppErrorCode, FunctionsErrorCode> = {
   "already-exists": "already-exists",
   "registration-incomplete": "failed-precondition",
   "mfa-required": "permission-denied",
+  "slug-invalid": "invalid-argument",
+  "slug-reserved": "invalid-argument",
+  "slug-taken": "already-exists",
   "unknown": "internal",
 };
 

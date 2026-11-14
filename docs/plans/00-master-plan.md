@@ -13,7 +13,7 @@ Status values: `Not started` · `In progress` · `Blocked` · `Done`
 | M00 | Foundation and project setup | `M00-foundation.md` | – | Done | 2026-11-14 | 2026-11-14 | Workspace, core, shells, rules, functions lib, CI. Open: prod project; dev Android/iOS options, Hosting sites and TTL. (Dev `eazy-suvai-dev` web connected; CI green on GitHub.) |
 | M01 | Authentication and accounts | `M01-authentication.md` | M00 | Done | 2026-11-14 | 2026-11-14 | Sign-up, verify, login, reset, claims, guards, cleanup, admin TOTP. Open: Identity Platform TOTP on a real project (approval), auth project settings, FR-091 24 h link expiry. |
 | M02 | Media management | `M02-media.md` | M00 | Done | 2026-11-14 | 2026-11-14 | Storage rules, `processImage` (sharp: magic bytes, minimum sizes, EXIF strip, WebP 320/640/1280), `ImagePickerField`, `ResponsiveImage`, upload with progress and cancel; web verified end to end. Open: Android/iOS device run, real-bucket setup (CORS, cross-service rules, Blaze). |
-| M03 | Restaurant onboarding and profile | `M03-restaurant-profile.md` | M01, M02 | Not started | | | |
+| M03 | Restaurant onboarding and profile | `M03-restaurant-profile.md` | M01, M02 | Done | 2026-11-14 | 2026-11-14 | Setup wizard, dashboard checklist, profile with autosave and live preview, opening hours, currency/time zone (FR-103), `changeSlug`, `onRestaurantUpdated`, rules whitelist with value checks; Chrome end to end. Open: device runs, slug-change rate limit (decision). |
 | M04 | Menu management (categories and items) | `M04-menu-management.md` | M03 | Not started | | | |
 | M05 | Menu customization (themes) | `M05-customization.md` | M03 | Not started | | | |
 | M06 | Preview, publishing and versions | `M06-publishing.md` | M04, M05 | Not started | | | |
@@ -92,8 +92,33 @@ Add a dated line whenever a module changes something another module depends on.
 - 2026-11-14 (M02): **Upload contract:** path `restaurants/{rid}/images/{20-char id}/original.{ext}` and custom metadata `{purpose, targetPath, field}`. `storage.rules` and `functions/src/media/policy.ts` both enforce the allow-list; keep them in sync with `ImagePurpose`. Uploads are create-only, and clients can't delete. Old image files are kept (published versions may reference them); M12 purges.
 - 2026-11-14 (M02): **Public images (M07):** renditions carry `firebaseStorageDownloadTokens` and `Cache-Control: public, max-age=31536000, immutable`. Storage rules do not allow anonymous reads. Web apps need `storage.cors.json` applied to the bucket.
 - 2026-11-14 (M02): **Tooling:** `npm run test:emulators` and `tool/integration.sh` also start the Storage emulator. Rules tests run one file at a time (`--test-concurrency=1`). `pumpOwnerApp(..., overrides: [...])` in the owner app's test helpers. Owner dev page `/dev/media` (non-prod only).
+- 2026-11-14 (M03): **Owner writes to `restaurants/{rid}`** go through `validOwnerUpdate()` in `firestore.rules`:
+  - the whitelist from architecture §5, plus `setupCompletedAt`;
+  - every draft change sets `draftUpdatedAt` to the server time;
+  - values are checked.
+
+  The rules are close to their per-request evaluation limit. Add checks inline and sparingly (M05 theme), and keep the "heaviest update" test in `restaurant-profile.test.js` passing.
+- 2026-11-14 (M03): **Profile formats** (architecture §4.2):
+  - `openingHours` is one string per weekday (`"07:00-11:00,18:00-23:30"`; `""` = closed; absent or `null` = not set), **not** slot maps.
+  - `contact` leaves out empty values. `phone` is E.164; `website` and `social.{instagram,facebook,x,youtube,googleMaps}` are https URLs.
+  - `visibility.{phone,email,address,hours,social}`: `false` hides the group; a missing flag means shown.
+  - New field `setupCompletedAt`.
+  - Dart model: `Restaurant.fromMap` and related classes in `core` (`src/restaurant/`).
+- 2026-11-14 (M03): **Slugs:**
+  - `changeSlug({restaurantId, slug, dryRun?})`, with errors `slug-invalid`, `slug-reserved` and `slug-taken`.
+  - Old slugs are kept as `{current: false, replacedAt}`. M07 answers them with a 301 to the current `restaurants/{rid}.slug`.
+  - Audit action `restaurant.changeSlug`.
+  - `onRestaurantUpdated` sets `pricesNeedReview` when the currency changes after a publish (M06 clears it) and keeps `nameLower` in sync (M11 search).
+- 2026-11-14 (M03): **Owner app:**
+  - Routes: `/setup`, `/settings/{profile,hours,regional,menu-link}`. `/` is the dashboard. `/dev/media` is removed.
+  - Reuse `currentRestaurantProvider`, `RestaurantRepository`, `DraftAutosave` with `SaveStatusIndicator` / `SaveBar`, `FormSection`, and `menuUrl(slug)` (built on `AppEnv.menuBaseUrl`).
+  - Detail routes inside the shell bring their own `AppBar` (`OwnerShell(showAppBar:)`).
+  - Widget tests: `pumpOwnerApp(..., restaurant: FakeRestaurantRepository(restaurantData({...})))`. The default restaurant has finished setup.
+- 2026-11-14 (M03): **Tooling:** `tool/integration.sh` also runs `profile_flow_test.dart`. The M01 end-to-end test skips the wizard after the first sign-in.
 
 ## Open decisions
+
+- Slug-change rate limit: the FRD sets none; M03 suggests one (see M03 Open items).
 
 - Final domains for app, admin and public menu (placeholders in `docs/architecture.md`).
 - Pro plan prices per currency.

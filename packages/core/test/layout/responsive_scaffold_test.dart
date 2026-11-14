@@ -15,9 +15,14 @@ void main() {
     expect(Breakpoint.fromWidth(1280), Breakpoint.expanded);
   });
 
-  Widget shell({ValueChanged<int>? onSelected, int selected = 0}) => testApp(
+  Widget shell({
+    ValueChanged<int>? onSelected,
+    int selected = 0,
+    bool showAppBar = true,
+  }) => testApp(
     ResponsiveScaffold(
       title: 'Title',
+      showAppBar: showAppBar,
       selectedIndex: selected,
       onDestinationSelected: onSelected ?? (_) {},
       destinations: const [
@@ -87,6 +92,18 @@ void main() {
     );
     expect(tester.getSize(body.first).width, lessThanOrEqualTo(1200));
   });
+
+  for (final width in [360.0, 768.0, 1280.0]) {
+    testWidgets('showAppBar: false hides the app bar at ${width.toInt()} px', (
+      tester,
+    ) async {
+      await pumpAt(tester, width, shell(showAppBar: false));
+      expect(find.byType(AppBar), findsNothing);
+      expect(find.text('Body'), findsOneWidget);
+      await pumpAt(tester, width, shell());
+      expect(find.widgetWithText(AppBar, 'Title'), findsOneWidget);
+    });
+  }
 
   testWidgets('works right-to-left', (tester) async {
     await setSurfaceWidth(tester, 1280);

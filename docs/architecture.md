@@ -57,7 +57,7 @@ All timestamps are Firestore `Timestamp` in UTC. IDs are Firestore auto-IDs unle
 | --- | --- | --- |
 | `users/{uid}` | Profile: `email`, `displayName`, `mobile`, `role` (`owner` or `platformAdmin`), `restaurantId`, `createdAt` | Functions |
 | `restaurants/{rid}` | Tenant root (4.2) | Owner (allowed fields only), Functions |
-| `slugs/{slug}` | `{restaurantId, current: bool, releasedAt?}`; one doc per current or old slug | Functions |
+| `slugs/{slug}` | `{restaurantId, current: bool, createdAt, replacedAt?, reclaimedAt?, releasedAt?}`; one doc per current or old slug. `changeSlug` (M03) sets the old one to `current: false` with `replacedAt` and keeps it for 301s | Functions |
 | `qrCodes/{code}` | `{restaurantId, kind: 'restaurant'}`; permanent, never reused | Functions |
 | `plans/{planId}` | `name`, `limits {maxItems, maxCategories, maxBranches, themeIds[], analyticsDays, qrLogo, removeBranding}`, `prices {INR, AED, KWD}`, `isFree`, `active` | Admin via Functions |
 | `dietaryLabels/{id}`, `itemTags/{id}` | `name`, `icon`, `color`, `sort`, `retired` (FR-104) | Admin via Functions |
@@ -70,9 +70,17 @@ All timestamps are Firestore `Timestamp` in UTC. IDs are Firestore auto-IDs unle
 
 ### 4.2 Tenant subtree `restaurants/{rid}`
 
-Root document fields: `name`, `nameLower` (for admin search), `ownerName`, `ownerEmail`, `ownerMobile` (E.164), `pricesNeedReview`, `businessType`, `description`, `logo`, `cover` (image objects, 4.4), `contact {phone, email, address, city, postalCode, website, social{}}`, `openingHours {mon: [{open, close}], …}`, `visibility {phone, email, address, hours, social}`, `country`, `currency`, `timezone`, `themeId`, `themeSettings {primary, secondary, background, font, layout, cardLayout, mode}`, `slug`, `qrCode`, `status` (`active`, `suspended`, `deactivated`, `deleted`), `ownerUid`, `planId`, `subscription {status, startAt, expiresAt, graceEndsAt}`, `counts {categories, items}`, `publishedVersion` (int or null), `draftUpdatedAt`, `createdAt`, `deactivatedAt?`.
+Root document fields: `name`, `nameLower` (for admin search), `ownerName`, `ownerEmail`, `ownerMobile` (E.164), `pricesNeedReview`, `businessType`, `description`, `logo`, `cover` (image objects, 4.4), `contact {phone, email, address, city, postalCode, website, social{instagram, facebook, x, youtube, googleMaps}}`, `openingHours {mon: "07:00-11:00,18:00-23:30", …}`, `visibility {phone, email, address, hours, social}`, `country`, `currency`, `timezone`, `themeId`, `themeSettings {primary, secondary, background, font, layout, cardLayout, mode}`, `slug`, `qrCode`, `status` (`active`, `suspended`, `deactivated`, `deleted`), `ownerUid`, `planId`, `subscription {status, startAt, expiresAt, graceEndsAt}`, `counts {categories, items}`, `publishedVersion` (int or null), `draftUpdatedAt`, `setupCompletedAt?`, `createdAt`, `deactivatedAt?`.
 
 The root document's profile and theme fields are the **draft**. They go live only when published (FR-012).
+
+Profile field formats (M03):
+
+- `contact`: empty values are left out. `phone` is E.164 (checked against the restaurant's country in the app). `website` and every `social.*` link are `https://` URLs.
+- `openingHours`: one string per weekday `mon`…`sun`, up to 3 slots `"HH:mm-HH:mm"` joined by `,`; `""` is closed. Times are wall-clock in `timezone`. A close earlier than the open runs past midnight (only the last slot of a day may), `"00:00"` as a close is midnight, and `"00:00-00:00"` is open all day. The field is absent or `null` until the owner adds hours. One string per day (instead of a list of `{open, close}` maps) lets the security rules check a whole week with one regex; the slot maps did not fit the rules' per-request evaluation budget.
+- `visibility`: a flag set to `false` hides that group on the public menu (FR-013, FR-014); a missing flag means shown. The owner app writes all five.
+- `setupCompletedAt`: set when the owner finishes or skips the first-run setup wizard.
+- `nameLower` and `pricesNeedReview` are maintained by `onRestaurantUpdated` (M03); `slug` changes only through `changeSlug`.
 
 | Subcollection | Fields | Notes |
 | --- | --- | --- |
@@ -119,7 +127,9 @@ match /restaurants/{rid} {
   allow read: if isOwner() || isAdmin();
   allow update: if isOwner() && request.resource.data.diff(resource.data).affectedKeys()
                    .hasOnly(['name','businessType','description','logo','cover','contact','openingHours',
-                             'visibility','currency','timezone','themeId','themeSettings','draftUpdatedAt']);
+                             'visibility','currency','timezone','themeId','themeSettings','draftUpdatedAt',
+                             'setupCompletedAt'])
+                && /* draft changes stamp draftUpdatedAt == request.time; value checks (M03) */ true;
   match /categories/{cid} { allow read: if isOwner() || isAdmin(); allow update: if isOwner() && /* field whitelist */ true; }
   match /items/{iid}      { allow read: if isOwner() || isAdmin(); allow update: if isOwner() && /* field whitelist */ true; }
   match /versions/{n}     { allow read: if isOwner() || isAdmin(); allow write: if false; }
@@ -127,6 +137,7 @@ match /restaurants/{rid} {
 }
 ```
 
+- Owner updates of the tenant root (M03, `validOwnerUpdate()` in `firestore.rules`) also check every changed value: name 1–80 characters, known business type, description ≤ 500, `logo`/`cover` only to `null`, `contact`/`social` shapes and formats, `openingHours` format, `visibility` booleans, ISO currency code, IANA-style time zone. A draft change must set `draftUpdatedAt` to the server time, and `setupCompletedAt` must be the server time. Rules stop evaluating a request after a fixed amount of work, so these checks use one regex per group (see the comment in the rules); `restaurant-profile.test.js` has a test that writes every field at once.
 - Storage rules: owners can write only under `restaurants/{theirRid}/images/**`, content type `image/jpeg|png|webp`, size ≤ 5 MB (FR-102).
 - Admin app: Firebase Authentication with Identity Platform TOTP multi-factor, required for `platformAdmin` (FR-084). Rules and `assertAdmin()` check `firebase.sign_in_second_factor == 'totp'`; only the Functions emulator under a `demo-` project skips the `assertAdmin()` check, because the Auth emulator has no TOTP (M01).
 - Every rule has a test in `firestore-tests/` using `@firebase/rules-unit-testing`.

@@ -8,8 +8,14 @@ import '../features/auth/presentation/forgot_password_page.dart';
 import '../features/auth/presentation/sign_in_page.dart';
 import '../features/auth/presentation/sign_up_page.dart';
 import '../features/auth/presentation/verify_email_page.dart';
-import '../features/dev/presentation/media_test_page.dart';
+import '../features/home/presentation/dashboard_page.dart';
 import '../features/home/presentation/placeholder_page.dart';
+import '../features/restaurant/presentation/menu_link_page.dart';
+import '../features/restaurant/presentation/opening_hours_page.dart';
+import '../features/restaurant/presentation/profile_page.dart';
+import '../features/restaurant/presentation/regional_page.dart';
+import '../features/restaurant/presentation/settings_page.dart';
+import '../features/setup/presentation/setup_wizard_page.dart';
 import '../features/shell/presentation/owner_shell.dart';
 import 'auth_guard.dart';
 import 'not_found_page.dart';
@@ -31,8 +37,12 @@ abstract final class Routes {
   static const finishingSetup = '/finishing-setup';
   static const splash = '/splash';
 
-  /// M02 developer page to try image uploads. Not registered in prod.
-  static const devMedia = '/dev/media';
+  // M03: onboarding and restaurant settings.
+  static const setup = '/setup';
+  static const profile = '/settings/profile';
+  static const hours = '/settings/hours';
+  static const regional = '/settings/regional';
+  static const menuLink = '/settings/menu-link';
 }
 
 /// Account screens switch without a transition. The guard can move a user
@@ -87,19 +97,30 @@ GoRouter appRouter(Ref ref) {
         pageBuilder: (context, state) =>
             _instant(state, const FinishingSetupPage()),
       ),
-      if (!AppEnv.fromDefines().isProd)
-        GoRoute(
-          path: Routes.devMedia,
-          builder: (context, state) => const MediaTestPage(),
-        ),
+      // First-run wizard: full screen, outside the shell.
+      GoRoute(
+        path: Routes.setup,
+        builder: (context, state) => const SetupWizardPage(),
+      ),
       StatefulShellRoute.indexedStack(
-        builder: (context, state, shell) => OwnerShell(navigationShell: shell),
+        builder: (context, state, shell) => OwnerShell(
+          navigationShell: shell,
+          // Detail pages (for example /settings/profile) bring their own
+          // app bar with a back button.
+          showAppBar: state.uri.pathSegments.length <= 1,
+        ),
         branches: [
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: Routes.home,
+                builder: (context, state) => const DashboardPage(),
+              ),
+            ],
+          ),
           for (final (path, section) in const [
-            (Routes.home, OwnerSection.home),
             (Routes.menu, OwnerSection.menu),
             (Routes.share, OwnerSection.share),
-            (Routes.settings, OwnerSection.settings),
           ])
             StatefulShellBranch(
               routes: [
@@ -110,6 +131,32 @@ GoRouter appRouter(Ref ref) {
                 ),
               ],
             ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: Routes.settings,
+                builder: (context, state) => const SettingsPage(),
+                routes: [
+                  GoRoute(
+                    path: 'profile',
+                    builder: (context, state) => const ProfilePage(),
+                  ),
+                  GoRoute(
+                    path: 'hours',
+                    builder: (context, state) => const OpeningHoursPage(),
+                  ),
+                  GoRoute(
+                    path: 'regional',
+                    builder: (context, state) => const RegionalPage(),
+                  ),
+                  GoRoute(
+                    path: 'menu-link',
+                    builder: (context, state) => const MenuLinkPage(),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ],
       ),
     ],

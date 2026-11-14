@@ -19,6 +19,7 @@ M07.
 ## Inputs from other modules
 
 - M01: `qrCode` on the restaurant (never changes).
+- M03 (done 2026-11-14): the dashboard's QR card links to `Routes.share` and shows `menuUrl(slug)` (`features/restaurant/presentation/menu_link_page.dart`, built on `AppEnv.menuBaseUrl`). The menu link page explains that the QR code keeps working after a slug change.
 - M07: `/q/{code}` redirect and link previews.
 - M10 (later): `limits.qrLogo` (logo in the QR is a Pro feature).
 

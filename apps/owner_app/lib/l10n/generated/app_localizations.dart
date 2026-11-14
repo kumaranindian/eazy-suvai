@@ -424,29 +424,863 @@ abstract class AppLocalizations {
   /// **'We\'re getting your restaurant ready. This takes a few seconds.'**
   String get finishingBody;
 
-  /// Title of the developer-only page for trying image uploads (not in production).
+  /// Goes to the previous step.
   ///
   /// In en, this message translates to:
-  /// **'Image upload test'**
-  String get devMediaTitle;
+  /// **'Back'**
+  String get actionBack;
 
-  /// Intro text on the developer-only image upload page.
+  /// Goes to the next step.
   ///
   /// In en, this message translates to:
-  /// **'Developer page. Images uploaded here become your restaurant\'s logo and cover.'**
-  String get devMediaIntro;
+  /// **'Next'**
+  String get actionNext;
 
-  /// Label of the logo image field.
+  /// Confirms a choice and closes the sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get actionDone;
+
+  /// Saves draft changes immediately instead of waiting for autosave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save now'**
+  String get actionSaveNow;
+
+  /// Save indicator before any change.
+  ///
+  /// In en, this message translates to:
+  /// **'Changes save automatically'**
+  String get saveAuto;
+
+  /// Save indicator while changes are waiting or being written.
+  ///
+  /// In en, this message translates to:
+  /// **'Saving…'**
+  String get saveSaving;
+
+  /// Save indicator after changes were stored in the draft.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved'**
+  String get saveSaved;
+
+  /// Save indicator when the last save failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t save your changes'**
+  String get saveFailed;
+
+  /// Save indicator when some fields are not valid.
+  ///
+  /// In en, this message translates to:
+  /// **'Fix the highlighted fields to save'**
+  String get saveInvalid;
+
+  /// Title of the profile editor.
+  ///
+  /// In en, this message translates to:
+  /// **'Restaurant profile'**
+  String get profileTitle;
+
+  /// Profile section: name, business type, description.
+  ///
+  /// In en, this message translates to:
+  /// **'Basics'**
+  String get profileSectionBasics;
+
+  /// Profile section: images.
+  ///
+  /// In en, this message translates to:
+  /// **'Logo and cover'**
+  String get profileSectionImages;
+
+  /// Profile section: phone, email, website.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact'**
+  String get profileSectionContact;
+
+  /// Profile section: address.
+  ///
+  /// In en, this message translates to:
+  /// **'Address'**
+  String get profileSectionAddress;
+
+  /// Profile section: opening hours summary.
+  ///
+  /// In en, this message translates to:
+  /// **'Opening hours'**
+  String get profileSectionHours;
+
+  /// Profile section: social network links.
+  ///
+  /// In en, this message translates to:
+  /// **'Social links'**
+  String get profileSectionSocial;
+
+  /// Help text for the social links section.
+  ///
+  /// In en, this message translates to:
+  /// **'Paste a link, or type @yourname for Instagram, X and YouTube.'**
+  String get profileSectionSocialHelp;
+
+  /// Profile section: which details the public menu shows (FR-013).
+  ///
+  /// In en, this message translates to:
+  /// **'Show on your menu'**
+  String get profileSectionVisibility;
+
+  /// Help text for the visibility switches.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn off anything you don\'t want customers to see. Your details stay saved.'**
+  String get profileSectionVisibilityHelp;
+
+  /// Field label: restaurant description.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get fieldDescription;
+
+  /// Helper under the description field.
+  ///
+  /// In en, this message translates to:
+  /// **'What makes your place special? Up to 500 characters.'**
+  String get fieldDescriptionHelper;
+
+  /// Image field label: restaurant logo.
   ///
   /// In en, this message translates to:
   /// **'Logo'**
-  String get devMediaLogo;
+  String get fieldLogo;
 
-  /// Label of the cover image field.
+  /// Image field label: wide cover image.
   ///
   /// In en, this message translates to:
   /// **'Cover image'**
-  String get devMediaCover;
+  String get fieldCover;
+
+  /// Field label: public phone number.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact number'**
+  String get fieldPhone;
+
+  /// Helper under the contact number field.
+  ///
+  /// In en, this message translates to:
+  /// **'Mobile or landline, for customers to call.'**
+  String get fieldPhoneHelper;
+
+  /// Field label: public business email.
+  ///
+  /// In en, this message translates to:
+  /// **'Public email'**
+  String get fieldPublicEmail;
+
+  /// Field label: website (https).
+  ///
+  /// In en, this message translates to:
+  /// **'Website'**
+  String get fieldWebsite;
+
+  /// Field label: address line.
+  ///
+  /// In en, this message translates to:
+  /// **'Street address'**
+  String get fieldAddress;
+
+  /// Helper under the address field.
+  ///
+  /// In en, this message translates to:
+  /// **'Building, street and area.'**
+  String get fieldAddressHelper;
+
+  /// Field label: city.
+  ///
+  /// In en, this message translates to:
+  /// **'City'**
+  String get fieldCityPlain;
+
+  /// Hint in a social link field.
+  ///
+  /// In en, this message translates to:
+  /// **'Link or @handle'**
+  String get fieldSocialHint;
+
+  /// Hint in the Google Maps link field.
+  ///
+  /// In en, this message translates to:
+  /// **'Link from Google Maps → Share'**
+  String get fieldMapsHint;
+
+  /// Field label: menu currency.
+  ///
+  /// In en, this message translates to:
+  /// **'Currency'**
+  String get fieldCurrency;
+
+  /// Visibility switch and preview label.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact number'**
+  String get visibilityPhone;
+
+  /// Visibility switch and preview label.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get visibilityEmail;
+
+  /// Visibility switch and preview label.
+  ///
+  /// In en, this message translates to:
+  /// **'Address'**
+  String get visibilityAddress;
+
+  /// Visibility switch and preview label.
+  ///
+  /// In en, this message translates to:
+  /// **'Opening hours'**
+  String get visibilityHours;
+
+  /// Visibility switch and preview label.
+  ///
+  /// In en, this message translates to:
+  /// **'Social links'**
+  String get visibilitySocial;
+
+  /// Title of the live preview of the public menu header.
+  ///
+  /// In en, this message translates to:
+  /// **'Menu preview'**
+  String get previewTitle;
+
+  /// Preview placeholder when the name is empty.
+  ///
+  /// In en, this message translates to:
+  /// **'Your restaurant'**
+  String get previewNoName;
+
+  /// Preview: today's opening hours.
+  ///
+  /// In en, this message translates to:
+  /// **'Today: {hours}'**
+  String previewHoursToday(String hours);
+
+  /// Preview: the restaurant is closed today.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed today'**
+  String get previewClosedToday;
+
+  /// Preview: which details are hidden (FR-013).
+  ///
+  /// In en, this message translates to:
+  /// **'Hidden from customers: {fields}'**
+  String previewHidden(String fields);
+
+  /// Title of the opening hours screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Opening hours'**
+  String get hoursTitle;
+
+  /// Intro on the opening hours screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Times are in your restaurant\'s time zone ({zone}). Add up to 3 time slots a day, or mark a day as closed.'**
+  String hoursIntro(String zone);
+
+  /// Shown when no opening hours were added.
+  ///
+  /// In en, this message translates to:
+  /// **'No opening hours yet'**
+  String get hoursNotSet;
+
+  /// Settings summary when opening hours exist.
+  ///
+  /// In en, this message translates to:
+  /// **'Added'**
+  String get hoursSet;
+
+  /// Body of the empty opening hours state.
+  ///
+  /// In en, this message translates to:
+  /// **'Tell customers when you\'re open. We\'ll start with every day 9:00 to 22:00; adjust it to fit.'**
+  String get hoursEmptyMessage;
+
+  /// Button that adds opening hours.
+  ///
+  /// In en, this message translates to:
+  /// **'Add opening hours'**
+  String get hoursAdd;
+
+  /// Button that opens the opening hours editor.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit opening hours'**
+  String get hoursEdit;
+
+  /// A day is open.
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get hoursOpen;
+
+  /// A day is closed.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed'**
+  String get hoursClosed;
+
+  /// A day is open all day.
+  ///
+  /// In en, this message translates to:
+  /// **'Open 24 hours'**
+  String get hoursAllDay;
+
+  /// Screen-reader label of the open/closed switch.
+  ///
+  /// In en, this message translates to:
+  /// **'Open on {day}'**
+  String hoursOpenOn(String day);
+
+  /// Time field label.
+  ///
+  /// In en, this message translates to:
+  /// **'Opens'**
+  String get hoursOpens;
+
+  /// Time field label.
+  ///
+  /// In en, this message translates to:
+  /// **'Closes'**
+  String get hoursCloses;
+
+  /// Adds another time slot to a day.
+  ///
+  /// In en, this message translates to:
+  /// **'Add time slot'**
+  String get hoursAddSlot;
+
+  /// Removes a time slot.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove time slot'**
+  String get hoursRemoveSlot;
+
+  /// Copies one day's hours to all days.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy {day}\'s hours to every day'**
+  String hoursCopyToAll(String day);
+
+  /// Title of the bottom sheet with time pickers.
+  ///
+  /// In en, this message translates to:
+  /// **'{day} hours'**
+  String hoursSheetTitle(String day);
+
+  /// Hint in the time picker sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'A closing time earlier than the opening time runs past midnight.'**
+  String get hoursOvernightHint;
+
+  /// Error for a badly formatted time.
+  ///
+  /// In en, this message translates to:
+  /// **'Use 24-hour time, like 09:30'**
+  String get hoursTimeFormat;
+
+  /// Removes all opening hours.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove opening hours'**
+  String get hoursRemoveAll;
+
+  /// Confirm dialog title.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove opening hours?'**
+  String get hoursRemoveAllTitle;
+
+  /// Confirm dialog body.
+  ///
+  /// In en, this message translates to:
+  /// **'Your menu will no longer show when you\'re open. You can add hours again at any time.'**
+  String get hoursRemoveAllMessage;
+
+  /// Title of the regional settings screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Currency and time zone'**
+  String get regionalTitle;
+
+  /// Section title.
+  ///
+  /// In en, this message translates to:
+  /// **'Country'**
+  String get regionalSectionCountry;
+
+  /// Explains the country is read-only.
+  ///
+  /// In en, this message translates to:
+  /// **'Set when you signed up. Contact support to change it.'**
+  String get regionalCountryLocked;
+
+  /// Section title.
+  ///
+  /// In en, this message translates to:
+  /// **'Currency'**
+  String get regionalSectionCurrency;
+
+  /// Help text for the currency.
+  ///
+  /// In en, this message translates to:
+  /// **'Your menu shows every price in this currency.'**
+  String get regionalCurrencyHelp;
+
+  /// Section title.
+  ///
+  /// In en, this message translates to:
+  /// **'Time zone'**
+  String get regionalSectionTimezone;
+
+  /// Help text for the time zone.
+  ///
+  /// In en, this message translates to:
+  /// **'Used for your opening hours and for analytics days.'**
+  String get regionalTimezoneHelp;
+
+  /// Title of the time zone picker.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a time zone'**
+  String get regionalTimezonePick;
+
+  /// Search field in the time zone picker.
+  ///
+  /// In en, this message translates to:
+  /// **'Search, for example Kolkata'**
+  String get regionalTimezoneSearch;
+
+  /// Heading in the time zone picker.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggested for your country'**
+  String get regionalTimezoneSuggested;
+
+  /// Heading in the time zone picker.
+  ///
+  /// In en, this message translates to:
+  /// **'All time zones'**
+  String get regionalTimezoneAll;
+
+  /// Banner when pricesNeedReview is set (FR-103).
+  ///
+  /// In en, this message translates to:
+  /// **'You changed the currency after publishing. Prices were not converted: review every price before you publish again.'**
+  String get regionalPricesNeedReview;
+
+  /// Currency dropdown item.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} ({code})'**
+  String currencyOption(String name, String code);
+
+  /// FR-103 dialog title.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch to {code}?'**
+  String currencyWarningTitle(String code);
+
+  /// FR-103 warning after the first publish.
+  ///
+  /// In en, this message translates to:
+  /// **'Prices are not converted. A price of 100 {from} becomes 100 {to}. Your live menu keeps {from} until you publish, and you\'ll need to review every price before the next publish.'**
+  String currencyWarningPublished(String from, String to);
+
+  /// Currency change warning when items exist but the menu was never published.
+  ///
+  /// In en, this message translates to:
+  /// **'Prices are not converted. A price of 100 {from} becomes 100 {to}. Check your item prices after the change.'**
+  String currencyWarningDraft(String from, String to);
+
+  /// Confirms the currency change.
+  ///
+  /// In en, this message translates to:
+  /// **'Change currency'**
+  String get currencyWarningConfirm;
+
+  /// Title of the menu link (slug) screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Menu link'**
+  String get menuLinkTitle;
+
+  /// Section with the current public menu URL.
+  ///
+  /// In en, this message translates to:
+  /// **'Your menu link'**
+  String get menuLinkCurrent;
+
+  /// Note that QR codes never change (BR-006).
+  ///
+  /// In en, this message translates to:
+  /// **'Your QR code always works, even if you change this link.'**
+  String get menuLinkQrNote;
+
+  /// Copies the menu link.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy link'**
+  String get menuLinkCopy;
+
+  /// Snackbar after copying the link.
+  ///
+  /// In en, this message translates to:
+  /// **'Link copied'**
+  String get menuLinkCopied;
+
+  /// Section to change the slug.
+  ///
+  /// In en, this message translates to:
+  /// **'Change the link'**
+  String get menuLinkChange;
+
+  /// FR-092/093 rules for the slug.
+  ///
+  /// In en, this message translates to:
+  /// **'3 to 60 lowercase letters, numbers and hyphens. Your old link will keep working and send customers to the new one.'**
+  String get menuLinkRules;
+
+  /// Field label: new slug.
+  ///
+  /// In en, this message translates to:
+  /// **'New link'**
+  String get menuLinkNew;
+
+  /// Availability check in progress.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking…'**
+  String get menuLinkChecking;
+
+  /// Availability check succeeded.
+  ///
+  /// In en, this message translates to:
+  /// **'This link is available.'**
+  String get menuLinkAvailable;
+
+  /// Saves the new slug.
+  ///
+  /// In en, this message translates to:
+  /// **'Change link'**
+  String get menuLinkSave;
+
+  /// Confirm dialog title.
+  ///
+  /// In en, this message translates to:
+  /// **'Change your menu link?'**
+  String get menuLinkConfirmTitle;
+
+  /// Confirm dialog body.
+  ///
+  /// In en, this message translates to:
+  /// **'Your menu will move to {newUrl}. The old link {oldUrl} keeps working and redirects there, and your QR code does not change.'**
+  String menuLinkConfirmMessage(String newUrl, String oldUrl);
+
+  /// Confirms the slug change.
+  ///
+  /// In en, this message translates to:
+  /// **'Change link'**
+  String get menuLinkConfirmAction;
+
+  /// Snackbar after a successful slug change.
+  ///
+  /// In en, this message translates to:
+  /// **'Your menu link was changed.'**
+  String get menuLinkChanged;
+
+  /// Setup checklist title.
+  ///
+  /// In en, this message translates to:
+  /// **'Get your menu ready'**
+  String get checklistTitle;
+
+  /// Setup checklist title when everything is done.
+  ///
+  /// In en, this message translates to:
+  /// **'Your menu is set up'**
+  String get checklistDoneTitle;
+
+  /// Setup checklist progress.
+  ///
+  /// In en, this message translates to:
+  /// **'{done} of {total} done'**
+  String checklistProgress(int done, int total);
+
+  /// Screen-reader label: step done.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get checklistStepDone;
+
+  /// Screen-reader label: step not done.
+  ///
+  /// In en, this message translates to:
+  /// **'To do'**
+  String get checklistStepTodo;
+
+  /// Checklist step.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete your profile'**
+  String get checklistProfile;
+
+  /// Checklist hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a description, a phone number or email, and your address.'**
+  String get checklistProfileHint;
+
+  /// Checklist step.
+  ///
+  /// In en, this message translates to:
+  /// **'Add your logo'**
+  String get checklistLogo;
+
+  /// Checklist hint.
+  ///
+  /// In en, this message translates to:
+  /// **'A square logo, at least 256 × 256 px.'**
+  String get checklistLogoHint;
+
+  /// Checklist step.
+  ///
+  /// In en, this message translates to:
+  /// **'Add menu categories'**
+  String get checklistCategories;
+
+  /// Checklist hint.
+  ///
+  /// In en, this message translates to:
+  /// **'For example Starters, Mains, Desserts.'**
+  String get checklistCategoriesHint;
+
+  /// Checklist step.
+  ///
+  /// In en, this message translates to:
+  /// **'Add dishes'**
+  String get checklistItems;
+
+  /// Checklist hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Add names, prices and photos.'**
+  String get checklistItemsHint;
+
+  /// Checklist step.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a theme'**
+  String get checklistTheme;
+
+  /// Checklist hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick colours and fonts that match your brand.'**
+  String get checklistThemeHint;
+
+  /// Checklist step.
+  ///
+  /// In en, this message translates to:
+  /// **'Publish your menu'**
+  String get checklistPublish;
+
+  /// Checklist hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Customers see your menu once it\'s published.'**
+  String get checklistPublishHint;
+
+  /// Dashboard card title.
+  ///
+  /// In en, this message translates to:
+  /// **'Menu status'**
+  String get statusTitle;
+
+  /// Menu not published yet.
+  ///
+  /// In en, this message translates to:
+  /// **'Draft'**
+  String get statusDraft;
+
+  /// Menu published.
+  ///
+  /// In en, this message translates to:
+  /// **'Live · version {version}'**
+  String statusLive(int version);
+
+  /// Explains the draft state (FR-012).
+  ///
+  /// In en, this message translates to:
+  /// **'Customers can\'t see your menu yet. Changes are saved as a draft until you publish.'**
+  String get statusDraftHelp;
+
+  /// Explains the live state.
+  ///
+  /// In en, this message translates to:
+  /// **'Customers see your last published version. New changes wait in the draft until you publish.'**
+  String get statusLiveHelp;
+
+  /// Counts of categories and items.
+  ///
+  /// In en, this message translates to:
+  /// **'Categories: {categories} · Dishes: {items}'**
+  String statusCounts(int categories, int items);
+
+  /// When the draft was last changed, in the restaurant time zone.
+  ///
+  /// In en, this message translates to:
+  /// **'Last change: {time}'**
+  String statusLastEdit(String time);
+
+  /// Button to the menu section.
+  ///
+  /// In en, this message translates to:
+  /// **'Open menu'**
+  String get statusOpenMenu;
+
+  /// Dashboard card title.
+  ///
+  /// In en, this message translates to:
+  /// **'QR code and link'**
+  String get qrTitle;
+
+  /// Dashboard card body.
+  ///
+  /// In en, this message translates to:
+  /// **'Customers scan your QR code or open this link to see your menu.'**
+  String get qrHelp;
+
+  /// The restaurant QR short code.
+  ///
+  /// In en, this message translates to:
+  /// **'QR code: {code}'**
+  String qrCode(String code);
+
+  /// Button to the QR section.
+  ///
+  /// In en, this message translates to:
+  /// **'QR & share'**
+  String get qrOpenShare;
+
+  /// Button to the menu link screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Change link'**
+  String get qrChangeLink;
+
+  /// Setup wizard title.
+  ///
+  /// In en, this message translates to:
+  /// **'Set up your restaurant'**
+  String get wizardTitle;
+
+  /// Skips the setup wizard.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip for now'**
+  String get wizardSkip;
+
+  /// Skips an optional wizard step.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get wizardSkipStep;
+
+  /// Wizard progress.
+  ///
+  /// In en, this message translates to:
+  /// **'Step {step} of {total}'**
+  String wizardStepOf(int step, int total);
+
+  /// Wizard step 1 title.
+  ///
+  /// In en, this message translates to:
+  /// **'Your restaurant'**
+  String get wizardStepProfile;
+
+  /// Wizard step 2 title.
+  ///
+  /// In en, this message translates to:
+  /// **'Logo and cover'**
+  String get wizardStepImages;
+
+  /// Wizard step 3 title.
+  ///
+  /// In en, this message translates to:
+  /// **'Build your menu'**
+  String get wizardStepMenu;
+
+  /// Wizard step 1 intro.
+  ///
+  /// In en, this message translates to:
+  /// **'Tell customers about your place. You can change everything later in Settings.'**
+  String get wizardProfileIntro;
+
+  /// Wizard step 2 intro.
+  ///
+  /// In en, this message translates to:
+  /// **'A logo and a wide cover photo make your menu look like yours. Both are optional.'**
+  String get wizardImagesIntro;
+
+  /// Wizard step 3 intro.
+  ///
+  /// In en, this message translates to:
+  /// **'Next, build your menu. Here\'s how it works:'**
+  String get wizardMenuIntro;
+
+  /// Wizard step 3 bullet.
+  ///
+  /// In en, this message translates to:
+  /// **'Create categories such as Starters, Mains and Drinks.'**
+  String get wizardMenuCategories;
+
+  /// Wizard step 3 bullet.
+  ///
+  /// In en, this message translates to:
+  /// **'Add dishes with prices, photos and dietary labels.'**
+  String get wizardMenuItems;
+
+  /// Wizard step 3 bullet.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a theme to match your brand.'**
+  String get wizardMenuTheme;
+
+  /// Wizard step 3 bullet.
+  ///
+  /// In en, this message translates to:
+  /// **'Preview, then publish. Your QR code starts working at once.'**
+  String get wizardMenuPublish;
+
+  /// Finishes the wizard and opens the menu section.
+  ///
+  /// In en, this message translates to:
+  /// **'Start my menu'**
+  String get wizardToMenu;
+
+  /// Finishes the wizard and opens the dashboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to dashboard'**
+  String get wizardToDashboard;
 }
 
 class _AppLocalizationsDelegate

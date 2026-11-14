@@ -33,6 +33,7 @@ class ResponsiveScaffold extends StatelessWidget {
     this.actions = const [],
     this.floatingActionButton,
     this.sideMenuHeader,
+    this.showAppBar = true,
   }) : assert(destinations.length >= 2, 'Navigation needs 2+ destinations');
 
   static const bottomBarKey = ValueKey('responsive-scaffold-bottom-bar');
@@ -50,10 +51,16 @@ class ResponsiveScaffold extends StatelessWidget {
   /// Shown at the top of the side menu (for example the logo).
   final Widget? sideMenuHeader;
 
+  /// False when the page inside [body] brings its own app bar (for example
+  /// a detail page with a back button).
+  final bool showAppBar;
+
   @override
   Widget build(BuildContext context) {
     final breakpoint = Breakpoint.fromWidth(MediaQuery.sizeOf(context).width);
-    final appBar = AppBar(title: Text(title), actions: actions);
+    final appBar = showAppBar
+        ? AppBar(title: Text(title), actions: actions)
+        : null;
 
     switch (breakpoint) {
       case Breakpoint.compact:

@@ -1,6 +1,7 @@
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:owner_app/features/home/presentation/dashboard_page.dart';
 import 'package:owner_app/features/shell/presentation/owner_shell.dart';
 import 'package:owner_app/router/app_router.dart';
 
@@ -18,14 +19,21 @@ void main() {
       await pumpOwnerApp(tester, width: width, signedIn: verifiedOwner());
 
       expect(find.byKey(navKey), findsOneWidget);
-      expect(find.textContaining('Layout: $layout'), findsOneWidget);
+      // M03: Home is the dashboard.
+      expect(find.byKey(DashboardKeys.checklist), findsOneWidget);
       expect(tester.takeException(), isNull);
 
-      // Navigate to Settings and back to Home.
-      await tester.tap(find.text('Settings').last);
+      // Menu is still a placeholder (M04).
+      await tester.tap(find.text('Menu').last);
       await tester.pumpAndSettle();
       expect(find.textContaining('Layout: $layout'), findsOneWidget);
+
+      // Settings lists the M03 pages.
+      await tester.tap(find.text('Settings').last);
+      await tester.pumpAndSettle();
       expect(find.widgetWithText(AppBar, 'Settings'), findsOneWidget);
+      expect(find.text('Restaurant profile'), findsOneWidget);
+      expect(find.text('Menu link'), findsOneWidget);
 
       await tester.tap(find.text('Home').last);
       await tester.pumpAndSettle();
@@ -43,10 +51,16 @@ void main() {
       (Routes.menu, 'Menu'),
       (Routes.share, 'QR & share'),
       (Routes.settings, 'Settings'),
+      (Routes.profile, 'Restaurant profile'),
+      (Routes.hours, 'Opening hours'),
+      (Routes.regional, 'Currency and time zone'),
+      (Routes.menuLink, 'Menu link'),
       (Routes.home, 'Home'),
     ]) {
       await app.go(path);
       expect(find.widgetWithText(AppBar, title), findsOneWidget, reason: path);
+      // Detail pages bring their own app bar instead of the shell's.
+      expect(find.byType(AppBar), findsOneWidget, reason: path);
     }
     // A signed-in owner who opens /sign-in is sent home.
     await app.go(Routes.signIn);

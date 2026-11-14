@@ -19,7 +19,7 @@ M03.
 ## Inputs from other modules
 
 - M02 (done 2026-11-14): `ImagePickerField(purpose: ImagePurpose.item | category, targetPath: 'restaurants/$rid/items/$iid', …)` (use `dense: true` in lists, 96 px) and `ResponsiveImage` for thumbnails. The target document **must exist before the upload**: create the item or category first, then enable the picker. `processImage` writes `image` and bumps the item's `updatedAt` and the root's `draftUpdatedAt`. Clients may only set `image` to `null` (field whitelist: `image` changes allowed only to `null`). The default crop is 1:1. Pass `aspectRatio` if the item card uses a different shape.
-- M03: restaurant currency (price input decimals).
+- M03 (done 2026-11-14): restaurant currency (price input decimals) via `currentRestaurantProvider` (`Restaurant.currency`, `Currencies.of(code).decimals`). Owner app routes: the setup checklist's "categories" and "items" steps open `Routes.menu`; the dashboard reads `counts.categories` / `counts.items`. Draft autosave pattern to reuse: `DraftAutosave` (`features/restaurant/application/draft_autosave.dart`, 1 s debounce, `SaveStatusIndicator` / `SaveBar`). The rules' owner update on the root is a whitelist; `counts` stays Functions-only. Detail pages inside the shell bring their own `AppBar` (the shell hides its app bar on nested routes).
 - M10 (later): plan limits. Until M10 is done, `createCategory`/`createItem` read limits from `plans/{planId}` seeded by M00/M01 data.
 
 ## Scope

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:core/core.dart';
 import 'package:core/testing.dart';
@@ -8,6 +10,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:owner_app/app.dart';
 import 'package:owner_app/features/auth/data/registration_repository.dart';
+import 'package:owner_app/features/restaurant/data/restaurant_repository.dart';
 import 'package:owner_app/router/app_router.dart';
 
 /// Stands in for the `completeRegistration` callable: sets owner claims on
@@ -53,6 +56,116 @@ class FakeRegistrationRepository implements RegistrationRepository {
   }
 }
 
+/// `restaurants/rest_1` as M01 creates it, with setup finished (so the
+/// dashboard does not open the wizard). Override fields per test.
+Map<String, dynamic> restaurantData([Map<String, dynamic> extra = const {}]) =>
+    {
+      'name': 'Spice Garden',
+      'nameLower': 'spice garden',
+      'ownerUid': 'u1',
+      'businessType': 'restaurant',
+      'country': 'IN',
+      'currency': 'INR',
+      'timezone': 'Asia/Kolkata',
+      'contact': {'city': 'Chennai'},
+      'slug': 'spice-garden',
+      'qrCode': 'ABCDEFGH',
+      'status': 'active',
+      'planId': 'free',
+      'counts': {'categories': 0, 'items': 0},
+      'publishedVersion': null,
+      'pricesNeedReview': false,
+      'themeId': null,
+      'setupCompletedAt': DateTime.utc(2026, 11, 14),
+      ...extra,
+    };
+
+FirebaseFunctionsException slugError(String code) => FirebaseFunctionsException(
+  message: code,
+  code: code == 'slug-taken' ? 'already-exists' : 'invalid-argument',
+  details: {'code': code},
+);
+
+/// In-memory `restaurants/rest_1` with the security rules' behaviour that
+/// matters to the UI: draft writes merge whole top-level fields.
+class FakeRestaurantRepository implements RestaurantRepository {
+  FakeRestaurantRepository([Map<String, dynamic>? data])
+    : data = data ?? restaurantData();
+
+  Map<String, dynamic> data;
+  final updates = <Map<String, Object?>>[];
+  final slugChecks = <String>[];
+  final slugChanges = <String>[];
+  int setupCompletions = 0;
+
+  /// Thrown once by the next [updateDraft].
+  Object? nextError;
+
+  /// Slugs other restaurants hold (current or old).
+  Set<String> taken = {'other-place'};
+
+  final _changes = StreamController<Restaurant?>.broadcast();
+
+  Restaurant get current => Restaurant.fromMap('rest_1', data);
+
+  void emit([Map<String, dynamic> extra = const {}]) {
+    data = {...data, ...extra};
+    _changes.add(current);
+  }
+
+  @override
+  Stream<Restaurant?> watch(String restaurantId) async* {
+    yield current;
+    yield* _changes.stream;
+  }
+
+  @override
+  Future<void> updateDraft(
+    String restaurantId,
+    Map<String, Object?> fields,
+  ) async {
+    final e = nextError;
+    if (e != null) {
+      nextError = null;
+      throw e;
+    }
+    updates.add(fields);
+    emit({...fields, 'draftUpdatedAt': DateTime.utc(2026, 11, 14, 6)});
+  }
+
+  @override
+  Future<void> completeSetup(String restaurantId) async {
+    setupCompletions++;
+    emit({'setupCompletedAt': DateTime.utc(2026, 11, 14, 7)});
+  }
+
+  void _check(String slug) {
+    final local = SlugRules.check(slug);
+    if (local != null) throw slugError(local.wire);
+    if (taken.contains(slug)) throw slugError('slug-taken');
+  }
+
+  @override
+  Future<SlugChange> checkSlug(String restaurantId, String slug) async {
+    slugChecks.add(slug);
+    _check(slug);
+    return SlugChange(
+      slug: slug,
+      previousSlug: data['slug'] as String,
+      changed: false,
+    );
+  }
+
+  @override
+  Future<SlugChange> changeSlug(String restaurantId, String slug) async {
+    _check(slug);
+    slugChanges.add(slug);
+    final previous = data['slug'] as String;
+    emit({'slug': slug});
+    return SlugChange(slug: slug, previousSlug: previous, changed: true);
+  }
+}
+
 /// A verified owner with claims.
 FakeUser verifiedOwner({String email = 'owner@example.com'}) => FakeUser(
   uid: 'u1',
@@ -63,11 +176,19 @@ FakeUser verifiedOwner({String email = 'owner@example.com'}) => FakeUser(
 );
 
 class TestApp {
-  TestApp(this.tester, this.auth, this.registration);
+  TestApp(
+    this.tester,
+    this.auth,
+    this.registration,
+    this.restaurant,
+    this.resolver,
+  );
 
   final WidgetTester tester;
   final FakeAuthRepository auth;
   final FakeRegistrationRepository registration;
+  final FakeRestaurantRepository restaurant;
+  final FakeStorageImageResolver resolver;
 
   ProviderContainer get container =>
       ProviderScope.containerOf(tester.element(find.byType(OwnerApp)));
@@ -131,22 +252,27 @@ Future<TestApp> pumpOwnerApp(
   double width = 360,
   List<FakeUser> users = const [],
   FakeUser? signedIn,
+  FakeRestaurantRepository? restaurant,
   List<Override> overrides = const [],
 }) async {
   await setWidth(tester, width);
   final auth = FakeAuthRepository(users: [...users, ?signedIn]);
   if (signedIn != null) auth.current = signedIn;
   final registration = FakeRegistrationRepository(auth);
+  final restaurants = restaurant ?? FakeRestaurantRepository();
+  final resolver = FakeStorageImageResolver();
   await tester.pumpWidget(
     ProviderScope(
       overrides: [
         authRepositoryProvider.overrideWithValue(auth),
         registrationRepositoryProvider.overrideWithValue(registration),
+        restaurantRepositoryProvider.overrideWithValue(restaurants),
+        storageImageResolverProvider.overrideWithValue(resolver),
         ...overrides,
       ],
       child: const OwnerApp(),
     ),
   );
   await tester.pumpAndSettle();
-  return TestApp(tester, auth, registration);
+  return TestApp(tester, auth, registration, restaurants, resolver);
 }

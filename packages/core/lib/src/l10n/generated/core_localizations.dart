@@ -196,6 +196,24 @@ abstract class CoreLocalizations {
   /// **'Sign in with your authenticator code to continue.'**
   String get errorMfaRequired;
 
+  /// Server error: the menu link (slug) breaks the FR-092 format.
+  ///
+  /// In en, this message translates to:
+  /// **'Use 3 to 60 lowercase letters, numbers and single hyphens, not starting or ending with a hyphen.'**
+  String get errorSlugInvalid;
+
+  /// Server error: the menu link is a reserved word.
+  ///
+  /// In en, this message translates to:
+  /// **'This link is reserved. Choose another one.'**
+  String get errorSlugReserved;
+
+  /// Server error: the menu link is used by another restaurant.
+  ///
+  /// In en, this message translates to:
+  /// **'Another restaurant already uses this link. Try adding your area or city.'**
+  String get errorSlugTaken;
+
   /// Auth error: the email address is malformed.
   ///
   /// In en, this message translates to:
@@ -585,6 +603,198 @@ abstract class CoreLocalizations {
   /// In en, this message translates to:
   /// **'We couldn\'t open your photos. Check that the app is allowed to access them.'**
   String get imageErrorPickFailed;
+
+  /// Contact number is not valid for the restaurant's country (FR-011).
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid phone number for your restaurant\'s country.'**
+  String get validationPhone;
+
+  /// Website entered with http:// (FR-011 needs https).
+  ///
+  /// In en, this message translates to:
+  /// **'Use a secure address that starts with https://.'**
+  String get validationHttps;
+
+  /// Website or link is not a valid address.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid web address, like https://example.com.'**
+  String get validationUrl;
+
+  /// Social link not recognised for the network.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a link to your {network} page.'**
+  String validationSocialLink(String network);
+
+  /// Postal code is not valid for the country.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid {label}.'**
+  String validationPostalCode(String label);
+
+  /// Address field label.
+  ///
+  /// In en, this message translates to:
+  /// **'Postal code'**
+  String get addressPostalCode;
+
+  /// Postal code label in India.
+  ///
+  /// In en, this message translates to:
+  /// **'PIN code'**
+  String get addressPinCode;
+
+  /// Postal code label in the United States.
+  ///
+  /// In en, this message translates to:
+  /// **'ZIP code'**
+  String get addressZipCode;
+
+  /// Day name.
+  ///
+  /// In en, this message translates to:
+  /// **'Monday'**
+  String get weekdayMon;
+
+  /// Day name.
+  ///
+  /// In en, this message translates to:
+  /// **'Tuesday'**
+  String get weekdayTue;
+
+  /// Day name.
+  ///
+  /// In en, this message translates to:
+  /// **'Wednesday'**
+  String get weekdayWed;
+
+  /// Day name.
+  ///
+  /// In en, this message translates to:
+  /// **'Thursday'**
+  String get weekdayThu;
+
+  /// Day name.
+  ///
+  /// In en, this message translates to:
+  /// **'Friday'**
+  String get weekdayFri;
+
+  /// Day name.
+  ///
+  /// In en, this message translates to:
+  /// **'Saturday'**
+  String get weekdaySat;
+
+  /// Day name.
+  ///
+  /// In en, this message translates to:
+  /// **'Sunday'**
+  String get weekdaySun;
+
+  /// Opening hours: a slot opens and closes at the same time.
+  ///
+  /// In en, this message translates to:
+  /// **'Opening and closing times must be different.'**
+  String get hoursErrorSameTime;
+
+  /// Opening hours: slots overlap or are out of order.
+  ///
+  /// In en, this message translates to:
+  /// **'Time slots overlap. List them in order through the day.'**
+  String get hoursErrorOverlap;
+
+  /// Opening hours: an overnight slot is not the last one.
+  ///
+  /// In en, this message translates to:
+  /// **'Only the last time slot of a day can run past midnight.'**
+  String get hoursErrorOvernightNotLast;
+
+  /// Opening hours: too many slots.
+  ///
+  /// In en, this message translates to:
+  /// **'Use at most {max} time slots a day.'**
+  String hoursErrorTooMany(int max);
+
+  /// Social network name.
+  ///
+  /// In en, this message translates to:
+  /// **'Instagram'**
+  String get socialInstagram;
+
+  /// Social network name.
+  ///
+  /// In en, this message translates to:
+  /// **'Facebook'**
+  String get socialFacebook;
+
+  /// Social network name (formerly Twitter).
+  ///
+  /// In en, this message translates to:
+  /// **'X'**
+  String get socialX;
+
+  /// Social network name.
+  ///
+  /// In en, this message translates to:
+  /// **'YouTube'**
+  String get socialYoutube;
+
+  /// Map service name.
+  ///
+  /// In en, this message translates to:
+  /// **'Google Maps'**
+  String get socialGoogleMaps;
+
+  /// Currency name.
+  ///
+  /// In en, this message translates to:
+  /// **'Indian rupee'**
+  String get currencyINR;
+
+  /// Currency name.
+  ///
+  /// In en, this message translates to:
+  /// **'UAE dirham'**
+  String get currencyAED;
+
+  /// Currency name.
+  ///
+  /// In en, this message translates to:
+  /// **'Kuwaiti dinar'**
+  String get currencyKWD;
+
+  /// Currency name.
+  ///
+  /// In en, this message translates to:
+  /// **'Saudi riyal'**
+  String get currencySAR;
+
+  /// Currency name.
+  ///
+  /// In en, this message translates to:
+  /// **'Qatari riyal'**
+  String get currencyQAR;
+
+  /// Currency name.
+  ///
+  /// In en, this message translates to:
+  /// **'Bahraini dinar'**
+  String get currencyBHD;
+
+  /// Currency name.
+  ///
+  /// In en, this message translates to:
+  /// **'Omani rial'**
+  String get currencyOMR;
+
+  /// Currency name.
+  ///
+  /// In en, this message translates to:
+  /// **'US dollar'**
+  String get currencyUSD;
 }
 
 class _CoreLocalizationsDelegate

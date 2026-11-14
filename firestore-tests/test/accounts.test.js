@@ -86,7 +86,7 @@ describe("restaurants/{rid}", () => {
     await assertFails(getDoc(doc(owner("u3", "suspended1"), "restaurants/suspended1")));
   });
 
-  it("owners cannot create, update or delete the tenant root yet", async () => {
+  it("owners cannot create or delete the tenant root, or change system fields (M03 whitelist: restaurant-profile.test.js)", async () => {
     await assertFails(updateDoc(doc(owner(), `restaurants/${RID}`), { planId: "pro" }));
     await assertFails(setDoc(doc(owner(), "restaurants/new"), { ownerUid: "u1", status: "active" }));
     await assertFails(deleteDoc(doc(owner(), `restaurants/${RID}`)));

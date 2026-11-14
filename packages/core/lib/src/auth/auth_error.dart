@@ -105,6 +105,15 @@ extension AuthErrorMessage on CoreLocalizations {
     if (error is FirebaseFunctionsException) {
       return messageFor(appErrorCodeOfFunctions(error));
     }
+    // Firestore and Storage errors (for example a refused draft write).
+    if (error is FirebaseException) {
+      return switch (error.code) {
+        'permission-denied' => errorPermissionDenied,
+        'unavailable' || 'deadline-exceeded' => errorNetwork,
+        'not-found' => errorNotFound,
+        _ => errorUnknown,
+      };
+    }
     return errorUnknown;
   }
 }

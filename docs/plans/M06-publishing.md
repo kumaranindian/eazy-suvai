@@ -18,7 +18,7 @@ M04, M05.
 
 ## Inputs from other modules
 
-- M03: `pricesNeedReview` flag after a currency change.
+- M03 (done 2026-11-14): `pricesNeedReview` is set by `onRestaurantUpdated` when `currency` changes while `publishedVersion != null`; `publishMenu` must ask the owner to confirm prices and clear it (Functions only; owners cannot write it). Snapshot these draft profile fields from `restaurants/{rid}`: `name`, `businessType`, `description`, `logo`, `cover`, `contact {phone, email, address, city, postalCode, website, social{instagram, facebook, x, youtube, googleMaps}}` (empty values are absent), `openingHours` (`{mon: "07:00-11:00,18:00-23:30", …, sun: ""}`, see architecture §4.2), `visibility {phone, email, address, hours, social}` (missing = shown), `currency`, `timezone`. Validate opening hours server-side when snapshotting (the rules check the format, not order or overlaps). Profile edits stamp `draftUpdatedAt` (server time); use it for "unpublished changes". The dashboard's status card shows "Draft" / "Live · version n" from `publishedVersion`.
 - M04: categories, items, availability overlay.
 - M05: theme tokens.
 - M07 (built next) renders snapshots; the preview in this module calls the same renderer with `draft=true`.

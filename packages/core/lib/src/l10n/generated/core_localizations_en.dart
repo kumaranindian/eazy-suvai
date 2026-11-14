@@ -65,6 +65,17 @@ class CoreLocalizationsEn extends CoreLocalizations {
       'Sign in with your authenticator code to continue.';
 
   @override
+  String get errorSlugInvalid =>
+      'Use 3 to 60 lowercase letters, numbers and single hyphens, not starting or ending with a hyphen.';
+
+  @override
+  String get errorSlugReserved => 'This link is reserved. Choose another one.';
+
+  @override
+  String get errorSlugTaken =>
+      'Another restaurant already uses this link. Try adding your area or city.';
+
+  @override
   String get authErrorInvalidEmail => 'Enter a valid email address.';
 
   @override
@@ -292,4 +303,112 @@ class CoreLocalizationsEn extends CoreLocalizations {
   @override
   String get imageErrorPickFailed =>
       'We couldn\'t open your photos. Check that the app is allowed to access them.';
+
+  @override
+  String get validationPhone =>
+      'Enter a valid phone number for your restaurant\'s country.';
+
+  @override
+  String get validationHttps =>
+      'Use a secure address that starts with https://.';
+
+  @override
+  String get validationUrl =>
+      'Enter a valid web address, like https://example.com.';
+
+  @override
+  String validationSocialLink(String network) {
+    return 'Enter a link to your $network page.';
+  }
+
+  @override
+  String validationPostalCode(String label) {
+    return 'Enter a valid $label.';
+  }
+
+  @override
+  String get addressPostalCode => 'Postal code';
+
+  @override
+  String get addressPinCode => 'PIN code';
+
+  @override
+  String get addressZipCode => 'ZIP code';
+
+  @override
+  String get weekdayMon => 'Monday';
+
+  @override
+  String get weekdayTue => 'Tuesday';
+
+  @override
+  String get weekdayWed => 'Wednesday';
+
+  @override
+  String get weekdayThu => 'Thursday';
+
+  @override
+  String get weekdayFri => 'Friday';
+
+  @override
+  String get weekdaySat => 'Saturday';
+
+  @override
+  String get weekdaySun => 'Sunday';
+
+  @override
+  String get hoursErrorSameTime =>
+      'Opening and closing times must be different.';
+
+  @override
+  String get hoursErrorOverlap =>
+      'Time slots overlap. List them in order through the day.';
+
+  @override
+  String get hoursErrorOvernightNotLast =>
+      'Only the last time slot of a day can run past midnight.';
+
+  @override
+  String hoursErrorTooMany(int max) {
+    return 'Use at most $max time slots a day.';
+  }
+
+  @override
+  String get socialInstagram => 'Instagram';
+
+  @override
+  String get socialFacebook => 'Facebook';
+
+  @override
+  String get socialX => 'X';
+
+  @override
+  String get socialYoutube => 'YouTube';
+
+  @override
+  String get socialGoogleMaps => 'Google Maps';
+
+  @override
+  String get currencyINR => 'Indian rupee';
+
+  @override
+  String get currencyAED => 'UAE dirham';
+
+  @override
+  String get currencyKWD => 'Kuwaiti dinar';
+
+  @override
+  String get currencySAR => 'Saudi riyal';
+
+  @override
+  String get currencyQAR => 'Qatari riyal';
+
+  @override
+  String get currencyBHD => 'Bahraini dinar';
+
+  @override
+  String get currencyOMR => 'Omani rial';
+
+  @override
+  String get currencyUSD => 'US dollar';
 }

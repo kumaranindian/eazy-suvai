@@ -19,7 +19,7 @@ M03.
 ## Inputs from other modules
 
 - M00 (done 2026-11-14): brand colours `#FF7A00`/`#C8650A` fail AA for normal text. Theme pickers must check contrast like `packages/core/test/theme/app_theme_test.dart` (architecture §6).
-- M03: logo and cover on the restaurant document.
+- M03 (done 2026-11-14): logo and cover on the restaurant document (`Restaurant.logo` / `.cover`, M02 image objects). `themeId` and `themeSettings` are already in the owner whitelist with placeholder checks (`themeId`: null or `[A-Za-z0-9_-]{1,64}`; `themeSettings`: any map). **Rules budget:** `validOwnerUpdate` in `firestore.rules` is close to the per-request evaluation limit; add theme checks inline (no helper per field, at most one or two `matches()`), and keep "the heaviest update" in `firestore-tests/test/restaurant-profile.test.js` green. The setup checklist's "Choose a theme" step is done when `themeId != null`; it opens `Routes.settings` until M05 adds its route (update `_stepRoute` in `dashboard_page.dart`). `MenuHeaderPreview` (owner app) can take theme colours.
 - M10 (later): which theme IDs the plan allows. Until then, all themes are allowed.
 
 ## Scope

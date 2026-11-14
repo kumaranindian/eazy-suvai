@@ -1,15 +1,21 @@
 import '../l10n/generated/core_localizations.dart';
+import 'address_format.dart';
 
-/// A country an owner can register in (FRD §6.1).
+/// A country an owner can register in (FRD §6.1), with its presets:
+/// default currency and time zone, phone format (through [code] and
+/// [dialCode]) and address format.
 ///
-/// Keep in sync with `functions/src/auth/countries.ts`, which sets the
-/// restaurant's currency and time zone from the code on the server.
+/// Keep the code, currency and default time zone in sync with
+/// `functions/src/auth/countries.ts`, which sets the restaurant's currency
+/// and time zone from the code on the server.
 class Country {
   const Country({
     required this.code,
     required this.dialCode,
     required this.currency,
     required this.timezone,
+    this.timezones = const [],
+    this.address = const AddressFormat(),
   });
 
   /// ISO 3166-1 alpha-2 code, for example `IN`.
@@ -23,6 +29,20 @@ class Country {
 
   /// Default IANA time zone.
   final String timezone;
+
+  /// Other IANA zones used in this country, offered first in the time zone
+  /// picker. [timezone] is always included (see [suggestedTimezones]).
+  final List<String> timezones;
+
+  /// Address parts, order and postal code format.
+  final AddressFormat address;
+
+  /// [timezone] followed by the other zones of the country.
+  List<String> get suggestedTimezones => [
+    timezone,
+    for (final z in timezones)
+      if (z != timezone) z,
+  ];
 
   /// Localized country name.
   String name(CoreLocalizations l10n) => switch (code) {
@@ -50,6 +70,11 @@ abstract final class Countries {
     dialCode: '91',
     currency: 'INR',
     timezone: 'Asia/Kolkata',
+    address: AddressFormat(
+      postalLabel: PostalCodeLabel.pinCode,
+      postalPattern: r'[1-9][0-9]{5}',
+      postalExample: '600017',
+    ),
   );
 
   /// Supported at launch or early expansion. India first (launch market).
@@ -60,42 +85,73 @@ abstract final class Countries {
       dialCode: '971',
       currency: 'AED',
       timezone: 'Asia/Dubai',
+      // The UAE has no postal codes.
+      address: AddressFormat(order: [AddressPart.address, AddressPart.city]),
     ),
     Country(
       code: 'KW',
       dialCode: '965',
       currency: 'KWD',
       timezone: 'Asia/Kuwait',
+      address: AddressFormat(
+        postalPattern: r'[0-9]{5}',
+        postalExample: '13001',
+      ),
     ),
     Country(
       code: 'SA',
       dialCode: '966',
       currency: 'SAR',
       timezone: 'Asia/Riyadh',
+      address: AddressFormat(
+        postalPattern: r'[0-9]{5}(-[0-9]{4})?',
+        postalExample: '12271',
+      ),
     ),
     Country(
       code: 'QA',
       dialCode: '974',
       currency: 'QAR',
       timezone: 'Asia/Qatar',
+      // Qatar has no postal codes.
+      address: AddressFormat(order: [AddressPart.address, AddressPart.city]),
     ),
     Country(
       code: 'BH',
       dialCode: '973',
       currency: 'BHD',
       timezone: 'Asia/Bahrain',
+      address: AddressFormat(
+        postalPattern: r'[0-9]{3,4}',
+        postalExample: '317',
+      ),
     ),
     Country(
       code: 'OM',
       dialCode: '968',
       currency: 'OMR',
       timezone: 'Asia/Muscat',
+      address: AddressFormat(postalPattern: r'[0-9]{3}', postalExample: '112'),
     ),
     Country(
       code: 'US',
       dialCode: '1',
       currency: 'USD',
       timezone: 'America/New_York',
+      timezones: [
+        'America/New_York',
+        'America/Chicago',
+        'America/Denver',
+        'America/Phoenix',
+        'America/Los_Angeles',
+        'America/Anchorage',
+        'Pacific/Honolulu',
+      ],
+      address: AddressFormat(
+        postalLabel: PostalCodeLabel.zipCode,
+        postalPattern: r'[0-9]{5}(-[0-9]{4})?',
+        postalExample: '10001',
+      ),
     ),
   ];
 

@@ -154,6 +154,9 @@ void main() {
       password,
     );
     await tap(tester, find.byKey(const ValueKey('signIn.submit')));
+    // M03: a new owner first lands in the setup wizard; skip it.
+    await pumpUntil(tester, find.byKey(const ValueKey('wizard.skip')));
+    await tap(tester, find.byKey(const ValueKey('wizard.skip')));
     await pumpUntil(tester, find.widgetWithText(AppBar, 'Home'));
 
     final token = await FirebaseAuth.instance.currentUser!.getIdTokenResult();
