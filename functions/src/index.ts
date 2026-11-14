@@ -17,3 +17,4 @@ initializeApp();
 // Do not export non-function values here: the deploy tool reads every export.
 
 export { cleanupUnverifiedUsers, completeRegistration } from "./auth";
+export { processImage } from "./media";

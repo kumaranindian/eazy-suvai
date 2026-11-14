@@ -435,6 +435,156 @@ abstract class CoreLocalizations {
   /// In en, this message translates to:
   /// **'Hide password'**
   String get actionHidePassword;
+
+  /// Button that opens the photo library or file dialog to add an image.
+  ///
+  /// In en, this message translates to:
+  /// **'Add image'**
+  String get imageAdd;
+
+  /// Button that picks a new image in place of the current one.
+  ///
+  /// In en, this message translates to:
+  /// **'Replace'**
+  String get imageReplace;
+
+  /// Button that removes the current image.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get imageRemove;
+
+  /// Title of the dialog that confirms removing an image.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove this image?'**
+  String get imageRemoveTitle;
+
+  /// Body of the dialog that confirms removing an image.
+  ///
+  /// In en, this message translates to:
+  /// **'You can add a new image at any time.'**
+  String get imageRemoveMessage;
+
+  /// Help text under an image field (FR-102).
+  ///
+  /// In en, this message translates to:
+  /// **'JPEG, PNG or WebP, up to 5 MB, at least {width} × {height} px.'**
+  String imageHint(int width, int height);
+
+  /// Shown while a picked image is checked, cropped or compressed on the device.
+  ///
+  /// In en, this message translates to:
+  /// **'Preparing image…'**
+  String get imagePreparing;
+
+  /// Upload progress.
+  ///
+  /// In en, this message translates to:
+  /// **'Uploading… {percent}%'**
+  String imageUploading(int percent);
+
+  /// Button that stops a running upload.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel upload'**
+  String get imageCancelUpload;
+
+  /// Shown after the upload while the server checks the image and makes web versions.
+  ///
+  /// In en, this message translates to:
+  /// **'Processing image…'**
+  String get imageProcessing;
+
+  /// Shown when server processing takes more than a minute.
+  ///
+  /// In en, this message translates to:
+  /// **'This is taking longer than usual. The image will appear when it\'s ready.'**
+  String get imageProcessingSlow;
+
+  /// Accessibility label of an empty image placeholder.
+  ///
+  /// In en, this message translates to:
+  /// **'No image'**
+  String get imageNone;
+
+  /// Accessibility label of the placeholder shown for a rejected image.
+  ///
+  /// In en, this message translates to:
+  /// **'Image not accepted'**
+  String get imageRejected;
+
+  /// Title of the crop dialog.
+  ///
+  /// In en, this message translates to:
+  /// **'Crop image'**
+  String get imageCropTitle;
+
+  /// Instructions in the crop dialog.
+  ///
+  /// In en, this message translates to:
+  /// **'Drag to move. Pinch, scroll or use the slider to zoom.'**
+  String get imageCropHint;
+
+  /// Label of the zoom slider in the crop dialog.
+  ///
+  /// In en, this message translates to:
+  /// **'Zoom'**
+  String get imageCropZoom;
+
+  /// Confirms the crop and starts the upload.
+  ///
+  /// In en, this message translates to:
+  /// **'Use image'**
+  String get imageCropDone;
+
+  /// Accessibility label of the crop area.
+  ///
+  /// In en, this message translates to:
+  /// **'Crop area. Drag to move the image.'**
+  String get imageCropArea;
+
+  /// Image rejected: not JPEG, PNG or WebP by content (FR-102, AC-005).
+  ///
+  /// In en, this message translates to:
+  /// **'This file type isn\'t supported. Choose a JPEG, PNG or WebP image.'**
+  String get imageErrorUnsupportedType;
+
+  /// Image rejected: over 5 MB or too many pixels (FR-102, AC-005).
+  ///
+  /// In en, this message translates to:
+  /// **'This file is larger than 5 MB. Choose a smaller image.'**
+  String get imageErrorTooLarge;
+
+  /// Image rejected: below the minimum dimensions for its purpose (FR-102).
+  ///
+  /// In en, this message translates to:
+  /// **'This image is too small. Use one at least {width} × {height} px.'**
+  String imageErrorTooSmall(int width, int height);
+
+  /// Image rejected: it has an image signature but cannot be decoded.
+  ///
+  /// In en, this message translates to:
+  /// **'This image couldn\'t be read. It may be damaged. Try another file.'**
+  String get imageErrorInvalid;
+
+  /// Image rejected: unexpected server failure.
+  ///
+  /// In en, this message translates to:
+  /// **'We couldn\'t process this image. Please try again.'**
+  String get imageErrorProcessingFailed;
+
+  /// The image upload failed on the device.
+  ///
+  /// In en, this message translates to:
+  /// **'The upload didn\'t finish. Check your connection and try again.'**
+  String get imageErrorUploadFailed;
+
+  /// The photo library or file dialog could not be opened.
+  ///
+  /// In en, this message translates to:
+  /// **'We couldn\'t open your photos. Check that the app is allowed to access them.'**
+  String get imageErrorPickFailed;
 }
 
 class _CoreLocalizationsDelegate

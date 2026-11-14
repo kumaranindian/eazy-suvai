@@ -92,6 +92,14 @@ The root document's profile and theme fields are the **draft**. They go live onl
 
 `{path, contentType, width, height, renditions: {w320, w640, w1280}, status: 'processing'|'ready'|'rejected'}`. Paths: `restaurants/{rid}/images/{uuid}/original.{ext}`, renditions next to it as WebP.
 
+As built in M02, by status:
+
+- `processing`: `{path, status, uploadedAt}`
+- `ready`: `{path, status, contentType, width, height, renditions: {w320, w640, w1280}, uploadedAt}`. `renditions` holds Storage paths (`…/w320.webp`). Images narrower than a width are not enlarged. `width` and `height` are the upright original's.
+- `rejected`: `{path, status, reason, uploadedAt}`. `reason` is `unsupported-type`, `too-large`, `too-small`, `invalid-image` or `processing-failed`.
+
+Only `processImage` writes these objects. It finds the target from the upload's custom metadata `{purpose, targetPath, field}`, and the field must be one of `restaurants/{rid}.logo`, `restaurants/{rid}.cover`, `…/categories/{cid}.image` or `…/items/{iid}.image` of the same restaurant. Clients only set a field to `null` to remove an image. Uploaded files are never deleted when an image is replaced or removed, because published versions may still reference them.
+
 ## 5. Security model
 
 - **Custom claims** set by Functions: `role` (`owner` or `platformAdmin`) and `restaurantId`.

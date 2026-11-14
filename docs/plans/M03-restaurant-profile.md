@@ -19,7 +19,7 @@ M01, M02.
 ## Inputs from other modules
 
 - M01 (done 2026-11-14): `restaurants/{rid}` is created with slug, QR code, Free plan and defaults (exact fields in the master plan's Cross-module notes). `contact.city` is set when the owner gave a city at sign-up; `ownerName`, `ownerEmail` and `ownerMobile` (E.164) are on the root. Reuse `slugify` / `isValidSlug` / `reservedSlugs` from `functions/src/auth/` in `changeSlug`. `Validators.mobile` and `Countries` are in `core`. Rules: owners can only `get` their restaurant so far; add the `update` whitelist here.
-- M02: `ImagePickerField`, `ResponsiveImage`, image object model.
+- M02 (done 2026-11-14): `ImagePickerField(purpose: ImagePurpose.logo | cover, restaurantId, targetPath: 'restaurants/$rid', label, value: ImageObject.fromMap(doc['logo']), onRemove: …)` from `core`. **Do not save the uploaded image yourself:** `processImage` writes `logo` / `cover` (`processing`, then `ready` or `rejected`). Pass the live document field as `value`, and on remove set the field to `null`. In the rules `update` whitelist, owners may set `logo` and `cover` **only to `null`** (for example `request.resource.data.logo == resource.data.logo || request.resource.data.logo == null`), so a client cannot point them at arbitrary paths or mark them `ready`. Show images with `ResponsiveImage(image: …)`. The dev page `/dev/media` (owner app, `features/dev/`) can be deleted once the profile screen has these fields.
 
 ## Scope
 

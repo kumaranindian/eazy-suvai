@@ -187,4 +187,17 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get finishingBody =>
       'We\'re getting your restaurant ready. This takes a few seconds.';
+
+  @override
+  String get devMediaTitle => 'Image upload test';
+
+  @override
+  String get devMediaIntro =>
+      'Developer page. Images uploaded here become your restaurant\'s logo and cover.';
+
+  @override
+  String get devMediaLogo => 'Logo';
+
+  @override
+  String get devMediaCover => 'Cover image';
 }

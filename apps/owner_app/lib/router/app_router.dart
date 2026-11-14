@@ -8,6 +8,7 @@ import '../features/auth/presentation/forgot_password_page.dart';
 import '../features/auth/presentation/sign_in_page.dart';
 import '../features/auth/presentation/sign_up_page.dart';
 import '../features/auth/presentation/verify_email_page.dart';
+import '../features/dev/presentation/media_test_page.dart';
 import '../features/home/presentation/placeholder_page.dart';
 import '../features/shell/presentation/owner_shell.dart';
 import 'auth_guard.dart';
@@ -29,6 +30,9 @@ abstract final class Routes {
   static const forgotPassword = '/forgot-password';
   static const finishingSetup = '/finishing-setup';
   static const splash = '/splash';
+
+  /// M02 developer page to try image uploads. Not registered in prod.
+  static const devMedia = '/dev/media';
 }
 
 /// Account screens switch without a transition. The guard can move a user
@@ -83,6 +87,11 @@ GoRouter appRouter(Ref ref) {
         pageBuilder: (context, state) =>
             _instant(state, const FinishingSetupPage()),
       ),
+      if (!AppEnv.fromDefines().isProd)
+        GoRoute(
+          path: Routes.devMedia,
+          builder: (context, state) => const MediaTestPage(),
+        ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, shell) => OwnerShell(navigationShell: shell),
         branches: [

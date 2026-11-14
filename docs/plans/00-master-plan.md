@@ -12,7 +12,7 @@ Status values: `Not started` · `In progress` · `Blocked` · `Done`
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | M00 | Foundation and project setup | `M00-foundation.md` | – | Done | 2026-11-14 | 2026-11-14 | Workspace, core, shells, rules, functions lib, CI. Open: prod project; dev Android/iOS options, Hosting sites and TTL. (Dev `eazy-suvai-dev` web connected; CI green on GitHub.) |
 | M01 | Authentication and accounts | `M01-authentication.md` | M00 | Done | 2026-11-14 | 2026-11-14 | Sign-up, verify, login, reset, claims, guards, cleanup, admin TOTP. Open: Identity Platform TOTP on a real project (approval), auth project settings, FR-091 24 h link expiry. |
-| M02 | Media management | `M02-media.md` | M00 | Not started | | | |
+| M02 | Media management | `M02-media.md` | M00 | Done | 2026-11-14 | 2026-11-14 | Storage rules, `processImage` (sharp: magic bytes, minimum sizes, EXIF strip, WebP 320/640/1280), `ImagePickerField`, `ResponsiveImage`, upload with progress and cancel; web verified end to end. Open: Android/iOS device run, real-bucket setup (CORS, cross-service rules, Blaze). |
 | M03 | Restaurant onboarding and profile | `M03-restaurant-profile.md` | M01, M02 | Not started | | | |
 | M04 | Menu management (categories and items) | `M04-menu-management.md` | M03 | Not started | | | |
 | M05 | Menu customization (themes) | `M05-customization.md` | M03 | Not started | | | |
@@ -79,6 +79,19 @@ Add a dated line whenever a module changes something another module depends on.
 - 2026-11-14 (M01): **Shared code in `core`:** `Validators` (email, password ≥ 8, mobile by country → E.164), `Countries` (keep in sync with `functions/src/auth/countries.ts`), `BusinessType`, `AuthLayout`, `AppPasswordField`, `FormMessage`, `CoreLocalizations.messageForError(e)` for any auth or callable error. Widget tests override `authRepositoryProvider` with `FakeAuthRepository` from `package:core/testing.dart`.
 - 2026-11-14 (M01): **Error codes added:** `registration-incomplete`, `mfa-required` (functions `errors.ts`, Dart `AppErrorCode`, `core_en.arb`).
 - 2026-11-14 (M01): **Tests:** functions emulator tests are `*.emu.test.ts` (`npm run test:emulators`, `tool/check.sh emulators`); the Flutter end-to-end test runs with `tool/integration.sh` (headless Chrome + emulators).
+- 2026-11-14 (M02): **Image object** (architecture §4.4), written **only** by `processImage`:
+  - `processing`: `{path, status, uploadedAt}`
+  - `ready`: `{path, status, contentType, width, height, renditions: {w320, w640, w1280}, uploadedAt}`
+  - `rejected`: `{path, status, reason, uploadedAt}`
+
+  `path` and `renditions.*` are Storage paths (`restaurants/{rid}/images/{id}/original.{jpg|png|webp}`, `…/w320.webp`), not URLs. `reason` is `unsupported-type | too-large | too-small | invalid-image | processing-failed`. Fields: `restaurants/{rid}.logo`, `.cover`, `…/categories/{cid}.image`, `…/items/{iid}.image`. **Clients may only set these fields to `null`** (M03/M04 rules whitelists). The target document must exist before the upload. A `ready` write bumps root `draftUpdatedAt` (and item `updatedAt`). Dart: `ImageObject.fromMap(doc['logo'])`.
+- 2026-11-14 (M02): **Widgets** (`core`):
+  - `ImagePickerField({required purpose, required restaurantId, required targetPath, required label, value, aspectRatio, onUploaded, onRemove, dense = false, enabled = true})`. `ImagePurpose.logo | cover | category | item` sets the minimum size, default aspect (cover 3:1, others 1:1) and field. The parent passes the live field as `value` and does not save uploads itself. Without `onRemove` there is no Remove button.
+  - `ResponsiveImage({required image, fit = BoxFit.cover, semanticLabel, placeholderIcon})` picks the smallest rendition ≥ the physical width and shows placeholders for none, processing and rejected. Give it a bounded size.
+  - Messages: `CoreLocalizations.imageRejectMessage(reason, purpose)`. Fakes for tests are in `package:core/testing.dart` (`FakeImageFilePicker`, `FakeImageUploader`, `FakeStorageImageResolver`). Override `imageFilePickerProvider`, `imageUploaderProvider` and `storageImageResolverProvider`.
+- 2026-11-14 (M02): **Upload contract:** path `restaurants/{rid}/images/{20-char id}/original.{ext}` and custom metadata `{purpose, targetPath, field}`. `storage.rules` and `functions/src/media/policy.ts` both enforce the allow-list; keep them in sync with `ImagePurpose`. Uploads are create-only, and clients can't delete. Old image files are kept (published versions may reference them); M12 purges.
+- 2026-11-14 (M02): **Public images (M07):** renditions carry `firebaseStorageDownloadTokens` and `Cache-Control: public, max-age=31536000, immutable`. Storage rules do not allow anonymous reads. Web apps need `storage.cors.json` applied to the bucket.
+- 2026-11-14 (M02): **Tooling:** `npm run test:emulators` and `tool/integration.sh` also start the Storage emulator. Rules tests run one file at a time (`--test-concurrency=1`). `pumpOwnerApp(..., overrides: [...])` in the owner app's test helpers. Owner dev page `/dev/media` (non-prod only).
 
 ## Open decisions
 

@@ -6,6 +6,8 @@
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
 	<string>EazySuvai</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>EazySuvai uses your photos so you can add your logo, cover and dish images to your menu.</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>

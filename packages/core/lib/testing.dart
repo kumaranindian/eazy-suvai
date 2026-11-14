@@ -2,3 +2,4 @@
 library;
 
 export 'src/auth/fake_auth_repository.dart';
+export 'src/media/fake_media.dart';

@@ -20,6 +20,7 @@ M10, M11.
 
 - M00: `writeAudit()` helper (already used by earlier modules).
 - M04: soft-deleted categories and items.
+- M02 (done 2026-11-14): images live under `restaurants/{rid}/images/{id}/` (original plus 3 renditions). Replaced or removed images are not deleted, because published versions may reference them. Purge folders that no draft field or kept version references, and delete the whole `restaurants/{rid}/` prefix when a tenant is purged.
 - M11: admin app navigation for the audit viewer.
 
 ## Scope

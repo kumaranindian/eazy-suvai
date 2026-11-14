@@ -94,21 +94,37 @@ describe("Firestore deny-all baseline", () => {
   }
 });
 
+// M02 opened restaurants/{rid}/images/** for its owner (storage.test.js).
+// Everyone else still reaches nothing, and nobody reaches any other path.
 describe("Storage deny-all baseline", () => {
-  const path = `restaurants/${RID}/images/img1/original.png`;
+  const path = `restaurants/${RID}/images/img1abcdefghijklmnop/original.png`;
 
   before(async () => {
     await env.withSecurityRulesDisabled(async (ctx) => {
       await uploadString(ref(ctx.storage(), path), "png-bytes");
+      await uploadString(ref(ctx.storage(), "anything/else.txt"), "x");
     });
   });
 
   for (const [who, context] of Object.entries(callers)) {
-    it(`${who} cannot read or upload images`, async () => {
+    it(`${who} cannot read or write outside restaurant images`, async () => {
+      const storage = context().storage();
+      await assertFails(getBytes(ref(storage, "anything/else.txt")));
+      await assertFails(uploadString(ref(storage, "anything/else.txt"), "x"));
+      await assertFails(uploadString(ref(storage, `restaurants/${RID}/logo.png`), "x"));
+      await assertFails(uploadString(ref(storage, `users/u1/avatar.png`), "x"));
+    });
+
+    if (who === "verified owner") continue;
+    it(`${who} cannot read or upload restaurant images`, async () => {
       const storage = context().storage();
       await assertFails(getBytes(ref(storage, path)));
-      await assertFails(uploadString(ref(storage, `restaurants/${RID}/images/img2/original.png`), "x"));
-      await assertFails(uploadString(ref(storage, "anything/else.txt"), "x"));
+      await assertFails(
+        uploadString(ref(storage, `restaurants/${RID}/images/img2abcdefghijklmnop/original.png`), "x", "raw", {
+          contentType: "image/png",
+          customMetadata: { purpose: "logo", targetPath: `restaurants/${RID}`, field: "logo" },
+        }),
+      );
     });
   }
 });

@@ -22,6 +22,7 @@ M06.
 - M06: `versions/{n}` snapshot shape and `publishedVersion`.
 - M04: `live/availability` overlay.
 - M03: `slugs/{slug}` with `current` flag; `qrCodes/{code}`.
+- M02 (done 2026-11-14): renditions are `…/w320.webp`, `w640`, `w1280` (WebP; never enlarged, so a small original gives smaller files). Each has a `firebaseStorageDownloadTokens` value and `Cache-Control: public, max-age=31536000, immutable`, so `renderMenu` can build public URLs with the Admin SDK's `getDownloadURL()` and use them in `srcset` (`320w, 640w, 1280w`). Storage rules do not allow anonymous reads; the token URLs are the public path. Choose the CDN approach (token URLs vs. a Hosting proxy) here.
 
 ## Scope
 

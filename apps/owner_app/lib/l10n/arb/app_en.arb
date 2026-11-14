@@ -117,5 +117,14 @@
   "finishingTitle": "Finishing setup…",
   "@finishingTitle": { "description": "Title while the app waits for the account to be ready." },
   "finishingBody": "We're getting your restaurant ready. This takes a few seconds.",
-  "@finishingBody": { "description": "Body while waiting for the account claims." }
+  "@finishingBody": { "description": "Body while waiting for the account claims." },
+
+  "devMediaTitle": "Image upload test",
+  "@devMediaTitle": { "description": "Title of the developer-only page for trying image uploads (not in production)." },
+  "devMediaIntro": "Developer page. Images uploaded here become your restaurant's logo and cover.",
+  "@devMediaIntro": { "description": "Intro text on the developer-only image upload page." },
+  "devMediaLogo": "Logo",
+  "@devMediaLogo": { "description": "Label of the logo image field." },
+  "devMediaCover": "Cover image",
+  "@devMediaCover": { "description": "Label of the cover image field." }
 }

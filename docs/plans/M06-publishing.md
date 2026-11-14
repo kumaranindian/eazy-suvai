@@ -22,6 +22,7 @@ M04, M05.
 - M04: categories, items, availability overlay.
 - M05: theme tokens.
 - M07 (built next) renders snapshots; the preview in this module calls the same renderer with `draft=true`.
+- M02 (done 2026-11-14): image objects (architecture §4.4) hold rendition **Storage paths**, not URLs. Snapshot only `status == 'ready'` images. Old image files are never deleted on replace or remove, so snapshots stay valid. Purging unreferenced images is for M12.
 
 ## Scope
 

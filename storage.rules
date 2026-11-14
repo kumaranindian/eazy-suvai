@@ -2,11 +2,77 @@ rules_version = '2';
 
 // EazySuvai Storage rules.
 //
-// M00 baseline: deny everything. M02 opens restaurants/{rid}/images/** for
-// the owning restaurant only (image/jpeg|png|webp, ≤ 5 MB, FR-102), per
-// docs/architecture.md §5, with tests in firestore-tests/.
+// Everything is denied unless a match below allows it (M00 baseline).
+// M02 opens restaurant images: docs/architecture.md §4.4 and §5, FR-102.
+// Tests: firestore-tests/test/storage.test.js.
 service firebase.storage {
   match /b/{bucket}/o {
+
+    // ---- Shared helpers (mirror firestore.rules) ---------------------------
+
+    // FR-091: nothing is reachable with an unverified email.
+    function verified() {
+      return request.auth != null && request.auth.token.email_verified == true;
+    }
+
+    // FR-084: platform admins must have signed in with a TOTP second factor.
+    function isAdmin() {
+      return verified()
+        && request.auth.token.role == 'platformAdmin'
+        && request.auth.token.firebase.sign_in_second_factor == 'totp';
+    }
+
+    // Owner of `rid` whose restaurant is active (same as isOwner in
+    // firestore.rules; reads the restaurant through cross-service rules).
+    function isOwner(rid) {
+      return verified()
+        && request.auth.token.role == 'owner'
+        && request.auth.token.restaurantId == rid
+        && firestore.get(/databases/(default)/documents/restaurants/$(rid)).data.status == 'active';
+    }
+
+    // ---- M02: restaurant images -------------------------------------------
+
+    function contentTypeFor(ext) {
+      return ext == 'jpg' ? 'image/jpeg' : (ext == 'png' ? 'image/png' : 'image/webp');
+    }
+
+    // Custom metadata read by processImage: which document and field the
+    // image is for. Only the allowed targets of the same restaurant.
+    // processImage checks the same list again (functions/src/media/policy.ts).
+    function validTarget(rid) {
+      let m = request.resource.metadata;
+      let root = 'restaurants/' + rid;
+      return m != null
+        && m.keys().hasOnly(['purpose', 'targetPath', 'field'])
+        && m.keys().hasAll(['purpose', 'targetPath', 'field'])
+        && (
+          (m.purpose in ['logo', 'cover'] && m.targetPath == root && m.field == m.purpose)
+          || (m.purpose == 'category' && m.field == 'image'
+              && m.targetPath.matches(root + '/categories/[A-Za-z0-9_-]{1,128}'))
+          || (m.purpose == 'item' && m.field == 'image'
+              && m.targetPath.matches(root + '/items/[A-Za-z0-9_-]{1,128}'))
+        );
+    }
+
+    // restaurants/{rid}/images/{imageId}/original.{jpg|png|webp} is uploaded
+    // by the owner. processImage writes the renditions (w320/w640/w1280.webp)
+    // next to it and re-encodes the original; clients never overwrite or
+    // delete (versions may still reference old images, FR-096).
+    match /restaurants/{rid}/images/{imageId}/{fileName} {
+      allow get: if isOwner(rid) || isAdmin();
+      allow list: if false;
+      allow create: if resource == null
+        && isOwner(rid)
+        && imageId.matches('[A-Za-z0-9_-]{16,64}')
+        && fileName.matches('original[.](jpg|png|webp)')
+        && request.resource.size <= 5 * 1024 * 1024
+        && request.resource.contentType == contentTypeFor(fileName.split('[.]')[1])
+        && validTarget(rid);
+      allow update, delete: if false;
+    }
+
+    // ---- Default: deny ------------------------------------------------------
     match /{allPaths=**} {
       allow read, write: if false;
     }

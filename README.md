@@ -67,6 +67,15 @@ Build the functions first (`cd functions && npm run build`); the Functions emula
   `--project eazy-suvai-dev` after the person has signed up and verified their email. They enrol an
   authenticator app the first time they sign in to the admin app.
 
+### Trying image uploads (M02)
+
+Sign in as an owner and open **`/dev/media`** (a developer page, not registered in prod builds). It has
+the logo and cover pickers. Pick an image, crop it, and watch it go *Uploading → Processing → preview*.
+The Functions emulator runs `processImage` (see Terminal 1). The Emulator UI → Storage shows
+`restaurants/{rid}/images/{id}/` with `original.*` and `w320/w640/w1280.webp`, and Firestore shows the
+`logo` / `cover` image object. Files over 5 MB, renamed non-images and images below the minimum size
+(logo 256 × 256, cover 1200 × 400) are refused with a message.
+
 On the Android emulator the apps reach the host at `10.0.2.2` automatically. On a physical device add
 `--dart-define=EMULATOR_HOST=<your computer's LAN IP>`.
 
@@ -118,6 +127,13 @@ Dev (`eazy-suvai-dev`) has web options in both apps (`lib/firebase_options_dev.d
    ```
 
 5. Enable TTL policies on `auditLogs.expireAt` and `analyticsEvents.expireAt` (architecture §9).
+6. **Storage (M02):**
+   - The first `firebase deploy --only storage` asks to let Storage rules read Firestore
+     (`storage.rules` checks the restaurant's status with `firestore.get`). Accept, or uploads are refused.
+   - Allow the web apps to load images: `gcloud storage buckets update gs://<bucket> --cors-file=storage.cors.json`.
+     Add the final app domains to `storage.cors.json` when they are chosen.
+   - `processImage` is a Storage trigger. It needs the Blaze plan, and the bucket must be in `asia-south1`
+     (same region as the function).
 
 ## Checks
 

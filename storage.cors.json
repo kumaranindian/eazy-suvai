@@ -1,0 +1,17 @@
+[
+  {
+    "origin": [
+      "https://eazy-suvai-dev-app.web.app",
+      "https://eazy-suvai-dev-app.firebaseapp.com",
+      "https://eazy-suvai-dev-admin.web.app",
+      "https://eazy-suvai-dev-admin.firebaseapp.com",
+      "https://eazysuvai-prod-app.web.app",
+      "https://eazysuvai-prod-app.firebaseapp.com",
+      "https://eazysuvai-prod-admin.web.app",
+      "https://eazysuvai-prod-admin.firebaseapp.com"
+    ],
+    "method": ["GET", "HEAD"],
+    "responseHeader": ["Content-Type", "Cache-Control"],
+    "maxAgeSeconds": 3600
+  }
+]

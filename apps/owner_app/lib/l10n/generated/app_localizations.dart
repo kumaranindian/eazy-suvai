@@ -423,6 +423,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'We\'re getting your restaurant ready. This takes a few seconds.'**
   String get finishingBody;
+
+  /// Title of the developer-only page for trying image uploads (not in production).
+  ///
+  /// In en, this message translates to:
+  /// **'Image upload test'**
+  String get devMediaTitle;
+
+  /// Intro text on the developer-only image upload page.
+  ///
+  /// In en, this message translates to:
+  /// **'Developer page. Images uploaded here become your restaurant\'s logo and cover.'**
+  String get devMediaIntro;
+
+  /// Label of the logo image field.
+  ///
+  /// In en, this message translates to:
+  /// **'Logo'**
+  String get devMediaLogo;
+
+  /// Label of the cover image field.
+  ///
+  /// In en, this message translates to:
+  /// **'Cover image'**
+  String get devMediaCover;
 }
 
 class _AppLocalizationsDelegate

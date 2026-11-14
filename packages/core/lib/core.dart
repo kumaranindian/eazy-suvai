@@ -14,6 +14,18 @@ export 'src/geo/countries.dart';
 export 'src/l10n/generated/core_localizations.dart';
 export 'src/layout/breakpoint.dart';
 export 'src/layout/responsive_scaffold.dart';
+export 'src/media/crop_geometry.dart';
+export 'src/media/image_crop_dialog.dart'
+    show ImageCropDialog, showImageCropDialog;
+export 'src/media/image_messages.dart';
+export 'src/media/image_object.dart';
+export 'src/media/image_picker_field.dart';
+export 'src/media/image_picker_service.dart';
+export 'src/media/image_preparer.dart';
+export 'src/media/image_sniffer.dart';
+export 'src/media/image_upload_service.dart';
+export 'src/media/responsive_image.dart';
+export 'src/media/storage_image_resolver.dart';
 export 'src/money/currency.dart';
 export 'src/money/money.dart';
 export 'src/theme/app_theme.dart';

@@ -203,4 +203,93 @@ class CoreLocalizationsEn extends CoreLocalizations {
 
   @override
   String get actionHidePassword => 'Hide password';
+
+  @override
+  String get imageAdd => 'Add image';
+
+  @override
+  String get imageReplace => 'Replace';
+
+  @override
+  String get imageRemove => 'Remove';
+
+  @override
+  String get imageRemoveTitle => 'Remove this image?';
+
+  @override
+  String get imageRemoveMessage => 'You can add a new image at any time.';
+
+  @override
+  String imageHint(int width, int height) {
+    return 'JPEG, PNG or WebP, up to 5 MB, at least $width × $height px.';
+  }
+
+  @override
+  String get imagePreparing => 'Preparing image…';
+
+  @override
+  String imageUploading(int percent) {
+    return 'Uploading… $percent%';
+  }
+
+  @override
+  String get imageCancelUpload => 'Cancel upload';
+
+  @override
+  String get imageProcessing => 'Processing image…';
+
+  @override
+  String get imageProcessingSlow =>
+      'This is taking longer than usual. The image will appear when it\'s ready.';
+
+  @override
+  String get imageNone => 'No image';
+
+  @override
+  String get imageRejected => 'Image not accepted';
+
+  @override
+  String get imageCropTitle => 'Crop image';
+
+  @override
+  String get imageCropHint =>
+      'Drag to move. Pinch, scroll or use the slider to zoom.';
+
+  @override
+  String get imageCropZoom => 'Zoom';
+
+  @override
+  String get imageCropDone => 'Use image';
+
+  @override
+  String get imageCropArea => 'Crop area. Drag to move the image.';
+
+  @override
+  String get imageErrorUnsupportedType =>
+      'This file type isn\'t supported. Choose a JPEG, PNG or WebP image.';
+
+  @override
+  String get imageErrorTooLarge =>
+      'This file is larger than 5 MB. Choose a smaller image.';
+
+  @override
+  String imageErrorTooSmall(int width, int height) {
+    return 'This image is too small. Use one at least $width × $height px.';
+  }
+
+  @override
+  String get imageErrorInvalid =>
+      'This image couldn\'t be read. It may be damaged. Try another file.';
+
+  @override
+  String get imageErrorProcessingFailed =>
+      'We couldn\'t process this image. Please try again.';
+
+  @override
+  String get imageErrorUploadFailed =>
+      'The upload didn\'t finish. Check your connection and try again.';
+
+  @override
+  String get imageErrorPickFailed =>
+      'We couldn\'t open your photos. Check that the app is allowed to access them.';
 }

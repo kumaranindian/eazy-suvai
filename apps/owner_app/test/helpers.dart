@@ -3,6 +3,7 @@ import 'package:core/core.dart';
 import 'package:core/testing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:owner_app/app.dart';
@@ -130,6 +131,7 @@ Future<TestApp> pumpOwnerApp(
   double width = 360,
   List<FakeUser> users = const [],
   FakeUser? signedIn,
+  List<Override> overrides = const [],
 }) async {
   await setWidth(tester, width);
   final auth = FakeAuthRepository(users: [...users, ?signedIn]);
@@ -140,6 +142,7 @@ Future<TestApp> pumpOwnerApp(
       overrides: [
         authRepositoryProvider.overrideWithValue(auth),
         registrationRepositoryProvider.overrideWithValue(registration),
+        ...overrides,
       ],
       child: const OwnerApp(),
     ),
