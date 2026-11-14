@@ -19,3 +19,13 @@ initializeApp();
 export { cleanupUnverifiedUsers, completeRegistration } from "./auth";
 export { processImage } from "./media";
 export { changeSlug, onRestaurantUpdated } from "./restaurant";
+export {
+  createCategory,
+  createItem,
+  deleteCategory,
+  deleteItems,
+  moveItems,
+  onCategoryWrite,
+  onItemWrite,
+  restoreDeleted,
+} from "./menu";

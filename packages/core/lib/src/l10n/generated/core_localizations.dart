@@ -795,6 +795,36 @@ abstract class CoreLocalizations {
   /// In en, this message translates to:
   /// **'US dollar'**
   String get currencyUSD;
+
+  /// Error: the item's category is deleted (M04).
+  ///
+  /// In en, this message translates to:
+  /// **'That category has been deleted. Choose another category.'**
+  String get errorCategoryDeleted;
+
+  /// Price field: empty.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a price.'**
+  String get priceRequired;
+
+  /// Price field: not a valid amount.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a price like {example}.'**
+  String priceInvalid(String example);
+
+  /// Price field: above the maximum.
+  ///
+  /// In en, this message translates to:
+  /// **'That price is too high.'**
+  String get priceTooHigh;
+
+  /// Price field helper: how many decimals the currency uses (FR-029).
+  ///
+  /// In en, this message translates to:
+  /// **'{code} prices have {decimals, plural, =0{no decimal places} =1{1 decimal place} other{{decimals} decimal places}}.'**
+  String priceDecimalsHelp(String code, int decimals);
 }
 
 class _CoreLocalizationsDelegate

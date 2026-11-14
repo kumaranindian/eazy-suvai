@@ -917,5 +917,603 @@
   "wizardToDashboard": "Go to dashboard",
   "@wizardToDashboard": {
     "description": "Finishes the wizard and opens the dashboard."
+  },
+  "actionAdd": "Add",
+  "@actionAdd": {
+    "description": "Button: create the new category or item."
+  },
+  "actionClose": "Close",
+  "@actionClose": {
+    "description": "Button: close a panel or dialog."
+  },
+  "actionDelete": "Delete",
+  "@actionDelete": {
+    "description": "Button: delete (moves to Recently deleted)."
+  },
+  "actionDiscard": "Discard",
+  "@actionDiscard": {
+    "description": "Button: throw away unsaved changes."
+  },
+  "actionEdit": "Edit",
+  "@actionEdit": {
+    "description": "Menu action: edit this entry."
+  },
+  "actionMoveDown": "Move down",
+  "@actionMoveDown": {
+    "description": "Menu action: keyboard alternative to dragging an entry down (FR-019)."
+  },
+  "actionMoveUp": "Move up",
+  "@actionMoveUp": {
+    "description": "Menu action: keyboard alternative to dragging an entry up (FR-019)."
+  },
+  "actionNotNow": "Not now",
+  "@actionNotNow": {
+    "description": "Button: dismiss the upgrade prompt."
+  },
+  "actionRestore": "Restore",
+  "@actionRestore": {
+    "description": "Button: restore a deleted category or item."
+  },
+  "actionSave": "Save",
+  "@actionSave": {
+    "description": "Button: save changes."
+  },
+  "actionUndo": "Undo",
+  "@actionUndo": {
+    "description": "Snack bar action: undo the last delete."
+  },
+  "actionUpgrade": "Upgrade",
+  "@actionUpgrade": {
+    "description": "Button: go to the plans screen."
+  },
+  "menuCategoriesTitle": "Categories",
+  "@menuCategoriesTitle": {
+    "description": "Heading of the category list."
+  },
+  "menuItemsTitle": "Items",
+  "@menuItemsTitle": {
+    "description": "Heading of the deleted items list."
+  },
+  "menuAddCategory": "Add category",
+  "@menuAddCategory": {
+    "description": "Button: create a category."
+  },
+  "menuAddItem": "Add item",
+  "@menuAddItem": {
+    "description": "Button: create an item in the current category."
+  },
+  "menuAllItems": "All items",
+  "@menuAllItems": {
+    "description": "Category list entry that shows every item."
+  },
+  "menuItemCount": "{count, plural, =0{No items} =1{1 item} other{{count} items}}",
+  "@menuItemCount": {
+    "description": "Number of items.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "menuCategoryHidden": "Hidden",
+  "@menuCategoryHidden": {
+    "description": "Category subtitle: inactive, not on the public menu (FR-020)."
+  },
+  "menuCategoryActiveLabel": "Show {name} on the menu",
+  "@menuCategoryActiveLabel": {
+    "description": "Screen reader label of the category active switch.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "menuMoreFor": "More options for {name}",
+  "@menuMoreFor": {
+    "description": "Tooltip of a row's overflow menu.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "menuDragToReorder": "Drag to reorder",
+  "@menuDragToReorder": {
+    "description": "Tooltip of a drag handle."
+  },
+  "menuRecentlyDeleted": "Recently deleted",
+  "@menuRecentlyDeleted": {
+    "description": "Title and button: deleted categories and items (FR-098)."
+  },
+  "menuNoCategoriesTitle": "No categories yet",
+  "@menuNoCategoriesTitle": {
+    "description": "Empty state: no categories."
+  },
+  "menuNoCategoriesMessage": "Start with sections such as Starters, Main course or Beverages.",
+  "@menuNoCategoriesMessage": {
+    "description": "Empty state: no categories."
+  },
+  "menuCategoryNew": "New category",
+  "@menuCategoryNew": {
+    "description": "Category dialog title."
+  },
+  "menuCategoryEdit": "Edit category",
+  "@menuCategoryEdit": {
+    "description": "Category dialog title and button."
+  },
+  "menuFieldCategoryName": "Category name",
+  "@menuFieldCategoryName": {
+    "description": "Field label."
+  },
+  "menuFieldCategoryNameHint": "For example, Starters",
+  "@menuFieldCategoryNameHint": {
+    "description": "Field hint."
+  },
+  "menuFieldDescriptionOptional": "Description (optional)",
+  "@menuFieldDescriptionOptional": {
+    "description": "Field label."
+  },
+  "menuFieldCategoryActive": "Show on the menu",
+  "@menuFieldCategoryActive": {
+    "description": "Switch: category active (FR-016, FR-020)."
+  },
+  "menuFieldCategoryActiveHelp": "When off, this category and its items are hidden from customers.",
+  "@menuFieldCategoryActiveHelp": {
+    "description": "Help for the category active switch."
+  },
+  "menuFieldPhoto": "Photo",
+  "@menuFieldPhoto": {
+    "description": "Image field label."
+  },
+  "menuPhotoAfterSave": "You can add a photo after saving.",
+  "@menuPhotoAfterSave": {
+    "description": "Shown while creating: an image needs the saved document (M02)."
+  },
+  "menuErrorNameRequired": "Enter a name.",
+  "@menuErrorNameRequired": {
+    "description": "Validation: name empty."
+  },
+  "menuErrorCategoryRequired": "Choose a category.",
+  "@menuErrorCategoryRequired": {
+    "description": "Validation: no category (BR-004)."
+  },
+  "menuErrorDietaryRequired": "Choose a dietary classification.",
+  "@menuErrorDietaryRequired": {
+    "description": "Validation: no dietary label (FR-023)."
+  },
+  "menuCategoryAdded": "{name} added.",
+  "@menuCategoryAdded": {
+    "description": "Snack bar after creating a category.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "menuDeleteCategoryTitle": "Delete {name}?",
+  "@menuDeleteCategoryTitle": {
+    "description": "Delete category dialog title and button label.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "menuDeleteCategoryEmpty": "This category has no items. You can restore it from Recently deleted for 30 days.",
+  "@menuDeleteCategoryEmpty": {
+    "description": "Delete an empty category (FR-018)."
+  },
+  "menuDeleteCategoryHasItems": "{count, plural, =1{This category has 1 item. What should happen to it?} other{This category has {count} items. What should happen to them?}}",
+  "@menuDeleteCategoryHasItems": {
+    "description": "Delete a category with items (FR-018).",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "menuDeleteModeMove": "{count, plural, =1{Move the item to another category} other{Move the {count} items to another category}}",
+  "@menuDeleteModeMove": {
+    "description": "Delete category option 1 (FR-018).",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "menuDeleteModeMoveNone": "Add another category first.",
+  "@menuDeleteModeMoveNone": {
+    "description": "Delete category: no other category to move items to."
+  },
+  "menuDeleteMoveTo": "Move items to",
+  "@menuDeleteMoveTo": {
+    "description": "Dropdown label: target category."
+  },
+  "menuDeleteModeAll": "{count, plural, =1{Delete the category and its item} other{Delete the category and all {count} items}}",
+  "@menuDeleteModeAll": {
+    "description": "Delete category option 2 (FR-018).",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "menuDeleteTypeName": "To confirm, type the category name: {name}",
+  "@menuDeleteTypeName": {
+    "description": "Typed confirmation (FR-018, AC-027).",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "menuDeleteRestoreNote": "Deleted content stays in Recently deleted for 30 days.",
+  "@menuDeleteRestoreNote": {
+    "description": "Note in delete dialogs (FR-098)."
+  },
+  "menuDeleteMoveConfirm": "Move items and delete",
+  "@menuDeleteMoveConfirm": {
+    "description": "Confirm button: move items then delete the category."
+  },
+  "menuDeleteAllConfirm": "{count, plural, =1{Delete category and 1 item} other{Delete category and {count} items}}",
+  "@menuDeleteAllConfirm": {
+    "description": "Confirm button: delete category and items.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "menuDeletedToBin": "{name} moved to Recently deleted.",
+  "@menuDeletedToBin": {
+    "description": "Snack bar after a delete.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "menuCategoryDeletedMoved": "{name} deleted. {count, plural, =1{1 item was moved.} other{{count} items were moved.}}",
+  "@menuCategoryDeletedMoved": {
+    "description": "Snack bar after deleting a category and moving its items.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "menuSearchHint": "Search items",
+  "@menuSearchHint": {
+    "description": "Search field hint."
+  },
+  "menuSearchClear": "Clear search",
+  "@menuSearchClear": {
+    "description": "Tooltip: clear the search."
+  },
+  "menuFilterSoldOut": "{count, plural, =0{Sold out} other{Sold out ({count})}}",
+  "@menuFilterSoldOut": {
+    "description": "Filter chip: unavailable items only (FRD 5.4).",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "menuFilterFeatured": "Featured",
+  "@menuFilterFeatured": {
+    "description": "Filter chip: featured items only."
+  },
+  "menuNoItemsTitle": "No items yet",
+  "@menuNoItemsTitle": {
+    "description": "Empty state: category without items."
+  },
+  "menuNoItemsMessage": "Add the dishes and drinks in this category.",
+  "@menuNoItemsMessage": {
+    "description": "Empty state: category without items."
+  },
+  "menuNoItemsAll": "Choose a category and add your first item.",
+  "@menuNoItemsAll": {
+    "description": "Empty state: no items at all."
+  },
+  "menuNoMatchTitle": "No matching items",
+  "@menuNoMatchTitle": {
+    "description": "Empty state: search or filters match nothing."
+  },
+  "menuNoMatchMessage": "Try another search or clear the filters.",
+  "@menuNoMatchMessage": {
+    "description": "Empty state: search or filters match nothing."
+  },
+  "menuSoldOut": "Sold out",
+  "@menuSoldOut": {
+    "description": "Item row: the item is unavailable (FR-026)."
+  },
+  "menuAvailableLabel": "{name} available",
+  "@menuAvailableLabel": {
+    "description": "Screen reader label of an item's availability switch (FR-025).",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "menuSelectItem": "Select {name}",
+  "@menuSelectItem": {
+    "description": "Screen reader label of an item's bulk-select checkbox.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "menuSelectAll": "Select all",
+  "@menuSelectAll": {
+    "description": "Screen reader label: select every listed item."
+  },
+  "menuSelectedCount": "{count} selected",
+  "@menuSelectedCount": {
+    "description": "Bulk bar: number of selected items.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "menuBulkAvailable": "Mark available",
+  "@menuBulkAvailable": {
+    "description": "Bulk action: make items available."
+  },
+  "menuBulkSoldOut": "Mark sold out",
+  "@menuBulkSoldOut": {
+    "description": "Bulk action: make items unavailable."
+  },
+  "menuMoveToCategory": "Move to category",
+  "@menuMoveToCategory": {
+    "description": "Action: move items to another category (FR-097)."
+  },
+  "menuMoveItemsTitle": "{count, plural, =1{Move item to} other{Move {count} items to}}",
+  "@menuMoveItemsTitle": {
+    "description": "Category picker title.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "menuItemsMoved": "{count, plural, =1{Item moved to {name}.} other{{count} items moved to {name}.}}",
+  "@menuItemsMoved": {
+    "description": "Snack bar after moving items.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "menuDeleteItemsTitle": "{count, plural, =1{Delete this item?} other{Delete {count} items?}}",
+  "@menuDeleteItemsTitle": {
+    "description": "Delete items dialog title.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "menuDeleteItemsMessage": "You can restore deleted items from Recently deleted for 30 days.",
+  "@menuDeleteItemsMessage": {
+    "description": "Delete items dialog message (FR-098)."
+  },
+  "menuDeleteItem": "Delete item",
+  "@menuDeleteItem": {
+    "description": "Button in the item editor."
+  },
+  "menuItemNew": "New item",
+  "@menuItemNew": {
+    "description": "Item editor title."
+  },
+  "menuItemEdit": "Edit item",
+  "@menuItemEdit": {
+    "description": "Item editor title."
+  },
+  "menuFieldItemName": "Item name",
+  "@menuFieldItemName": {
+    "description": "Field label."
+  },
+  "menuFieldCategory": "Category",
+  "@menuFieldCategory": {
+    "description": "Field label."
+  },
+  "menuFieldPrice": "Price",
+  "@menuFieldPrice": {
+    "description": "Field label."
+  },
+  "menuFieldDietary": "Dietary classification",
+  "@menuFieldDietary": {
+    "description": "Section label: exactly one label (FR-023)."
+  },
+  "menuFieldTags": "Tags",
+  "@menuFieldTags": {
+    "description": "Section label: optional tags (FR-033)."
+  },
+  "menuFieldAvailable": "Available",
+  "@menuFieldAvailable": {
+    "description": "Switch: item availability (FR-025)."
+  },
+  "menuFieldAvailableHelp": "Turn off when sold out. Customers see it at once, without publishing.",
+  "@menuFieldAvailableHelp": {
+    "description": "Help for availability (FR-095)."
+  },
+  "menuFieldFeatured": "Featured",
+  "@menuFieldFeatured": {
+    "description": "Switch and label: featured item (FR-027)."
+  },
+  "menuFieldFeaturedHelp": "Highlight this item on your menu.",
+  "@menuFieldFeaturedHelp": {
+    "description": "Help for featured."
+  },
+  "menuLabelsUnavailable": "Dietary labels are not available right now. Try again later.",
+  "@menuLabelsUnavailable": {
+    "description": "Shown when the platform label list is empty."
+  },
+  "menuItemAdded": "{name} added. You can add a photo now.",
+  "@menuItemAdded": {
+    "description": "Snack bar after creating an item.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "menuItemSaved": "Changes saved to the draft.",
+  "@menuItemSaved": {
+    "description": "Snack bar after saving an item."
+  },
+  "menuUnsaved": "Unsaved changes",
+  "@menuUnsaved": {
+    "description": "Editor footer: there are unsaved edits."
+  },
+  "menuDiscardTitle": "Discard changes?",
+  "@menuDiscardTitle": {
+    "description": "Dialog: leave the editor with unsaved edits."
+  },
+  "menuDiscardMessage": "Your changes to this item will be lost.",
+  "@menuDiscardMessage": {
+    "description": "Dialog: leave the editor with unsaved edits."
+  },
+  "menuItemGoneTitle": "Item not found",
+  "@menuItemGoneTitle": {
+    "description": "Editor: the item was deleted or moved."
+  },
+  "menuItemGoneMessage": "It may have been deleted on another device.",
+  "@menuItemGoneMessage": {
+    "description": "Editor: the item was deleted."
+  },
+  "menuCategoryGoneTitle": "Category not found",
+  "@menuCategoryGoneTitle": {
+    "description": "Category page: deleted elsewhere."
+  },
+  "menuCategoryGoneMessage": "It may have been deleted on another device.",
+  "@menuCategoryGoneMessage": {
+    "description": "Category page: deleted elsewhere."
+  },
+  "menuItemNeedsCategory": "Add a category before adding items.",
+  "@menuItemNeedsCategory": {
+    "description": "Editor: no categories exist (BR-004)."
+  },
+  "menuEditorEmptyTitle": "No item selected",
+  "@menuEditorEmptyTitle": {
+    "description": "Editor pane placeholder."
+  },
+  "menuEditorEmptyMessage": "Choose an item to edit it here, or add a new one.",
+  "@menuEditorEmptyMessage": {
+    "description": "Editor pane placeholder."
+  },
+  "menuLimitTitle": "Plan limit reached",
+  "@menuLimitTitle": {
+    "description": "Dialog title (BR-011)."
+  },
+  "menuLimitItems": "{max, plural, =1{Your plan allows 1 item.} other{Your plan allows {max} items.}} Upgrade to add more, or delete items you no longer need.",
+  "@menuLimitItems": {
+    "description": "Plan limit dialog: items.",
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "menuLimitCategories": "{max, plural, =1{Your plan allows 1 category.} other{Your plan allows {max} categories.}} Upgrade to add more, or delete categories you no longer need.",
+  "@menuLimitCategories": {
+    "description": "Plan limit dialog: categories.",
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "menuLimitGeneric": "You've reached a limit of your plan. Upgrade to add more.",
+  "@menuLimitGeneric": {
+    "description": "Plan limit dialog without details."
+  },
+  "menuDeletedIntro": "Deleted categories and items can be restored for 30 days. Restored content goes back to your draft; publish to show it to customers.",
+  "@menuDeletedIntro": {
+    "description": "Recently deleted intro (FR-098)."
+  },
+  "menuDeletedEmptyTitle": "Nothing deleted",
+  "@menuDeletedEmptyTitle": {
+    "description": "Recently deleted empty state."
+  },
+  "menuDeletedEmptyMessage": "Categories and items you delete appear here for 30 days.",
+  "@menuDeletedEmptyMessage": {
+    "description": "Recently deleted empty state."
+  },
+  "menuDeletedDaysLeft": "{days, plural, =0{Less than a day left} =1{1 day left} other{{days} days left}}",
+  "@menuDeletedDaysLeft": {
+    "description": "Time left to restore (FR-098).",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "menuDeletedWithItems": "{count, plural, =1{With 1 item} other{With {count} items}}",
+  "@menuDeletedWithItems": {
+    "description": "Deleted category: items that come back with it.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "menuDeletedCategoryGone": "{name} (deleted)",
+  "@menuDeletedCategoryGone": {
+    "description": "Deleted item whose category is deleted too.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "menuRestoreLabel": "Restore {name}",
+  "@menuRestoreLabel": {
+    "description": "Screen reader label of a Restore button.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "menuRestoreInto": "Restore {name} into",
+  "@menuRestoreInto": {
+    "description": "Category picker title when an item's category is deleted (BR-004).",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "menuRestoreNeedsCategory": "Add or restore a category first.",
+  "@menuRestoreNeedsCategory": {
+    "description": "No category to restore an item into."
+  },
+  "menuRestored": "{name} restored to your draft.",
+  "@menuRestored": {
+    "description": "Snack bar after a restore.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "planTitle": "Plans",
+  "@planTitle": {
+    "description": "Plans screen title."
+  },
+  "planComingSoon": "Upgrading from the app is coming soon. Contact EazySuvai support to change your plan.",
+  "@planComingSoon": {
+    "description": "Plans placeholder until M10."
   }
 }

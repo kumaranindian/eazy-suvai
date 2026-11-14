@@ -19,7 +19,7 @@ M10, M11.
 ## Inputs from other modules
 
 - M00: `writeAudit()` helper (already used by earlier modules).
-- M04: soft-deleted categories and items.
+- M04 (done 2026-11-14): soft-deleted `categories/{cid}` and `items/{iid}` have `deletedAt` (Timestamp; `null` when live). Purge them 30 days after `deletedAt` (`restoreDeleted` already refuses older ones). Items deleted with their category carry `deletedWith: cid`. A hard delete of an item removes its key from `live/availability` (`onItemWrite`) and the triggers recount `counts`, so purging needs no extra bookkeeping.
 - M02 (done 2026-11-14): images live under `restaurants/{rid}/images/{id}/` (original plus 3 renditions). Replaced or removed images are not deleted, because published versions may reference them. Purge folders that no draft field or kept version references, and delete the whole `restaurants/{rid}/` prefix when a tenant is purged.
 - M11: admin app navigation for the audit viewer.
 - M03 (done 2026-11-14): a restaurant can own several `slugs` docs (one `current: true`, the others `current: false` with `replacedAt`). On deletion, set `releasedAt` on all of them and only free them after 12 months (FR-093). `onRestaurantUpdated` ignores updates to a restaurant that no longer exists.

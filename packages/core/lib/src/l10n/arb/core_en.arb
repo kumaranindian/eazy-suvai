@@ -250,5 +250,15 @@
   "currencyOMR": "Omani rial",
   "@currencyOMR": { "description": "Currency name." },
   "currencyUSD": "US dollar",
-  "@currencyUSD": { "description": "Currency name." }
+  "@currencyUSD": { "description": "Currency name." },
+  "errorCategoryDeleted": "That category has been deleted. Choose another category.",
+  "@errorCategoryDeleted": {"description":"Error: the item's category is deleted (M04)."},
+  "priceRequired": "Enter a price.",
+  "@priceRequired": {"description":"Price field: empty."},
+  "priceInvalid": "Enter a price like {example}.",
+  "@priceInvalid": {"description":"Price field: not a valid amount.","placeholders":{"example":{"type":"String"}}},
+  "priceTooHigh": "That price is too high.",
+  "@priceTooHigh": {"description":"Price field: above the maximum."},
+  "priceDecimalsHelp": "{code} prices have {decimals, plural, =0{no decimal places} =1{1 decimal place} other{{decimals} decimal places}}.",
+  "@priceDecimalsHelp": {"description":"Price field helper: how many decimals the currency uses (FR-029).","placeholders":{"code":{"type":"String"},"decimals":{"type":"int"}}}
 }

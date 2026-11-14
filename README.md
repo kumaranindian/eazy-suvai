@@ -103,6 +103,17 @@ On the Android emulator the apps reach the host at `10.0.2.2` automatically. On 
 | Hosting | 5000 |
 | Emulator UI | 4000 |
 
+### Trying menu management (M04)
+
+The item editor needs the platform dietary labels and tags. Seed them once per emulator run (or keep them with `--export-on-exit`):
+
+```bash
+(cd functions && npm run build)
+FIRESTORE_EMULATOR_HOST=localhost:8080 node functions/scripts/seed-platform.mjs --project demo-eazysuvai
+```
+
+Then open **Menu** in the owner app. Add a category, then an item, and toggle **Available** on its row. `restaurants/{rid}/live/availability` in the Emulator UI changes within a second. Plan limits use the FRD defaults (Free: 10 categories, 50 items) until `plans/free` exists. To try the limit prompt quickly, create `plans/free` with `limits: {maxItems: 2, maxCategories: 2}` in the Emulator UI. On a real project, run the same script with `--project eazy-suvai-dev` and no emulator variable.
+
 ## Environments
 
 | `--dart-define=ENV=` | Firebase project | Firebase CLI alias |

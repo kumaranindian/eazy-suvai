@@ -2,6 +2,7 @@ import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:owner_app/features/home/presentation/dashboard_page.dart';
+import 'package:owner_app/features/menu/presentation/menu_actions.dart';
 import 'package:owner_app/features/shell/presentation/owner_shell.dart';
 import 'package:owner_app/router/app_router.dart';
 
@@ -23,10 +24,19 @@ void main() {
       expect(find.byKey(DashboardKeys.checklist), findsOneWidget);
       expect(tester.takeException(), isNull);
 
-      // Menu is still a placeholder (M04).
+      // M04: the menu manager, one, two or three panes by width.
       await tester.tap(find.text('Menu').last);
       await tester.pumpAndSettle();
-      expect(find.textContaining('Layout: $layout'), findsOneWidget);
+      expect(find.byKey(MenuKeys.categoryPane), findsOneWidget);
+      expect(
+        find.byKey(MenuKeys.itemPane),
+        layout == 'compact' ? findsNothing : findsOneWidget,
+      );
+      expect(
+        find.byKey(MenuKeys.editorPane),
+        layout == 'expanded' ? findsOneWidget : findsNothing,
+      );
+      expect(tester.takeException(), isNull);
 
       // Settings lists the M03 pages.
       await tester.tap(find.text('Settings').last);
@@ -55,6 +65,8 @@ void main() {
       (Routes.hours, 'Opening hours'),
       (Routes.regional, 'Currency and time zone'),
       (Routes.menuLink, 'Menu link'),
+      (Routes.menuDeleted, 'Recently deleted'),
+      (Routes.plan, 'Plans'),
       (Routes.home, 'Home'),
     ]) {
       await app.go(path);

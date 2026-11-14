@@ -170,6 +170,89 @@ service cloud.firestore {
       return v.size() <= 64 && v.matches('^(UTC|[A-Z][A-Za-z]+(/[A-Za-z0-9_+-]+){1,2})$');
     }
 
+    // ---- M04: menu content (FR-015 to FR-033, FR-095, FR-098) -----------
+    //
+    // Categories and items are draft content. Create and (soft) delete go
+    // through the callables (plan limits in a transaction, BR-011); owners
+    // update only the fields below, and every update stamps updatedAt with
+    // the server time. Soft-deleted documents can't be edited (restore them
+    // with restoreDeleted). Image objects are written only by processImage
+    // (M02); owners may only remove one. Field limits match MENU_LIMITS
+    // (functions/src/menu/schemas.ts) and MenuLimits (core).
+
+    match /restaurants/{rid}/categories/{cid} {
+      allow read: if isOwner(rid) || isAdmin();
+      allow update: if isOwner(rid) && validCategoryUpdate();
+      allow create, delete: if false;
+    }
+
+    match /restaurants/{rid}/items/{iid} {
+      allow read: if isOwner(rid) || isAdmin();
+      allow update: if isOwner(rid) && validItemUpdate();
+      allow create, delete: if false;
+    }
+
+    function editableMenuDoc(allowed) {
+      let changed = request.resource.data.diff(resource.data).affectedKeys();
+      return resource.data.get('deletedAt', null) == null
+        && changed.hasOnly(allowed)
+        && request.resource.data.updatedAt == request.time;
+    }
+
+    function validCategoryUpdate() {
+      let next = request.resource.data;
+      let changed = next.diff(resource.data).affectedKeys();
+      return editableMenuDoc(['name', 'description', 'image', 'sequence', 'active', 'updatedAt'])
+        && (!('name' in changed) || validMenuName(next.name, 60))
+        && (!('description' in changed) || next.description is string && next.description.size() <= 250)
+        && (!('image' in changed) || next.image == null)
+        && (!('sequence' in changed) || validSequence(next.sequence))
+        && (!('active' in changed) || next.active is bool);
+    }
+
+    function validItemUpdate() {
+      let next = request.resource.data;
+      let changed = next.diff(resource.data).affectedKeys();
+      return editableMenuDoc(['name', 'description', 'image', 'priceMinor', 'dietaryLabelId',
+                              'tagIds', 'featured', 'sequence', 'available', 'updatedAt'])
+        && (!('name' in changed) || validMenuName(next.name, 80))
+        && (!('description' in changed) || next.description is string && next.description.size() <= 500)
+        && (!('image' in changed) || next.image == null)
+        // BR-019: integer minor units, never a float.
+        && (!('priceMinor' in changed)
+            || next.priceMinor is int && next.priceMinor >= 0 && next.priceMinor <= 999999999)
+        // FR-023: exactly one platform-managed label. A retired label stays
+        // valid on items that have it (FR-104); the apps hide it from new
+        // choices. Unknown tag ids are dropped when publishing (M06).
+        && (!('dietaryLabelId' in changed)
+            || next.dietaryLabelId is string
+               && exists(/databases/$(database)/documents/dietaryLabels/$(next.dietaryLabelId)))
+        && (!('tagIds' in changed) || next.tagIds is list && next.tagIds.size() <= 10)
+        && (!('featured' in changed) || next.featured is bool)
+        && (!('sequence' in changed) || validSequence(next.sequence))
+        && (!('available' in changed) || next.available is bool);
+    }
+
+    function validMenuName(v, max) {
+      return v is string && v.size() <= max && v.trim().size() > 0;
+    }
+
+    function validSequence(v) {
+      return v is int && v >= 0 && v <= 1000000000000;
+    }
+
+    // Platform-managed dietary labels and item tags (FR-023, FR-033,
+    // FR-104): read by owners and admins, written by Functions (M11).
+    match /dietaryLabels/{id} {
+      allow read: if (verified() && request.auth.token.role == 'owner') || isAdmin();
+      allow write: if false;
+    }
+
+    match /itemTags/{id} {
+      allow read: if (verified() && request.auth.token.role == 'owner') || isAdmin();
+      allow write: if false;
+    }
+
     // ---- Default: deny ----------------------------------------------------
     match /{document=**} {
       allow read, write: if false;

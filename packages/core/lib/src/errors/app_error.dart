@@ -18,6 +18,7 @@ enum AppErrorCode {
   slugInvalid('slug-invalid'),
   slugReserved('slug-reserved'),
   slugTaken('slug-taken'),
+  categoryDeleted('category-deleted'),
   network('network'),
   unknown('unknown');
 
@@ -48,6 +49,7 @@ extension AppErrorMessage on CoreLocalizations {
     AppErrorCode.slugInvalid => errorSlugInvalid,
     AppErrorCode.slugReserved => errorSlugReserved,
     AppErrorCode.slugTaken => errorSlugTaken,
+    AppErrorCode.categoryDeleted => errorCategoryDeleted,
     AppErrorCode.network => errorNetwork,
     AppErrorCode.unknown => errorUnknown,
   };

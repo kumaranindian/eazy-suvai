@@ -60,7 +60,7 @@ All timestamps are Firestore `Timestamp` in UTC. IDs are Firestore auto-IDs unle
 | `slugs/{slug}` | `{restaurantId, current: bool, createdAt, replacedAt?, reclaimedAt?, releasedAt?}`; one doc per current or old slug. `changeSlug` (M03) sets the old one to `current: false` with `replacedAt` and keeps it for 301s | Functions |
 | `qrCodes/{code}` | `{restaurantId, kind: 'restaurant'}`; permanent, never reused | Functions |
 | `plans/{planId}` | `name`, `limits {maxItems, maxCategories, maxBranches, themeIds[], analyticsDays, qrLogo, removeBranding}`, `prices {INR, AED, KWD}`, `isFree`, `active` | Admin via Functions |
-| `dietaryLabels/{id}`, `itemTags/{id}` | `name`, `icon`, `color`, `sort`, `retired` (FR-104) | Admin via Functions |
+| `dietaryLabels/{id}`, `itemTags/{id}` | `name`, `icon` (a key the apps draw: `veg`, `nonVeg`, `vegan`, `egg`, `spicy`, `bestseller`, `chefsSpecial`, `new`), `color` (`#RRGGBB`), `sort`, `retired` (FR-104). Seeded by `functions/scripts/seed-platform.mjs` (M04) | Admin via Functions |
 | `themes/{id}` | Predefined theme tokens (M05) | Admin via Functions |
 | `config/platform` | `reservedSlugs[]`, `graceDays` (default 14), `fonts[]`, `currencies{code: decimals}` | Admin via Functions |
 | `upgradeRequests/{id}` | `restaurantId`, `requestedPlanId`, `status`, `createdAt` | Owner (create), Functions |
@@ -84,17 +84,21 @@ Profile field formats (M03):
 
 | Subcollection | Fields | Notes |
 | --- | --- | --- |
-| `categories/{cid}` | `name`, `description`, `image?`, `sequence`, `active`, `deletedAt?` | Soft delete (FR-098) |
-| `items/{iid}` | `categoryId`, `name`, `description`, `image?`, `priceMinor` (int), `dietaryLabelId`, `tagIds[]`, `available`, `featured`, `sequence`, `hiddenOverLimit`, `deletedAt?`, `updatedAt` | Draft content |
+| `categories/{cid}` | `name`, `description`, `image`, `sequence`, `active`, `deletedAt`, `createdAt`, `updatedAt` | Soft delete (FR-098). `deletedAt` is `null` while live |
+| `items/{iid}` | `categoryId`, `name`, `description`, `image`, `priceMinor` (int), `dietaryLabelId`, `tagIds[]`, `available`, `featured`, `sequence`, `hiddenOverLimit`, `deletedAt`, `deletedWith`, `createdAt`, `updatedAt` | Draft content. `deletedWith`: the category it was deleted together with (restored with it) |
 | `versions/{n}` | `n`, `publishedAt`, `publishedBy`, `summary {added, changed, removed}`, `snapshot {profile, theme, categories[], items[], currency, locale}` | Immutable. Keep the last 10 (FR-096) |
-| `live/availability` | `{items: {iid: bool}}` | Updated on every availability change (FR-095) |
+| `live/availability` | `{items: {iid: bool}, updatedAt}` | Written by `onItemWrite` on every availability change (FR-095); Functions only |
 | `analyticsDaily/{yyyy-MM-dd}` | `views`, `qrVisits`, `categoryTaps {cid: n}`, `itemOpens {iid: n}` | Day in the restaurant's time zone |
 | `payments/{id}` | `amountMinor`, `currency`, `method`, `reference`, `paidAt`, `recordedBy` | Admin only (FR-106) |
 | `subscriptionHistory/{id}` | Every plan change with reason | Functions only |
 
 ### 4.3 Counts and limits
 
-`counts.items` and `counts.categories` count non-deleted documents. They are kept by Firestore triggers. Creating a category or item goes through a callable function that checks the plan limit inside a transaction, so two devices cannot both pass the limit.
+`counts.items` and `counts.categories` count non-deleted documents. Creating, deleting and restoring a category or item goes through a callable function that counts the live documents inside a transaction, checks the plan limit, and writes the new count to the restaurant root in the same transaction. Writing the root makes two concurrent creates conflict, so the retry sees the other's document and two devices cannot both pass the limit. The triggers `onCategoryWrite` / `onItemWrite` recount when a document starts or stops counting, which catches changes made outside the callables (M04).
+
+Plan limits come from `plans/{planId}.limits` through `getPlanLimits()` (`functions/src/lib/plan-limits.ts`), with the FRD §4.11 values as the fallback while a plan document is missing.
+
+Menu order is `sequence` ascending (ties by id). New documents go last with gaps of 1000; a drag writes only the moved document, halfway between its neighbours, and renumbers the list only when there is no room left.
 
 ### 4.4 Image object
 
@@ -138,6 +142,7 @@ match /restaurants/{rid} {
 ```
 
 - Owner updates of the tenant root (M03, `validOwnerUpdate()` in `firestore.rules`) also check every changed value: name 1–80 characters, known business type, description ≤ 500, `logo`/`cover` only to `null`, `contact`/`social` shapes and formats, `openingHours` format, `visibility` booleans, ISO currency code, IANA-style time zone. A draft change must set `draftUpdatedAt` to the server time, and `setupCompletedAt` must be the server time. Rules stop evaluating a request after a fixed amount of work, so these checks use one regex per group (see the comment in the rules); `restaurant-profile.test.js` has a test that writes every field at once.
+- Menu content (M04): owners update only whitelisted fields of `categories` (`name, description, image, sequence, active`) and `items` (`name, description, image, priceMinor, dietaryLabelId, tagIds, featured, sequence, available`), plus `updatedAt == request.time`. Soft-deleted documents can't be edited. `image` can only become `null`, `priceMinor` must be an integer from 0 to 999,999,999, and `dietaryLabelId` must exist. Creating, deleting, moving and restoring go through callables. `dietaryLabels` and `itemTags` are readable by owners and admins.
 - Storage rules: owners can write only under `restaurants/{theirRid}/images/**`, content type `image/jpeg|png|webp`, size ≤ 5 MB (FR-102).
 - Admin app: Firebase Authentication with Identity Platform TOTP multi-factor, required for `platformAdmin` (FR-084). Rules and `assertAdmin()` check `firebase.sign_in_second_factor == 'totp'`; only the Functions emulator under a `demo-` project skips the `assertAdmin()` check, because the Auth emulator has no TOTP (M01).
 - Every rule has a test in `firestore-tests/` using `@firebase/rules-unit-testing`.
@@ -179,14 +184,14 @@ A shared `ResponsiveScaffold` and `Breakpoint` helper in `packages/core` impleme
 | Auth | `completeRegistration`, `cleanupUnverifiedUsers` (daily) | callable, schedule | M01 |
 | Media | `processImage` | Storage trigger | M02 |
 | Restaurant | `changeSlug`, `onRestaurantUpdated` | callable, trigger | M03 |
-| Menu | `createCategory`, `createItem`, `deleteCategory`, `moveItems`, `restoreDeleted`, `onItemWrite`, `onCategoryWrite` | callable, triggers | M04 |
+| Menu | `createCategory`, `createItem`, `deleteCategory`, `deleteItems`, `moveItems`, `restoreDeleted`, `onItemWrite`, `onCategoryWrite` | callable, triggers | M04 |
 | Publishing | `publishMenu`, `rollbackMenu`, `discardDraft` | callable | M06 |
 | Public | `renderMenu`, `collectEvent` | HTTPS | M07, M09 |
 | Analytics | `rollupAnalytics` (hourly, if needed) | schedule | M09 |
 | Subscriptions | `requestUpgrade`, `recordPaymentAndActivate`, `changeSubscription`, `subscriptionDaily` | callable, schedule | M10 |
 | Admin | `setRestaurantStatus`, `upsertPlan`, `upsertLabel`, `upsertTag`, `upsertTheme`, `updatePlatformConfig`, `setAdminRole` | callable | M11 |
 | Lifecycle | `requestAccountDeletion`, `exportMenu`, `purgeDaily` | callable, schedule | M12 |
-| Shared | `writeAudit()`, `assertAdmin()`, `assertOwner()`, `getPlanLimits()` | library | M00 |
+| Shared | `writeAudit()`, `assertAdmin()`, `assertOwner()`, `getPlanLimits()` (M04; M10 extends it) | library | M00 |
 
 Every callable validates its input with a schema (zod) and returns typed errors with stable codes that the apps map to localized messages.
 

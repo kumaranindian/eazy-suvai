@@ -674,4 +674,500 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get wizardToDashboard => 'Go to dashboard';
+
+  @override
+  String get actionAdd => 'Add';
+
+  @override
+  String get actionClose => 'Close';
+
+  @override
+  String get actionDelete => 'Delete';
+
+  @override
+  String get actionDiscard => 'Discard';
+
+  @override
+  String get actionEdit => 'Edit';
+
+  @override
+  String get actionMoveDown => 'Move down';
+
+  @override
+  String get actionMoveUp => 'Move up';
+
+  @override
+  String get actionNotNow => 'Not now';
+
+  @override
+  String get actionRestore => 'Restore';
+
+  @override
+  String get actionSave => 'Save';
+
+  @override
+  String get actionUndo => 'Undo';
+
+  @override
+  String get actionUpgrade => 'Upgrade';
+
+  @override
+  String get menuCategoriesTitle => 'Categories';
+
+  @override
+  String get menuItemsTitle => 'Items';
+
+  @override
+  String get menuAddCategory => 'Add category';
+
+  @override
+  String get menuAddItem => 'Add item';
+
+  @override
+  String get menuAllItems => 'All items';
+
+  @override
+  String menuItemCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count items',
+      one: '1 item',
+      zero: 'No items',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get menuCategoryHidden => 'Hidden';
+
+  @override
+  String menuCategoryActiveLabel(String name) {
+    return 'Show $name on the menu';
+  }
+
+  @override
+  String menuMoreFor(String name) {
+    return 'More options for $name';
+  }
+
+  @override
+  String get menuDragToReorder => 'Drag to reorder';
+
+  @override
+  String get menuRecentlyDeleted => 'Recently deleted';
+
+  @override
+  String get menuNoCategoriesTitle => 'No categories yet';
+
+  @override
+  String get menuNoCategoriesMessage =>
+      'Start with sections such as Starters, Main course or Beverages.';
+
+  @override
+  String get menuCategoryNew => 'New category';
+
+  @override
+  String get menuCategoryEdit => 'Edit category';
+
+  @override
+  String get menuFieldCategoryName => 'Category name';
+
+  @override
+  String get menuFieldCategoryNameHint => 'For example, Starters';
+
+  @override
+  String get menuFieldDescriptionOptional => 'Description (optional)';
+
+  @override
+  String get menuFieldCategoryActive => 'Show on the menu';
+
+  @override
+  String get menuFieldCategoryActiveHelp =>
+      'When off, this category and its items are hidden from customers.';
+
+  @override
+  String get menuFieldPhoto => 'Photo';
+
+  @override
+  String get menuPhotoAfterSave => 'You can add a photo after saving.';
+
+  @override
+  String get menuErrorNameRequired => 'Enter a name.';
+
+  @override
+  String get menuErrorCategoryRequired => 'Choose a category.';
+
+  @override
+  String get menuErrorDietaryRequired => 'Choose a dietary classification.';
+
+  @override
+  String menuCategoryAdded(String name) {
+    return '$name added.';
+  }
+
+  @override
+  String menuDeleteCategoryTitle(String name) {
+    return 'Delete $name?';
+  }
+
+  @override
+  String get menuDeleteCategoryEmpty =>
+      'This category has no items. You can restore it from Recently deleted for 30 days.';
+
+  @override
+  String menuDeleteCategoryHasItems(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'This category has $count items. What should happen to them?',
+      one: 'This category has 1 item. What should happen to it?',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String menuDeleteModeMove(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Move the $count items to another category',
+      one: 'Move the item to another category',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get menuDeleteModeMoveNone => 'Add another category first.';
+
+  @override
+  String get menuDeleteMoveTo => 'Move items to';
+
+  @override
+  String menuDeleteModeAll(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Delete the category and all $count items',
+      one: 'Delete the category and its item',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String menuDeleteTypeName(String name) {
+    return 'To confirm, type the category name: $name';
+  }
+
+  @override
+  String get menuDeleteRestoreNote =>
+      'Deleted content stays in Recently deleted for 30 days.';
+
+  @override
+  String get menuDeleteMoveConfirm => 'Move items and delete';
+
+  @override
+  String menuDeleteAllConfirm(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Delete category and $count items',
+      one: 'Delete category and 1 item',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String menuDeletedToBin(String name) {
+    return '$name moved to Recently deleted.';
+  }
+
+  @override
+  String menuCategoryDeletedMoved(String name, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count items were moved.',
+      one: '1 item was moved.',
+    );
+    return '$name deleted. $_temp0';
+  }
+
+  @override
+  String get menuSearchHint => 'Search items';
+
+  @override
+  String get menuSearchClear => 'Clear search';
+
+  @override
+  String menuFilterSoldOut(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Sold out ($count)',
+      zero: 'Sold out',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get menuFilterFeatured => 'Featured';
+
+  @override
+  String get menuNoItemsTitle => 'No items yet';
+
+  @override
+  String get menuNoItemsMessage =>
+      'Add the dishes and drinks in this category.';
+
+  @override
+  String get menuNoItemsAll => 'Choose a category and add your first item.';
+
+  @override
+  String get menuNoMatchTitle => 'No matching items';
+
+  @override
+  String get menuNoMatchMessage => 'Try another search or clear the filters.';
+
+  @override
+  String get menuSoldOut => 'Sold out';
+
+  @override
+  String menuAvailableLabel(String name) {
+    return '$name available';
+  }
+
+  @override
+  String menuSelectItem(String name) {
+    return 'Select $name';
+  }
+
+  @override
+  String get menuSelectAll => 'Select all';
+
+  @override
+  String menuSelectedCount(int count) {
+    return '$count selected';
+  }
+
+  @override
+  String get menuBulkAvailable => 'Mark available';
+
+  @override
+  String get menuBulkSoldOut => 'Mark sold out';
+
+  @override
+  String get menuMoveToCategory => 'Move to category';
+
+  @override
+  String menuMoveItemsTitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Move $count items to',
+      one: 'Move item to',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String menuItemsMoved(int count, String name) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count items moved to $name.',
+      one: 'Item moved to $name.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String menuDeleteItemsTitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Delete $count items?',
+      one: 'Delete this item?',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get menuDeleteItemsMessage =>
+      'You can restore deleted items from Recently deleted for 30 days.';
+
+  @override
+  String get menuDeleteItem => 'Delete item';
+
+  @override
+  String get menuItemNew => 'New item';
+
+  @override
+  String get menuItemEdit => 'Edit item';
+
+  @override
+  String get menuFieldItemName => 'Item name';
+
+  @override
+  String get menuFieldCategory => 'Category';
+
+  @override
+  String get menuFieldPrice => 'Price';
+
+  @override
+  String get menuFieldDietary => 'Dietary classification';
+
+  @override
+  String get menuFieldTags => 'Tags';
+
+  @override
+  String get menuFieldAvailable => 'Available';
+
+  @override
+  String get menuFieldAvailableHelp =>
+      'Turn off when sold out. Customers see it at once, without publishing.';
+
+  @override
+  String get menuFieldFeatured => 'Featured';
+
+  @override
+  String get menuFieldFeaturedHelp => 'Highlight this item on your menu.';
+
+  @override
+  String get menuLabelsUnavailable =>
+      'Dietary labels are not available right now. Try again later.';
+
+  @override
+  String menuItemAdded(String name) {
+    return '$name added. You can add a photo now.';
+  }
+
+  @override
+  String get menuItemSaved => 'Changes saved to the draft.';
+
+  @override
+  String get menuUnsaved => 'Unsaved changes';
+
+  @override
+  String get menuDiscardTitle => 'Discard changes?';
+
+  @override
+  String get menuDiscardMessage => 'Your changes to this item will be lost.';
+
+  @override
+  String get menuItemGoneTitle => 'Item not found';
+
+  @override
+  String get menuItemGoneMessage =>
+      'It may have been deleted on another device.';
+
+  @override
+  String get menuCategoryGoneTitle => 'Category not found';
+
+  @override
+  String get menuCategoryGoneMessage =>
+      'It may have been deleted on another device.';
+
+  @override
+  String get menuItemNeedsCategory => 'Add a category before adding items.';
+
+  @override
+  String get menuEditorEmptyTitle => 'No item selected';
+
+  @override
+  String get menuEditorEmptyMessage =>
+      'Choose an item to edit it here, or add a new one.';
+
+  @override
+  String get menuLimitTitle => 'Plan limit reached';
+
+  @override
+  String menuLimitItems(int max) {
+    String _temp0 = intl.Intl.pluralLogic(
+      max,
+      locale: localeName,
+      other: 'Your plan allows $max items.',
+      one: 'Your plan allows 1 item.',
+    );
+    return '$_temp0 Upgrade to add more, or delete items you no longer need.';
+  }
+
+  @override
+  String menuLimitCategories(int max) {
+    String _temp0 = intl.Intl.pluralLogic(
+      max,
+      locale: localeName,
+      other: 'Your plan allows $max categories.',
+      one: 'Your plan allows 1 category.',
+    );
+    return '$_temp0 Upgrade to add more, or delete categories you no longer need.';
+  }
+
+  @override
+  String get menuLimitGeneric =>
+      'You\'ve reached a limit of your plan. Upgrade to add more.';
+
+  @override
+  String get menuDeletedIntro =>
+      'Deleted categories and items can be restored for 30 days. Restored content goes back to your draft; publish to show it to customers.';
+
+  @override
+  String get menuDeletedEmptyTitle => 'Nothing deleted';
+
+  @override
+  String get menuDeletedEmptyMessage =>
+      'Categories and items you delete appear here for 30 days.';
+
+  @override
+  String menuDeletedDaysLeft(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days days left',
+      one: '1 day left',
+      zero: 'Less than a day left',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String menuDeletedWithItems(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'With $count items',
+      one: 'With 1 item',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String menuDeletedCategoryGone(String name) {
+    return '$name (deleted)';
+  }
+
+  @override
+  String menuRestoreLabel(String name) {
+    return 'Restore $name';
+  }
+
+  @override
+  String menuRestoreInto(String name) {
+    return 'Restore $name into';
+  }
+
+  @override
+  String get menuRestoreNeedsCategory => 'Add or restore a category first.';
+
+  @override
+  String menuRestored(String name) {
+    return '$name restored to your draft.';
+  }
+
+  @override
+  String get planTitle => 'Plans';
+
+  @override
+  String get planComingSoon =>
+      'Upgrading from the app is coming soon. Contact EazySuvai support to change your plan.';
 }

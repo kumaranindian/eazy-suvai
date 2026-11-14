@@ -26,6 +26,8 @@ export const AppErrorCode = {
   slugReserved: "slug-reserved",
   /** Slug is used, now or before, by another restaurant (FR-093, M03). */
   slugTaken: "slug-taken",
+  /** The item's category is deleted: pick another one (BR-004, M04). */
+  categoryDeleted: "category-deleted",
   unknown: "unknown",
 } as const;
 
@@ -46,6 +48,7 @@ const httpsCodeFor: Record<AppErrorCode, FunctionsErrorCode> = {
   "slug-invalid": "invalid-argument",
   "slug-reserved": "invalid-argument",
   "slug-taken": "already-exists",
+  "category-deleted": "failed-precondition",
   "unknown": "internal",
 };
 

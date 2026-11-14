@@ -1281,6 +1281,684 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Go to dashboard'**
   String get wizardToDashboard;
+
+  /// Button: create the new category or item.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get actionAdd;
+
+  /// Button: close a panel or dialog.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get actionClose;
+
+  /// Button: delete (moves to Recently deleted).
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get actionDelete;
+
+  /// Button: throw away unsaved changes.
+  ///
+  /// In en, this message translates to:
+  /// **'Discard'**
+  String get actionDiscard;
+
+  /// Menu action: edit this entry.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get actionEdit;
+
+  /// Menu action: keyboard alternative to dragging an entry down (FR-019).
+  ///
+  /// In en, this message translates to:
+  /// **'Move down'**
+  String get actionMoveDown;
+
+  /// Menu action: keyboard alternative to dragging an entry up (FR-019).
+  ///
+  /// In en, this message translates to:
+  /// **'Move up'**
+  String get actionMoveUp;
+
+  /// Button: dismiss the upgrade prompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Not now'**
+  String get actionNotNow;
+
+  /// Button: restore a deleted category or item.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore'**
+  String get actionRestore;
+
+  /// Button: save changes.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get actionSave;
+
+  /// Snack bar action: undo the last delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Undo'**
+  String get actionUndo;
+
+  /// Button: go to the plans screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Upgrade'**
+  String get actionUpgrade;
+
+  /// Heading of the category list.
+  ///
+  /// In en, this message translates to:
+  /// **'Categories'**
+  String get menuCategoriesTitle;
+
+  /// Heading of the deleted items list.
+  ///
+  /// In en, this message translates to:
+  /// **'Items'**
+  String get menuItemsTitle;
+
+  /// Button: create a category.
+  ///
+  /// In en, this message translates to:
+  /// **'Add category'**
+  String get menuAddCategory;
+
+  /// Button: create an item in the current category.
+  ///
+  /// In en, this message translates to:
+  /// **'Add item'**
+  String get menuAddItem;
+
+  /// Category list entry that shows every item.
+  ///
+  /// In en, this message translates to:
+  /// **'All items'**
+  String get menuAllItems;
+
+  /// Number of items.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No items} =1{1 item} other{{count} items}}'**
+  String menuItemCount(int count);
+
+  /// Category subtitle: inactive, not on the public menu (FR-020).
+  ///
+  /// In en, this message translates to:
+  /// **'Hidden'**
+  String get menuCategoryHidden;
+
+  /// Screen reader label of the category active switch.
+  ///
+  /// In en, this message translates to:
+  /// **'Show {name} on the menu'**
+  String menuCategoryActiveLabel(String name);
+
+  /// Tooltip of a row's overflow menu.
+  ///
+  /// In en, this message translates to:
+  /// **'More options for {name}'**
+  String menuMoreFor(String name);
+
+  /// Tooltip of a drag handle.
+  ///
+  /// In en, this message translates to:
+  /// **'Drag to reorder'**
+  String get menuDragToReorder;
+
+  /// Title and button: deleted categories and items (FR-098).
+  ///
+  /// In en, this message translates to:
+  /// **'Recently deleted'**
+  String get menuRecentlyDeleted;
+
+  /// Empty state: no categories.
+  ///
+  /// In en, this message translates to:
+  /// **'No categories yet'**
+  String get menuNoCategoriesTitle;
+
+  /// Empty state: no categories.
+  ///
+  /// In en, this message translates to:
+  /// **'Start with sections such as Starters, Main course or Beverages.'**
+  String get menuNoCategoriesMessage;
+
+  /// Category dialog title.
+  ///
+  /// In en, this message translates to:
+  /// **'New category'**
+  String get menuCategoryNew;
+
+  /// Category dialog title and button.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit category'**
+  String get menuCategoryEdit;
+
+  /// Field label.
+  ///
+  /// In en, this message translates to:
+  /// **'Category name'**
+  String get menuFieldCategoryName;
+
+  /// Field hint.
+  ///
+  /// In en, this message translates to:
+  /// **'For example, Starters'**
+  String get menuFieldCategoryNameHint;
+
+  /// Field label.
+  ///
+  /// In en, this message translates to:
+  /// **'Description (optional)'**
+  String get menuFieldDescriptionOptional;
+
+  /// Switch: category active (FR-016, FR-020).
+  ///
+  /// In en, this message translates to:
+  /// **'Show on the menu'**
+  String get menuFieldCategoryActive;
+
+  /// Help for the category active switch.
+  ///
+  /// In en, this message translates to:
+  /// **'When off, this category and its items are hidden from customers.'**
+  String get menuFieldCategoryActiveHelp;
+
+  /// Image field label.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo'**
+  String get menuFieldPhoto;
+
+  /// Shown while creating: an image needs the saved document (M02).
+  ///
+  /// In en, this message translates to:
+  /// **'You can add a photo after saving.'**
+  String get menuPhotoAfterSave;
+
+  /// Validation: name empty.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a name.'**
+  String get menuErrorNameRequired;
+
+  /// Validation: no category (BR-004).
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a category.'**
+  String get menuErrorCategoryRequired;
+
+  /// Validation: no dietary label (FR-023).
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a dietary classification.'**
+  String get menuErrorDietaryRequired;
+
+  /// Snack bar after creating a category.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} added.'**
+  String menuCategoryAdded(String name);
+
+  /// Delete category dialog title and button label.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete {name}?'**
+  String menuDeleteCategoryTitle(String name);
+
+  /// Delete an empty category (FR-018).
+  ///
+  /// In en, this message translates to:
+  /// **'This category has no items. You can restore it from Recently deleted for 30 days.'**
+  String get menuDeleteCategoryEmpty;
+
+  /// Delete a category with items (FR-018).
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{This category has 1 item. What should happen to it?} other{This category has {count} items. What should happen to them?}}'**
+  String menuDeleteCategoryHasItems(int count);
+
+  /// Delete category option 1 (FR-018).
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Move the item to another category} other{Move the {count} items to another category}}'**
+  String menuDeleteModeMove(int count);
+
+  /// Delete category: no other category to move items to.
+  ///
+  /// In en, this message translates to:
+  /// **'Add another category first.'**
+  String get menuDeleteModeMoveNone;
+
+  /// Dropdown label: target category.
+  ///
+  /// In en, this message translates to:
+  /// **'Move items to'**
+  String get menuDeleteMoveTo;
+
+  /// Delete category option 2 (FR-018).
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Delete the category and its item} other{Delete the category and all {count} items}}'**
+  String menuDeleteModeAll(int count);
+
+  /// Typed confirmation (FR-018, AC-027).
+  ///
+  /// In en, this message translates to:
+  /// **'To confirm, type the category name: {name}'**
+  String menuDeleteTypeName(String name);
+
+  /// Note in delete dialogs (FR-098).
+  ///
+  /// In en, this message translates to:
+  /// **'Deleted content stays in Recently deleted for 30 days.'**
+  String get menuDeleteRestoreNote;
+
+  /// Confirm button: move items then delete the category.
+  ///
+  /// In en, this message translates to:
+  /// **'Move items and delete'**
+  String get menuDeleteMoveConfirm;
+
+  /// Confirm button: delete category and items.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Delete category and 1 item} other{Delete category and {count} items}}'**
+  String menuDeleteAllConfirm(int count);
+
+  /// Snack bar after a delete.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} moved to Recently deleted.'**
+  String menuDeletedToBin(String name);
+
+  /// Snack bar after deleting a category and moving its items.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} deleted. {count, plural, =1{1 item was moved.} other{{count} items were moved.}}'**
+  String menuCategoryDeletedMoved(String name, int count);
+
+  /// Search field hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search items'**
+  String get menuSearchHint;
+
+  /// Tooltip: clear the search.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear search'**
+  String get menuSearchClear;
+
+  /// Filter chip: unavailable items only (FRD 5.4).
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Sold out} other{Sold out ({count})}}'**
+  String menuFilterSoldOut(int count);
+
+  /// Filter chip: featured items only.
+  ///
+  /// In en, this message translates to:
+  /// **'Featured'**
+  String get menuFilterFeatured;
+
+  /// Empty state: category without items.
+  ///
+  /// In en, this message translates to:
+  /// **'No items yet'**
+  String get menuNoItemsTitle;
+
+  /// Empty state: category without items.
+  ///
+  /// In en, this message translates to:
+  /// **'Add the dishes and drinks in this category.'**
+  String get menuNoItemsMessage;
+
+  /// Empty state: no items at all.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a category and add your first item.'**
+  String get menuNoItemsAll;
+
+  /// Empty state: search or filters match nothing.
+  ///
+  /// In en, this message translates to:
+  /// **'No matching items'**
+  String get menuNoMatchTitle;
+
+  /// Empty state: search or filters match nothing.
+  ///
+  /// In en, this message translates to:
+  /// **'Try another search or clear the filters.'**
+  String get menuNoMatchMessage;
+
+  /// Item row: the item is unavailable (FR-026).
+  ///
+  /// In en, this message translates to:
+  /// **'Sold out'**
+  String get menuSoldOut;
+
+  /// Screen reader label of an item's availability switch (FR-025).
+  ///
+  /// In en, this message translates to:
+  /// **'{name} available'**
+  String menuAvailableLabel(String name);
+
+  /// Screen reader label of an item's bulk-select checkbox.
+  ///
+  /// In en, this message translates to:
+  /// **'Select {name}'**
+  String menuSelectItem(String name);
+
+  /// Screen reader label: select every listed item.
+  ///
+  /// In en, this message translates to:
+  /// **'Select all'**
+  String get menuSelectAll;
+
+  /// Bulk bar: number of selected items.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} selected'**
+  String menuSelectedCount(int count);
+
+  /// Bulk action: make items available.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark available'**
+  String get menuBulkAvailable;
+
+  /// Bulk action: make items unavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark sold out'**
+  String get menuBulkSoldOut;
+
+  /// Action: move items to another category (FR-097).
+  ///
+  /// In en, this message translates to:
+  /// **'Move to category'**
+  String get menuMoveToCategory;
+
+  /// Category picker title.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Move item to} other{Move {count} items to}}'**
+  String menuMoveItemsTitle(int count);
+
+  /// Snack bar after moving items.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Item moved to {name}.} other{{count} items moved to {name}.}}'**
+  String menuItemsMoved(int count, String name);
+
+  /// Delete items dialog title.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Delete this item?} other{Delete {count} items?}}'**
+  String menuDeleteItemsTitle(int count);
+
+  /// Delete items dialog message (FR-098).
+  ///
+  /// In en, this message translates to:
+  /// **'You can restore deleted items from Recently deleted for 30 days.'**
+  String get menuDeleteItemsMessage;
+
+  /// Button in the item editor.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete item'**
+  String get menuDeleteItem;
+
+  /// Item editor title.
+  ///
+  /// In en, this message translates to:
+  /// **'New item'**
+  String get menuItemNew;
+
+  /// Item editor title.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit item'**
+  String get menuItemEdit;
+
+  /// Field label.
+  ///
+  /// In en, this message translates to:
+  /// **'Item name'**
+  String get menuFieldItemName;
+
+  /// Field label.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get menuFieldCategory;
+
+  /// Field label.
+  ///
+  /// In en, this message translates to:
+  /// **'Price'**
+  String get menuFieldPrice;
+
+  /// Section label: exactly one label (FR-023).
+  ///
+  /// In en, this message translates to:
+  /// **'Dietary classification'**
+  String get menuFieldDietary;
+
+  /// Section label: optional tags (FR-033).
+  ///
+  /// In en, this message translates to:
+  /// **'Tags'**
+  String get menuFieldTags;
+
+  /// Switch: item availability (FR-025).
+  ///
+  /// In en, this message translates to:
+  /// **'Available'**
+  String get menuFieldAvailable;
+
+  /// Help for availability (FR-095).
+  ///
+  /// In en, this message translates to:
+  /// **'Turn off when sold out. Customers see it at once, without publishing.'**
+  String get menuFieldAvailableHelp;
+
+  /// Switch and label: featured item (FR-027).
+  ///
+  /// In en, this message translates to:
+  /// **'Featured'**
+  String get menuFieldFeatured;
+
+  /// Help for featured.
+  ///
+  /// In en, this message translates to:
+  /// **'Highlight this item on your menu.'**
+  String get menuFieldFeaturedHelp;
+
+  /// Shown when the platform label list is empty.
+  ///
+  /// In en, this message translates to:
+  /// **'Dietary labels are not available right now. Try again later.'**
+  String get menuLabelsUnavailable;
+
+  /// Snack bar after creating an item.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} added. You can add a photo now.'**
+  String menuItemAdded(String name);
+
+  /// Snack bar after saving an item.
+  ///
+  /// In en, this message translates to:
+  /// **'Changes saved to the draft.'**
+  String get menuItemSaved;
+
+  /// Editor footer: there are unsaved edits.
+  ///
+  /// In en, this message translates to:
+  /// **'Unsaved changes'**
+  String get menuUnsaved;
+
+  /// Dialog: leave the editor with unsaved edits.
+  ///
+  /// In en, this message translates to:
+  /// **'Discard changes?'**
+  String get menuDiscardTitle;
+
+  /// Dialog: leave the editor with unsaved edits.
+  ///
+  /// In en, this message translates to:
+  /// **'Your changes to this item will be lost.'**
+  String get menuDiscardMessage;
+
+  /// Editor: the item was deleted or moved.
+  ///
+  /// In en, this message translates to:
+  /// **'Item not found'**
+  String get menuItemGoneTitle;
+
+  /// Editor: the item was deleted.
+  ///
+  /// In en, this message translates to:
+  /// **'It may have been deleted on another device.'**
+  String get menuItemGoneMessage;
+
+  /// Category page: deleted elsewhere.
+  ///
+  /// In en, this message translates to:
+  /// **'Category not found'**
+  String get menuCategoryGoneTitle;
+
+  /// Category page: deleted elsewhere.
+  ///
+  /// In en, this message translates to:
+  /// **'It may have been deleted on another device.'**
+  String get menuCategoryGoneMessage;
+
+  /// Editor: no categories exist (BR-004).
+  ///
+  /// In en, this message translates to:
+  /// **'Add a category before adding items.'**
+  String get menuItemNeedsCategory;
+
+  /// Editor pane placeholder.
+  ///
+  /// In en, this message translates to:
+  /// **'No item selected'**
+  String get menuEditorEmptyTitle;
+
+  /// Editor pane placeholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose an item to edit it here, or add a new one.'**
+  String get menuEditorEmptyMessage;
+
+  /// Dialog title (BR-011).
+  ///
+  /// In en, this message translates to:
+  /// **'Plan limit reached'**
+  String get menuLimitTitle;
+
+  /// Plan limit dialog: items.
+  ///
+  /// In en, this message translates to:
+  /// **'{max, plural, =1{Your plan allows 1 item.} other{Your plan allows {max} items.}} Upgrade to add more, or delete items you no longer need.'**
+  String menuLimitItems(int max);
+
+  /// Plan limit dialog: categories.
+  ///
+  /// In en, this message translates to:
+  /// **'{max, plural, =1{Your plan allows 1 category.} other{Your plan allows {max} categories.}} Upgrade to add more, or delete categories you no longer need.'**
+  String menuLimitCategories(int max);
+
+  /// Plan limit dialog without details.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'ve reached a limit of your plan. Upgrade to add more.'**
+  String get menuLimitGeneric;
+
+  /// Recently deleted intro (FR-098).
+  ///
+  /// In en, this message translates to:
+  /// **'Deleted categories and items can be restored for 30 days. Restored content goes back to your draft; publish to show it to customers.'**
+  String get menuDeletedIntro;
+
+  /// Recently deleted empty state.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing deleted'**
+  String get menuDeletedEmptyTitle;
+
+  /// Recently deleted empty state.
+  ///
+  /// In en, this message translates to:
+  /// **'Categories and items you delete appear here for 30 days.'**
+  String get menuDeletedEmptyMessage;
+
+  /// Time left to restore (FR-098).
+  ///
+  /// In en, this message translates to:
+  /// **'{days, plural, =0{Less than a day left} =1{1 day left} other{{days} days left}}'**
+  String menuDeletedDaysLeft(int days);
+
+  /// Deleted category: items that come back with it.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{With 1 item} other{With {count} items}}'**
+  String menuDeletedWithItems(int count);
+
+  /// Deleted item whose category is deleted too.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} (deleted)'**
+  String menuDeletedCategoryGone(String name);
+
+  /// Screen reader label of a Restore button.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore {name}'**
+  String menuRestoreLabel(String name);
+
+  /// Category picker title when an item's category is deleted (BR-004).
+  ///
+  /// In en, this message translates to:
+  /// **'Restore {name} into'**
+  String menuRestoreInto(String name);
+
+  /// No category to restore an item into.
+  ///
+  /// In en, this message translates to:
+  /// **'Add or restore a category first.'**
+  String get menuRestoreNeedsCategory;
+
+  /// Snack bar after a restore.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} restored to your draft.'**
+  String menuRestored(String name);
+
+  /// Plans screen title.
+  ///
+  /// In en, this message translates to:
+  /// **'Plans'**
+  String get planTitle;
+
+  /// Plans placeholder until M10.
+  ///
+  /// In en, this message translates to:
+  /// **'Upgrading from the app is coming soon. Contact EazySuvai support to change your plan.'**
+  String get planComingSoon;
 }
 
 class _AppLocalizationsDelegate

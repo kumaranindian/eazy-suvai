@@ -411,4 +411,31 @@ class CoreLocalizationsEn extends CoreLocalizations {
 
   @override
   String get currencyUSD => 'US dollar';
+
+  @override
+  String get errorCategoryDeleted =>
+      'That category has been deleted. Choose another category.';
+
+  @override
+  String get priceRequired => 'Enter a price.';
+
+  @override
+  String priceInvalid(String example) {
+    return 'Enter a price like $example.';
+  }
+
+  @override
+  String get priceTooHigh => 'That price is too high.';
+
+  @override
+  String priceDecimalsHelp(String code, int decimals) {
+    String _temp0 = intl.Intl.pluralLogic(
+      decimals,
+      locale: localeName,
+      other: '$decimals decimal places',
+      one: '1 decimal place',
+      zero: 'no decimal places',
+    );
+    return '$code prices have $_temp0.';
+  }
 }

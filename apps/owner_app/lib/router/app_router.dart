@@ -10,6 +10,10 @@ import '../features/auth/presentation/sign_up_page.dart';
 import '../features/auth/presentation/verify_email_page.dart';
 import '../features/home/presentation/dashboard_page.dart';
 import '../features/home/presentation/placeholder_page.dart';
+import '../features/home/presentation/plan_page.dart';
+import '../features/menu/application/menu_state.dart';
+import '../features/menu/presentation/menu_page.dart';
+import '../features/menu/presentation/recently_deleted_page.dart';
 import '../features/restaurant/presentation/menu_link_page.dart';
 import '../features/restaurant/presentation/opening_hours_page.dart';
 import '../features/restaurant/presentation/profile_page.dart';
@@ -43,6 +47,17 @@ abstract final class Routes {
   static const hours = '/settings/hours';
   static const regional = '/settings/regional';
   static const menuLink = '/settings/menu-link';
+
+  // M04: menu management.
+  static const menuDeleted = '/menu/deleted';
+  static String menuCategory(String id) => '/menu/category/$id';
+  static String menuItem(String id) => '/menu/item/$id';
+  static String menuNewItem([String? categoryId]) => categoryId == null
+      ? '/menu/item/new'
+      : '/menu/item/new?category=${Uri.encodeQueryComponent(categoryId)}';
+
+  /// Where "Upgrade" leads (M10 replaces the page).
+  static const plan = '/settings/plan';
 }
 
 /// Account screens switch without a transition. The guard can move a user
@@ -118,19 +133,52 @@ GoRouter appRouter(Ref ref) {
               ),
             ],
           ),
-          for (final (path, section) in const [
-            (Routes.menu, OwnerSection.menu),
-            (Routes.share, OwnerSection.share),
-          ])
-            StatefulShellBranch(
-              routes: [
-                GoRoute(
-                  path: path,
-                  builder: (context, state) =>
-                      PlaceholderPage(section: section),
-                ),
-              ],
-            ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: Routes.menu,
+                builder: (context, state) => const MenuPage(),
+                routes: [
+                  GoRoute(
+                    path: 'category/:cid',
+                    builder: (context, state) => CategoryItemsPage(
+                      categoryId: state.pathParameters['cid']!,
+                    ),
+                  ),
+                  GoRoute(
+                    path: 'deleted',
+                    builder: (context, state) => const RecentlyDeletedPage(),
+                  ),
+                  // The item editor covers the navigation bar on phones.
+                  GoRoute(
+                    path: 'item/new',
+                    parentNavigatorKey: _rootKey,
+                    builder: (context, state) => ItemEditorPage(
+                      target: EditorTarget.create(
+                        state.uri.queryParameters['category'],
+                      ),
+                    ),
+                  ),
+                  GoRoute(
+                    path: 'item/:iid',
+                    parentNavigatorKey: _rootKey,
+                    builder: (context, state) => ItemEditorPage(
+                      target: EditorTarget.item(state.pathParameters['iid']!),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: Routes.share,
+                builder: (context, state) =>
+                    const PlaceholderPage(section: OwnerSection.share),
+              ),
+            ],
+          ),
           StatefulShellBranch(
             routes: [
               GoRoute(
@@ -152,6 +200,10 @@ GoRouter appRouter(Ref ref) {
                   GoRoute(
                     path: 'menu-link',
                     builder: (context, state) => const MenuLinkPage(),
+                  ),
+                  GoRoute(
+                    path: 'plan',
+                    builder: (context, state) => const PlanPage(),
                   ),
                 ],
               ),

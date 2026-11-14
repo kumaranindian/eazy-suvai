@@ -14,7 +14,7 @@ Status values: `Not started` · `In progress` · `Blocked` · `Done`
 | M01 | Authentication and accounts | `M01-authentication.md` | M00 | Done | 2026-11-14 | 2026-11-14 | Sign-up, verify, login, reset, claims, guards, cleanup, admin TOTP. Open: Identity Platform TOTP on a real project (approval), auth project settings, FR-091 24 h link expiry. |
 | M02 | Media management | `M02-media.md` | M00 | Done | 2026-11-14 | 2026-11-14 | Storage rules, `processImage` (sharp: magic bytes, minimum sizes, EXIF strip, WebP 320/640/1280), `ImagePickerField`, `ResponsiveImage`, upload with progress and cancel; web verified end to end. Open: Android/iOS device run, real-bucket setup (CORS, cross-service rules, Blaze). |
 | M03 | Restaurant onboarding and profile | `M03-restaurant-profile.md` | M01, M02 | Done | 2026-11-14 | 2026-11-14 | Setup wizard, dashboard checklist, profile with autosave and live preview, opening hours, currency/time zone (FR-103), `changeSlug`, `onRestaurantUpdated`, rules whitelist with value checks; Chrome end to end. Open: device runs, slug-change rate limit (decision). |
-| M04 | Menu management (categories and items) | `M04-menu-management.md` | M03 | Not started | | | |
+| M04 | Menu management (categories and items) | `M04-menu-management.md` | M03 | Done | 2026-11-14 | 2026-11-14 | Callables (create, delete, move, restore; plan limits in a transaction), triggers (counts, `draftUpdatedAt`, `live/availability`), rules whitelist, price field in minor units, labels/tags seed, menu manager at 1/2/3 panes, Recently deleted; Chrome end to end. Open: device runs, seed labels on real projects. |
 | M05 | Menu customization (themes) | `M05-customization.md` | M03 | Not started | | | |
 | M06 | Preview, publishing and versions | `M06-publishing.md` | M04, M05 | Not started | | | |
 | M07 | Public digital menu | `M07-public-menu.md` | M06 | Not started | | | |
@@ -115,6 +115,25 @@ Add a dated line whenever a module changes something another module depends on.
   - Detail routes inside the shell bring their own `AppBar` (`OwnerShell(showAppBar:)`).
   - Widget tests: `pumpOwnerApp(..., restaurant: FakeRestaurantRepository(restaurantData({...})))`. The default restaurant has finished setup.
 - 2026-11-14 (M03): **Tooling:** `tool/integration.sh` also runs `profile_flow_test.dart`. The M01 end-to-end test skips the wizard after the first sign-in.
+
+- 2026-11-14 (M04): **Menu documents** (architecture §4.2):
+  - `categories/{cid}`: `{name, description, image, sequence, active, deletedAt, createdAt, updatedAt}`.
+  - `items/{iid}`: `{categoryId, name, description, image, priceMinor, dietaryLabelId, tagIds, available, featured, sequence, hiddenOverLimit, deletedAt, deletedWith, createdAt, updatedAt}`.
+  - `deletedAt` is `null` when live (query `deletedAt == null`). `deletedWith` is the category an item was deleted together with.
+  - Order is `sequence` ascending, ties by id (`compareSequenced` in core); gaps of 1000.
+  - Only non-deleted, active categories and non-deleted, non-`hiddenOverLimit` items go public (M06 snapshot).
+- 2026-11-14 (M04): **Callables:**
+  - `createCategory`, `createItem`, `deleteCategory({mode: 'move'|'deleteAll', targetCategoryId?, confirmName?})`, **`deleteItems`** (new, not in the original plan), `moveItems`, `restoreDeleted({kind, id, targetCategoryId?})`.
+  - Each counts live documents inside its transaction and writes the root's `counts` and `draftUpdatedAt`; the triggers only recount.
+  - Errors: `limit-reached` with details `{limit: 'items'|'categories', max, planId}`, and the new code `category-deleted`.
+- 2026-11-14 (M04): **Plan limits:** `getPlanLimits(read, planId)` in `functions/src/lib/plan-limits.ts` reads `plans/{planId}.limits.{maxItems, maxCategories}` (`null` or negative = unlimited) and falls back to the FRD values (Free 50/10, Pro 500/unlimited). M10 seeds the plans and extends this helper rather than writing a second one.
+- 2026-11-14 (M04): **`live/availability`** = `{items: {iid: bool}, updatedAt}`, written by `onItemWrite` on every availability change (and on create); the key is removed when an item document is deleted. M07 lays it over the published snapshot. M06 may reset it on publish but doesn't have to (it always holds the current value). An availability-only change does **not** bump `draftUpdatedAt` (BR-018).
+- 2026-11-14 (M04): **Platform labels:** `dietaryLabels/{id}` and `itemTags/{id}` = `{name, icon, color, sort, retired}`, seeded by `functions/scripts/seed-platform.mjs` (ids `vegetarian`, `non-vegetarian`, `vegan`, `contains-egg`; `spicy`, `bestseller`, `chefs-special`, `new`). `icon` is a key drawn by `MenuLabelIcon` in core (`veg`, `nonVeg`, `vegan`, `egg`, `spicy`, `bestseller`, `chefsSpecial`, `new`). M11's `upsertLabel`/`upsertTag` keep this shape; retiring sets `retired: true` (never delete, FR-104). The rules check that an item's `dietaryLabelId` exists, not its tags; M06 drops unknown tag ids.
+- 2026-11-14 (M04): **Owner app:**
+  - Routes `/menu`, `/menu/category/:cid`, `/menu/item/new?category=`, `/menu/item/:iid` (root navigator), `/menu/deleted`, and `/settings/plan` (`PlanPage` placeholder, which M10 replaces; the plan-limit prompt's "Upgrade" goes there).
+  - Core adds `MenuCategory`, `MenuItem`, `MenuLabel`, `MenuLimits`, `sequencesAfterMove`, `PriceField` / `parsePriceMinor` and `MenuLabelBadge` (reuse in the M06 preview and the M11 label admin).
+  - Widget tests: `pumpOwnerApp(..., menu: FakeMenuRepository(...))` (`test/fake_menu.dart`, `sampleMenu()`).
+- 2026-11-14 (M04): **Tooling:** `tool/integration.sh` also runs `menu_flow_test.dart`. Seed labels on the emulators with `FIRESTORE_EMULATOR_HOST=localhost:8080 node functions/scripts/seed-platform.mjs --project demo-eazysuvai` (after `npm run build`).
 
 ## Open decisions
 

@@ -10,8 +10,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:owner_app/app.dart';
 import 'package:owner_app/features/auth/data/registration_repository.dart';
+import 'package:owner_app/features/menu/data/menu_repository.dart';
 import 'package:owner_app/features/restaurant/data/restaurant_repository.dart';
 import 'package:owner_app/router/app_router.dart';
+
+import 'fake_menu.dart';
 
 /// Stands in for the `completeRegistration` callable: sets owner claims on
 /// the fake auth user, like the real function does.
@@ -182,6 +185,7 @@ class TestApp {
     this.registration,
     this.restaurant,
     this.resolver,
+    this.menu,
   );
 
   final WidgetTester tester;
@@ -189,6 +193,7 @@ class TestApp {
   final FakeRegistrationRepository registration;
   final FakeRestaurantRepository restaurant;
   final FakeStorageImageResolver resolver;
+  final FakeMenuRepository menu;
 
   ProviderContainer get container =>
       ProviderScope.containerOf(tester.element(find.byType(OwnerApp)));
@@ -250,17 +255,20 @@ Future<void> setWidth(
 Future<TestApp> pumpOwnerApp(
   WidgetTester tester, {
   double width = 360,
+  double height = 900,
   List<FakeUser> users = const [],
   FakeUser? signedIn,
   FakeRestaurantRepository? restaurant,
+  FakeMenuRepository? menu,
   List<Override> overrides = const [],
 }) async {
-  await setWidth(tester, width);
+  await setWidth(tester, width, height: height);
   final auth = FakeAuthRepository(users: [...users, ?signedIn]);
   if (signedIn != null) auth.current = signedIn;
   final registration = FakeRegistrationRepository(auth);
   final restaurants = restaurant ?? FakeRestaurantRepository();
   final resolver = FakeStorageImageResolver();
+  final menus = menu ?? FakeMenuRepository();
   await tester.pumpWidget(
     ProviderScope(
       overrides: [
@@ -268,11 +276,12 @@ Future<TestApp> pumpOwnerApp(
         registrationRepositoryProvider.overrideWithValue(registration),
         restaurantRepositoryProvider.overrideWithValue(restaurants),
         storageImageResolverProvider.overrideWithValue(resolver),
+        menuRepositoryProvider.overrideWithValue(menus),
         ...overrides,
       ],
       child: const OwnerApp(),
     ),
   );
   await tester.pumpAndSettle();
-  return TestApp(tester, auth, registration, restaurants, resolver);
+  return TestApp(tester, auth, registration, restaurants, resolver, menus);
 }
