@@ -1,15 +1,15 @@
 {
   "projects": {
-    "default": "eazysuvai-dev",
-    "dev": "eazysuvai-dev",
+    "default": "eazy-suvai-dev",
+    "dev": "eazy-suvai-dev",
     "prod": "eazysuvai-prod"
   },
   "targets": {
-    "eazysuvai-dev": {
+    "eazy-suvai-dev": {
       "hosting": {
-        "app": ["eazysuvai-dev-app"],
-        "admin": ["eazysuvai-dev-admin"],
-        "menu": ["eazysuvai-dev-menu"]
+        "app": ["eazy-suvai-dev-app"],
+        "admin": ["eazy-suvai-dev-admin"],
+        "menu": ["eazy-suvai-dev-menu"]
       }
     },
     "eazysuvai-prod": {

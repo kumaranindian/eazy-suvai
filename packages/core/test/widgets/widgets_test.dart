@@ -153,7 +153,7 @@ void main() {
     final prod = AppEnv.parse(envName: 'prod', useEmulators: true);
     expect(prod.useEmulators, isFalse, reason: 'prod never uses emulators');
     expect(prod.projectId, 'eazysuvai-prod');
-    expect(AppEnv.parse(envName: 'dev').projectId, 'eazysuvai-dev');
+    expect(AppEnv.parse(envName: 'dev').projectId, 'eazy-suvai-dev');
     expect(() => AppEnv.parse(envName: 'staging'), throwsArgumentError);
   });
 }

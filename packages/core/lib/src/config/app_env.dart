@@ -10,7 +10,7 @@ enum AppEnvironment { dev, prod }
 /// ```
 ///
 /// * `ENV`: `dev` (default) or `prod`. Picks the Firebase project
-///   `eazysuvai-dev` or `eazysuvai-prod`.
+///   `eazy-suvai-dev` or `eazysuvai-prod`.
 /// * `USE_EMULATORS`: `true` connects to the local Emulator Suite under the
 ///   demo project `demo-eazysuvai` and never touches a real project.
 ///   Ignored (forced off) when `ENV=prod`.
@@ -67,7 +67,7 @@ class AppEnv {
   /// Firebase project id this build talks to.
   String get projectId => useEmulators
       ? demoProjectId
-      : (isProd ? 'eazysuvai-prod' : 'eazysuvai-dev');
+      : (isProd ? 'eazysuvai-prod' : 'eazy-suvai-dev');
 
   /// Demo project used with the Emulator Suite. A `demo-` prefix makes the
   /// emulators refuse to reach any real Google service.

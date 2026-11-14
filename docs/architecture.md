@@ -139,7 +139,7 @@ The repo is a Dart pub workspace (root `pubspec.yaml` lists `apps/*` and `packag
 
 - **State:** Riverpod (code generation). **Routing:** go_router with auth and role guards. **Models:** freezed + json_serializable.
 - **Feature-first folders** inside each app: `lib/features/<feature>/{data,domain,presentation}`.
-- **Environments:** two Firebase projects, `eazysuvai-dev` and `eazysuvai-prod`, selected with `--dart-define=ENV=dev|prod` and generated `firebase_options_*.dart`.
+- **Environments:** two Firebase projects, `eazy-suvai-dev` and `eazysuvai-prod`, selected with `--dart-define=ENV=dev|prod` and generated `firebase_options_*.dart`.
 - **Brand:** primary orange `#FF7A00` (decorative and large text), deep orange `#C8650A` (large text and icons on light backgrounds), charcoal `#2B2B2B`, leaf green `#4C9A2A`, background `#FFFFFF` / `#FFF8EE`. Logo files in `docs/brand/`.
 - **Accessible text colours (M00):** `#C8650A` is only about 3.9:1 on white and `#4C9A2A` about 3.5:1, both below WCAG AA for normal text. Normal-size text, links and filled-button backgrounds therefore use `#A8550A` (orange, about 5.3:1 on white and 5.0:1 on cream) and `#3B7A20` (green, about 5.2:1). Dark mode uses `#FF7A00` as primary on a charcoal surface. Defined in `packages/core/lib/src/theme/brand_colors.dart`; `app_theme_test.dart` checks every pair. The public menu (M07) must apply the same rule to restaurant theme colours.
 

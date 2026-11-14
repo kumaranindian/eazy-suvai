@@ -99,8 +99,8 @@ Delivered: 45 tests in `packages/core` (money, time, breakpoints/shell incl. RTL
 
 ## Open items
 
-- **Firebase projects not created.** `firebase projects:create eazysuvai-dev` failed: "you have exceeded your allotted project quota". Free up quota or request more, then follow README → "Connecting the real projects" (create both projects in asia-south1, run `flutterfire configure` for each app and env, create the 6 Hosting sites, enable TTL on `auditLogs.expireAt` and `analyticsEvents.expireAt`). The apps run on the emulators until then. Running with `USE_EMULATORS=false` throws a clear error.
-- **CI not yet run on GitHub Actions.** The folder had no git remote. `tool/check.sh` (what CI runs) passes on a clean export. Push to GitHub and confirm the three jobs are green.
+- **Firebase projects not created.** (2026-11-14: dev now exists as `eazy-suvai-dev`; web options are in both apps. Still to do for dev: Android/iOS options, Hosting sites, TTL policies, Auth settings. Prod is still pending.) `firebase projects:create eazysuvai-dev` failed: "you have exceeded your allotted project quota". Free up quota or request more, then follow README → "Connecting the real projects" (create both projects in asia-south1, run `flutterfire configure` for each app and env, create the 6 Hosting sites, enable TTL on `auditLogs.expireAt` and `analyticsEvents.expireAt`). The apps run on the emulators until then. Running with `USE_EMULATORS=false` throws a clear error.
+- **CI not yet run on GitHub Actions.** The folder had no git remote. `tool/check.sh` (what CI runs) passes on a clean export. Push to GitHub and confirm the three jobs are green. (2026-11-14: done, all jobs green on run 43594923640.)
 - **iOS build not verified.** Windows can't build iOS. The Android debug APK builds.
 - **Brand assets duplicated at the repo root** (`eazysuvai-brand-kit/`, `EazySuvai Taste Meets Technology Logo.png`). Left untracked for the owner to keep or delete. `docs/brand/` is the source.
 - Android `applicationId` is `com.avail404.eazysuvai.owner_app` and the iOS bundle ID is `com.avail404.eazysuvai.ownerApp` (Flutter defaults). Confirm the final store IDs before the first store upload (M13).
@@ -108,4 +108,5 @@ Delivered: 45 tests in `packages/core` (money, time, breakpoints/shell incl. RTL
 ## Change log
 
 - 2026-11-14: Plan created.
+- 2026-11-14: Dev project `eazy-suvai-dev` connected (web options in both apps; project id renamed in `.firebaserc`, `AppEnv`, docs).
 - 2026-11-14: Module built. Status Done, with open items: real Firebase projects (quota) and the first GitHub Actions run. Functions moved to Node 22; accessible text colours added.

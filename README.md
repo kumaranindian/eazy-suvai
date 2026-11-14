@@ -64,7 +64,7 @@ Build the functions first (`cd functions && npm run build`); the Functions emula
   ```
 
   On a real project, run the same script without the emulator variables and with
-  `--project eazysuvai-dev` after the person has signed up and verified their email. They enrol an
+  `--project eazy-suvai-dev` after the person has signed up and verified their email. They enrol an
   authenticator app the first time they sign in to the admin app.
 
 On the Android emulator the apps reach the host at `10.0.2.2` automatically. On a physical device add
@@ -83,25 +83,25 @@ On the Android emulator the apps reach the host at `10.0.2.2` automatically. On 
 
 | `--dart-define=ENV=` | Firebase project | Firebase CLI alias |
 | --- | --- | --- |
-| `dev` (default) | `eazysuvai-dev` | `firebase use dev` |
+| `dev` (default) | `eazy-suvai-dev` | `firebase use dev` |
 | `prod` | `eazysuvai-prod` | `firebase use prod` |
 
 `USE_EMULATORS` is ignored for `prod`.
 
 ### Connecting the real projects (one-time)
 
-The Firebase options files in each app are placeholders until the projects exist.
+Dev (`eazy-suvai-dev`) has web options in both apps (`lib/firebase_options_dev.dart`, from the Firebase console). Android/iOS options for dev and all prod options are still placeholders.
 
-1. Create `eazysuvai-dev` and `eazysuvai-prod` in the Firebase console. Pick location `asia-south1` for Firestore and Storage.
+1. Create `eazy-suvai-dev` and `eazysuvai-prod` in the Firebase console. Pick location `asia-south1` for Firestore and Storage.
 2. Install the FlutterFire CLI: `dart pub global activate flutterfire_cli`.
 3. Generate the options:
 
    ```bash
    cd apps/owner_app
-   flutterfire configure --project=eazysuvai-dev  --out=lib/firebase_options_dev.dart  --platforms=web,android,ios
+   flutterfire configure --project=eazy-suvai-dev  --out=lib/firebase_options_dev.dart  --platforms=web,android,ios
    flutterfire configure --project=eazysuvai-prod --out=lib/firebase_options_prod.dart --platforms=web,android,ios
    cd ../admin_app
-   flutterfire configure --project=eazysuvai-dev  --out=lib/firebase_options_dev.dart  --platforms=web
+   flutterfire configure --project=eazy-suvai-dev  --out=lib/firebase_options_dev.dart  --platforms=web
    flutterfire configure --project=eazysuvai-prod --out=lib/firebase_options_prod.dart --platforms=web
    ```
 
@@ -111,9 +111,9 @@ The Firebase options files in each app are placeholders until the projects exist
 
    ```bash
    firebase use dev
-   firebase hosting:sites:create eazysuvai-dev-app
-   firebase hosting:sites:create eazysuvai-dev-admin
-   firebase hosting:sites:create eazysuvai-dev-menu
+   firebase hosting:sites:create eazy-suvai-dev-app
+   firebase hosting:sites:create eazy-suvai-dev-admin
+   firebase hosting:sites:create eazy-suvai-dev-menu
    # repeat with prod
    ```
 

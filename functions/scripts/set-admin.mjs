@@ -7,7 +7,7 @@
 //
 // Real project (uses Application Default Credentials: `gcloud auth application-default login`).
 // The user must already exist and have verified their email (TOTP enrolment needs it):
-//   node scripts/set-admin.mjs --project eazysuvai-dev --email you@avail404.com
+//   node scripts/set-admin.mjs --project eazy-suvai-dev --email you@avail404.com
 //
 // The admin then signs in to the admin app and enrols an authenticator app (FR-084).
 import { parseArgs } from "node:util";
