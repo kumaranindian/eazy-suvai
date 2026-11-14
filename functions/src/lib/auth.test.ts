@@ -1,6 +1,13 @@
 import { HttpsError } from "firebase-functions/v2/https";
 
-import { assertAdmin, assertOwner, assertSignedIn, type CallerAuth, type DocReader } from "./auth";
+import {
+  assertAdmin,
+  assertOwner,
+  assertSignedIn,
+  isDemoEmulator,
+  type CallerAuth,
+  type DocReader,
+} from "./auth";
 import { appErrorCodeOf } from "./errors";
 
 const RID = "rest_1";
@@ -109,8 +116,28 @@ describe("assertOwner", () => {
 });
 
 describe("assertAdmin", () => {
-  it("accepts a platform admin", () => {
-    expect(assertAdmin({ uid: "a1", token: { role: "platformAdmin" } })).toEqual({ uid: "a1" });
+  const mfaAdmin = { uid: "a1", token: { role: "platformAdmin", firebase: { sign_in_second_factor: "totp" } } };
+
+  it("accepts a platform admin who signed in with TOTP", () => {
+    expect(assertAdmin(mfaAdmin)).toEqual({ uid: "a1" });
+  });
+
+  it("rejects a platform admin without a second factor (FR-084)", () => {
+    try {
+      assertAdmin({ uid: "a1", token: { role: "platformAdmin" } });
+      throw new Error("expected rejection");
+    } catch (e) {
+      expect(appErrorCodeOf(e)).toBe("mfa-required");
+    }
+    expect(assertAdmin({ uid: "a1", token: { role: "platformAdmin" } }, { requireMfa: false })).toEqual({
+      uid: "a1",
+    });
+  });
+
+  it("skips MFA only on the functions emulator with a demo project", () => {
+    expect(isDemoEmulator({ FUNCTIONS_EMULATOR: "true", GCLOUD_PROJECT: "demo-eazysuvai" })).toBe(true);
+    expect(isDemoEmulator({ FUNCTIONS_EMULATOR: "true", GCLOUD_PROJECT: "eazysuvai-prod" })).toBe(false);
+    expect(isDemoEmulator({ GCLOUD_PROJECT: "demo-eazysuvai" })).toBe(false);
   });
 
   it("rejects owners and signed-out callers", () => {

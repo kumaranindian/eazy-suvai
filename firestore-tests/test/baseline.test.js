@@ -1,6 +1,6 @@
-// M00 baseline: with deny-all rules, nobody can read or write anything from a
-// client. Later modules replace these expectations path by path as they open
-// access, and add a test file per collection.
+// Baseline: nobody can read or write anything from a client except the paths
+// a module has opened (listed in OPENED below and tested in their own file).
+// Later modules add their paths to OPENED and a test file per collection.
 import { after, before, beforeEach, describe, it } from "node:test";
 
 import { assertFails } from "@firebase/rules-unit-testing";
@@ -52,10 +52,14 @@ beforeEach(async () => {
 const callers = {
   "unauthenticated user": () => env.unauthenticatedContext(),
   "signed-in user with no claims": () => env.authenticatedContext("stranger"),
-  "verified owner (until each module opens its paths)": () =>
-    env.authenticatedContext("u1", ownerClaims(RID)),
-  "platform admin (admins go through Functions)": () =>
-    env.authenticatedContext("admin1", adminClaims),
+  "verified owner": () => env.authenticatedContext("u1", ownerClaims(RID)),
+  "platform admin without MFA": () => env.authenticatedContext("admin1", adminClaims),
+};
+
+// Paths each caller may read, opened by a module (M01: users.test.js,
+// restaurants.test.js). Everything else stays denied.
+const OPENED = {
+  "verified owner": ["users/u1", `restaurants/${RID}`],
 };
 
 describe("Firestore deny-all baseline", () => {
@@ -64,6 +68,7 @@ describe("Firestore deny-all baseline", () => {
       it("cannot read any document", async () => {
         const db = context().firestore();
         for (const path of Object.keys(SEED)) {
+          if (OPENED[who]?.includes(path)) continue;
           await assertFails(getDoc(doc(db, path)));
         }
       });

@@ -47,6 +47,26 @@ cd apps/admin_app
 flutter run -d chrome --dart-define=ENV=dev --dart-define=USE_EMULATORS=true
 ```
 
+Build the functions first (`cd functions && npm run build`); the Functions emulator serves `functions/lib`.
+
+### Trying the account flows (M01)
+
+- **Owner sign-up:** open the owner app, choose *Create an account*. The verification email is not sent
+  for real: the Auth emulator prints the link in Terminal 1 (and lists it in the Emulator UI → Authentication).
+  Open the link, then sign in. Password reset links appear the same way.
+- **First platform admin:** the emulator has no TOTP, so on the emulators the admin app and `assertAdmin`
+  accept an admin without a second factor (Firestore rules still require it). Create one with:
+
+  ```bash
+  cd functions
+  FIREBASE_AUTH_EMULATOR_HOST=localhost:9099 FIRESTORE_EMULATOR_HOST=localhost:8080 \
+    node scripts/set-admin.mjs --project demo-eazysuvai --email admin@example.com --password 'Admin12345!'
+  ```
+
+  On a real project, run the same script without the emulator variables and with
+  `--project eazysuvai-dev` after the person has signed up and verified their email. They enrol an
+  authenticator app the first time they sign in to the admin app.
+
 On the Android emulator the apps reach the host at `10.0.2.2` automatically. On a physical device add
 `--dart-define=EMULATOR_HOST=<your computer's LAN IP>`.
 
@@ -106,6 +126,10 @@ bash tool/check.sh            # everything CI runs
 bash tool/check.sh flutter    # gen-l10n + build_runner + format + analyze + tests
 bash tool/check.sh functions  # lint + build + jest
 bash tool/check.sh rules      # rules tests on the Firestore and Storage emulators
+bash tool/check.sh emulators  # functions tests on the Auth, Firestore and Functions emulators
+
+# Owner app end-to-end in headless Chrome on the emulators (needs a chromedriver matching Chrome)
+CHROMEDRIVER=/path/to/chromedriver bash tool/integration.sh
 ```
 
 Generated files (`lib/**/l10n/generated/`, `*.g.dart`) are committed. `tool/check.sh flutter` regenerates

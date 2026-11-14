@@ -13,11 +13,13 @@
     "test": "jest",
     "serve": "npm run build && firebase emulators:start --only functions",
     "deploy": "firebase deploy --only functions",
-    "logs": "firebase functions:log"
+    "logs": "firebase functions:log",
+    "test:emulators": "npm run build && firebase emulators:exec --project demo-eazysuvai --only auth,firestore,functions --config ../firebase.json \"jest -c jest.emulator.config.js\""
   },
   "dependencies": {
     "firebase-admin": "^14.5.1",
     "firebase-functions": "^7.4.0",
+    "libphonenumber-js": "^1.13.16",
     "zod": "^4.6.7"
   },
   "devDependencies": {

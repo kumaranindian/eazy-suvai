@@ -19,7 +19,7 @@ M01 (admin login and MFA), M03 (restaurant data).
 ## Inputs from other modules
 
 - M00 (done 2026-11-14): admin shell sections are `AdminSection` (dashboard, restaurants, plans, settings) in `apps/admin_app/lib/features/shell/`. `assertAdmin()` should also check the second factor once Identity Platform MFA is on (see the comment in `functions/src/lib/auth.ts`).
-- M01: admin login with TOTP MFA; `setAdminRole` bootstrap.
+- M01 (done 2026-11-14): admin `/sign-in` with the TOTP challenge and `/mfa-setup` enrolment; guard `adminRedirect`. `assertAdmin()` and the rules' `isAdmin()` already require `sign_in_second_factor == 'totp'` (relaxed in `assertAdmin` only on the demo emulator). First admin: `functions/scripts/set-admin.mjs` (claims `{role: 'platformAdmin'}`, `users/{uid}`, audit `admin.grant`, refresh tokens revoked); `setAdminRole` should keep the same claim shape. Real TOTP needs Identity Platform on the project (M01 Open items).
 - M10: upgrade-request queue and record-payment form are placed in this app's navigation.
 - M12: audit log viewer is placed in this app's navigation.
 

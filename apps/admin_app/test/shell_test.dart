@@ -5,13 +5,16 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:admin_app/app.dart';
 import 'package:admin_app/router/app_router.dart';
 
-Future<void> pumpApp(WidgetTester tester, double width) async {
-  tester.view.devicePixelRatio = 1;
-  tester.view.physicalSize = Size(width, 900);
-  addTearDown(tester.view.reset);
-  await tester.pumpWidget(const ProviderScope(child: AdminApp()));
-  await tester.pumpAndSettle();
-}
+import 'package:admin_app/features/shell/presentation/admin_shell.dart';
+
+import 'helpers.dart';
+
+Future<void> pumpApp(WidgetTester tester, double width) => pumpAdminApp(
+  tester,
+  width: width,
+  signedIn: adminUser(totp: true),
+  secondFactor: 'totp',
+);
 
 void main() {
   const cases = [
@@ -56,9 +59,17 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.widgetWithText(AppBar, title), findsOneWidget, reason: path);
     }
+    // A signed-in admin who opens /sign-in is sent to the dashboard.
     router.go(Routes.signIn);
     await tester.pumpAndSettle();
-    expect(find.widgetWithText(AppBar, 'Sign in'), findsOneWidget);
+    expect(find.widgetWithText(AppBar, 'Dashboard'), findsOneWidget);
+  });
+
+  testWidgets('sign out returns to sign-in', (tester) async {
+    await pumpApp(tester, 768);
+    await tester.tap(find.byKey(AdminShell.signOutKey));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('admin.email')), findsOneWidget);
   });
 
   testWidgets('unknown route shows not found', (tester) async {

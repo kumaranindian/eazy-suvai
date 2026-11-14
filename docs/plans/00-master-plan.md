@@ -11,7 +11,7 @@ Status values: `Not started` · `In progress` · `Blocked` · `Done`
 | # | Module | Plan file | Depends on | Status | Started | Completed | Note |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | M00 | Foundation and project setup | `M00-foundation.md` | – | Done | 2026-11-14 | 2026-11-14 | Workspace, core, shells, rules, functions lib, CI. Open: real Firebase projects (quota) and the first GitHub Actions run. |
-| M01 | Authentication and accounts | `M01-authentication.md` | M00 | Not started | | | |
+| M01 | Authentication and accounts | `M01-authentication.md` | M00 | Done | 2026-11-14 | 2026-11-14 | Sign-up, verify, login, reset, claims, guards, cleanup, admin TOTP. Open: Identity Platform TOTP on a real project (approval), auth project settings, FR-091 24 h link expiry. |
 | M02 | Media management | `M02-media.md` | M00 | Not started | | | |
 | M03 | Restaurant onboarding and profile | `M03-restaurant-profile.md` | M01, M02 | Not started | | | |
 | M04 | Menu management (categories and items) | `M04-menu-management.md` | M03 | Not started | | | |
@@ -69,10 +69,21 @@ Add a dated line whenever a module changes something another module depends on.
 - 2026-11-14 (M00): Normal-size text must use `BrandColors.orangeText` / `greenText` (AA). `#FF7A00` and `#C8650A` are for large text and decoration only. M05/M07 must check restaurant theme colours for contrast (architecture §6).
 - 2026-11-14 (M00): Emulator runs use project `demo-eazysuvai` (`--dart-define=USE_EMULATORS=true`). Real `eazysuvai-dev`/`-prod` projects are not created yet (quota). See M00 Open items.
 - 2026-11-14 (M00): The `menu` Hosting target serves the static placeholder `hosting/menu/`. M07 replaces it with a rewrite of `**` to `renderMenu`.
+- 2026-11-14 (M01): **Custom claims:** owners `{role: 'owner', restaurantId: '<rid>'}`; admins `{role: 'platformAdmin'}`. Set only by `completeRegistration` and `functions/scripts/set-admin.mjs` (M11's `setAdminRole` takes over). Apps read them through `AuthSession` (`authSessionProvider` in `core`: `isOwner`, `isAdmin`, `restaurantId`, `signedInWithTotp`).
+- 2026-11-14 (M01): **`restaurants/{rid}` at creation:** `name`, `nameLower`, `ownerUid`, `ownerName`, `ownerEmail` (lower case), `ownerMobile` (E.164), `businessType` (`BusinessType.name`), `country` (ISO alpha-2), `currency`, `timezone` (from the country), `contact: {city?}`, `slug`, `qrCode`, `status: 'active'`, `planId: 'free'`, `subscription: {status: 'free', startAt, expiresAt: null, graceEndsAt: null}`, `counts: {categories: 0, items: 0}`, `publishedVersion: null`, `pricesNeedReview: false`, `themeId: null`, `draftUpdatedAt`, `createdAt`. `users/{uid}`: `email`, `displayName`, `mobile`, `role`, `restaurantId`, `createdAt`. `slugs/{slug}`: `{restaurantId, current: true, createdAt}`. `qrCodes/{code}`: `{restaurantId, kind: 'restaurant', createdAt}`; codes are 8 upper-case characters from `23456789ABCDEFGHJKMNPQRSTUVWXYZ` (M07/M08: upper-case `/q/{code}` before the lookup).
+- 2026-11-14 (M01): **`plans/free` does not exist yet.** Restaurants point to `planId: 'free'` (`FREE_PLAN_ID` in `functions/src/auth/register.ts`). M10 must create that document with this id.
+- 2026-11-14 (M01): **Slug helpers** `slugify`, `isValidSlug`, `slugCandidates` (`functions/src/auth/slug.ts`) and `reservedSlugs(db)` (`register.ts`; reads `config/platform.reservedSlugs`, falls back to `DEFAULT_RESERVED_SLUGS`). M03's `changeSlug` should reuse them. Any existing `slugs` doc (current or old) blocks a slug.
+- 2026-11-14 (M01): **Admin MFA is enforced:** rules `isAdmin()` and `assertAdmin()` require `firebase.sign_in_second_factor == 'totp'` (new error code `mfa-required`). On the Functions emulator under a `demo-` project `assertAdmin()` skips the check, and the admin app skips enrolment when `USE_EMULATORS=true`. **The rules never skip it**, so admin screens on the emulators must read data through callables; rules tests use `mfaAdminClaims` from `firestore-tests/test/helpers.js`.
+- 2026-11-14 (M01): **Rules opened:** `users/{uid}` (get: the verified user, admins; list: admins) and `restaurants/{rid}` (get: verified owner of an active restaurant via `isOwner(rid)`, admins; list: admins; no client writes yet, M03 adds the owner `update` whitelist). `baseline.test.js` lists opened paths in `OPENED`.
+- 2026-11-14 (M01): **Routes:** owner `/sign-in`, `/sign-up`, `/verify-email`, `/forgot-password`, `/finishing-setup`, `/splash`; admin `/sign-in`, `/mfa-setup`, `/splash`. Guards are the pure functions `ownerRedirect` / `adminRedirect` (tested). Account screens use `NoTransitionPage`. Sign-out is an app-bar action in both shells.
+- 2026-11-14 (M01): **Shared code in `core`:** `Validators` (email, password ≥ 8, mobile by country → E.164), `Countries` (keep in sync with `functions/src/auth/countries.ts`), `BusinessType`, `AuthLayout`, `AppPasswordField`, `FormMessage`, `CoreLocalizations.messageForError(e)` for any auth or callable error. Widget tests override `authRepositoryProvider` with `FakeAuthRepository` from `package:core/testing.dart`.
+- 2026-11-14 (M01): **Error codes added:** `registration-incomplete`, `mfa-required` (functions `errors.ts`, Dart `AppErrorCode`, `core_en.arb`).
+- 2026-11-14 (M01): **Tests:** functions emulator tests are `*.emu.test.ts` (`npm run test:emulators`, `tool/check.sh emulators`); the Flutter end-to-end test runs with `tool/integration.sh` (headless Chrome + emulators).
 
 ## Open decisions
 
 - Final domains for app, admin and public menu (placeholders in `docs/architecture.md`).
 - Pro plan prices per currency.
-- Whether to enable Identity Platform now for admin MFA (required by FR-084).
+- Whether to enable Identity Platform now for admin MFA (required by FR-084). The M01 code is ready; it needs the real projects and your approval (paid product with a free tier).
+- FR-091 asks for 24-hour verification links; Firebase sets its own expiry. Accept it, or send custom verification emails (needs a mail provider).
 - Whether Free-plan menus show a "Powered by EazySuvai" footer (not yet in the FRD; M07 builds it behind a plan flag).

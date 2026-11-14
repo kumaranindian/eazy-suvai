@@ -183,6 +183,258 @@ abstract class CoreLocalizations {
   /// In en, this message translates to:
   /// **'Something went wrong. Please try again.'**
   String get errorUnknown;
+
+  /// Server error: signed in, but the restaurant was never created.
+  ///
+  /// In en, this message translates to:
+  /// **'Your account isn\'t set up yet. Add your restaurant details to finish.'**
+  String get errorRegistrationIncomplete;
+
+  /// Server error: an administrator signed in without two-factor authentication.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in with your authenticator code to continue.'**
+  String get errorMfaRequired;
+
+  /// Auth error: the email address is malformed.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid email address.'**
+  String get authErrorInvalidEmail;
+
+  /// Auth error: wrong email or password. Must not reveal which one.
+  ///
+  /// In en, this message translates to:
+  /// **'That email and password don\'t match. Check them and try again.'**
+  String get authErrorInvalidCredential;
+
+  /// Auth error: the account is disabled.
+  ///
+  /// In en, this message translates to:
+  /// **'This account has been disabled. Contact support for help.'**
+  String get authErrorUserDisabled;
+
+  /// Auth error: registering with an email that already has an account (FR-004).
+  ///
+  /// In en, this message translates to:
+  /// **'An account with this email already exists. Sign in instead, or reset your password.'**
+  String get authErrorEmailAlreadyInUse;
+
+  /// Auth error: the password does not meet the policy.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a stronger password with at least 8 characters.'**
+  String get authErrorWeakPassword;
+
+  /// Auth error: rate limited after repeated attempts.
+  ///
+  /// In en, this message translates to:
+  /// **'Too many attempts. Wait a few minutes and try again.'**
+  String get authErrorTooManyRequests;
+
+  /// Auth error: the action needs a recent sign-in.
+  ///
+  /// In en, this message translates to:
+  /// **'For your security, sign in again and retry.'**
+  String get authErrorRequiresRecentLogin;
+
+  /// Auth error: a verification or reset link expired.
+  ///
+  /// In en, this message translates to:
+  /// **'This link has expired. Request a new one.'**
+  String get authErrorExpiredActionCode;
+
+  /// Auth error: a verification or reset link is invalid or used.
+  ///
+  /// In en, this message translates to:
+  /// **'This link is not valid or was already used. Request a new one.'**
+  String get authErrorInvalidActionCode;
+
+  /// Auth error: wrong TOTP code.
+  ///
+  /// In en, this message translates to:
+  /// **'That code is not correct. Enter the current 6-digit code from your authenticator app.'**
+  String get authErrorInvalidMfaCode;
+
+  /// Auth error: the multi-factor sign-in session expired.
+  ///
+  /// In en, this message translates to:
+  /// **'This sign-in took too long. Start again.'**
+  String get authErrorMfaSessionExpired;
+
+  /// Auth error: MFA enrolment needs a verified email.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify your email address before setting up two-factor authentication.'**
+  String get authErrorUnverifiedEmail;
+
+  /// Auth error: a non-admin tried to sign in to the admin app.
+  ///
+  /// In en, this message translates to:
+  /// **'This account is not a platform administrator.'**
+  String get authErrorNotAdmin;
+
+  /// Auth error: an admin tried to sign in to the owner app.
+  ///
+  /// In en, this message translates to:
+  /// **'This is an administrator account. Use the admin app to sign in.'**
+  String get authErrorAdminAccount;
+
+  /// Auth error: the sign-in method is disabled on the project.
+  ///
+  /// In en, this message translates to:
+  /// **'This sign-in method is not available. Contact support.'**
+  String get authErrorOperationNotAllowed;
+
+  /// Form validation: empty required field.
+  ///
+  /// In en, this message translates to:
+  /// **'This field is required.'**
+  String get validationRequired;
+
+  /// Form validation: text too long.
+  ///
+  /// In en, this message translates to:
+  /// **'Use at most {max} characters.'**
+  String validationTooLong(int max);
+
+  /// Form validation: malformed email (FR-003).
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid email address, like name@example.com.'**
+  String get validationEmail;
+
+  /// Form validation: password too short.
+  ///
+  /// In en, this message translates to:
+  /// **'Use at least {min} characters.'**
+  String validationPasswordLength(int min);
+
+  /// Form validation: mobile number not valid for the chosen country (FR-003).
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid mobile number for the selected country.'**
+  String get validationMobile;
+
+  /// Country name.
+  ///
+  /// In en, this message translates to:
+  /// **'India'**
+  String get countryIN;
+
+  /// Country name.
+  ///
+  /// In en, this message translates to:
+  /// **'United Arab Emirates'**
+  String get countryAE;
+
+  /// Country name.
+  ///
+  /// In en, this message translates to:
+  /// **'Kuwait'**
+  String get countryKW;
+
+  /// Country name.
+  ///
+  /// In en, this message translates to:
+  /// **'Saudi Arabia'**
+  String get countrySA;
+
+  /// Country name.
+  ///
+  /// In en, this message translates to:
+  /// **'Qatar'**
+  String get countryQA;
+
+  /// Country name.
+  ///
+  /// In en, this message translates to:
+  /// **'Bahrain'**
+  String get countryBH;
+
+  /// Country name.
+  ///
+  /// In en, this message translates to:
+  /// **'Oman'**
+  String get countryOM;
+
+  /// Country name.
+  ///
+  /// In en, this message translates to:
+  /// **'United States'**
+  String get countryUS;
+
+  /// Business type option.
+  ///
+  /// In en, this message translates to:
+  /// **'Restaurant'**
+  String get businessTypeRestaurant;
+
+  /// Business type option.
+  ///
+  /// In en, this message translates to:
+  /// **'Café'**
+  String get businessTypeCafe;
+
+  /// Business type option.
+  ///
+  /// In en, this message translates to:
+  /// **'Bakery'**
+  String get businessTypeBakery;
+
+  /// Business type option: delivery-only kitchen.
+  ///
+  /// In en, this message translates to:
+  /// **'Cloud kitchen'**
+  String get businessTypeCloudKitchen;
+
+  /// Business type option.
+  ///
+  /// In en, this message translates to:
+  /// **'Sweet shop'**
+  String get businessTypeSweetShop;
+
+  /// Business type option.
+  ///
+  /// In en, this message translates to:
+  /// **'Juice bar'**
+  String get businessTypeJuiceBar;
+
+  /// Business type option.
+  ///
+  /// In en, this message translates to:
+  /// **'Food truck'**
+  String get businessTypeFoodTruck;
+
+  /// Business type option.
+  ///
+  /// In en, this message translates to:
+  /// **'Bar or pub'**
+  String get businessTypeBar;
+
+  /// Business type option.
+  ///
+  /// In en, this message translates to:
+  /// **'Hotel'**
+  String get businessTypeHotel;
+
+  /// Business type option.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get businessTypeOther;
+
+  /// Accessibility label of the button that reveals the password.
+  ///
+  /// In en, this message translates to:
+  /// **'Show password'**
+  String get actionShowPassword;
+
+  /// Accessibility label of the button that hides the password.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide password'**
+  String get actionHidePassword;
 }
 
 class _CoreLocalizationsDelegate

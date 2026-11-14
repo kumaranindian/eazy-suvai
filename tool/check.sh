@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-# Runs every check CI runs. Usage: tool/check.sh [flutter|functions|rules|all]
-# Rules tests need Java 21+ (the Firebase emulators) and firebase-tools.
+# Runs every check CI runs. Usage: tool/check.sh [flutter|functions|rules|emulators|all]
+# rules and emulators need Java 21+ (the Firebase emulators) and firebase-tools.
+# The owner app end-to-end test (Chrome) is separate: tool/integration.sh.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
@@ -32,10 +33,16 @@ rules_checks() {
   (cd firestore-tests && npm ci && npm test)
 }
 
+# Functions tests that need the Auth, Firestore and Functions emulators.
+functions_emulator_checks() {
+  (cd functions && npm ci && npm run test:emulators)
+}
+
 case "${1:-all}" in
   flutter) flutter_checks ;;
   functions) functions_checks ;;
   rules) rules_checks ;;
-  all) flutter_checks; functions_checks; rules_checks ;;
-  *) echo "Usage: $0 [flutter|functions|rules|all]" >&2; exit 2 ;;
+  emulators) functions_emulator_checks ;;
+  all) flutter_checks; functions_checks; rules_checks; functions_emulator_checks ;;
+  *) echo "Usage: $0 [flutter|functions|rules|emulators|all]" >&2; exit 2 ;;
 esac

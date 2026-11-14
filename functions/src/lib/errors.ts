@@ -16,6 +16,10 @@ export const AppErrorCode = {
   limitReached: "limit-reached",
   notFound: "not-found",
   alreadyExists: "already-exists",
+  /** Signed in, but the restaurant was never created (M01). */
+  registrationIncomplete: "registration-incomplete",
+  /** Admin signed in without a second factor (FR-084). */
+  mfaRequired: "mfa-required",
   unknown: "unknown",
 } as const;
 
@@ -31,6 +35,8 @@ const httpsCodeFor: Record<AppErrorCode, FunctionsErrorCode> = {
   "limit-reached": "resource-exhausted",
   "not-found": "not-found",
   "already-exists": "already-exists",
+  "registration-incomplete": "failed-precondition",
+  "mfa-required": "permission-denied",
   "unknown": "internal",
 };
 

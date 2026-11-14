@@ -26,6 +26,7 @@ class AppTextField extends StatelessWidget {
     this.minLines,
     this.prefixIcon,
     this.suffix,
+    this.prefixText,
   });
 
   final String label;
@@ -47,6 +48,9 @@ class AppTextField extends StatelessWidget {
   final int? minLines;
   final IconData? prefixIcon;
   final Widget? suffix;
+
+  /// Fixed text before the input, for example a dial code `+91`.
+  final String? prefixText;
 
   @override
   Widget build(BuildContext context) => TextFormField(
@@ -71,6 +75,7 @@ class AppTextField extends StatelessWidget {
       hintText: hintText,
       prefixIcon: prefixIcon == null ? null : Icon(prefixIcon),
       suffixIcon: suffix,
+      prefixText: prefixText,
     ),
   );
 }

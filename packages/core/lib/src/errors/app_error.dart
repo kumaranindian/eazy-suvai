@@ -13,6 +13,8 @@ enum AppErrorCode {
   limitReached('limit-reached'),
   notFound('not-found'),
   alreadyExists('already-exists'),
+  registrationIncomplete('registration-incomplete'),
+  mfaRequired('mfa-required'),
   network('network'),
   unknown('unknown');
 
@@ -38,6 +40,8 @@ extension AppErrorMessage on CoreLocalizations {
     AppErrorCode.limitReached => errorLimitReached,
     AppErrorCode.notFound => errorNotFound,
     AppErrorCode.alreadyExists => errorAlreadyExists,
+    AppErrorCode.registrationIncomplete => errorRegistrationIncomplete,
+    AppErrorCode.mfaRequired => errorMfaRequired,
     AppErrorCode.network => errorNetwork,
     AppErrorCode.unknown => errorUnknown,
   };

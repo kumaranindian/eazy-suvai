@@ -24,3 +24,9 @@ export const ownerClaims = (restaurantId) => ({
 });
 
 export const adminClaims = { email_verified: true, role: "platformAdmin" };
+
+/** A platform admin whose sign-in completed a TOTP second factor (FR-084). */
+export const mfaAdminClaims = {
+  ...adminClaims,
+  firebase: { sign_in_provider: "password", sign_in_second_factor: "totp" },
+};

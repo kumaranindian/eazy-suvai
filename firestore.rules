@@ -2,11 +2,60 @@ rules_version = '2';
 
 // EazySuvai Firestore rules.
 //
-// M00 baseline: deny everything. Each module opens only the paths it needs,
-// following the tenant pattern in docs/architecture.md §5, and adds a test
-// for every new collection in firestore-tests/.
+// Everything is denied unless a match below allows it. Each module opens only
+// the paths it needs, following docs/architecture.md §5, and adds a test for
+// every collection in firestore-tests/.
 service cloud.firestore {
   match /databases/{database}/documents {
+
+    // ---- Shared helpers ---------------------------------------------------
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    // FR-091: nothing is readable with an unverified email.
+    function verified() {
+      return signedIn() && request.auth.token.email_verified == true;
+    }
+
+    // FR-084: platform admins must have signed in with a TOTP second factor.
+    function isAdmin() {
+      return verified()
+        && request.auth.token.role == 'platformAdmin'
+        && request.auth.token.firebase.sign_in_second_factor == 'totp';
+    }
+
+    // Owner of `rid` (claims set by completeRegistration, M01) whose
+    // restaurant is active (FR-099, FR-010).
+    function isOwner(rid) {
+      return verified()
+        && request.auth.token.role == 'owner'
+        && request.auth.token.restaurantId == rid
+        && get(/databases/$(database)/documents/restaurants/$(rid)).data.status == 'active';
+    }
+
+    // ---- M01: accounts ----------------------------------------------------
+
+    // Written only by Functions (completeRegistration, admin bootstrap).
+    match /users/{uid} {
+      allow get: if (verified() && request.auth.uid == uid) || isAdmin();
+      allow list: if isAdmin();
+      allow write: if false;
+    }
+
+    // Tenant root. Created by completeRegistration. M03 opens owner updates
+    // of the allowed profile fields.
+    match /restaurants/{rid} {
+      allow get: if isOwner(rid) || isAdmin();
+      allow list: if isAdmin();
+      allow write: if false;
+    }
+
+    // slugs/{slug}, qrCodes/{code}, config/platform, auditLogs: Functions
+    // only for now (no match = denied).
+
+    // ---- Default: deny ----------------------------------------------------
     match /{document=**} {
       allow read, write: if false;
     }

@@ -5,6 +5,7 @@ import tseslint from "typescript-eslint";
 export default tseslint.config(
   { ignores: ["lib/**", "coverage/**", "node_modules/**"] },
   { files: ["*.js"], languageOptions: { globals: globals.node, sourceType: "commonjs" } },
+  { files: ["scripts/**/*.mjs"], languageOptions: { globals: globals.node, sourceType: "module" } },
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {

@@ -19,7 +19,7 @@ M00.
 ## Inputs from other modules
 
 - M00 (done 2026-11-14): `storage.rules` denies everything. Open `restaurants/{rid}/images/**` and update the Storage expectations in `firestore-tests/test/baseline.test.js`.
-- M01 provides the `restaurantId` claim used in storage paths and rules (can be stubbed with emulator claims while building).
+- M01 (done 2026-11-14): claims `{role: 'owner', restaurantId}`, and `email_verified` must be true. Mirror `isOwner(rid)` from `firestore.rules` in `storage.rules` (Storage rules can read the restaurant status with `firestore.get`).
 
 ## Scope
 

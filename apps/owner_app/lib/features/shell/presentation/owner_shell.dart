@@ -1,8 +1,10 @@
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../l10n/generated/app_localizations.dart';
+import '../../auth/application/owner_auth_service.dart';
 
 /// Top-level sections of the owner app, in navigation order.
 enum OwnerSection { home, menu, share, settings }
@@ -40,17 +42,27 @@ extension OwnerSectionView on OwnerSection {
 }
 
 /// The owner app shell: [ResponsiveScaffold] around the current branch.
-class OwnerShell extends StatelessWidget {
+class OwnerShell extends ConsumerWidget {
   const OwnerShell({super.key, required this.navigationShell});
 
   final StatefulNavigationShell navigationShell;
 
+  static const signOutKey = ValueKey('shell.signOut');
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final section = OwnerSection.values[navigationShell.currentIndex];
     return ResponsiveScaffold(
       title: section.label(l10n),
+      actions: [
+        AppIconButton(
+          key: signOutKey,
+          icon: Icons.logout,
+          semanticLabel: l10n.actionSignOut,
+          onPressed: () => ref.read(ownerAuthServiceProvider).signOut(),
+        ),
+      ],
       sideMenuHeader: Image.asset(
         Theme.of(context).brightness == Brightness.dark
             ? 'assets/brand/logo_dark.png'

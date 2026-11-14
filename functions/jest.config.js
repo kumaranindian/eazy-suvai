@@ -3,6 +3,8 @@ module.exports = {
   testEnvironment: "node",
   roots: ["<rootDir>/src"],
   testMatch: ["**/*.test.ts"],
+  // Emulator tests (*.emu.test.ts) run with `npm run test:emulators`.
+  testPathIgnorePatterns: ["/node_modules/", "[.]emu[.]test[.]ts$"],
   clearMocks: true,
   transform: {
     "^.+\\.ts$": "ts-jest",

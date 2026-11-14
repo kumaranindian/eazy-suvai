@@ -171,6 +171,144 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Go to dashboard'**
   String get actionGoHome;
+
+  /// Tagline in the brand panel of the admin sign-in screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Platform administration. Two-factor sign-in is required.'**
+  String get authTagline;
+
+  /// Subtitle of the admin sign-in screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in with your administrator account.'**
+  String get signInSubtitle;
+
+  /// Email field label.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get fieldEmail;
+
+  /// Password field label.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get fieldPassword;
+
+  /// Button that signs in.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in'**
+  String get actionSignIn;
+
+  /// Signs the user out.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign out'**
+  String get actionSignOut;
+
+  /// Abandons the code step and returns to email and password.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get actionCancel;
+
+  /// Title of the two-factor code step.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your code'**
+  String get mfaCodeTitle;
+
+  /// Subtitle of the two-factor code step.
+  ///
+  /// In en, this message translates to:
+  /// **'Open your authenticator app and enter the 6-digit code for EazySuvai Admin.'**
+  String get mfaCodeSubtitle;
+
+  /// Label of the authenticator code field.
+  ///
+  /// In en, this message translates to:
+  /// **'6-digit code'**
+  String get fieldMfaCode;
+
+  /// Validation: the TOTP code must be 6 digits.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the 6 digits from your authenticator app.'**
+  String get validationMfaCode;
+
+  /// Submits the authenticator code.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify'**
+  String get actionVerify;
+
+  /// Title of the TOTP enrolment screen (FR-084).
+  ///
+  /// In en, this message translates to:
+  /// **'Set up two-factor sign-in'**
+  String get mfaSetupTitle;
+
+  /// Subtitle of the TOTP enrolment screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Administrators must use an authenticator app, such as Google Authenticator or Microsoft Authenticator.'**
+  String get mfaSetupSubtitle;
+
+  /// Enrolment step 1.
+  ///
+  /// In en, this message translates to:
+  /// **'1. Scan this QR code with your authenticator app.'**
+  String get mfaSetupStep1;
+
+  /// Text before the manual TOTP key.
+  ///
+  /// In en, this message translates to:
+  /// **'Or enter this key by hand:'**
+  String get mfaSetupStep2;
+
+  /// Enrolment step 3.
+  ///
+  /// In en, this message translates to:
+  /// **'2. Enter the 6-digit code the app shows.'**
+  String get mfaSetupStep3;
+
+  /// Accessibility label of the TOTP QR code.
+  ///
+  /// In en, this message translates to:
+  /// **'QR code for your authenticator app'**
+  String get mfaQrLabel;
+
+  /// Copies the TOTP secret to the clipboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy key'**
+  String get actionCopyKey;
+
+  /// Shown after copying the TOTP key.
+  ///
+  /// In en, this message translates to:
+  /// **'Key copied.'**
+  String get mfaKeyCopied;
+
+  /// Confirms TOTP enrolment.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn on two-factor sign-in'**
+  String get actionEnable;
+
+  /// Shown on the sign-in screen after enrolment.
+  ///
+  /// In en, this message translates to:
+  /// **'Two-factor sign-in is on. Sign in again with your code.'**
+  String get mfaEnrolled;
+
+  /// Generates a new TOTP secret.
+  ///
+  /// In en, this message translates to:
+  /// **'Start setup'**
+  String get actionStartSetup;
 }
 
 class _AppLocalizationsDelegate

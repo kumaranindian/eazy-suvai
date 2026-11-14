@@ -18,7 +18,7 @@ M01, M02.
 
 ## Inputs from other modules
 
-- M01: `restaurants/{rid}` created with slug, QR code, Free plan, defaults.
+- M01 (done 2026-11-14): `restaurants/{rid}` is created with slug, QR code, Free plan and defaults (exact fields in the master plan's Cross-module notes). `contact.city` is set when the owner gave a city at sign-up; `ownerName`, `ownerEmail` and `ownerMobile` (E.164) are on the root. Reuse `slugify` / `isValidSlug` / `reservedSlugs` from `functions/src/auth/` in `changeSlug`. `Validators.mobile` and `Countries` are in `core`. Rules: owners can only `get` their restaurant so far; add the `update` whitelist here.
 - M02: `ImagePickerField`, `ResponsiveImage`, image object model.
 
 ## Scope

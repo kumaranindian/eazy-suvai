@@ -57,19 +57,42 @@ export function assertSignedIn(auth: CallerAuth | undefined | null): CallerAuth 
 /**
  * Checks that the caller is a platform administrator.
  *
- * MFA for admins (FR-084) is enforced at sign-in by Identity Platform.
- * M11 adds a check of `token.firebase.sign_in_second_factor` here once it is
- * enabled on the project.
+ * MFA for admins (FR-084): the ID token must come from a sign-in that
+ * completed a TOTP second factor (`firebase.sign_in_second_factor`). The Auth
+ * emulator has no TOTP, so the check is skipped only on the functions
+ * emulator under a `demo-` project (see {@link isDemoEmulator}).
  *
  * @param auth The callable request's `auth`.
+ * @param options `requireMfa` overrides the default (tests).
  * @return The admin's uid.
  */
-export function assertAdmin(auth: CallerAuth | undefined | null): { uid: string } {
+export function assertAdmin(
+  auth: CallerAuth | undefined | null,
+  options: { requireMfa?: boolean } = {},
+): { uid: string } {
   const caller = assertSignedIn(auth);
   if (caller.token.role !== "platformAdmin") {
     throw appError("permission-denied", "Platform administrator role required.");
   }
+  const requireMfa = options.requireMfa ?? !isDemoEmulator();
+  if (requireMfa && secondFactorOf(caller) !== "totp") {
+    throw appError("mfa-required", "Sign in with your authenticator code.");
+  }
   return { uid: caller.uid };
+}
+
+/** The second factor used at sign-in, from the `firebase` token claim. */
+export function secondFactorOf(auth: CallerAuth): string | undefined {
+  const firebase = auth.token.firebase as { sign_in_second_factor?: unknown } | undefined;
+  const factor = firebase?.sign_in_second_factor;
+  return typeof factor === "string" ? factor : undefined;
+}
+
+/** True only inside the Functions emulator running a `demo-` project, which
+ * can never reach a real Firebase project. */
+export function isDemoEmulator(env: NodeJS.ProcessEnv = process.env): boolean {
+  const project = env.GCLOUD_PROJECT ?? env.GOOGLE_CLOUD_PROJECT ?? "";
+  return env.FUNCTIONS_EMULATOR === "true" && project.startsWith("demo-");
 }
 
 /**

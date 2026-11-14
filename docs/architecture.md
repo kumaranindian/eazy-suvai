@@ -70,7 +70,7 @@ All timestamps are Firestore `Timestamp` in UTC. IDs are Firestore auto-IDs unle
 
 ### 4.2 Tenant subtree `restaurants/{rid}`
 
-Root document fields: `name`, `nameLower` (for admin search), `ownerEmail`, `ownerMobile`, `pricesNeedReview`, `businessType`, `description`, `logo`, `cover` (image objects, 4.4), `contact {phone, email, address, city, postalCode, website, social{}}`, `openingHours {mon: [{open, close}], …}`, `visibility {phone, email, address, hours, social}`, `country`, `currency`, `timezone`, `themeId`, `themeSettings {primary, secondary, background, font, layout, cardLayout, mode}`, `slug`, `qrCode`, `status` (`active`, `suspended`, `deactivated`, `deleted`), `ownerUid`, `planId`, `subscription {status, startAt, expiresAt, graceEndsAt}`, `counts {categories, items}`, `publishedVersion` (int or null), `draftUpdatedAt`, `createdAt`, `deactivatedAt?`.
+Root document fields: `name`, `nameLower` (for admin search), `ownerName`, `ownerEmail`, `ownerMobile` (E.164), `pricesNeedReview`, `businessType`, `description`, `logo`, `cover` (image objects, 4.4), `contact {phone, email, address, city, postalCode, website, social{}}`, `openingHours {mon: [{open, close}], …}`, `visibility {phone, email, address, hours, social}`, `country`, `currency`, `timezone`, `themeId`, `themeSettings {primary, secondary, background, font, layout, cardLayout, mode}`, `slug`, `qrCode`, `status` (`active`, `suspended`, `deactivated`, `deleted`), `ownerUid`, `planId`, `subscription {status, startAt, expiresAt, graceEndsAt}`, `counts {categories, items}`, `publishedVersion` (int or null), `draftUpdatedAt`, `createdAt`, `deactivatedAt?`.
 
 The root document's profile and theme fields are the **draft**. They go live only when published (FR-012).
 
@@ -105,7 +105,9 @@ match /restaurants/{rid} {
     && request.auth.token.role == 'owner'
     && request.auth.token.restaurantId == rid
     && get(/databases/$(database)/documents/restaurants/$(rid)).data.status == 'active'; }
-  function isAdmin() { return request.auth != null && request.auth.token.role == 'platformAdmin'; }
+  function isAdmin() { return request.auth != null && request.auth.token.email_verified == true
+    && request.auth.token.role == 'platformAdmin'
+    && request.auth.token.firebase.sign_in_second_factor == 'totp'; }   // FR-084 (M01)
   allow read: if isOwner() || isAdmin();
   allow update: if isOwner() && request.resource.data.diff(resource.data).affectedKeys()
                    .hasOnly(['name','businessType','description','logo','cover','contact','openingHours',
@@ -118,7 +120,7 @@ match /restaurants/{rid} {
 ```
 
 - Storage rules: owners can write only under `restaurants/{theirRid}/images/**`, content type `image/jpeg|png|webp`, size ≤ 5 MB (FR-102).
-- Admin app: Firebase Authentication with Identity Platform TOTP multi-factor, required for `platformAdmin` (FR-084).
+- Admin app: Firebase Authentication with Identity Platform TOTP multi-factor, required for `platformAdmin` (FR-084). Rules and `assertAdmin()` check `firebase.sign_in_second_factor == 'totp'`; only the Functions emulator under a `demo-` project skips the `assertAdmin()` check, because the Auth emulator has no TOTP (M01).
 - Every rule has a test in `firestore-tests/` using `@firebase/rules-unit-testing`.
 
 ## 6. Flutter app structure
