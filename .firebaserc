@@ -1,0 +1,30 @@
+{
+  "projects": {
+    "default": "eazysuvai-dev",
+    "dev": "eazysuvai-dev",
+    "prod": "eazysuvai-prod"
+  },
+  "targets": {
+    "eazysuvai-dev": {
+      "hosting": {
+        "app": ["eazysuvai-dev-app"],
+        "admin": ["eazysuvai-dev-admin"],
+        "menu": ["eazysuvai-dev-menu"]
+      }
+    },
+    "eazysuvai-prod": {
+      "hosting": {
+        "app": ["eazysuvai-prod-app"],
+        "admin": ["eazysuvai-prod-admin"],
+        "menu": ["eazysuvai-prod-menu"]
+      }
+    },
+    "demo-eazysuvai": {
+      "hosting": {
+        "app": ["demo-eazysuvai-app"],
+        "admin": ["demo-eazysuvai-admin"],
+        "menu": ["demo-eazysuvai-menu"]
+      }
+    }
+  }
+}

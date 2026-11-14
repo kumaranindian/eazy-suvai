@@ -1,0 +1,32 @@
+# OS / editors
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.iml
+
+# Dart / Flutter
+.dart_tool/
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+**/ios/Flutter/ephemeral/
+**/ios/Pods/
+**/android/.gradle/
+**/android/local.properties
+**/android/key.properties
+*.jks
+*.keystore
+
+# Firebase
+.firebase/
+*-debug.log
+emulator-data/
+service-account*.json
+*-adminsdk-*.json
+.env
+.env.*
+!.env.example
+
+# Node
+node_modules/

@@ -1,0 +1,16 @@
+name: eazysuvai_workspace
+publish_to: none
+
+environment:
+  sdk: ^3.8.0
+
+workspace:
+  - apps/owner_app
+  - apps/admin_app
+  - packages/core
+
+dev_dependencies:
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true

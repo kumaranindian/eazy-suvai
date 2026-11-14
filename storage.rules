@@ -1,0 +1,14 @@
+rules_version = '2';
+
+// EazySuvai Storage rules.
+//
+// M00 baseline: deny everything. M02 opens restaurants/{rid}/images/** for
+// the owning restaurant only (image/jpeg|png|webp, ≤ 5 MB, FR-102), per
+// docs/architecture.md §5, with tests in firestore-tests/.
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

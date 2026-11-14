@@ -1,0 +1,32 @@
+{
+  "@@locale": "en",
+  "appTitle": "EazySuvai Admin",
+  "@appTitle": { "description": "Product name shown in the browser tab and app bar." },
+  "navDashboard": "Dashboard",
+  "@navDashboard": { "description": "Navigation: platform dashboard." },
+  "navRestaurants": "Restaurants",
+  "@navRestaurants": { "description": "Navigation: list of restaurants on the platform." },
+  "navPlans": "Plans",
+  "@navPlans": { "description": "Navigation: subscription plans." },
+  "navSettings": "Settings",
+  "@navSettings": { "description": "Navigation: platform configuration." },
+  "placeholderMessage": "This screen is coming soon.",
+  "@placeholderMessage": { "description": "Body of a placeholder screen that a later module replaces." },
+  "layoutLabel": "Layout: {layout}",
+  "@layoutLabel": {
+    "description": "Shows the current responsive layout class on placeholder screens.",
+    "placeholders": { "layout": { "type": "String" } }
+  },
+  "layoutCompact": "compact",
+  "@layoutCompact": { "description": "Responsive layout name below 600 px." },
+  "layoutMedium": "medium",
+  "@layoutMedium": { "description": "Responsive layout name from 600 to 1023 px." },
+  "layoutExpanded": "expanded",
+  "@layoutExpanded": { "description": "Responsive layout name from 1024 px." },
+  "signInTitle": "Sign in",
+  "@signInTitle": { "description": "Title of the sign-in screen." },
+  "notFoundTitle": "Page not found",
+  "@notFoundTitle": { "description": "Title shown for an unknown route." },
+  "actionGoHome": "Go to dashboard",
+  "@actionGoHome": { "description": "Button that returns to the dashboard." }
+}
