@@ -417,6 +417,10 @@ class CoreLocalizationsEn extends CoreLocalizations {
       'That category has been deleted. Choose another category.';
 
   @override
+  String get errorPublishBlocked =>
+      'Your menu can\'t be published yet. Fix the problems listed and try again.';
+
+  @override
   String get priceRequired => 'Enter a price.';
 
   @override

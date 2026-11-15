@@ -16,7 +16,7 @@ Status values: `Not started` · `In progress` · `Blocked` · `Done`
 | M03 | Restaurant onboarding and profile | `M03-restaurant-profile.md` | M01, M02 | Done | 2026-11-14 | 2026-11-14 | Setup wizard, dashboard checklist, profile with autosave and live preview, opening hours, currency/time zone (FR-103), `changeSlug`, `onRestaurantUpdated`, rules whitelist with value checks; Chrome end to end. Open: device runs, slug-change rate limit (decision). |
 | M04 | Menu management (categories and items) | `M04-menu-management.md` | M03 | Done | 2026-11-14 | 2026-11-14 | Callables (create, delete, move, restore; plan limits in a transaction), triggers (counts, `draftUpdatedAt`, `live/availability`), rules whitelist, price field in minor units, labels/tags seed, menu manager at 1/2/3 panes, Recently deleted; Chrome end to end. Open: device runs, seed labels on real projects. |
 | M05 | Menu customization (themes) | `M05-customization.md` | M03 | Done | 2026-11-14 | 2026-11-14 | Shared WCAG contrast + `resolveTheme` (Dart and TS, one test-case file), 6 seed themes (2 Free) and fonts, rules for `themes`/`config/platform`/theme draft, gallery and editor with live phone/desktop preview and autosave; Chrome end to end. Open: premium lock (M10), device runs, seed real projects. |
-| M06 | Preview, publishing and versions | `M06-publishing.md` | M04, M05 | Not started | | | |
+| M06 | Preview, publishing and versions | `M06-publishing.md` | M04, M05 | Done | 2026-11-15 | 2026-11-15 | Pure snapshot builder + diff + validation (stable problem codes), `publishMenu` (dry run; one transaction: version, pointer, availability reset, prune to 10, audit), `rollbackMenu`, `discardDraft`, `previewMenu` with the first public renderer; publish bar, dialog, preview (iframe / web view) and version history; Chrome end to end. Open: device runs of the web view, M07 owns SEO and account states. |
 | M07 | Public digital menu | `M07-public-menu.md` | M06 | Not started | | | |
 | M08 | QR codes and sharing | `M08-qr-sharing.md` | M07 | Not started | | | |
 | M09 | Analytics | `M09-analytics.md` | M07 | Not started | | | |
@@ -152,6 +152,95 @@ Add a dated line whenever a module changes something another module depends on.
   - `MenuThemePreview` (owner app) renders the menu from resolved tokens; reuse it in the M06 preview screen if useful.
   - Widget tests: `pumpOwnerApp(..., themes: FakeThemeRepository(...))` (`test/fake_theme.dart`); `menuFontResolverProvider` is overridden with `PlainMenuFontResolver` (no Google Fonts fetches in tests).
   - `tool/integration.sh` also runs `theme_flow_test.dart`.
+
+- 2026-11-15 (M06): **Published version document** `restaurants/{rid}/versions/{n}` (immutable; the last 10 are kept). M07 renders `snapshot`. The exact shape (`?` = left out when empty or hidden):
+
+  ```jsonc
+  {
+    "n": 3,
+    "kind": "publish",                 // or "rollback"
+    "rollbackOf": null,                // the version re-published by a rollback
+    "publishedAt": "<Timestamp>",
+    "publishedBy": "<uid>",
+    "summary": { "added": 1, "changed": 2, "removed": 0, "profileChanged": false, "themeChanged": true },
+    "snapshot": {
+      "schema": 1,
+      "profile": {
+        "name": "Spice Garden",
+        "businessType": "restaurant",
+        "description?": "South Indian classics",
+        "logo?": "<Image>",
+        "cover?": "<Image>",
+        "contact": {                    // only groups with visibility != false
+          "phone?": "+914423456789",    // "phone"
+          "email?": "hi@spice.in",      // "email"
+          "address?": "12 Anna Salai", "city?": "Chennai", "postalCode?": "600002",   // "address"
+          "website?": "https://…",      // "social"
+          "social?": { "instagram?": "https://…", "facebook?": "…", "x?": "…", "youtube?": "…", "googleMaps?": "…" }   // "social"
+        },
+        "openingHours?": { "mon": "07:00-11:00,18:00-23:30", "tue": "", "…": "", "sun": "00:00-00:00" }   // "hours"; all 7 days
+      },
+      "theme": {
+        "themeId": "saffron",          // or null (DEFAULT_TOKENS)
+        "tokens": { "primary": "#…", "secondary": "#…", "background": "#…", "surface": "#…", "text": "#…", "font": "Poppins", "layout": "list", "cardLayout": "image-left", "mode": "light" },
+        "settings": { "primary?": "#…", "secondary?": "#…", "background?": "#…", "font?": "…", "layout?": "grid", "cardLayout?": "compact", "mode?": "dark" },
+        "resolved": { "primary": "#…", "onPrimary": "#…", "secondary": "#…", "onSecondary": "#…", "background": "#…", "surface": "#…", "text": "#…", "surfaceText": "#…", "mutedText": "#…", "accent": "#…", "border": "#…", "font": "Poppins", "layout": "list", "cardLayout": "image-left", "mode": "light" }
+      },
+      "categories": [                  // active, not deleted, display order
+        { "id": "c1", "name": "Tiffin", "description?": "…", "image?": "<Image>", "sequence": 1000 }
+      ],
+      "items": [                       // not deleted, not hiddenOverLimit, in a public category; category order, then sequence, then id
+        {
+          "id": "i1", "categoryId": "c1", "name": "Idli", "description?": "…", "image?": "<Image>",
+          "priceMinor": 6000,           // integer minor units of `currency`
+          "dietaryLabel": { "id": "vegetarian", "name": "Vegetarian", "icon": "veg", "color": "#0F7B0F" },   // or null
+          "tags": [ { "id": "spicy", "name": "Spicy", "icon": "spicy", "color": "#C62828" } ],             // unknown ids dropped
+          "available": true,            // at publish time; live/availability.items[id] wins (FR-095)
+          "featured": false,
+          "sequence": 1000
+        }
+      ],
+      "currency": "INR",
+      "locale": "en-IN",               // en-{country}
+      "timezone": "Asia/Kolkata"
+    }
+  }
+  // <Image> = { "width": 1200, "height": 800, "w320": "<url>", "w640": "<url>", "w1280": "<url>" }
+  //           token download URLs; only `ready` images whose three renditions resolved
+  ```
+
+  - Read order: `restaurants/{rid}.publishedVersion`, then `versions/{n}`, then `live/availability`. Publishing writes the version and moves the pointer in one transaction (AC-022).
+  - Render with `renderMenuPage(snapshot, {availability, branding, headExtra, bodyExtra})` in `functions/src/public/render-menu.ts` (built for the M06 draft preview); `formatPrice()` / `formatDayHours()` are in `public/format.ts`. Changing the shape means bumping `SNAPSHOT_SCHEMA` and updating the builder (`functions/src/publishing/snapshot.ts`), the renderer and this note together.
+  - `versions/{n}/private/source` holds the full draft for discard and rollback. It is Functions-only: never render it (FR-045).
+- 2026-11-15 (M06): **New root fields on `restaurants/{rid}`** (Functions only):
+  - `publishedAt`;
+  - `publishedDraftAt`: the draft time the live version matches; `null` after a rollback that kept the draft;
+  - `publishedCurrency`;
+  - `versionHistory`: `[{n, kind, rollbackOf, publishedAt, publishedBy, summary}]`, newest first, at most 10.
+
+  Core reads them as `Restaurant.publishedAt`, `publishedDraftAt`, `versionHistory` (`MenuVersionEntry`) and `hasUnpublishedChanges`.
+- 2026-11-15 (M06): **Changes to earlier modules' functions:**
+  - The M04 menu triggers stamp `draftUpdatedAt` with the edited document's own `updatedAt` (not the server time).
+  - M03's `onRestaurantUpdated` skips `pricesNeedReview` when the currency returns to `publishedCurrency`.
+  - Owner writes still must set `updatedAt` / `draftUpdatedAt` to `request.time` (rules unchanged).
+- 2026-11-15 (M06): **Callables:**
+  - `publishMenu({restaurantId, dryRun?, pricesReviewed?})`: the dry run returns `{ok, problems, summary, currentVersion, pricesNeedReview}`; a real run returns `{version, summary}` or fails with the new error code **`publish-blocked`** (`details.problems`).
+  - `rollbackMenu({restaurantId, version, replaceDraft = true})` → `{version, summary}`.
+  - `discardDraft({restaurantId})` → `{version}`.
+  - `previewMenu({restaurantId})` → `{html, problems}`.
+
+  Problem codes are `email-not-verified`, `menu-empty`, `missing-field`, `invalid-field`, `limit-exceeded`, `prices-need-review` and `snapshot-too-large` (`ProblemCode` in `snapshot.ts`, `PublishProblemCode` in the owner app; keep both in sync). Audit actions: `menu.publish`, `menu.rollback`, `menu.discardDraft`.
+- 2026-11-15 (M06): **Rules:** owners of an active restaurant and TOTP admins can read `restaurants/{rid}/versions/{n}`. `versions/{n}/private/**` and `live/**` stay closed.
+- 2026-11-15 (M06): **Owner app:**
+  - `ResponsiveScaffold(banner:)` (core) holds the publish bar.
+  - Routes `/preview` (root navigator, full screen) and `/settings/versions`.
+  - `showPublishDialog(context)` can be opened from anywhere.
+  - `PublishingRepository` / `publishingRepositoryProvider` and `menuHtmlViewBuilderProvider`. Widget tests get `FakePublishingRepository` and `fakeMenuHtmlView` by default through `pumpOwnerApp(..., publishing:)`.
+  - New dependencies: `webview_flutter` and `web`.
+- 2026-11-15 (M06): **Tooling:**
+  - `npm run test:emulators` also runs `scripts/check-storage-urls.mjs`. It checks the download URLs on the Storage emulator, because Jest can't load the Storage client's dynamic import.
+  - `tool/integration.sh` also runs `publish_flow_test.dart`.
+  - This machine's Java is 17: run the emulators with Android Studio's JBR 21 (`JAVA_HOME="C:/Program Files/Android/Android Studio/jbr"`).
 
 ## Open decisions
 

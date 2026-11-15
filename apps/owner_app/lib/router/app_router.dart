@@ -14,6 +14,8 @@ import '../features/home/presentation/plan_page.dart';
 import '../features/menu/application/menu_state.dart';
 import '../features/menu/presentation/menu_page.dart';
 import '../features/menu/presentation/recently_deleted_page.dart';
+import '../features/publishing/presentation/preview_page.dart';
+import '../features/publishing/presentation/version_history_page.dart';
 import '../features/restaurant/presentation/menu_link_page.dart';
 import '../features/restaurant/presentation/opening_hours_page.dart';
 import '../features/restaurant/presentation/profile_page.dart';
@@ -64,6 +66,10 @@ abstract final class Routes {
 
   /// Where "Upgrade" leads (M10 replaces the page).
   static const plan = '/settings/plan';
+
+  // M06: draft preview (full screen) and version history.
+  static const preview = '/preview';
+  static const versions = '/settings/versions';
 }
 
 /// Account screens switch without a transition. The guard can move a user
@@ -117,6 +123,11 @@ GoRouter appRouter(Ref ref) {
         path: Routes.finishingSetup,
         pageBuilder: (context, state) =>
             _instant(state, const FinishingSetupPage()),
+      ),
+      // Draft preview: full screen, above the shell (M06).
+      GoRoute(
+        path: Routes.preview,
+        builder: (context, state) => const PreviewPage(),
       ),
       // First-run wizard: full screen, outside the shell.
       GoRoute(
@@ -210,6 +221,10 @@ GoRouter appRouter(Ref ref) {
                   GoRoute(
                     path: 'plan',
                     builder: (context, state) => const PlanPage(),
+                  ),
+                  GoRoute(
+                    path: 'versions',
+                    builder: (context, state) => const VersionHistoryPage(),
                   ),
                   GoRoute(
                     path: 'theme',

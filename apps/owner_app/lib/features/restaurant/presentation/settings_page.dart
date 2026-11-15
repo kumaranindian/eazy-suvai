@@ -65,6 +65,17 @@ class SettingsPage extends ConsumerWidget {
         Routes.theme,
       ),
       (
+        const ValueKey('settings.versions'),
+        Icons.history,
+        l10n.versionsTitle,
+        r == null
+            ? null
+            : (r.isPublished
+                  ? l10n.settingsVersionsLive(r.publishedVersion!)
+                  : l10n.publishBarDraft),
+        Routes.versions,
+      ),
+      (
         const ValueKey('settings.menuLink'),
         Icons.link,
         l10n.menuLinkTitle,

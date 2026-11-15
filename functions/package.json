@@ -14,7 +14,7 @@
     "serve": "npm run build && firebase emulators:start --only functions",
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log",
-    "test:emulators": "npm run build && firebase emulators:exec --project demo-eazysuvai --only auth,firestore,functions,storage --config ../firebase.json \"jest -c jest.emulator.config.js\""
+    "test:emulators": "npm run build && firebase emulators:exec --project demo-eazysuvai --only auth,firestore,functions,storage --config ../firebase.json \"jest -c jest.emulator.config.js && node scripts/check-storage-urls.mjs\""
   },
   "dependencies": {
     "firebase-admin": "^14.5.1",

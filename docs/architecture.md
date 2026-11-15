@@ -44,7 +44,7 @@ The FRD requires the customer menu to load in 2.5 s or less on 4G, with an initi
 - The function reads `slugs/{slug}`, then `restaurants/{rid}` (status), the current version `restaurants/{rid}/versions/{n}`, and the live availability overlay `restaurants/{rid}/live/availability`.
 - Response header: `Cache-Control: public, max-age=0, s-maxage=60`. Changes therefore show within 60 s (FR-044).
 - Account states follow FR-099: 200 live menu, 404 "coming soon", 503 "temporarily unavailable", 410 "no longer available". Pages that are not live carry `noindex`.
-- Templates live in `functions/src/public/templates/` as TypeScript template functions, with HTML escaping on every value. Theme colours are passed as CSS custom properties.
+- Templates live in `functions/src/public/` as TypeScript template functions (`renderMenuPage()` in `render-menu.ts`, built in M06 for the draft preview and extended by M07), with HTML escaping on every value. Theme colours are passed as CSS custom properties.
 - Images are served from the Storage rendition URLs with `srcset` (320/640/1280) and `loading="lazy"`.
 
 ## 4. Firestore data model
@@ -70,7 +70,7 @@ All timestamps are Firestore `Timestamp` in UTC. IDs are Firestore auto-IDs unle
 
 ### 4.2 Tenant subtree `restaurants/{rid}`
 
-Root document fields: `name`, `nameLower` (for admin search), `ownerName`, `ownerEmail`, `ownerMobile` (E.164), `pricesNeedReview`, `businessType`, `description`, `logo`, `cover` (image objects, 4.4), `contact {phone, email, address, city, postalCode, website, social{instagram, facebook, x, youtube, googleMaps}}`, `openingHours {mon: "07:00-11:00,18:00-23:30", …}`, `visibility {phone, email, address, hours, social}`, `country`, `currency`, `timezone`, `themeId`, `themeSettings {primary, secondary, background, font, layout, cardLayout, mode}`, `slug`, `qrCode`, `status` (`active`, `suspended`, `deactivated`, `deleted`), `ownerUid`, `planId`, `subscription {status, startAt, expiresAt, graceEndsAt}`, `counts {categories, items}`, `publishedVersion` (int or null), `draftUpdatedAt`, `setupCompletedAt?`, `createdAt`, `deactivatedAt?`.
+Root document fields: `name`, `nameLower` (for admin search), `ownerName`, `ownerEmail`, `ownerMobile` (E.164), `pricesNeedReview`, `businessType`, `description`, `logo`, `cover` (image objects, 4.4), `contact {phone, email, address, city, postalCode, website, social{instagram, facebook, x, youtube, googleMaps}}`, `openingHours {mon: "07:00-11:00,18:00-23:30", …}`, `visibility {phone, email, address, hours, social}`, `country`, `currency`, `timezone`, `themeId`, `themeSettings {primary, secondary, background, font, layout, cardLayout, mode}`, `slug`, `qrCode`, `status` (`active`, `suspended`, `deactivated`, `deleted`), `ownerUid`, `planId`, `subscription {status, startAt, expiresAt, graceEndsAt}`, `counts {categories, items}`, `publishedVersion` (int or null), `publishedAt`, `publishedDraftAt`, `publishedCurrency`, `versionHistory[]` (M06), `draftUpdatedAt`, `setupCompletedAt?`, `createdAt`, `deactivatedAt?`.
 
 The root document's profile and theme fields are the **draft**. They go live only when published (FR-012).
 
@@ -82,6 +82,12 @@ Profile field formats (M03):
 - `setupCompletedAt`: set when the owner finishes or skips the first-run setup wizard.
 - `nameLower` and `pricesNeedReview` are maintained by `onRestaurantUpdated` (M03); `slug` changes only through `changeSlug`.
 
+Publishing fields (M06), written only by `publishMenu`, `rollbackMenu` and `discardDraft`:
+
+- `publishedVersion`, `publishedAt`, `publishedCurrency` (the live version's currency; `onRestaurantUpdated` does not ask for a price review when the currency returns to it).
+- `publishedDraftAt`: the `draftUpdatedAt` the live version matches. The owner app shows "Unpublished changes" while `draftUpdatedAt > publishedDraftAt`, or when it is `null` (a rollback that kept the draft). The menu triggers stamp `draftUpdatedAt` with the edited document's own `updatedAt`, so an edit committed before a publish never looks newer than it. Availability changes never touch it (BR-018).
+- `versionHistory`: `[{n, kind, rollbackOf, publishedAt, publishedBy, summary}]`, newest first, at most 10, for the history screen.
+
 Theme fields (M05):
 
 - `themeId`: a `themes/{id}` document id, or `null` until the owner chooses (the setup checklist step).
@@ -92,7 +98,8 @@ Theme fields (M05):
 | --- | --- | --- |
 | `categories/{cid}` | `name`, `description`, `image`, `sequence`, `active`, `deletedAt`, `createdAt`, `updatedAt` | Soft delete (FR-098). `deletedAt` is `null` while live |
 | `items/{iid}` | `categoryId`, `name`, `description`, `image`, `priceMinor` (int), `dietaryLabelId`, `tagIds[]`, `available`, `featured`, `sequence`, `hiddenOverLimit`, `deletedAt`, `deletedWith`, `createdAt`, `updatedAt` | Draft content. `deletedWith`: the category it was deleted together with (restored with it) |
-| `versions/{n}` | `n`, `publishedAt`, `publishedBy`, `summary {added, changed, removed}`, `snapshot {profile, theme, categories[], items[], currency, locale}` | Immutable. Keep the last 10 (FR-096) |
+| `versions/{n}` | `n`, `kind` (`publish` or `rollback`), `rollbackOf`, `publishedAt`, `publishedBy`, `summary {added, changed, removed, profileChanged, themeChanged}`, `snapshot {schema, profile, theme, categories[], items[], currency, locale, timezone}` | Immutable. Keep the last 10 (FR-096). Shape: master plan, Cross-module notes (M06) |
+| `versions/{n}/private/source` | `{restaurant, categories[], items[], imageUrls}`: the full draft at that version, for discard and rollback | Functions only (M06) |
 | `live/availability` | `{items: {iid: bool}, updatedAt}` | Written by `onItemWrite` on every availability change (FR-095); Functions only |
 | `analyticsDaily/{yyyy-MM-dd}` | `views`, `qrVisits`, `categoryTaps {cid: n}`, `itemOpens {iid: n}` | Day in the restaurant's time zone |
 | `payments/{id}` | `amountMinor`, `currency`, `method`, `reference`, `paidAt`, `recordedBy` | Admin only (FR-106) |
@@ -142,7 +149,7 @@ match /restaurants/{rid} {
                 && /* draft changes stamp draftUpdatedAt == request.time; value checks (M03) */ true;
   match /categories/{cid} { allow read: if isOwner() || isAdmin(); allow update: if isOwner() && /* field whitelist */ true; }
   match /items/{iid}      { allow read: if isOwner() || isAdmin(); allow update: if isOwner() && /* field whitelist */ true; }
-  match /versions/{n}     { allow read: if isOwner() || isAdmin(); allow write: if false; }
+  match /versions/{n}     { allow read: if isOwner() || isAdmin(); allow write: if false; }   // M06; versions/{n}/private/** and live/** stay closed
   // create and delete of categories/items go through callable functions
 }
 ```
@@ -193,7 +200,7 @@ A shared `ResponsiveScaffold` and `Breakpoint` helper in `packages/core` impleme
 | Restaurant | `changeSlug`, `onRestaurantUpdated` | callable, trigger | M03 |
 | Menu | `createCategory`, `createItem`, `deleteCategory`, `deleteItems`, `moveItems`, `restoreDeleted`, `onItemWrite`, `onCategoryWrite` | callable, triggers | M04 |
 | Theme | No deployed functions. `functions/src/theme/` holds `contrastRatio`, `readableTextOn`, `resolveTheme`, `cssVariables` and the seed themes, used by M06/M07 | library | M05 |
-| Publishing | `publishMenu`, `rollbackMenu`, `discardDraft` | callable | M06 |
+| Publishing | `publishMenu` (with `dryRun`), `rollbackMenu`, `discardDraft`, `previewMenu` (draft HTML for the owner). Snapshot builder, change summary and validation in `functions/src/publishing/snapshot.ts`; the page renderer `renderMenuPage()` in `functions/src/public/` (M07 extends it) | callable | M06 |
 | Public | `renderMenu`, `collectEvent` | HTTPS | M07, M09 |
 | Analytics | `rollupAnalytics` (hourly, if needed) | schedule | M09 |
 | Subscriptions | `requestUpgrade`, `recordPaymentAndActivate`, `changeSubscription`, `subscriptionDaily` | callable, schedule | M10 |

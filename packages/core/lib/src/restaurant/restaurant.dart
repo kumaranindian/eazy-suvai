@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import '../geo/business_type.dart';
 import '../l10n/generated/core_localizations.dart';
 import '../media/image_object.dart';
+import '../publishing/menu_version.dart';
 import '../theme/menu_theme.dart';
 import 'opening_hours.dart';
 
@@ -221,6 +222,9 @@ class Restaurant {
     this.themeSettings = const ThemeSettings(),
     this.draftUpdatedAt,
     this.setupCompletedAt,
+    this.publishedAt,
+    this.publishedDraftAt,
+    this.versionHistory = const [],
   });
 
   factory Restaurant.fromMap(String id, Map<String, dynamic> data) {
@@ -254,6 +258,9 @@ class Restaurant {
       themeSettings: ThemeSettings.fromMap(data['themeSettings']),
       draftUpdatedAt: time(data['draftUpdatedAt']),
       setupCompletedAt: time(data['setupCompletedAt']),
+      publishedAt: time(data['publishedAt']),
+      publishedDraftAt: time(data['publishedDraftAt']),
+      versionHistory: MenuVersionEntry.listFrom(data['versionHistory']),
     );
   }
 
@@ -297,7 +304,29 @@ class Restaurant {
   /// When the first-run setup wizard was finished or skipped.
   final DateTime? setupCompletedAt;
 
+  /// When the live version was published (M06).
+  final DateTime? publishedAt;
+
+  /// The draft time the live version matches (M06): set to the publish
+  /// time on publish, discard and rollback; null after a rollback that kept
+  /// the draft. Written only by Functions.
+  final DateTime? publishedDraftAt;
+
+  /// Published versions, newest first (at most 10, FR-096).
+  final List<MenuVersionEntry> versionHistory;
+
   bool get isPublished => publishedVersion != null;
+
+  /// The draft differs from the live menu (M06): the "Unpublished changes"
+  /// bar. Availability does not count (BR-018). Before the first publish
+  /// the whole draft is unpublished.
+  bool get hasUnpublishedChanges {
+    if (!isPublished) return true;
+    final matched = publishedDraftAt;
+    if (matched == null) return true;
+    final edited = draftUpdatedAt;
+    return edited != null && edited.isAfter(matched);
+  }
 
   /// Copy with draft edits applied, for live previews.
   Restaurant copyWith({
@@ -337,6 +366,9 @@ class Restaurant {
     themeSettings: themeSettings ?? this.themeSettings,
     draftUpdatedAt: draftUpdatedAt,
     setupCompletedAt: setupCompletedAt,
+    publishedAt: publishedAt,
+    publishedDraftAt: publishedDraftAt,
+    versionHistory: versionHistory,
   );
 }
 

@@ -2367,6 +2367,432 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Basmati rice slow-cooked with vegetables and whole spices.'**
   String get sampleItemBiryaniDesc;
+
+  /// Publish bar (M06): the menu was never published.
+  ///
+  /// In en, this message translates to:
+  /// **'Not published yet'**
+  String get publishBarDraft;
+
+  /// Publish bar (M06): the draft differs from the live menu.
+  ///
+  /// In en, this message translates to:
+  /// **'Unpublished changes'**
+  String get publishBarChanges;
+
+  /// Button: open the draft preview (M06).
+  ///
+  /// In en, this message translates to:
+  /// **'Preview'**
+  String get actionPreview;
+
+  /// Button: publish the menu (M06).
+  ///
+  /// In en, this message translates to:
+  /// **'Publish'**
+  String get actionPublish;
+
+  /// Publish dialog title (M06).
+  ///
+  /// In en, this message translates to:
+  /// **'Publish your menu'**
+  String get publishTitle;
+
+  /// Publish dialog: dry run in progress.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking your menu…'**
+  String get publishChecking;
+
+  /// Publish dialog: heading of the problem list.
+  ///
+  /// In en, this message translates to:
+  /// **'Fix these before publishing'**
+  String get publishProblemsTitle;
+
+  /// Publish dialog: heading of the change summary (FR-065).
+  ///
+  /// In en, this message translates to:
+  /// **'What changes for customers'**
+  String get publishChangesTitle;
+
+  /// Publish dialog: first publish summary.
+  ///
+  /// In en, this message translates to:
+  /// **'{categories, plural, =1{1 category} other{{categories} categories}} and {items, plural, =1{1 item} other{{items} items}} go live at your menu link and QR code.'**
+  String publishFirstSummary(int categories, int items);
+
+  /// Publish dialog: empty change summary.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing has changed since version {version}. You can still publish it again.'**
+  String publishNoChanges(int version);
+
+  /// Change summary line.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 item added} other{{count} items added}}'**
+  String publishAddedItems(int count);
+
+  /// Change summary line.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 item changed} other{{count} items changed}}'**
+  String publishChangedItems(int count);
+
+  /// Change summary line.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 item removed} other{{count} items removed}}'**
+  String publishRemovedItems(int count);
+
+  /// Change summary line.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 category added} other{{count} categories added}}'**
+  String publishAddedCategories(int count);
+
+  /// Change summary line.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 category changed} other{{count} categories changed}}'**
+  String publishChangedCategories(int count);
+
+  /// Change summary line.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 category removed} other{{count} categories removed}}'**
+  String publishRemovedCategories(int count);
+
+  /// Change summary: names beyond the first few.
+  ///
+  /// In en, this message translates to:
+  /// **'and {count} more'**
+  String publishMoreNames(int count);
+
+  /// Change summary: profile changed.
+  ///
+  /// In en, this message translates to:
+  /// **'Restaurant details changed'**
+  String get publishProfileChanged;
+
+  /// Change summary: theme changed.
+  ///
+  /// In en, this message translates to:
+  /// **'Theme changed'**
+  String get publishThemeChanged;
+
+  /// Publish dialog: price review checkbox after a currency change (FR-103).
+  ///
+  /// In en, this message translates to:
+  /// **'I have checked that every price is in {currency}.'**
+  String publishPricesCheckbox(String currency);
+
+  /// Snack bar after publishing.
+  ///
+  /// In en, this message translates to:
+  /// **'Version {version} is live.'**
+  String publishDone(int version);
+
+  /// Publish dialog: the version number to be created.
+  ///
+  /// In en, this message translates to:
+  /// **'This becomes version {version}.'**
+  String publishNextVersion(int version);
+
+  /// Publish dialog: link to the screen that fixes a problem.
+  ///
+  /// In en, this message translates to:
+  /// **'Fix'**
+  String get actionFix;
+
+  /// Publish problem.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify your email address before publishing.'**
+  String get problemEmailNotVerified;
+
+  /// Publish problem (BR-003).
+  ///
+  /// In en, this message translates to:
+  /// **'Your menu is empty. Add at least one active category with an item in it.'**
+  String get problemMenuEmpty;
+
+  /// Publish problem.
+  ///
+  /// In en, this message translates to:
+  /// **'Your restaurant needs a name.'**
+  String get problemRestaurantName;
+
+  /// Publish problem.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose your menu\'s currency.'**
+  String get problemCurrency;
+
+  /// Publish problem.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose your time zone.'**
+  String get problemTimezone;
+
+  /// Publish problem: invalid opening hours.
+  ///
+  /// In en, this message translates to:
+  /// **'Check the opening hours for {day}: the times overlap or are out of order.'**
+  String problemHours(String day);
+
+  /// Publish problem.
+  ///
+  /// In en, this message translates to:
+  /// **'A category has no name.'**
+  String get problemCategoryName;
+
+  /// Publish problem.
+  ///
+  /// In en, this message translates to:
+  /// **'An item has no name.'**
+  String get problemItemName;
+
+  /// Publish problem.
+  ///
+  /// In en, this message translates to:
+  /// **'{name}: enter a price.'**
+  String problemItemPrice(String name);
+
+  /// Publish problem.
+  ///
+  /// In en, this message translates to:
+  /// **'{name}: choose a dietary label.'**
+  String problemItemLabel(String name);
+
+  /// Publish problem.
+  ///
+  /// In en, this message translates to:
+  /// **'{name}: its dietary label is no longer available. Choose another.'**
+  String problemItemLabelGone(String name);
+
+  /// Publish problem (BR-011).
+  ///
+  /// In en, this message translates to:
+  /// **'You have {count} items and your plan allows {max}. Delete some or upgrade your plan.'**
+  String problemLimitItems(int count, int max);
+
+  /// Publish problem (BR-011).
+  ///
+  /// In en, this message translates to:
+  /// **'You have {count} categories and your plan allows {max}. Delete some or upgrade your plan.'**
+  String problemLimitCategories(int count, int max);
+
+  /// Publish problem (FR-103).
+  ///
+  /// In en, this message translates to:
+  /// **'Your currency changed since the last publish. Check your prices, then tick the box below.'**
+  String get problemPrices;
+
+  /// Publish problem.
+  ///
+  /// In en, this message translates to:
+  /// **'Your menu is too large to publish. Shorten some descriptions or remove items.'**
+  String get problemTooLarge;
+
+  /// Publish problem: unknown code.
+  ///
+  /// In en, this message translates to:
+  /// **'Something needs fixing before you can publish.'**
+  String get problemUnknown;
+
+  /// Publish problem: placeholder for an item without a name.
+  ///
+  /// In en, this message translates to:
+  /// **'Unnamed item'**
+  String get problemUnnamedItem;
+
+  /// Draft preview page title (M06).
+  ///
+  /// In en, this message translates to:
+  /// **'Preview'**
+  String get menuPreviewTitle;
+
+  /// Draft preview: note.
+  ///
+  /// In en, this message translates to:
+  /// **'This is your draft. Customers see it only after you publish.'**
+  String get menuPreviewNote;
+
+  /// Draft preview: phone frame.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get menuPreviewPhone;
+
+  /// Draft preview: desktop frame.
+  ///
+  /// In en, this message translates to:
+  /// **'Desktop'**
+  String get menuPreviewDesktop;
+
+  /// Draft preview: reload (icon button label).
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh preview'**
+  String get menuPreviewRefresh;
+
+  /// Draft preview: blocking problems.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 problem must be fixed before you can publish.} other{{count} problems must be fixed before you can publish.}}'**
+  String menuPreviewBlocked(int count);
+
+  /// Semantics label of a preview frame.
+  ///
+  /// In en, this message translates to:
+  /// **'Menu preview, {frame}'**
+  String menuPreviewFrame(String frame);
+
+  /// Version history page title (M06).
+  ///
+  /// In en, this message translates to:
+  /// **'Version history'**
+  String get versionsTitle;
+
+  /// Version history: empty.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing is published yet. Each time you publish, a version is kept here, up to the last 10.'**
+  String get versionsEmpty;
+
+  /// Version history: help line.
+  ///
+  /// In en, this message translates to:
+  /// **'The last 10 published versions are kept. Restoring one publishes it again as a new version.'**
+  String get versionsHelp;
+
+  /// Version history: version number.
+  ///
+  /// In en, this message translates to:
+  /// **'Version {version}'**
+  String versionLabel(int version);
+
+  /// Version history: the version customers see.
+  ///
+  /// In en, this message translates to:
+  /// **'Live'**
+  String get versionLive;
+
+  /// Version history: a rollback.
+  ///
+  /// In en, this message translates to:
+  /// **'Restored from version {version}'**
+  String versionRestoredFrom(int version);
+
+  /// Version history: published by the owner.
+  ///
+  /// In en, this message translates to:
+  /// **'You'**
+  String get versionByYou;
+
+  /// Version history: published by someone else.
+  ///
+  /// In en, this message translates to:
+  /// **'EazySuvai support'**
+  String get versionBySupport;
+
+  /// Version history: nothing changed.
+  ///
+  /// In en, this message translates to:
+  /// **'No menu changes'**
+  String get versionNoContentChanges;
+
+  /// Version history: change counts.
+  ///
+  /// In en, this message translates to:
+  /// **'{added} added · {changed} changed · {removed} removed'**
+  String versionSummary(int added, int changed, int removed);
+
+  /// Version history table column.
+  ///
+  /// In en, this message translates to:
+  /// **'Version'**
+  String get versionColumnVersion;
+
+  /// Version history table column.
+  ///
+  /// In en, this message translates to:
+  /// **'Published'**
+  String get versionColumnPublished;
+
+  /// Version history table column.
+  ///
+  /// In en, this message translates to:
+  /// **'By'**
+  String get versionColumnBy;
+
+  /// Version history table column.
+  ///
+  /// In en, this message translates to:
+  /// **'Changes'**
+  String get versionColumnChanges;
+
+  /// Restore dialog title.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore version {version}?'**
+  String restoreTitle(int version);
+
+  /// Restore dialog body.
+  ///
+  /// In en, this message translates to:
+  /// **'Customers will see version {version} again. It is published as version {next}; the versions in between are kept.'**
+  String restoreBody(int version, int next);
+
+  /// Restore dialog: checkbox (FR-096).
+  ///
+  /// In en, this message translates to:
+  /// **'Also replace my draft with version {version}. Unpublished changes are lost; new categories and items go to Recently deleted.'**
+  String restoreReplaceDraft(int version);
+
+  /// Snack bar after a rollback.
+  ///
+  /// In en, this message translates to:
+  /// **'Version {version} is live again as version {next}.'**
+  String restoreDone(int version, int next);
+
+  /// Discard dialog title (M06).
+  ///
+  /// In en, this message translates to:
+  /// **'Discard unpublished changes?'**
+  String get discardTitle;
+
+  /// Discard dialog body.
+  ///
+  /// In en, this message translates to:
+  /// **'Your draft goes back to version {version}, the menu customers see. Categories and items added since then go to Recently deleted.'**
+  String discardBody(int version);
+
+  /// Button: discard the draft.
+  ///
+  /// In en, this message translates to:
+  /// **'Discard changes'**
+  String get actionDiscardChanges;
+
+  /// Snack bar after discarding.
+  ///
+  /// In en, this message translates to:
+  /// **'Your draft matches version {version} again.'**
+  String discardDone(int version);
+
+  /// Settings: version history subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Live · version {version}'**
+  String settingsVersionsLive(int version);
+
+  /// Dashboard status card: button.
+  ///
+  /// In en, this message translates to:
+  /// **'Version history'**
+  String get statusActionHistory;
 }
 
 class _AppLocalizationsDelegate

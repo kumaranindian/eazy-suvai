@@ -18,6 +18,7 @@ const SEED = {
   [`restaurants/${RID}/categories/c1`]: { name: "Dosa", sequence: 1, active: true },
   [`restaurants/${RID}/items/i1`]: { name: "Masala dosa", priceMinor: 12900, categoryId: "c1" },
   [`restaurants/${RID}/versions/1`]: { n: 1 },
+  [`restaurants/${RID}/versions/1/private/source`]: { items: [] },
   [`restaurants/${RID}/live/availability`]: { items: { i1: true } },
   [`slugs/saravana-bhavan`]: { restaurantId: RID, current: true },
   [`qrCodes/abc123`]: { restaurantId: RID, kind: "restaurant" },
@@ -60,7 +61,8 @@ const callers = {
 };
 
 // Paths each caller may read, opened by a module (M01: accounts.test.js,
-// M03: restaurant-profile.test.js, M04: menu.test.js, M05: theme.test.js).
+// M03: restaurant-profile.test.js, M04: menu.test.js, M05: theme.test.js,
+// M06: publishing.test.js).
 // Everything else stays denied.
 const OPENED = {
   "verified owner": [
@@ -68,6 +70,7 @@ const OPENED = {
     `restaurants/${RID}`,
     `restaurants/${RID}/categories/c1`,
     `restaurants/${RID}/items/i1`,
+    `restaurants/${RID}/versions/1`,
     "dietaryLabels/vegetarian",
     "itemTags/spicy",
     "themes/saffron",
@@ -75,9 +78,10 @@ const OPENED = {
   ],
 };
 
-// Collections each caller may list (M04: menu.test.js, M05: theme.test.js).
+// Collections each caller may list (M04: menu.test.js, M05: theme.test.js,
+// M06: publishing.test.js).
 const OPENED_LISTS = {
-  "verified owner": [`restaurants/${RID}/items`, "dietaryLabels", "itemTags", "themes"],
+  "verified owner": [`restaurants/${RID}/items`, `restaurants/${RID}/versions`, "dietaryLabels", "itemTags", "themes"],
 };
 
 describe("Firestore deny-all baseline", () => {
@@ -96,7 +100,8 @@ describe("Firestore deny-all baseline", () => {
         for (const name of [
           "users", "restaurants", "slugs", "qrCodes", "plans", "auditLogs",
           "analyticsEvents", "upgradeRequests", `restaurants/${RID}/items`,
-          "dietaryLabels", "itemTags", "themes", "config",
+          "dietaryLabels", "itemTags", "themes", "config", `restaurants/${RID}/versions`,
+          `restaurants/${RID}/versions/1/private`,
         ]) {
           if (OPENED_LISTS[who]?.includes(name)) continue;
           await assertFails(getDocs(collection(db, name)));

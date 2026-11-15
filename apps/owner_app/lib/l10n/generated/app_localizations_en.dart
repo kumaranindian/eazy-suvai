@@ -1400,4 +1400,338 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get sampleItemBiryaniDesc =>
       'Basmati rice slow-cooked with vegetables and whole spices.';
+
+  @override
+  String get publishBarDraft => 'Not published yet';
+
+  @override
+  String get publishBarChanges => 'Unpublished changes';
+
+  @override
+  String get actionPreview => 'Preview';
+
+  @override
+  String get actionPublish => 'Publish';
+
+  @override
+  String get publishTitle => 'Publish your menu';
+
+  @override
+  String get publishChecking => 'Checking your menu…';
+
+  @override
+  String get publishProblemsTitle => 'Fix these before publishing';
+
+  @override
+  String get publishChangesTitle => 'What changes for customers';
+
+  @override
+  String publishFirstSummary(int categories, int items) {
+    String _temp0 = intl.Intl.pluralLogic(
+      categories,
+      locale: localeName,
+      other: '$categories categories',
+      one: '1 category',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      items,
+      locale: localeName,
+      other: '$items items',
+      one: '1 item',
+    );
+    return '$_temp0 and $_temp1 go live at your menu link and QR code.';
+  }
+
+  @override
+  String publishNoChanges(int version) {
+    return 'Nothing has changed since version $version. You can still publish it again.';
+  }
+
+  @override
+  String publishAddedItems(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count items added',
+      one: '1 item added',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String publishChangedItems(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count items changed',
+      one: '1 item changed',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String publishRemovedItems(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count items removed',
+      one: '1 item removed',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String publishAddedCategories(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count categories added',
+      one: '1 category added',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String publishChangedCategories(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count categories changed',
+      one: '1 category changed',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String publishRemovedCategories(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count categories removed',
+      one: '1 category removed',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String publishMoreNames(int count) {
+    return 'and $count more';
+  }
+
+  @override
+  String get publishProfileChanged => 'Restaurant details changed';
+
+  @override
+  String get publishThemeChanged => 'Theme changed';
+
+  @override
+  String publishPricesCheckbox(String currency) {
+    return 'I have checked that every price is in $currency.';
+  }
+
+  @override
+  String publishDone(int version) {
+    return 'Version $version is live.';
+  }
+
+  @override
+  String publishNextVersion(int version) {
+    return 'This becomes version $version.';
+  }
+
+  @override
+  String get actionFix => 'Fix';
+
+  @override
+  String get problemEmailNotVerified =>
+      'Verify your email address before publishing.';
+
+  @override
+  String get problemMenuEmpty =>
+      'Your menu is empty. Add at least one active category with an item in it.';
+
+  @override
+  String get problemRestaurantName => 'Your restaurant needs a name.';
+
+  @override
+  String get problemCurrency => 'Choose your menu\'s currency.';
+
+  @override
+  String get problemTimezone => 'Choose your time zone.';
+
+  @override
+  String problemHours(String day) {
+    return 'Check the opening hours for $day: the times overlap or are out of order.';
+  }
+
+  @override
+  String get problemCategoryName => 'A category has no name.';
+
+  @override
+  String get problemItemName => 'An item has no name.';
+
+  @override
+  String problemItemPrice(String name) {
+    return '$name: enter a price.';
+  }
+
+  @override
+  String problemItemLabel(String name) {
+    return '$name: choose a dietary label.';
+  }
+
+  @override
+  String problemItemLabelGone(String name) {
+    return '$name: its dietary label is no longer available. Choose another.';
+  }
+
+  @override
+  String problemLimitItems(int count, int max) {
+    return 'You have $count items and your plan allows $max. Delete some or upgrade your plan.';
+  }
+
+  @override
+  String problemLimitCategories(int count, int max) {
+    return 'You have $count categories and your plan allows $max. Delete some or upgrade your plan.';
+  }
+
+  @override
+  String get problemPrices =>
+      'Your currency changed since the last publish. Check your prices, then tick the box below.';
+
+  @override
+  String get problemTooLarge =>
+      'Your menu is too large to publish. Shorten some descriptions or remove items.';
+
+  @override
+  String get problemUnknown => 'Something needs fixing before you can publish.';
+
+  @override
+  String get problemUnnamedItem => 'Unnamed item';
+
+  @override
+  String get menuPreviewTitle => 'Preview';
+
+  @override
+  String get menuPreviewNote =>
+      'This is your draft. Customers see it only after you publish.';
+
+  @override
+  String get menuPreviewPhone => 'Phone';
+
+  @override
+  String get menuPreviewDesktop => 'Desktop';
+
+  @override
+  String get menuPreviewRefresh => 'Refresh preview';
+
+  @override
+  String menuPreviewBlocked(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count problems must be fixed before you can publish.',
+      one: '1 problem must be fixed before you can publish.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String menuPreviewFrame(String frame) {
+    return 'Menu preview, $frame';
+  }
+
+  @override
+  String get versionsTitle => 'Version history';
+
+  @override
+  String get versionsEmpty =>
+      'Nothing is published yet. Each time you publish, a version is kept here, up to the last 10.';
+
+  @override
+  String get versionsHelp =>
+      'The last 10 published versions are kept. Restoring one publishes it again as a new version.';
+
+  @override
+  String versionLabel(int version) {
+    return 'Version $version';
+  }
+
+  @override
+  String get versionLive => 'Live';
+
+  @override
+  String versionRestoredFrom(int version) {
+    return 'Restored from version $version';
+  }
+
+  @override
+  String get versionByYou => 'You';
+
+  @override
+  String get versionBySupport => 'EazySuvai support';
+
+  @override
+  String get versionNoContentChanges => 'No menu changes';
+
+  @override
+  String versionSummary(int added, int changed, int removed) {
+    return '$added added · $changed changed · $removed removed';
+  }
+
+  @override
+  String get versionColumnVersion => 'Version';
+
+  @override
+  String get versionColumnPublished => 'Published';
+
+  @override
+  String get versionColumnBy => 'By';
+
+  @override
+  String get versionColumnChanges => 'Changes';
+
+  @override
+  String restoreTitle(int version) {
+    return 'Restore version $version?';
+  }
+
+  @override
+  String restoreBody(int version, int next) {
+    return 'Customers will see version $version again. It is published as version $next; the versions in between are kept.';
+  }
+
+  @override
+  String restoreReplaceDraft(int version) {
+    return 'Also replace my draft with version $version. Unpublished changes are lost; new categories and items go to Recently deleted.';
+  }
+
+  @override
+  String restoreDone(int version, int next) {
+    return 'Version $version is live again as version $next.';
+  }
+
+  @override
+  String get discardTitle => 'Discard unpublished changes?';
+
+  @override
+  String discardBody(int version) {
+    return 'Your draft goes back to version $version, the menu customers see. Categories and items added since then go to Recently deleted.';
+  }
+
+  @override
+  String get actionDiscardChanges => 'Discard changes';
+
+  @override
+  String discardDone(int version) {
+    return 'Your draft matches version $version again.';
+  }
+
+  @override
+  String settingsVersionsLive(int version) {
+    return 'Live · version $version';
+  }
+
+  @override
+  String get statusActionHistory => 'Version history';
 }

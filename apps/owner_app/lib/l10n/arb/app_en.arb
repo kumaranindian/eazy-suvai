@@ -1833,5 +1833,460 @@
   "sampleItemBiryaniDesc": "Basmati rice slow-cooked with vegetables and whole spices.",
   "@sampleItemBiryaniDesc": {
     "description": "Sample dish description."
+  },
+  "publishBarDraft": "Not published yet",
+  "@publishBarDraft": {
+    "description": "Publish bar (M06): the menu was never published."
+  },
+  "publishBarChanges": "Unpublished changes",
+  "@publishBarChanges": {
+    "description": "Publish bar (M06): the draft differs from the live menu."
+  },
+  "actionPreview": "Preview",
+  "@actionPreview": {
+    "description": "Button: open the draft preview (M06)."
+  },
+  "actionPublish": "Publish",
+  "@actionPublish": {
+    "description": "Button: publish the menu (M06)."
+  },
+  "publishTitle": "Publish your menu",
+  "@publishTitle": {
+    "description": "Publish dialog title (M06)."
+  },
+  "publishChecking": "Checking your menu…",
+  "@publishChecking": {
+    "description": "Publish dialog: dry run in progress."
+  },
+  "publishProblemsTitle": "Fix these before publishing",
+  "@publishProblemsTitle": {
+    "description": "Publish dialog: heading of the problem list."
+  },
+  "publishChangesTitle": "What changes for customers",
+  "@publishChangesTitle": {
+    "description": "Publish dialog: heading of the change summary (FR-065)."
+  },
+  "publishFirstSummary": "{categories, plural, =1{1 category} other{{categories} categories}} and {items, plural, =1{1 item} other{{items} items}} go live at your menu link and QR code.",
+  "@publishFirstSummary": {
+    "description": "Publish dialog: first publish summary.",
+    "placeholders": {
+      "categories": {
+        "type": "int"
+      },
+      "items": {
+        "type": "int"
+      }
+    }
+  },
+  "publishNoChanges": "Nothing has changed since version {version}. You can still publish it again.",
+  "@publishNoChanges": {
+    "description": "Publish dialog: empty change summary.",
+    "placeholders": {
+      "version": {
+        "type": "int"
+      }
+    }
+  },
+  "publishAddedItems": "{count, plural, =1{1 item added} other{{count} items added}}",
+  "@publishAddedItems": {
+    "description": "Change summary line.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "publishChangedItems": "{count, plural, =1{1 item changed} other{{count} items changed}}",
+  "@publishChangedItems": {
+    "description": "Change summary line.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "publishRemovedItems": "{count, plural, =1{1 item removed} other{{count} items removed}}",
+  "@publishRemovedItems": {
+    "description": "Change summary line.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "publishAddedCategories": "{count, plural, =1{1 category added} other{{count} categories added}}",
+  "@publishAddedCategories": {
+    "description": "Change summary line.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "publishChangedCategories": "{count, plural, =1{1 category changed} other{{count} categories changed}}",
+  "@publishChangedCategories": {
+    "description": "Change summary line.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "publishRemovedCategories": "{count, plural, =1{1 category removed} other{{count} categories removed}}",
+  "@publishRemovedCategories": {
+    "description": "Change summary line.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "publishMoreNames": "and {count} more",
+  "@publishMoreNames": {
+    "description": "Change summary: names beyond the first few.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "publishProfileChanged": "Restaurant details changed",
+  "@publishProfileChanged": {
+    "description": "Change summary: profile changed."
+  },
+  "publishThemeChanged": "Theme changed",
+  "@publishThemeChanged": {
+    "description": "Change summary: theme changed."
+  },
+  "publishPricesCheckbox": "I have checked that every price is in {currency}.",
+  "@publishPricesCheckbox": {
+    "description": "Publish dialog: price review checkbox after a currency change (FR-103).",
+    "placeholders": {
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "publishDone": "Version {version} is live.",
+  "@publishDone": {
+    "description": "Snack bar after publishing.",
+    "placeholders": {
+      "version": {
+        "type": "int"
+      }
+    }
+  },
+  "publishNextVersion": "This becomes version {version}.",
+  "@publishNextVersion": {
+    "description": "Publish dialog: the version number to be created.",
+    "placeholders": {
+      "version": {
+        "type": "int"
+      }
+    }
+  },
+  "actionFix": "Fix",
+  "@actionFix": {
+    "description": "Publish dialog: link to the screen that fixes a problem."
+  },
+  "problemEmailNotVerified": "Verify your email address before publishing.",
+  "@problemEmailNotVerified": {
+    "description": "Publish problem."
+  },
+  "problemMenuEmpty": "Your menu is empty. Add at least one active category with an item in it.",
+  "@problemMenuEmpty": {
+    "description": "Publish problem (BR-003)."
+  },
+  "problemRestaurantName": "Your restaurant needs a name.",
+  "@problemRestaurantName": {
+    "description": "Publish problem."
+  },
+  "problemCurrency": "Choose your menu's currency.",
+  "@problemCurrency": {
+    "description": "Publish problem."
+  },
+  "problemTimezone": "Choose your time zone.",
+  "@problemTimezone": {
+    "description": "Publish problem."
+  },
+  "problemHours": "Check the opening hours for {day}: the times overlap or are out of order.",
+  "@problemHours": {
+    "description": "Publish problem: invalid opening hours.",
+    "placeholders": {
+      "day": {
+        "type": "String"
+      }
+    }
+  },
+  "problemCategoryName": "A category has no name.",
+  "@problemCategoryName": {
+    "description": "Publish problem."
+  },
+  "problemItemName": "An item has no name.",
+  "@problemItemName": {
+    "description": "Publish problem."
+  },
+  "problemItemPrice": "{name}: enter a price.",
+  "@problemItemPrice": {
+    "description": "Publish problem.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "problemItemLabel": "{name}: choose a dietary label.",
+  "@problemItemLabel": {
+    "description": "Publish problem.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "problemItemLabelGone": "{name}: its dietary label is no longer available. Choose another.",
+  "@problemItemLabelGone": {
+    "description": "Publish problem.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "problemLimitItems": "You have {count} items and your plan allows {max}. Delete some or upgrade your plan.",
+  "@problemLimitItems": {
+    "description": "Publish problem (BR-011).",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "problemLimitCategories": "You have {count} categories and your plan allows {max}. Delete some or upgrade your plan.",
+  "@problemLimitCategories": {
+    "description": "Publish problem (BR-011).",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "problemPrices": "Your currency changed since the last publish. Check your prices, then tick the box below.",
+  "@problemPrices": {
+    "description": "Publish problem (FR-103)."
+  },
+  "problemTooLarge": "Your menu is too large to publish. Shorten some descriptions or remove items.",
+  "@problemTooLarge": {
+    "description": "Publish problem."
+  },
+  "problemUnknown": "Something needs fixing before you can publish.",
+  "@problemUnknown": {
+    "description": "Publish problem: unknown code."
+  },
+  "problemUnnamedItem": "Unnamed item",
+  "@problemUnnamedItem": {
+    "description": "Publish problem: placeholder for an item without a name."
+  },
+  "menuPreviewTitle": "Preview",
+  "@menuPreviewTitle": {
+    "description": "Draft preview page title (M06)."
+  },
+  "menuPreviewNote": "This is your draft. Customers see it only after you publish.",
+  "@menuPreviewNote": {
+    "description": "Draft preview: note."
+  },
+  "menuPreviewPhone": "Phone",
+  "@menuPreviewPhone": {
+    "description": "Draft preview: phone frame."
+  },
+  "menuPreviewDesktop": "Desktop",
+  "@menuPreviewDesktop": {
+    "description": "Draft preview: desktop frame."
+  },
+  "menuPreviewRefresh": "Refresh preview",
+  "@menuPreviewRefresh": {
+    "description": "Draft preview: reload (icon button label)."
+  },
+  "menuPreviewBlocked": "{count, plural, =1{1 problem must be fixed before you can publish.} other{{count} problems must be fixed before you can publish.}}",
+  "@menuPreviewBlocked": {
+    "description": "Draft preview: blocking problems.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "menuPreviewFrame": "Menu preview, {frame}",
+  "@menuPreviewFrame": {
+    "description": "Semantics label of a preview frame.",
+    "placeholders": {
+      "frame": {
+        "type": "String"
+      }
+    }
+  },
+  "versionsTitle": "Version history",
+  "@versionsTitle": {
+    "description": "Version history page title (M06)."
+  },
+  "versionsEmpty": "Nothing is published yet. Each time you publish, a version is kept here, up to the last 10.",
+  "@versionsEmpty": {
+    "description": "Version history: empty."
+  },
+  "versionsHelp": "The last 10 published versions are kept. Restoring one publishes it again as a new version.",
+  "@versionsHelp": {
+    "description": "Version history: help line."
+  },
+  "versionLabel": "Version {version}",
+  "@versionLabel": {
+    "description": "Version history: version number.",
+    "placeholders": {
+      "version": {
+        "type": "int"
+      }
+    }
+  },
+  "versionLive": "Live",
+  "@versionLive": {
+    "description": "Version history: the version customers see."
+  },
+  "versionRestoredFrom": "Restored from version {version}",
+  "@versionRestoredFrom": {
+    "description": "Version history: a rollback.",
+    "placeholders": {
+      "version": {
+        "type": "int"
+      }
+    }
+  },
+  "versionByYou": "You",
+  "@versionByYou": {
+    "description": "Version history: published by the owner."
+  },
+  "versionBySupport": "EazySuvai support",
+  "@versionBySupport": {
+    "description": "Version history: published by someone else."
+  },
+  "versionNoContentChanges": "No menu changes",
+  "@versionNoContentChanges": {
+    "description": "Version history: nothing changed."
+  },
+  "versionSummary": "{added} added · {changed} changed · {removed} removed",
+  "@versionSummary": {
+    "description": "Version history: change counts.",
+    "placeholders": {
+      "added": {
+        "type": "int"
+      },
+      "changed": {
+        "type": "int"
+      },
+      "removed": {
+        "type": "int"
+      }
+    }
+  },
+  "versionColumnVersion": "Version",
+  "@versionColumnVersion": {
+    "description": "Version history table column."
+  },
+  "versionColumnPublished": "Published",
+  "@versionColumnPublished": {
+    "description": "Version history table column."
+  },
+  "versionColumnBy": "By",
+  "@versionColumnBy": {
+    "description": "Version history table column."
+  },
+  "versionColumnChanges": "Changes",
+  "@versionColumnChanges": {
+    "description": "Version history table column."
+  },
+  "restoreTitle": "Restore version {version}?",
+  "@restoreTitle": {
+    "description": "Restore dialog title.",
+    "placeholders": {
+      "version": {
+        "type": "int"
+      }
+    }
+  },
+  "restoreBody": "Customers will see version {version} again. It is published as version {next}; the versions in between are kept.",
+  "@restoreBody": {
+    "description": "Restore dialog body.",
+    "placeholders": {
+      "version": {
+        "type": "int"
+      },
+      "next": {
+        "type": "int"
+      }
+    }
+  },
+  "restoreReplaceDraft": "Also replace my draft with version {version}. Unpublished changes are lost; new categories and items go to Recently deleted.",
+  "@restoreReplaceDraft": {
+    "description": "Restore dialog: checkbox (FR-096).",
+    "placeholders": {
+      "version": {
+        "type": "int"
+      }
+    }
+  },
+  "restoreDone": "Version {version} is live again as version {next}.",
+  "@restoreDone": {
+    "description": "Snack bar after a rollback.",
+    "placeholders": {
+      "version": {
+        "type": "int"
+      },
+      "next": {
+        "type": "int"
+      }
+    }
+  },
+  "discardTitle": "Discard unpublished changes?",
+  "@discardTitle": {
+    "description": "Discard dialog title (M06)."
+  },
+  "discardBody": "Your draft goes back to version {version}, the menu customers see. Categories and items added since then go to Recently deleted.",
+  "@discardBody": {
+    "description": "Discard dialog body.",
+    "placeholders": {
+      "version": {
+        "type": "int"
+      }
+    }
+  },
+  "actionDiscardChanges": "Discard changes",
+  "@actionDiscardChanges": {
+    "description": "Button: discard the draft."
+  },
+  "discardDone": "Your draft matches version {version} again.",
+  "@discardDone": {
+    "description": "Snack bar after discarding.",
+    "placeholders": {
+      "version": {
+        "type": "int"
+      }
+    }
+  },
+  "settingsVersionsLive": "Live · version {version}",
+  "@settingsVersionsLive": {
+    "description": "Settings: version history subtitle.",
+    "placeholders": {
+      "version": {
+        "type": "int"
+      }
+    }
+  },
+  "statusActionHistory": "Version history",
+  "@statusActionHistory": {
+    "description": "Dashboard status card: button."
   }
 }

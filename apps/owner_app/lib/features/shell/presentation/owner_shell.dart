@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../l10n/generated/app_localizations.dart';
 import '../../auth/application/owner_auth_service.dart';
+import '../../publishing/presentation/publish_bar.dart';
 
 /// Top-level sections of the owner app, in navigation order.
 enum OwnerSection { home, menu, share, settings }
@@ -85,6 +86,8 @@ class OwnerShell extends ConsumerWidget {
         index,
         initialLocation: index == navigationShell.currentIndex,
       ),
+      // "Unpublished changes · Preview · Publish" (M06).
+      banner: const PublishBar(),
       body: navigationShell,
     );
   }

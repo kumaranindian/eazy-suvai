@@ -28,6 +28,8 @@ export const AppErrorCode = {
   slugTaken: "slug-taken",
   /** The item's category is deleted: pick another one (BR-004, M04). */
   categoryDeleted: "category-deleted",
+  /** Publishing is blocked; `details.problems` lists why (FR-066, M06). */
+  publishBlocked: "publish-blocked",
   unknown: "unknown",
 } as const;
 
@@ -49,6 +51,7 @@ const httpsCodeFor: Record<AppErrorCode, FunctionsErrorCode> = {
   "slug-reserved": "invalid-argument",
   "slug-taken": "already-exists",
   "category-deleted": "failed-precondition",
+  "publish-blocked": "failed-precondition",
   "unknown": "internal",
 };
 

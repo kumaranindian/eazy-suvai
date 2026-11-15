@@ -253,6 +253,8 @@
   "@currencyUSD": { "description": "Currency name." },
   "errorCategoryDeleted": "That category has been deleted. Choose another category.",
   "@errorCategoryDeleted": {"description":"Error: the item's category is deleted (M04)."},
+  "errorPublishBlocked": "Your menu can't be published yet. Fix the problems listed and try again.",
+  "@errorPublishBlocked": {"description":"Error: publishing is blocked by validation problems (M06)."},
   "priceRequired": "Enter a price.",
   "@priceRequired": {"description":"Price field: empty."},
   "priceInvalid": "Enter a price like {example}.",

@@ -1,4 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Firebase and the draft preview web view (M06: fonts and images). -->
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:label="EazySuvai"
         android:name="${applicationName}"

@@ -11,11 +11,14 @@ import 'package:go_router/go_router.dart';
 import 'package:owner_app/app.dart';
 import 'package:owner_app/features/auth/data/registration_repository.dart';
 import 'package:owner_app/features/menu/data/menu_repository.dart';
+import 'package:owner_app/features/publishing/data/publishing_repository.dart';
+import 'package:owner_app/features/publishing/presentation/menu_html_view.dart';
 import 'package:owner_app/features/restaurant/data/restaurant_repository.dart';
 import 'package:owner_app/features/theme/data/theme_repository.dart';
 import 'package:owner_app/router/app_router.dart';
 
 import 'fake_menu.dart';
+import 'fake_publishing.dart';
 import 'fake_theme.dart';
 
 /// Stands in for the `completeRegistration` callable: sets owner claims on
@@ -189,6 +192,7 @@ class TestApp {
     this.resolver,
     this.menu,
     this.themes,
+    this.publishing,
   );
 
   final WidgetTester tester;
@@ -198,6 +202,7 @@ class TestApp {
   final FakeStorageImageResolver resolver;
   final FakeMenuRepository menu;
   final FakeThemeRepository themes;
+  final FakePublishingRepository publishing;
 
   ProviderContainer get container =>
       ProviderScope.containerOf(tester.element(find.byType(OwnerApp)));
@@ -265,6 +270,7 @@ Future<TestApp> pumpOwnerApp(
   FakeRestaurantRepository? restaurant,
   FakeMenuRepository? menu,
   FakeThemeRepository? themes,
+  FakePublishingRepository? publishing,
   List<Override> overrides = const [],
 }) async {
   await setWidth(tester, width, height: height);
@@ -275,6 +281,7 @@ Future<TestApp> pumpOwnerApp(
   final resolver = FakeStorageImageResolver();
   final menus = menu ?? FakeMenuRepository();
   final themeRepo = themes ?? FakeThemeRepository();
+  final publishingRepo = publishing ?? FakePublishingRepository();
   await tester.pumpWidget(
     ProviderScope(
       overrides: [
@@ -284,6 +291,8 @@ Future<TestApp> pumpOwnerApp(
         storageImageResolverProvider.overrideWithValue(resolver),
         menuRepositoryProvider.overrideWithValue(menus),
         themeRepositoryProvider.overrideWithValue(themeRepo),
+        publishingRepositoryProvider.overrideWithValue(publishingRepo),
+        menuHtmlViewBuilderProvider.overrideWithValue(fakeMenuHtmlView),
         // Google Fonts are not fetched in tests.
         menuFontResolverProvider.overrideWithValue(
           const PlainMenuFontResolver(),
@@ -302,5 +311,6 @@ Future<TestApp> pumpOwnerApp(
     resolver,
     menus,
     themeRepo,
+    publishingRepo,
   );
 }

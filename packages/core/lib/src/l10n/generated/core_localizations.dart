@@ -802,6 +802,12 @@ abstract class CoreLocalizations {
   /// **'That category has been deleted. Choose another category.'**
   String get errorCategoryDeleted;
 
+  /// Error: publishing is blocked by validation problems (M06).
+  ///
+  /// In en, this message translates to:
+  /// **'Your menu can\'t be published yet. Fix the problems listed and try again.'**
+  String get errorPublishBlocked;
+
   /// Price field: empty.
   ///
   /// In en, this message translates to:

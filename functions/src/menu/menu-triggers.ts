@@ -106,9 +106,12 @@ export async function syncRestaurantRoot(
     if (counts[kind] !== n) patch[`counts.${kind}`] = n;
   }
   if (draftChanged) {
-    const changedAt = millisOf(after?.updatedAt) ?? eventTime.getTime();
+    // The change's own time, not now: an edit published before this
+    // trigger ran must not look newer than the publish (M06 compares
+    // draftUpdatedAt with publishedDraftAt).
+    const stamp = after?.updatedAt instanceof Timestamp ? after.updatedAt : Timestamp.fromDate(eventTime);
     const recorded = millisOf(rootSnap.get("draftUpdatedAt")) ?? 0;
-    if (recorded < changedAt) patch.draftUpdatedAt = FieldValue.serverTimestamp();
+    if (recorded < stamp.toMillis()) patch.draftUpdatedAt = stamp;
   }
   if (Object.keys(patch).length === 0) return null;
   try {

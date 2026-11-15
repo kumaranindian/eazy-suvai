@@ -257,6 +257,19 @@ service cloud.firestore {
       return v is int && v >= 0 && v <= 1000000000000;
     }
 
+    // ---- M06: published versions (FR-062, FR-096) -------------------------
+    //
+    // Immutable snapshots written only by publishMenu / rollbackMenu. Owners
+    // and admins read them (version history). The draft kept for discard and
+    // rollback (versions/{n}/private/source) and live/availability stay
+    // Functions-only; the public menu (M07) reads with the Admin SDK. The
+    // root fields publishedVersion, publishedAt, publishedDraftAt,
+    // publishedCurrency and versionHistory are outside the owner whitelist.
+    match /restaurants/{rid}/versions/{n} {
+      allow read: if isOwner(rid) || isAdmin();
+      allow write: if false;
+    }
+
     // Platform-managed dietary labels and item tags (FR-023, FR-033,
     // FR-104): read by owners and admins, written by Functions (M11).
     match /dietaryLabels/{id} {

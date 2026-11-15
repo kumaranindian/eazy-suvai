@@ -19,10 +19,12 @@ void main() {
     ValueChanged<int>? onSelected,
     int selected = 0,
     bool showAppBar = true,
+    Widget? banner,
   }) => testApp(
     ResponsiveScaffold(
       title: 'Title',
       showAppBar: showAppBar,
+      banner: banner,
       selectedIndex: selected,
       onDestinationSelected: onSelected ?? (_) {},
       destinations: const [
@@ -121,6 +123,37 @@ void main() {
       1280,
       reason: 'side menu sits on the start (right) side',
     );
+  });
+
+  for (final width in const [360.0, 768.0, 1280.0]) {
+    testWidgets('banner at ${width.toInt()} px (M06 publish bar)', (
+      tester,
+    ) async {
+      await pumpAt(
+        tester,
+        width,
+        shell(banner: const SizedBox(height: 56, child: Text('Banner'))),
+      );
+      final banner = tester.getRect(find.byKey(ResponsiveScaffold.bannerKey));
+      final body = tester.getRect(find.text('Body'));
+      if (width < 600) {
+        final nav = tester.getRect(find.byKey(ResponsiveScaffold.bottomBarKey));
+        expect(banner.bottom, nav.top, reason: 'just above the navigation bar');
+        expect(banner.width, width);
+      } else {
+        expect(
+          banner.bottom,
+          lessThanOrEqualTo(body.top),
+          reason: 'top of the content',
+        );
+        expect(banner.left, greaterThan(0), reason: 'beside the navigation');
+      }
+    });
+  }
+
+  testWidgets('no banner, no banner slot', (tester) async {
+    await pumpAt(tester, 360, shell());
+    expect(find.byKey(ResponsiveScaffold.bannerKey), findsNothing);
   });
 }
 

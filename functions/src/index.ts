@@ -29,3 +29,4 @@ export {
   onItemWrite,
   restoreDeleted,
 } from "./menu";
+export { discardDraft, previewMenu, publishMenu, rollbackMenu } from "./publishing";

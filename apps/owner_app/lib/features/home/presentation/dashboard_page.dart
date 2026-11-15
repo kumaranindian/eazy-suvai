@@ -215,12 +215,13 @@ class _ChecklistCard extends StatelessWidget {
     SetupStep.publish => l10n.checklistPublishHint,
   };
 
-  /// Menu, theme and publishing screens arrive in M04–M06; until then
-  /// those steps open the closest existing section.
+  /// The screen that completes each step. "Publish" opens the preview,
+  /// which has the Publish button (M06).
   static String _stepRoute(SetupStep s) => switch (s) {
     SetupStep.profile || SetupStep.logo => Routes.profile,
-    SetupStep.categories || SetupStep.items || SetupStep.publish => Routes.menu,
+    SetupStep.categories || SetupStep.items => Routes.menu,
     SetupStep.theme => Routes.theme,
+    SetupStep.publish => Routes.preview,
   };
 }
 
@@ -288,13 +289,29 @@ class _StatusCard extends StatelessWidget {
           FormMessage(l10n.regionalPricesNeedReview),
         ],
         const SizedBox(height: 12),
-        Align(
-          alignment: AlignmentDirectional.centerStart,
-          child: AppSecondaryButton(
-            label: l10n.statusOpenMenu,
-            icon: Icons.restaurant_menu,
-            onPressed: () => context.go(Routes.menu),
-          ),
+        Wrap(
+          spacing: 8,
+          runSpacing: 8,
+          children: [
+            AppSecondaryButton(
+              label: l10n.statusOpenMenu,
+              icon: Icons.restaurant_menu,
+              onPressed: () => context.go(Routes.menu),
+            ),
+            AppSecondaryButton(
+              key: const ValueKey('dashboard.preview'),
+              label: l10n.actionPreview,
+              icon: Icons.visibility_outlined,
+              onPressed: () => context.push(Routes.preview),
+            ),
+            if (r.isPublished)
+              TextButton(
+                key: const ValueKey('dashboard.versions'),
+                style: TextButton.styleFrom(minimumSize: const Size(48, 48)),
+                onPressed: () => context.go(Routes.versions),
+                child: Text(l10n.statusActionHistory),
+              ),
+          ],
         ),
       ],
     );

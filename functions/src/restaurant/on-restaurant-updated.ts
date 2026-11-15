@@ -26,7 +26,9 @@ export function restaurantUpdatePatch(before: Data | undefined, after: Data | un
   const currencyChanged =
     typeof before.currency === "string" && typeof after.currency === "string" && before.currency !== after.currency;
   const published = after.publishedVersion !== null && after.publishedVersion !== undefined;
-  if (currencyChanged && published && after.pricesNeedReview !== true) {
+  // Back to the published currency (for example a discarded draft, M06): nothing to review.
+  const backToPublished = typeof after.publishedCurrency === "string" && after.currency === after.publishedCurrency;
+  if (currencyChanged && published && !backToPublished && after.pricesNeedReview !== true) {
     patch.pricesNeedReview = true;
   }
 

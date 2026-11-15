@@ -34,6 +34,7 @@ class ResponsiveScaffold extends StatelessWidget {
     this.floatingActionButton,
     this.sideMenuHeader,
     this.showAppBar = true,
+    this.banner,
   }) : assert(destinations.length >= 2, 'Navigation needs 2+ destinations');
 
   static const bottomBarKey = ValueKey('responsive-scaffold-bottom-bar');
@@ -55,6 +56,24 @@ class ResponsiveScaffold extends StatelessWidget {
   /// a detail page with a back button).
   final bool showAppBar;
 
+  /// A persistent strip (for example M06's "Unpublished changes" bar):
+  /// above the bottom navigation on compact windows, at the top of the
+  /// content area on wider ones. Null or a zero-size widget shows nothing.
+  final Widget? banner;
+
+  static const bannerKey = ValueKey('responsive-scaffold-banner');
+
+  Widget _withBanner(Widget content) {
+    final b = banner;
+    if (b == null) return content;
+    return Column(
+      children: [
+        KeyedSubtree(key: bannerKey, child: b),
+        Expanded(child: content),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final breakpoint = Breakpoint.fromWidth(MediaQuery.sizeOf(context).width);
@@ -68,17 +87,24 @@ class ResponsiveScaffold extends StatelessWidget {
           appBar: appBar,
           body: SafeArea(child: body),
           floatingActionButton: floatingActionButton,
-          bottomNavigationBar: NavigationBar(
-            key: bottomBarKey,
-            selectedIndex: selectedIndex,
-            onDestinationSelected: onDestinationSelected,
-            destinations: [
-              for (final d in destinations)
-                NavigationDestination(
-                  icon: Icon(d.icon),
-                  selectedIcon: Icon(d.selectedIcon),
-                  label: d.label,
-                ),
+          bottomNavigationBar: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              if (banner case final b?) KeyedSubtree(key: bannerKey, child: b),
+              NavigationBar(
+                key: bottomBarKey,
+                selectedIndex: selectedIndex,
+                onDestinationSelected: onDestinationSelected,
+                destinations: [
+                  for (final d in destinations)
+                    NavigationDestination(
+                      icon: Icon(d.icon),
+                      selectedIcon: Icon(d.selectedIcon),
+                      label: d.label,
+                    ),
+                ],
+              ),
             ],
           ),
         );
@@ -104,7 +130,7 @@ class ResponsiveScaffold extends StatelessWidget {
                   ],
                 ),
                 const VerticalDivider(width: 1, thickness: 1),
-                Expanded(child: body),
+                Expanded(child: _withBanner(body)),
               ],
             ),
           ),
@@ -134,7 +160,7 @@ class ResponsiveScaffold extends StatelessWidget {
                       constraints: const BoxConstraints(
                         maxWidth: Breakpoint.maxContentWidth,
                       ),
-                      child: body,
+                      child: _withBanner(body),
                     ),
                   ),
                 ),

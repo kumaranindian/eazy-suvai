@@ -33,6 +33,7 @@ export 'src/menu/sequencing.dart';
 export 'src/money/currency.dart';
 export 'src/money/money.dart';
 export 'src/money/price_field.dart';
+export 'src/publishing/menu_version.dart';
 export 'src/restaurant/opening_hours.dart';
 export 'src/restaurant/restaurant.dart';
 export 'src/restaurant/slug.dart';
