@@ -8,7 +8,7 @@ import { removeBrandingFrom } from "../lib/plan-limits";
 import { BODY_SCRIPT, HEAD_SCRIPT } from "./client-script";
 import { formatPrice, majorAmount } from "./format";
 import { isOpenAt, localTime, openingHoursSpecification } from "./hours";
-import { filterBarHtml, renderMenuPage } from "./render-menu";
+import { filterBarHtml, renderMenuPage, splashHtml } from "./render-menu";
 import { routeOf } from "./routes";
 import { sampleSnapshot } from "./sample-menu";
 import { jsonForScript, menuJsonLd, metaDescription, pageTitle, seoHead, sitemapXml, truncate } from "./seo";
@@ -290,6 +290,34 @@ describe("menu page", () => {
     it("is valid HTML and absent from the draft preview", async () => {
       await expectValidHtml(html);
       expect(renderMenuPage(s, { draft: true })).not.toContain("class=\"filters\"");
+    });
+  });
+
+  describe("opening splash card", () => {
+    it("shows the logo on a plate, the name and Menu; decorative and never blocking", () => {
+      const s = sampleSnapshot();
+      const splash = splashHtml(s, MENU_TEXT_EN);
+      expect(splash).toMatch(/^<div class="splash" aria-hidden="true">/);
+      expect(splash).toContain("class=\"sp-plate\"");
+      expect(splash).toContain(`<p class="sp-name">${s.profile.name}</p>`);
+      expect(splash).toContain(`<p class="sp-sub">${MENU_TEXT_EN.menu}</p>`);
+      expect(live(s)).toContain(splash);
+      expect(live(s)).toMatch(/\.splash\{[^}]*pointer-events:none/);
+      expect(live(s)).toContain("prefers-reduced-motion:reduce");
+    });
+
+    it("draws a steaming bowl without a logo", () => {
+      const s = sampleSnapshot();
+      delete s.profile.logo;
+      const splash = splashHtml(s, MENU_TEXT_EN);
+      expect(splash).toContain("class=\"sp-bowl\"");
+      expect(splash).not.toContain("sp-plate");
+    });
+
+    it("appears once per tab session and never in the draft preview", () => {
+      expect(HEAD_SCRIPT).toContain("es_s_");
+      expect(HEAD_SCRIPT).toContain("no-splash");
+      expect(renderMenuPage(sampleSnapshot(), { draft: true })).not.toContain("class=\"splash\"");
     });
   });
 

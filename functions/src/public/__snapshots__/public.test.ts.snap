@@ -10,7 +10,7 @@ exports[`menu page matches the template snapshot (live, Free plan) 1`] = `
 
 <meta name="color-scheme" content="light">
 <meta name="theme-color" content="#A8550A">
-<script>document.documentElement.classList.add("js")</script>
+<script>var h=document.documentElement;h.classList.add("js");try{var k="es_s_"+location.pathname,ss=sessionStorage;if(ss.getItem(k))h.classList.add("no-splash");else ss.setItem(k,"1")}catch(e){}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link id="es-font" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&amp;display=swap" media="print"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&amp;display=swap"></noscript>
 <style>:root{--es-primary:#A8550A;--es-on-primary:#FFFFFF;--es-secondary:#3B7A20;--es-on-secondary:#FFFFFF;--es-background:#FFF8EE;--es-surface:#FFFFFF;--es-text:#2B2B2B;--es-surface-text:#2B2B2B;--es-muted-text:#6B6966;--es-accent:#A8550A;--es-border:#DFD9D1;--es-font:"Poppins"}*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--es-background);color:var(--es-text);font-family:var(--es-font),system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.5}
@@ -19,6 +19,20 @@ a{color:var(--es-accent)}:focus-visible{outline:3px solid var(--es-accent);outli
 h1{margin:0;font-size:1.6rem;line-height:1.2;color:var(--es-text)}
 @media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
 [hidden]{display:none!important}
+.splash{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:var(--es-background);perspective:900px;pointer-events:none;animation:sp-out .5s ease-in 1.5s forwards}
+.no-splash .splash{display:none}
+.sp-card{width:min(70vw,250px);aspect-ratio:3/4;border-radius:22px;background:var(--es-primary);color:var(--es-on-primary);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:20px;text-align:center;box-shadow:0 34px 60px -24px rgba(0,0,0,.5),inset 0 0 0 6px rgba(255,255,255,.12);transform-style:preserve-3d;animation:sp-in 1.1s cubic-bezier(.2,.8,.2,1) both}
+.sp-plate{display:grid;place-items:center;width:132px;height:132px;border-radius:50%;background:var(--es-surface);box-shadow:0 0 0 8px var(--es-secondary),0 14px 24px -10px rgba(0,0,0,.45);transform:translateZ(40px);animation:sp-plate 1.1s cubic-bezier(.2,.8,.2,1) both}
+.sp-logo{width:96px;height:96px;border-radius:50%;object-fit:cover}
+.sp-bowl{width:128px;height:128px;transform:translateZ(40px)}
+.sp-steam path{animation:sp-steam 1.4s ease-in-out infinite}.sp-steam path:nth-child(2){animation-delay:.25s}.sp-steam path:nth-child(3){animation-delay:.5s}
+.sp-name{margin:8px 0 0;font-size:1.3rem;font-weight:700;line-height:1.2;overflow-wrap:anywhere;transform:translateZ(24px)}
+.sp-sub{margin:0;font-size:.8rem;letter-spacing:.3em;text-transform:uppercase;opacity:.85;transform:translateZ(16px)}
+@keyframes sp-in{0%{transform:rotateY(-75deg) rotateX(20deg) translateZ(-220px);opacity:0}60%{transform:rotateY(10deg) rotateX(-4deg) translateZ(24px);opacity:1}100%{transform:none;opacity:1}}
+@keyframes sp-plate{0%{transform:translateZ(40px) rotate(-120deg) scale(.6)}100%{transform:translateZ(40px) rotate(0) scale(1)}}
+@keyframes sp-steam{0%{transform:translateY(6px);opacity:0}50%{opacity:.9}100%{transform:translateY(-10px);opacity:0}}
+@keyframes sp-out{to{opacity:0;visibility:hidden}}
+@media (prefers-reduced-motion:reduce){.sp-card,.sp-plate,.sp-steam path{animation:none}.splash{animation-duration:.2s;animation-delay:.6s}}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .filters ul{display:flex;gap:8px;list-style:none;margin:0;padding:12px 0 4px;overflow-x:auto;scrollbar-width:none}
 .chip{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 14px;border-radius:999px;border:1px solid var(--es-border);background:var(--es-surface);color:var(--es-surface-text);font:inherit;font-size:.9rem;white-space:nowrap;cursor:pointer}
@@ -103,6 +117,7 @@ section{scroll-margin-top:16px}}</style>
 
 </head>
 <body class="layout-list card-image-left mode-light" data-slug="spice-garden" data-more="more" data-less="less" data-close="Close">
+<div class="splash" aria-hidden="true"><div class="sp-card"><span class="sp-plate"><img class="sp-logo" src="https://img.test/logo/w640.webp" srcset="https://img.test/logo/w320.webp 320w, https://img.test/logo/w640.webp 640w, https://img.test/logo/w1280.webp 1280w" sizes="120px" width="1200" height="900" fetchpriority="high" decoding="async" alt=""></span><p class="sp-name">Spice Garden</p><p class="sp-sub">Menu</p></div></div>
 <a class="skip" href="#menu">Skip to menu</a>
 
 <header class="hero">

@@ -161,7 +161,8 @@ try {
   const { webSocketDebuggerUrl } = await res.json();
   const browser = await puppeteer.connect({ browserWSEndpoint: webSocketDebuggerUrl });
   const page = await browser.newPage();
-  const expectCols = { "lh-list": { 360: 1, 768: 2, 1280: 2 }, "lh-grid": { 360: 1, 768: 2, 1280: 3 }, "lh-large": { 360: 1, 768: 2, 1280: 2 } };
+  // Compact rows: one column on phones, two from 600 px, for every theme.
+  const expectCols = { "lh-list": { 360: 1, 768: 2, 1280: 2 }, "lh-grid": { 360: 1, 768: 2, 1280: 2 }, "lh-large": { 360: 1, 768: 2, 1280: 2 } };
   for (const slug of ["lh-list", "lh-grid", "lh-large"]) {
     for (const width of [360, 768, 1280]) {
       await page.setViewport({ width, height: 800, deviceScaleFactor: 1 });

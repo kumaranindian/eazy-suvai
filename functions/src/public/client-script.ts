@@ -36,8 +36,13 @@ if(l&&n-l<18e5&&n>=l)return;ss.setItem(k,String(n))}}catch(e){}
 try{var p={type:t,slug:ds.slug||"",src:src};for(var k2 in x)p[k2]=x[k2];
 navigator.sendBeacon(u,new Blob([JSON.stringify(p)],{type:"text/plain"}))}catch(e){}}`;
 
-/** Runs in `<head>` before first paint, so the clamp applies without a jump. */
-export const HEAD_SCRIPT = "document.documentElement.classList.add(\"js\")";
+/**
+ * Runs in `<head>` before first paint, so the clamp applies without a jump.
+ * Also shows the opening splash card once per tab session: on a repeat
+ * visit it adds `no-splash` before the card can paint (key `es_s_{path}`).
+ */
+export const HEAD_SCRIPT = "var h=document.documentElement;h.classList.add(\"js\");" +
+  "try{var k=\"es_s_\"+location.pathname,ss=sessionStorage;if(ss.getItem(k))h.classList.add(\"no-splash\");else ss.setItem(k,\"1\")}catch(e){}";
 
 /** Runs at the end of `<body>`. */
 export const BODY_SCRIPT = `(function(){

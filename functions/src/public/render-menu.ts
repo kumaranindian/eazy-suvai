@@ -128,6 +128,31 @@ ${pills.length > 0 ? `<div class="item-meta">${pills.join("")}</div>` : ""}
 </div></li>`;
 }
 
+/** A bowl with rising steam, drawn in the card's colours (no logo). */
+const BOWL_SVG = `<svg class="sp-bowl" viewBox="0 0 120 120" aria-hidden="true">
+<g class="sp-steam" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round">
+<path d="M44 46c-6-8 6-12 0-22"/><path d="M60 42c-6-8 6-12 0-22"/><path d="M76 46c-6-8 6-12 0-22"/></g>
+<ellipse cx="60" cy="62" rx="44" ry="8" fill="var(--es-secondary)"/>
+<circle cx="44" cy="58" r="6" fill="var(--es-surface)"/><circle cx="58" cy="55" r="7" fill="var(--es-surface)"/><circle cx="74" cy="58" r="6" fill="var(--es-surface)"/>
+<path d="M14 62h92c0 26-20 42-46 42S14 88 14 62z" fill="var(--es-surface)"/>
+<path d="M22 70h76" stroke="var(--es-secondary)" stroke-width="4" stroke-linecap="round"/>
+<rect x="44" y="104" width="32" height="6" rx="3" fill="var(--es-surface)"/></svg>`;
+
+/**
+ * The opening splash: a 3D card that swings in with the logo on a plate (or
+ * a steaming bowl), the restaurant's name and "Menu", then fades out. CSS
+ * only: it never blocks taps (`pointer-events:none`) or the page load, it
+ * is decorative (`aria-hidden`), it shows once per tab session (see
+ * HEAD_SCRIPT) and briefly and still for reduced motion.
+ */
+export function splashHtml(s: MenuSnapshot, t: MenuText): string {
+  const p = s.profile;
+  const plate = p.logo
+    ? `<span class="sp-plate">${imgTag(p.logo, { sizes: "120px", cls: "sp-logo", eager: true })}</span>`
+    : BOWL_SVG;
+  return `<div class="splash" aria-hidden="true"><div class="sp-card">${plate}<p class="sp-name">${esc(p.name)}</p><p class="sp-sub">${esc(t.menu)}</p></div></div>`;
+}
+
 /**
  * Chips for the dietary labels and tags used on the menu. Within a group the
  * chips are alternatives; the groups narrow each other (the page script does
@@ -229,6 +254,20 @@ h1{margin:0;font-size:1.6rem;line-height:1.2;color:var(--es-text)}`;
 const CSS = `${BASE_CSS}
 @media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
 [hidden]{display:none!important}
+.splash{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:var(--es-background);perspective:900px;pointer-events:none;animation:sp-out .5s ease-in 1.5s forwards}
+.no-splash .splash{display:none}
+.sp-card{width:min(70vw,250px);aspect-ratio:3/4;border-radius:22px;background:var(--es-primary);color:var(--es-on-primary);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:20px;text-align:center;box-shadow:0 34px 60px -24px rgba(0,0,0,.5),inset 0 0 0 6px rgba(255,255,255,.12);transform-style:preserve-3d;animation:sp-in 1.1s cubic-bezier(.2,.8,.2,1) both}
+.sp-plate{display:grid;place-items:center;width:132px;height:132px;border-radius:50%;background:var(--es-surface);box-shadow:0 0 0 8px var(--es-secondary),0 14px 24px -10px rgba(0,0,0,.45);transform:translateZ(40px);animation:sp-plate 1.1s cubic-bezier(.2,.8,.2,1) both}
+.sp-logo{width:96px;height:96px;border-radius:50%;object-fit:cover}
+.sp-bowl{width:128px;height:128px;transform:translateZ(40px)}
+.sp-steam path{animation:sp-steam 1.4s ease-in-out infinite}.sp-steam path:nth-child(2){animation-delay:.25s}.sp-steam path:nth-child(3){animation-delay:.5s}
+.sp-name{margin:8px 0 0;font-size:1.3rem;font-weight:700;line-height:1.2;overflow-wrap:anywhere;transform:translateZ(24px)}
+.sp-sub{margin:0;font-size:.8rem;letter-spacing:.3em;text-transform:uppercase;opacity:.85;transform:translateZ(16px)}
+@keyframes sp-in{0%{transform:rotateY(-75deg) rotateX(20deg) translateZ(-220px);opacity:0}60%{transform:rotateY(10deg) rotateX(-4deg) translateZ(24px);opacity:1}100%{transform:none;opacity:1}}
+@keyframes sp-plate{0%{transform:translateZ(40px) rotate(-120deg) scale(.6)}100%{transform:translateZ(40px) rotate(0) scale(1)}}
+@keyframes sp-steam{0%{transform:translateY(6px);opacity:0}50%{opacity:.9}100%{transform:translateY(-10px);opacity:0}}
+@keyframes sp-out{to{opacity:0;visibility:hidden}}
+@media (prefers-reduced-motion:reduce){.sp-card,.sp-plate,.sp-steam path{animation:none}.splash{animation-duration:.2s;animation-delay:.6s}}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .filters ul{display:flex;gap:8px;list-style:none;margin:0;padding:12px 0 4px;overflow-x:auto;scrollbar-width:none}
 .chip{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 14px;border-radius:999px;border:1px solid var(--es-border);background:var(--es-surface);color:var(--es-surface-text);font:inherit;font-size:.9rem;white-space:nowrap;cursor:pointer}
@@ -377,6 +416,7 @@ ${seo}
 ${options.headExtra ?? ""}
 </head>
 <body class="${esc(bodyClass)}"${data}>
+${scripts ? splashHtml(s, t) : ""}
 <a class="skip" href="#menu">${esc(t.skip)}</a>
 ${options.draft ? `<div class="draft" role="note">${esc(t.previewBanner)}</div>` : ""}
 <header class="hero">
