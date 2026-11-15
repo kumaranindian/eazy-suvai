@@ -24,6 +24,7 @@ build/
 emulator-data/
 service-account*.json
 *-adminsdk-*.json
+secrets/
 .env
 .env.*
 !.env.example

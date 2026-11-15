@@ -1491,6 +1491,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Tracked in the support inbox'**
   String get metricSupportOutside;
+
+  /// Button on the restaurant's subscription card and the dialog's submit (FR-081).
+  ///
+  /// In en, this message translates to:
+  /// **'Change plan'**
+  String get changePlan;
+
+  /// Change-plan dialog title.
+  ///
+  /// In en, this message translates to:
+  /// **'Change the plan for {name}'**
+  String changePlanTitle(String name);
+
+  /// Change-plan dialog: the restaurant's plan now.
+  ///
+  /// In en, this message translates to:
+  /// **'Current plan: {plan}'**
+  String changePlanCurrent(String plan);
+
+  /// Change-plan dialog: plan picker label.
+  ///
+  /// In en, this message translates to:
+  /// **'New plan'**
+  String get changePlanNew;
+
+  /// Change-plan dialog: no plan to choose.
+  ///
+  /// In en, this message translates to:
+  /// **'There is no other active plan to move to.'**
+  String get changePlanNoOther;
+
+  /// Change-plan dialog: moving to a paid plan.
+  ///
+  /// In en, this message translates to:
+  /// **'No payment is recorded. Use this for trials, complimentary upgrades and corrections. After a payment, use Record payment instead.'**
+  String get changePlanPaidNote;
+
+  /// Change-plan dialog: moving to a free plan.
+  ///
+  /// In en, this message translates to:
+  /// **'Content over this plan\'s limits is hidden and the menu is republished.'**
+  String get changePlanFreeNote;
+
+  /// Change-plan dialog: bad dates.
+  ///
+  /// In en, this message translates to:
+  /// **'The plan must end after it starts and after today.'**
+  String get changePlanEndInvalid;
 }
 
 class _AppLocalizationsDelegate

@@ -820,4 +820,35 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get metricSupportOutside => 'Tracked in the support inbox';
+
+  @override
+  String get changePlan => 'Change plan';
+
+  @override
+  String changePlanTitle(String name) {
+    return 'Change the plan for $name';
+  }
+
+  @override
+  String changePlanCurrent(String plan) {
+    return 'Current plan: $plan';
+  }
+
+  @override
+  String get changePlanNew => 'New plan';
+
+  @override
+  String get changePlanNoOther => 'There is no other active plan to move to.';
+
+  @override
+  String get changePlanPaidNote =>
+      'No payment is recorded. Use this for trials, complimentary upgrades and corrections. After a payment, use Record payment instead.';
+
+  @override
+  String get changePlanFreeNote =>
+      'Content over this plan\'s limits is hidden and the menu is republished.';
+
+  @override
+  String get changePlanEndInvalid =>
+      'The plan must end after it starts and after today.';
 }

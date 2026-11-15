@@ -1053,5 +1053,47 @@
   "metricSupportOutside": "Tracked in the support inbox",
   "@metricSupportOutside": {
     "description": "Metric value: not measured in the app."
+  },
+  "changePlan": "Change plan",
+  "@changePlan": {
+    "description": "Button on the restaurant's subscription card and the dialog's submit (FR-081)."
+  },
+  "changePlanTitle": "Change the plan for {name}",
+  "@changePlanTitle": {
+    "description": "Change-plan dialog title.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "changePlanCurrent": "Current plan: {plan}",
+  "@changePlanCurrent": {
+    "description": "Change-plan dialog: the restaurant's plan now.",
+    "placeholders": {
+      "plan": {
+        "type": "String"
+      }
+    }
+  },
+  "changePlanNew": "New plan",
+  "@changePlanNew": {
+    "description": "Change-plan dialog: plan picker label."
+  },
+  "changePlanNoOther": "There is no other active plan to move to.",
+  "@changePlanNoOther": {
+    "description": "Change-plan dialog: no plan to choose."
+  },
+  "changePlanPaidNote": "No payment is recorded. Use this for trials, complimentary upgrades and corrections. After a payment, use Record payment instead.",
+  "@changePlanPaidNote": {
+    "description": "Change-plan dialog: moving to a paid plan."
+  },
+  "changePlanFreeNote": "Content over this plan's limits is hidden and the menu is republished.",
+  "@changePlanFreeNote": {
+    "description": "Change-plan dialog: moving to a free plan."
+  },
+  "changePlanEndInvalid": "The plan must end after it starts and after today.",
+  "@changePlanEndInvalid": {
+    "description": "Change-plan dialog: bad dates."
   }
 }

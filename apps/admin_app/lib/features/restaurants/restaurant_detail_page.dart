@@ -9,6 +9,7 @@ import '../../l10n/generated/app_localizations.dart';
 import '../../router/app_router.dart';
 import '../../widgets/admin_widgets.dart';
 import '../../widgets/read_only.dart';
+import '../subscriptions/presentation/change_plan_dialog.dart';
 import '../subscriptions/presentation/upgrade_requests_page.dart';
 
 /// Keys, for tests.
@@ -24,6 +25,7 @@ abstract final class DetailKeys {
   static const extend = ValueKey('detail.extend');
   static const downgrade = ValueKey('detail.downgrade');
   static const recordPayment = ValueKey('detail.recordPayment');
+  static const changePlan = ValueKey('detail.changePlan');
   static const menuLink = ValueKey('detail.menuLink');
   static const auditLink = ValueKey('detail.auditLink');
 }
@@ -46,8 +48,9 @@ List<String> statusActionsFor(String status) => switch (status) {
 };
 
 /// Restaurant detail (M11, FR-087 to FR-089): profile summary, public menu
-/// link, status with actions (reason required), subscription with extend /
-/// downgrade / record payment, payments, plan history and activity.
+/// link, status with actions (reason required), subscription with record
+/// payment / change plan / extend / downgrade, payments, plan history and
+/// activity.
 /// Admins never edit the menu here (§3.5).
 class RestaurantDetailPage extends ConsumerWidget {
   const RestaurantDetailPage({super.key, required this.restaurantId});
@@ -301,6 +304,26 @@ class _Detail extends ConsumerWidget {
                   }
                 },
                 child: Text(l10n.recordPayment),
+              ),
+              OutlinedButton(
+                key: DetailKeys.changePlan,
+                onPressed: () async {
+                  final ok = await showDialog<bool>(
+                    context: context,
+                    builder: (_) => ChangePlanDialog(
+                      restaurantId: restaurantId,
+                      restaurantName: '${r['name']}',
+                      currentPlanId: '${sub['planId'] ?? 'free'}',
+                    ),
+                  );
+                  if (ok == true && context.mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text(l10n.subscriptionChanged)),
+                    );
+                    ref.invalidate(restaurantDetailProvider(restaurantId));
+                  }
+                },
+                child: Text(l10n.changePlan),
               ),
               if (subStatus != 'free') ...[
                 OutlinedButton(
