@@ -93,9 +93,25 @@ service cloud.firestore {
         && (!('visibility' in changed) || validVisibility(next.visibility))
         && (!('currency' in changed) || next.currency.matches('^[A-Z]{3}$'))
         && (!('timezone' in changed) || validTimezone(next.timezone))
-        // M05 adds the theme checks.
-        && (!('themeId' in changed) || next.themeId == null || next.themeId.matches('^[A-Za-z0-9_-]{1,64}$'))
-        && (!('themeSettings' in changed) || next.themeSettings is map);
+        // M05 (FR-055, FR-058): a theme that exists, and overrides as one
+        // regex over "primary|secondary|background|font|layout|cardLayout|mode"
+        // (each part empty or valid). Fonts are checked against
+        // config/platform.fonts in the app; M07 falls back for unknown ones.
+        && (!('themeId' in changed) || next.themeId == null
+            || next.themeId.matches('^[A-Za-z0-9_-]{1,64}$')
+               && exists(/databases/$(database)/documents/themes/$(next.themeId)))
+        && (!('themeSettings' in changed) || next.themeSettings == null
+            || validThemeSettings(next.themeSettings));
+    }
+
+    function validThemeSettings(s) {
+      let hex = '(#[0-9A-F]{6})?';
+      return s.keys().hasOnly(['primary', 'secondary', 'background', 'font', 'layout', 'cardLayout', 'mode'])
+        && (s.get('primary', '') + '|' + s.get('secondary', '') + '|' + s.get('background', '') + '|'
+            + s.get('font', '') + '|' + s.get('layout', '') + '|' + s.get('cardLayout', '') + '|'
+            + s.get('mode', ''))
+           .matches('^' + hex + '[|]' + hex + '[|]' + hex + '[|]([A-Za-z][A-Za-z ]{0,39})?'
+             + '[|](list|grid)?[|](compact|image-top|image-left)?[|](light|dark)?$');
     }
 
     function validName(v) {
@@ -250,6 +266,21 @@ service cloud.firestore {
 
     match /itemTags/{id} {
       allow read: if (verified() && request.auth.token.role == 'owner') || isAdmin();
+      allow write: if false;
+    }
+
+    // ---- M05: themes and fonts (FR-056, FR-059) ---------------------------
+    //
+    // Predefined themes and the platform config (font list, currencies) are
+    // read by owners and admins and written by Functions (seed script, M11).
+    // Which themes a plan allows is enforced by M10.
+    match /themes/{id} {
+      allow read: if (verified() && request.auth.token.role == 'owner') || isAdmin();
+      allow write: if false;
+    }
+
+    match /config/platform {
+      allow get: if (verified() && request.auth.token.role == 'owner') || isAdmin();
       allow write: if false;
     }
 

@@ -3,7 +3,7 @@ import 'package:flutter/painting.dart';
 /// EazySuvai brand colours (architecture §6) plus accessible variants.
 ///
 /// The brand orange and the documented deep orange are below the WCAG 2.1 AA
-/// 4.5:1 ratio for normal-size text on white (#FF7A00 ≈ 2.9:1,
+/// 4.5:1 ratio for normal-size text on white (#FF7A00 ≈ 2.6:1,
 /// #C8650A ≈ 3.95:1). They are used for decoration and large text only.
 /// Small text and filled-button backgrounds use [orangeText] and
 /// [greenText], which pass AA on both white and cream. The theme tests check

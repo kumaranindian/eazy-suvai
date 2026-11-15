@@ -21,6 +21,8 @@ import '../features/restaurant/presentation/regional_page.dart';
 import '../features/restaurant/presentation/settings_page.dart';
 import '../features/setup/presentation/setup_wizard_page.dart';
 import '../features/shell/presentation/owner_shell.dart';
+import '../features/theme/presentation/theme_editor_page.dart';
+import '../features/theme/presentation/theme_gallery_page.dart';
 import 'auth_guard.dart';
 import 'not_found_page.dart';
 
@@ -55,6 +57,10 @@ abstract final class Routes {
   static String menuNewItem([String? categoryId]) => categoryId == null
       ? '/menu/item/new'
       : '/menu/item/new?category=${Uri.encodeQueryComponent(categoryId)}';
+
+  // M05: theme gallery and editor.
+  static const theme = '/settings/theme';
+  static const themeEditor = '/settings/theme/customize';
 
   /// Where "Upgrade" leads (M10 replaces the page).
   static const plan = '/settings/plan';
@@ -204,6 +210,16 @@ GoRouter appRouter(Ref ref) {
                   GoRoute(
                     path: 'plan',
                     builder: (context, state) => const PlanPage(),
+                  ),
+                  GoRoute(
+                    path: 'theme',
+                    builder: (context, state) => const ThemeGalleryPage(),
+                    routes: [
+                      GoRoute(
+                        path: 'customize',
+                        builder: (context, state) => const ThemeEditorPage(),
+                      ),
+                    ],
                   ),
                 ],
               ),

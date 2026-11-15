@@ -1170,4 +1170,234 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get planComingSoon =>
       'Upgrading from the app is coming soon. Contact EazySuvai support to change your plan.';
+
+  @override
+  String get themeTitle => 'Theme';
+
+  @override
+  String get themeEditorTitle => 'Customize theme';
+
+  @override
+  String get themeCurrent => 'Your theme';
+
+  @override
+  String get themeNotChosen => 'No theme chosen yet';
+
+  @override
+  String themeCustomizedName(String name) {
+    return '$name (customized)';
+  }
+
+  @override
+  String get themeChooseHint =>
+      'Pick a theme below. You can change its colours, font and layout afterwards.';
+
+  @override
+  String get themeCustomizeHint =>
+      'Change colours, font, layouts and light or dark mode. Changes save automatically.';
+
+  @override
+  String get themeCustomize => 'Customize';
+
+  @override
+  String get themePreview => 'Preview';
+
+  @override
+  String get themePreviewTitle => 'Menu preview';
+
+  @override
+  String get themePreviewClose => 'Close preview';
+
+  @override
+  String get themePreviewNote =>
+      'An approximation of your public menu. Check the exact page in Preview before you publish.';
+
+  @override
+  String get themePreviewSample =>
+      'Sample dishes are shown until you add items.';
+
+  @override
+  String get themePreviewSoldOut => 'Sold out';
+
+  @override
+  String get themePremium => 'Premium';
+
+  @override
+  String get themeSelected => 'Selected';
+
+  @override
+  String get themeFontSample => 'Aa';
+
+  @override
+  String get themeEmpty =>
+      'No themes are available yet. Please try again later.';
+
+  @override
+  String get themeReplaceTitle => 'Switch theme?';
+
+  @override
+  String themeReplaceBody(String name) {
+    return 'Your custom colours, font and layouts will be replaced by the $name theme.';
+  }
+
+  @override
+  String get themeReplaceConfirm => 'Switch theme';
+
+  @override
+  String get themeChooseFirst => 'Choose a theme first, then customize it.';
+
+  @override
+  String get themeChooseAction => 'Choose a theme';
+
+  @override
+  String themeEditorBasedOn(String name) {
+    return 'Based on the $name theme.';
+  }
+
+  @override
+  String get themeSectionColours => 'Colours';
+
+  @override
+  String get themeSectionFont => 'Font';
+
+  @override
+  String get themeSectionLayout => 'Layout';
+
+  @override
+  String get themeSectionMode => 'Appearance';
+
+  @override
+  String get themePrimary => 'Primary colour';
+
+  @override
+  String get themePrimaryHelp =>
+      'Buttons, the selected category, headings and prices.';
+
+  @override
+  String get themeSecondary => 'Secondary colour';
+
+  @override
+  String get themeSecondaryHelp => 'Image placeholders and accents.';
+
+  @override
+  String get themeBackground => 'Background colour';
+
+  @override
+  String get themeBackgroundHelp => 'Behind the whole menu.';
+
+  @override
+  String themeHexLabel(String field) {
+    return '$field (hex)';
+  }
+
+  @override
+  String get themeHexInvalid => 'Enter a colour like #A8550A.';
+
+  @override
+  String get themeResetColour => 'Use theme colour';
+
+  @override
+  String get themeResetAll => 'Reset to theme defaults';
+
+  @override
+  String themeSwatch(String hex) {
+    return 'Colour $hex';
+  }
+
+  @override
+  String get themeFont => 'Menu font';
+
+  @override
+  String get themeLayout => 'Menu layout';
+
+  @override
+  String get themeLayoutList => 'List';
+
+  @override
+  String get themeLayoutGrid => 'Grid';
+
+  @override
+  String get themeCardLayout => 'Item cards';
+
+  @override
+  String get themeCardCompact => 'Compact, no image';
+
+  @override
+  String get themeCardImageTop => 'Image on top';
+
+  @override
+  String get themeCardImageLeft => 'Image at the side';
+
+  @override
+  String get themeDarkMode => 'Dark mode';
+
+  @override
+  String get themeDarkModeHelp => 'Light text on a dark background.';
+
+  @override
+  String get themeDevicePhone => 'Phone';
+
+  @override
+  String get themeDeviceDesktop => 'Desktop';
+
+  @override
+  String get themeContrastOk => 'All text is easy to read (WCAG AA contrast).';
+
+  @override
+  String get themeContrastTitle => 'Some text would be hard to read';
+
+  @override
+  String themeContrastText(String ratio, String colour) {
+    return 'Text on your background has a contrast of $ratio:1; at least 4.5:1 is needed. Your menu will use $colour text instead.';
+  }
+
+  @override
+  String themeContrastSurfaceText(String ratio, String colour) {
+    return 'Text on item cards has a contrast of $ratio:1; at least 4.5:1 is needed. Cards will use $colour text instead.';
+  }
+
+  @override
+  String themeContrastAccent(String ratio) {
+    return 'Your primary colour has a contrast of $ratio:1 as text; at least 4.5:1 is needed. Headings and prices will use an adjusted shade.';
+  }
+
+  @override
+  String get themeColourWhite => 'white';
+
+  @override
+  String get themeColourBlack => 'black';
+
+  @override
+  String get sampleStarters => 'Starters';
+
+  @override
+  String get sampleMains => 'Mains';
+
+  @override
+  String get sampleItemPaneer => 'Paneer tikka';
+
+  @override
+  String get sampleItemPaneerDesc =>
+      'Cottage cheese marinated in yogurt and spices, grilled in a tandoor.';
+
+  @override
+  String get sampleItemChicken => 'Chicken 65';
+
+  @override
+  String get sampleItemChickenDesc =>
+      'Crispy fried chicken with curry leaves and chillies.';
+
+  @override
+  String get sampleItemDosa => 'Masala dosa';
+
+  @override
+  String get sampleItemDosaDesc =>
+      'Rice and lentil crepe with spiced potato, sambar and chutney.';
+
+  @override
+  String get sampleItemBiryani => 'Vegetable biryani';
+
+  @override
+  String get sampleItemBiryaniDesc =>
+      'Basmati rice slow-cooked with vegetables and whole spices.';
 }

@@ -1959,6 +1959,414 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Upgrading from the app is coming soon. Contact EazySuvai support to change your plan.'**
   String get planComingSoon;
+
+  /// Theme gallery title and Settings entry.
+  ///
+  /// In en, this message translates to:
+  /// **'Theme'**
+  String get themeTitle;
+
+  /// Theme editor title.
+  ///
+  /// In en, this message translates to:
+  /// **'Customize theme'**
+  String get themeEditorTitle;
+
+  /// Label above the chosen theme name.
+  ///
+  /// In en, this message translates to:
+  /// **'Your theme'**
+  String get themeCurrent;
+
+  /// Shown when the restaurant has no theme.
+  ///
+  /// In en, this message translates to:
+  /// **'No theme chosen yet'**
+  String get themeNotChosen;
+
+  /// Theme name when the owner changed colours, font or layouts.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} (customized)'**
+  String themeCustomizedName(String name);
+
+  /// Hint before a theme is chosen.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a theme below. You can change its colours, font and layout afterwards.'**
+  String get themeChooseHint;
+
+  /// Hint once a theme is chosen.
+  ///
+  /// In en, this message translates to:
+  /// **'Change colours, font, layouts and light or dark mode. Changes save automatically.'**
+  String get themeCustomizeHint;
+
+  /// Opens the theme editor.
+  ///
+  /// In en, this message translates to:
+  /// **'Customize'**
+  String get themeCustomize;
+
+  /// Opens the full-screen menu preview on phones.
+  ///
+  /// In en, this message translates to:
+  /// **'Preview'**
+  String get themePreview;
+
+  /// Preview title and screen-reader label.
+  ///
+  /// In en, this message translates to:
+  /// **'Menu preview'**
+  String get themePreviewTitle;
+
+  /// Tooltip of the close button on the full-screen preview.
+  ///
+  /// In en, this message translates to:
+  /// **'Close preview'**
+  String get themePreviewClose;
+
+  /// Note under the preview.
+  ///
+  /// In en, this message translates to:
+  /// **'An approximation of your public menu. Check the exact page in Preview before you publish.'**
+  String get themePreviewNote;
+
+  /// Shown in the preview while the menu is empty.
+  ///
+  /// In en, this message translates to:
+  /// **'Sample dishes are shown until you add items.'**
+  String get themePreviewSample;
+
+  /// Badge on unavailable items in the preview.
+  ///
+  /// In en, this message translates to:
+  /// **'Sold out'**
+  String get themePreviewSoldOut;
+
+  /// Badge on themes outside the Free plan.
+  ///
+  /// In en, this message translates to:
+  /// **'Premium'**
+  String get themePremium;
+
+  /// Screen-reader state of the chosen theme card.
+  ///
+  /// In en, this message translates to:
+  /// **'Selected'**
+  String get themeSelected;
+
+  /// Short sample drawn in the theme font on theme cards.
+  ///
+  /// In en, this message translates to:
+  /// **'Aa'**
+  String get themeFontSample;
+
+  /// Gallery empty state.
+  ///
+  /// In en, this message translates to:
+  /// **'No themes are available yet. Please try again later.'**
+  String get themeEmpty;
+
+  /// Confirm dialog title when switching away from a customized theme.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch theme?'**
+  String get themeReplaceTitle;
+
+  /// Confirm dialog body.
+  ///
+  /// In en, this message translates to:
+  /// **'Your custom colours, font and layouts will be replaced by the {name} theme.'**
+  String themeReplaceBody(String name);
+
+  /// Confirm button.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch theme'**
+  String get themeReplaceConfirm;
+
+  /// Editor empty state when no theme is chosen.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a theme first, then customize it.'**
+  String get themeChooseFirst;
+
+  /// Button to the gallery.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a theme'**
+  String get themeChooseAction;
+
+  /// Editor intro line.
+  ///
+  /// In en, this message translates to:
+  /// **'Based on the {name} theme.'**
+  String themeEditorBasedOn(String name);
+
+  /// Editor section.
+  ///
+  /// In en, this message translates to:
+  /// **'Colours'**
+  String get themeSectionColours;
+
+  /// Editor section.
+  ///
+  /// In en, this message translates to:
+  /// **'Font'**
+  String get themeSectionFont;
+
+  /// Editor section.
+  ///
+  /// In en, this message translates to:
+  /// **'Layout'**
+  String get themeSectionLayout;
+
+  /// Editor section for light or dark mode.
+  ///
+  /// In en, this message translates to:
+  /// **'Appearance'**
+  String get themeSectionMode;
+
+  /// Colour field label.
+  ///
+  /// In en, this message translates to:
+  /// **'Primary colour'**
+  String get themePrimary;
+
+  /// Colour field help.
+  ///
+  /// In en, this message translates to:
+  /// **'Buttons, the selected category, headings and prices.'**
+  String get themePrimaryHelp;
+
+  /// Colour field label.
+  ///
+  /// In en, this message translates to:
+  /// **'Secondary colour'**
+  String get themeSecondary;
+
+  /// Colour field help.
+  ///
+  /// In en, this message translates to:
+  /// **'Image placeholders and accents.'**
+  String get themeSecondaryHelp;
+
+  /// Colour field label.
+  ///
+  /// In en, this message translates to:
+  /// **'Background colour'**
+  String get themeBackground;
+
+  /// Colour field help.
+  ///
+  /// In en, this message translates to:
+  /// **'Behind the whole menu.'**
+  String get themeBackgroundHelp;
+
+  /// Hex input label, for example Primary colour (hex).
+  ///
+  /// In en, this message translates to:
+  /// **'{field} (hex)'**
+  String themeHexLabel(String field);
+
+  /// Hex input error.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a colour like #A8550A.'**
+  String get themeHexInvalid;
+
+  /// Removes a colour override.
+  ///
+  /// In en, this message translates to:
+  /// **'Use theme colour'**
+  String get themeResetColour;
+
+  /// Removes every override.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset to theme defaults'**
+  String get themeResetAll;
+
+  /// Screen-reader label of a colour swatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Colour {hex}'**
+  String themeSwatch(String hex);
+
+  /// Font dropdown label.
+  ///
+  /// In en, this message translates to:
+  /// **'Menu font'**
+  String get themeFont;
+
+  /// Layout selector label.
+  ///
+  /// In en, this message translates to:
+  /// **'Menu layout'**
+  String get themeLayout;
+
+  /// Menu layout option.
+  ///
+  /// In en, this message translates to:
+  /// **'List'**
+  String get themeLayoutList;
+
+  /// Menu layout option.
+  ///
+  /// In en, this message translates to:
+  /// **'Grid'**
+  String get themeLayoutGrid;
+
+  /// Card layout selector label.
+  ///
+  /// In en, this message translates to:
+  /// **'Item cards'**
+  String get themeCardLayout;
+
+  /// Card layout option.
+  ///
+  /// In en, this message translates to:
+  /// **'Compact, no image'**
+  String get themeCardCompact;
+
+  /// Card layout option.
+  ///
+  /// In en, this message translates to:
+  /// **'Image on top'**
+  String get themeCardImageTop;
+
+  /// Card layout option.
+  ///
+  /// In en, this message translates to:
+  /// **'Image at the side'**
+  String get themeCardImageLeft;
+
+  /// Switch label.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark mode'**
+  String get themeDarkMode;
+
+  /// Switch help.
+  ///
+  /// In en, this message translates to:
+  /// **'Light text on a dark background.'**
+  String get themeDarkModeHelp;
+
+  /// Preview size option.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get themeDevicePhone;
+
+  /// Preview size option.
+  ///
+  /// In en, this message translates to:
+  /// **'Desktop'**
+  String get themeDeviceDesktop;
+
+  /// Shown when every colour pair passes.
+  ///
+  /// In en, this message translates to:
+  /// **'All text is easy to read (WCAG AA contrast).'**
+  String get themeContrastOk;
+
+  /// Contrast warning title.
+  ///
+  /// In en, this message translates to:
+  /// **'Some text would be hard to read'**
+  String get themeContrastTitle;
+
+  /// Contrast warning for body text.
+  ///
+  /// In en, this message translates to:
+  /// **'Text on your background has a contrast of {ratio}:1; at least 4.5:1 is needed. Your menu will use {colour} text instead.'**
+  String themeContrastText(String ratio, String colour);
+
+  /// Contrast warning for card text.
+  ///
+  /// In en, this message translates to:
+  /// **'Text on item cards has a contrast of {ratio}:1; at least 4.5:1 is needed. Cards will use {colour} text instead.'**
+  String themeContrastSurfaceText(String ratio, String colour);
+
+  /// Contrast warning for the primary colour used as text.
+  ///
+  /// In en, this message translates to:
+  /// **'Your primary colour has a contrast of {ratio}:1 as text; at least 4.5:1 is needed. Headings and prices will use an adjusted shade.'**
+  String themeContrastAccent(String ratio);
+
+  /// Colour name in contrast warnings.
+  ///
+  /// In en, this message translates to:
+  /// **'white'**
+  String get themeColourWhite;
+
+  /// Colour name in contrast warnings.
+  ///
+  /// In en, this message translates to:
+  /// **'black'**
+  String get themeColourBlack;
+
+  /// Sample category in the preview.
+  ///
+  /// In en, this message translates to:
+  /// **'Starters'**
+  String get sampleStarters;
+
+  /// Sample category in the preview.
+  ///
+  /// In en, this message translates to:
+  /// **'Mains'**
+  String get sampleMains;
+
+  /// Sample dish.
+  ///
+  /// In en, this message translates to:
+  /// **'Paneer tikka'**
+  String get sampleItemPaneer;
+
+  /// Sample dish description.
+  ///
+  /// In en, this message translates to:
+  /// **'Cottage cheese marinated in yogurt and spices, grilled in a tandoor.'**
+  String get sampleItemPaneerDesc;
+
+  /// Sample dish.
+  ///
+  /// In en, this message translates to:
+  /// **'Chicken 65'**
+  String get sampleItemChicken;
+
+  /// Sample dish description.
+  ///
+  /// In en, this message translates to:
+  /// **'Crispy fried chicken with curry leaves and chillies.'**
+  String get sampleItemChickenDesc;
+
+  /// Sample dish.
+  ///
+  /// In en, this message translates to:
+  /// **'Masala dosa'**
+  String get sampleItemDosa;
+
+  /// Sample dish description.
+  ///
+  /// In en, this message translates to:
+  /// **'Rice and lentil crepe with spiced potato, sambar and chutney.'**
+  String get sampleItemDosaDesc;
+
+  /// Sample dish.
+  ///
+  /// In en, this message translates to:
+  /// **'Vegetable biryani'**
+  String get sampleItemBiryani;
+
+  /// Sample dish description.
+  ///
+  /// In en, this message translates to:
+  /// **'Basmati rice slow-cooked with vegetables and whole spices.'**
+  String get sampleItemBiryaniDesc;
 }
 
 class _AppLocalizationsDelegate

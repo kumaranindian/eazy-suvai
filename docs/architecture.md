@@ -61,8 +61,8 @@ All timestamps are Firestore `Timestamp` in UTC. IDs are Firestore auto-IDs unle
 | `qrCodes/{code}` | `{restaurantId, kind: 'restaurant'}`; permanent, never reused | Functions |
 | `plans/{planId}` | `name`, `limits {maxItems, maxCategories, maxBranches, themeIds[], analyticsDays, qrLogo, removeBranding}`, `prices {INR, AED, KWD}`, `isFree`, `active` | Admin via Functions |
 | `dietaryLabels/{id}`, `itemTags/{id}` | `name`, `icon` (a key the apps draw: `veg`, `nonVeg`, `vegan`, `egg`, `spicy`, `bestseller`, `chefsSpecial`, `new`), `color` (`#RRGGBB`), `sort`, `retired` (FR-104). Seeded by `functions/scripts/seed-platform.mjs` (M04) | Admin via Functions |
-| `themes/{id}` | Predefined theme tokens (M05) | Admin via Functions |
-| `config/platform` | `reservedSlugs[]`, `graceDays` (default 14), `fonts[]`, `currencies{code: decimals}` | Admin via Functions |
+| `themes/{id}` | `name`, `premium`, `sort`, `retired`, `updatedAt`, `tokens {primary, secondary, background, surface, text, font, layout, cardLayout, mode}`: colours `#RRGGBB`, `layout` list or grid, `cardLayout` compact, image-top or image-left, `mode` light or dark. Seeded by `seed-platform.mjs` (M05: 6 themes, 2 non-premium). Readable by verified owners and admins | Admin via Functions |
+| `config/platform` | `reservedSlugs[]`, `graceDays` (default 14), `fonts[]` (Google Fonts families, M05), `currencies{code: decimals}`. Readable by verified owners and admins (M05, for the font list), so it must never hold secrets | Admin via Functions |
 | `upgradeRequests/{id}` | `restaurantId`, `requestedPlanId`, `status`, `createdAt` | Owner (create), Functions |
 | `auditLogs/{id}` | `actorUid`, `actorRole`, `action`, `restaurantId?`, `target`, `reason?`, `details`, `at`, `expireAt` (TTL 2 years) | Functions only |
 | `analyticsEvents/{id}` | Raw beacon events, `expireAt` (TTL 90 days) | Functions only |
@@ -81,6 +81,12 @@ Profile field formats (M03):
 - `visibility`: a flag set to `false` hides that group on the public menu (FR-013, FR-014); a missing flag means shown. The owner app writes all five.
 - `setupCompletedAt`: set when the owner finishes or skips the first-run setup wizard.
 - `nameLower` and `pricesNeedReview` are maintained by `onRestaurantUpdated` (M03); `slug` changes only through `changeSlug`.
+
+Theme fields (M05):
+
+- `themeId`: a `themes/{id}` document id, or `null` until the owner chooses (the setup checklist step).
+- `themeSettings`: only the owner's overrides of that theme, any of `primary`, `secondary`, `background` (`#RRGGBB`, upper case), `font` (letters and spaces, ≤ 40), `layout`, `cardLayout`, `mode`. Choosing another theme resets it to `{}`.
+- What the menu shows is `resolveTheme(tokens, settings)` (`functions/src/theme/resolve.ts`, mirrored by `resolveMenuTheme()` in core): overrides win; text, card text, muted text and the accent (primary used as text) are raised to WCAG AA 4.5:1 automatically (FR-060), and the owner app warns when that happens.
 
 | Subcollection | Fields | Notes |
 | --- | --- | --- |
@@ -143,6 +149,7 @@ match /restaurants/{rid} {
 
 - Owner updates of the tenant root (M03, `validOwnerUpdate()` in `firestore.rules`) also check every changed value: name 1–80 characters, known business type, description ≤ 500, `logo`/`cover` only to `null`, `contact`/`social` shapes and formats, `openingHours` format, `visibility` booleans, ISO currency code, IANA-style time zone. A draft change must set `draftUpdatedAt` to the server time, and `setupCompletedAt` must be the server time. Rules stop evaluating a request after a fixed amount of work, so these checks use one regex per group (see the comment in the rules); `restaurant-profile.test.js` has a test that writes every field at once.
 - Menu content (M04): owners update only whitelisted fields of `categories` (`name, description, image, sequence, active`) and `items` (`name, description, image, priceMinor, dietaryLabelId, tagIds, featured, sequence, available`), plus `updatedAt == request.time`. Soft-deleted documents can't be edited. `image` can only become `null`, `priceMinor` must be an integer from 0 to 999,999,999, and `dietaryLabelId` must exist. Creating, deleting, moving and restoring go through callables. `dietaryLabels` and `itemTags` are readable by owners and admins.
+- Theme (M05): owners set `themeId` to an existing `themes` document (or `null`) and `themeSettings` to `null` or a map checked with one regex (allowed keys, upper-case hex colours, a plain font name, known layout values). Plan gating of premium themes is M10. `themes` and `config/platform` are readable by verified owners and TOTP admins and written only by Functions.
 - Storage rules: owners can write only under `restaurants/{theirRid}/images/**`, content type `image/jpeg|png|webp`, size ≤ 5 MB (FR-102).
 - Admin app: Firebase Authentication with Identity Platform TOTP multi-factor, required for `platformAdmin` (FR-084). Rules and `assertAdmin()` check `firebase.sign_in_second_factor == 'totp'`; only the Functions emulator under a `demo-` project skips the `assertAdmin()` check, because the Auth emulator has no TOTP (M01).
 - Every rule has a test in `firestore-tests/` using `@firebase/rules-unit-testing`.
@@ -185,6 +192,7 @@ A shared `ResponsiveScaffold` and `Breakpoint` helper in `packages/core` impleme
 | Media | `processImage` | Storage trigger | M02 |
 | Restaurant | `changeSlug`, `onRestaurantUpdated` | callable, trigger | M03 |
 | Menu | `createCategory`, `createItem`, `deleteCategory`, `deleteItems`, `moveItems`, `restoreDeleted`, `onItemWrite`, `onCategoryWrite` | callable, triggers | M04 |
+| Theme | No deployed functions. `functions/src/theme/` holds `contrastRatio`, `readableTextOn`, `resolveTheme`, `cssVariables` and the seed themes, used by M06/M07 | library | M05 |
 | Publishing | `publishMenu`, `rollbackMenu`, `discardDraft` | callable | M06 |
 | Public | `renderMenu`, `collectEvent` | HTTPS | M07, M09 |
 | Analytics | `rollupAnalytics` (hourly, if needed) | schedule | M09 |

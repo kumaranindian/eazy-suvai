@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../../router/app_router.dart';
 import '../data/restaurant_repository.dart';
+import '../../theme/data/theme_repository.dart';
 import 'menu_link_page.dart';
 import 'regional_page.dart';
 
@@ -48,6 +49,22 @@ class SettingsPage extends ConsumerWidget {
         Routes.regional,
       ),
       (
+        const ValueKey('settings.theme'),
+        Icons.palette_outlined,
+        l10n.themeTitle,
+        r == null
+            ? null
+            : (r.themeId == null
+                  ? l10n.themeNotChosen
+                  : _themeName(
+                      ref.watch(themePresetsProvider).value,
+                      r.themeId!,
+                      customized: !r.themeSettings.isEmpty,
+                      l10n: l10n,
+                    )),
+        Routes.theme,
+      ),
+      (
         const ValueKey('settings.menuLink'),
         Icons.link,
         l10n.menuLinkTitle,
@@ -84,4 +101,15 @@ class SettingsPage extends ConsumerWidget {
       ),
     );
   }
+}
+
+/// "Saffron" or "Saffron (customized)"; the id while themes load.
+String _themeName(
+  List<ThemePreset>? presets,
+  String id, {
+  required bool customized,
+  required AppLocalizations l10n,
+}) {
+  final name = presets?.where((p) => p.id == id).firstOrNull?.name ?? id;
+  return customized ? l10n.themeCustomizedName(name) : name;
 }

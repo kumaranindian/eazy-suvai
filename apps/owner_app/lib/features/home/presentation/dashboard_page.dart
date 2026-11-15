@@ -220,7 +220,7 @@ class _ChecklistCard extends StatelessWidget {
   static String _stepRoute(SetupStep s) => switch (s) {
     SetupStep.profile || SetupStep.logo => Routes.profile,
     SetupStep.categories || SetupStep.items || SetupStep.publish => Routes.menu,
-    SetupStep.theme => Routes.settings,
+    SetupStep.theme => Routes.theme,
   };
 }
 

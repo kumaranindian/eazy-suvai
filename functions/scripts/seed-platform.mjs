@@ -1,8 +1,11 @@
 // Seeds the platform-managed dietary labels and item tags (M04; FR-023,
-// FR-033, FR-104). Safe to run again: existing documents keep any admin
-// changes (only missing ones are created) unless --overwrite is given.
+// FR-033, FR-104), the predefined themes and the font list (M05; FR-056,
+// FR-059). Safe to run again: existing documents keep any admin changes
+// (only missing ones are created, and `config/platform.fonts` is set only
+// when absent) unless --overwrite is given.
 //
-// Build first (the data lives in src/menu/seed-data.ts): npm run build
+// Build first (the data lives in src/menu/seed-data.ts and
+// src/theme/seed-themes.ts): npm run build
 //
 // Emulators:
 //   FIRESTORE_EMULATOR_HOST=localhost:8080 node scripts/seed-platform.mjs --project demo-eazysuvai
@@ -17,6 +20,7 @@ import { FieldValue, getFirestore } from "firebase-admin/firestore";
 
 const require = createRequire(import.meta.url);
 const { DIETARY_LABELS, ITEM_TAGS } = require("../lib/menu/seed-data.js");
+const { SEED_FONTS, SEED_THEMES } = require("../lib/theme/seed-themes.js");
 
 const { values } = parseArgs({
   options: {
@@ -40,6 +44,7 @@ let created = 0;
 for (const [collection, entries] of [
   ["dietaryLabels", DIETARY_LABELS],
   ["itemTags", ITEM_TAGS],
+  ["themes", SEED_THEMES],
 ]) {
   for (const { id, ...data } of entries) {
     const ref = db.doc(`${collection}/${id}`);
@@ -48,4 +53,11 @@ for (const [collection, entries] of [
     created++;
   }
 }
-console.log(`Seeded ${created} platform label/tag documents in ${values.project}.`);
+
+const config = db.doc("config/platform");
+const existing = (await config.get()).data();
+if (values.overwrite || !Array.isArray(existing?.fonts)) {
+  await config.set({ fonts: [...SEED_FONTS] }, { merge: true });
+  created++;
+}
+console.log(`Seeded ${created} platform documents/fields in ${values.project}.`);

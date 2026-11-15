@@ -15,7 +15,7 @@ Status values: `Not started` · `In progress` · `Blocked` · `Done`
 | M02 | Media management | `M02-media.md` | M00 | Done | 2026-11-14 | 2026-11-14 | Storage rules, `processImage` (sharp: magic bytes, minimum sizes, EXIF strip, WebP 320/640/1280), `ImagePickerField`, `ResponsiveImage`, upload with progress and cancel; web verified end to end. Open: Android/iOS device run, real-bucket setup (CORS, cross-service rules, Blaze). |
 | M03 | Restaurant onboarding and profile | `M03-restaurant-profile.md` | M01, M02 | Done | 2026-11-14 | 2026-11-14 | Setup wizard, dashboard checklist, profile with autosave and live preview, opening hours, currency/time zone (FR-103), `changeSlug`, `onRestaurantUpdated`, rules whitelist with value checks; Chrome end to end. Open: device runs, slug-change rate limit (decision). |
 | M04 | Menu management (categories and items) | `M04-menu-management.md` | M03 | Done | 2026-11-14 | 2026-11-14 | Callables (create, delete, move, restore; plan limits in a transaction), triggers (counts, `draftUpdatedAt`, `live/availability`), rules whitelist, price field in minor units, labels/tags seed, menu manager at 1/2/3 panes, Recently deleted; Chrome end to end. Open: device runs, seed labels on real projects. |
-| M05 | Menu customization (themes) | `M05-customization.md` | M03 | Not started | | | |
+| M05 | Menu customization (themes) | `M05-customization.md` | M03 | Done | 2026-11-14 | 2026-11-14 | Shared WCAG contrast + `resolveTheme` (Dart and TS, one test-case file), 6 seed themes (2 Free) and fonts, rules for `themes`/`config/platform`/theme draft, gallery and editor with live phone/desktop preview and autosave; Chrome end to end. Open: premium lock (M10), device runs, seed real projects. |
 | M06 | Preview, publishing and versions | `M06-publishing.md` | M04, M05 | Not started | | | |
 | M07 | Public digital menu | `M07-public-menu.md` | M06 | Not started | | | |
 | M08 | QR codes and sharing | `M08-qr-sharing.md` | M07 | Not started | | | |
@@ -134,6 +134,24 @@ Add a dated line whenever a module changes something another module depends on.
   - Core adds `MenuCategory`, `MenuItem`, `MenuLabel`, `MenuLimits`, `sequencesAfterMove`, `PriceField` / `parsePriceMinor` and `MenuLabelBadge` (reuse in the M06 preview and the M11 label admin).
   - Widget tests: `pumpOwnerApp(..., menu: FakeMenuRepository(...))` (`test/fake_menu.dart`, `sampleMenu()`).
 - 2026-11-14 (M04): **Tooling:** `tool/integration.sh` also runs `menu_flow_test.dart`. Seed labels on the emulators with `FIRESTORE_EMULATOR_HOST=localhost:8080 node functions/scripts/seed-platform.mjs --project demo-eazysuvai` (after `npm run build`).
+
+- 2026-11-14 (M05): **Theme data:**
+  - `themes/{id}` = `{name, premium, sort, retired, tokens {primary, secondary, background, surface, text, font, layout, cardLayout, mode}, updatedAt}`.
+  - Seeded ids: `saffron` and `minimal` (Free); `banana-leaf`, `midnight`, `cafe-cream` and `coastal` (premium).
+  - `config/platform.fonts` is the curated Google Fonts list. `seed-platform.mjs` seeds both; run it on every project.
+  - `restaurants/{rid}.themeId` is an existing theme id or `null`. `themeSettings` holds only the overrides (`primary`, `secondary`, `background` as upper-case `#RRGGBB`; `font`; `layout: list|grid`; `cardLayout: compact|image-top|image-left`; `mode: light|dark`). Choosing a theme resets it to `{}`.
+  - `themes` and `config/platform` are readable by verified owners, so `config/platform` must never hold secrets.
+- 2026-11-14 (M05): **Theme tokens M07 must use.** Render with `resolveTheme(tokens, settings)` and `cssVariables()` from `functions/src/theme`; never re-implement the contrast rules.
+  - CSS custom properties: `--es-primary`, `--es-on-primary`, `--es-secondary`, `--es-on-secondary`, `--es-background`, `--es-surface`, `--es-text`, `--es-surface-text`, `--es-muted-text`, `--es-accent`, `--es-border`.
+  - Use `text` on the background, `surfaceText` on cards, `mutedText` for descriptions, and `accent` for headings and prices. All of them reach WCAG AA after the automatic adjustment (FR-060).
+  - `font` is a Google Fonts family (fall back to the system sans-serif). `layout`, `cardLayout` and `mode` as above.
+  - The Dart twin is `resolveMenuTheme()` → `ResolvedMenuTheme` in core. Both are tested against `functions/src/theme/contrast-cases.json`; change them together.
+- 2026-11-14 (M05): **Snapshot (M06):** `theme: {themeId, tokens (copied from the theme at publish), settings}`. **Plan gating (M10):** owners write `themeId` directly and the rules only check that it exists; add the premium check there or move the choice to a callable.
+- 2026-11-14 (M05): **Owner app:**
+  - Routes `/settings/theme` (gallery) and `/settings/theme/customize` (editor). The dashboard step "Choose a theme" opens the gallery.
+  - `MenuThemePreview` (owner app) renders the menu from resolved tokens; reuse it in the M06 preview screen if useful.
+  - Widget tests: `pumpOwnerApp(..., themes: FakeThemeRepository(...))` (`test/fake_theme.dart`); `menuFontResolverProvider` is overridden with `PlainMenuFontResolver` (no Google Fonts fetches in tests).
+  - `tool/integration.sh` also runs `theme_flow_test.dart`.
 
 ## Open decisions
 

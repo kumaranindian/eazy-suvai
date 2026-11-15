@@ -1515,5 +1515,323 @@
   "planComingSoon": "Upgrading from the app is coming soon. Contact EazySuvai support to change your plan.",
   "@planComingSoon": {
     "description": "Plans placeholder until M10."
+  },
+  "themeTitle": "Theme",
+  "@themeTitle": {
+    "description": "Theme gallery title and Settings entry."
+  },
+  "themeEditorTitle": "Customize theme",
+  "@themeEditorTitle": {
+    "description": "Theme editor title."
+  },
+  "themeCurrent": "Your theme",
+  "@themeCurrent": {
+    "description": "Label above the chosen theme name."
+  },
+  "themeNotChosen": "No theme chosen yet",
+  "@themeNotChosen": {
+    "description": "Shown when the restaurant has no theme."
+  },
+  "themeCustomizedName": "{name} (customized)",
+  "@themeCustomizedName": {
+    "description": "Theme name when the owner changed colours, font or layouts.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "themeChooseHint": "Pick a theme below. You can change its colours, font and layout afterwards.",
+  "@themeChooseHint": {
+    "description": "Hint before a theme is chosen."
+  },
+  "themeCustomizeHint": "Change colours, font, layouts and light or dark mode. Changes save automatically.",
+  "@themeCustomizeHint": {
+    "description": "Hint once a theme is chosen."
+  },
+  "themeCustomize": "Customize",
+  "@themeCustomize": {
+    "description": "Opens the theme editor."
+  },
+  "themePreview": "Preview",
+  "@themePreview": {
+    "description": "Opens the full-screen menu preview on phones."
+  },
+  "themePreviewTitle": "Menu preview",
+  "@themePreviewTitle": {
+    "description": "Preview title and screen-reader label."
+  },
+  "themePreviewClose": "Close preview",
+  "@themePreviewClose": {
+    "description": "Tooltip of the close button on the full-screen preview."
+  },
+  "themePreviewNote": "An approximation of your public menu. Check the exact page in Preview before you publish.",
+  "@themePreviewNote": {
+    "description": "Note under the preview."
+  },
+  "themePreviewSample": "Sample dishes are shown until you add items.",
+  "@themePreviewSample": {
+    "description": "Shown in the preview while the menu is empty."
+  },
+  "themePreviewSoldOut": "Sold out",
+  "@themePreviewSoldOut": {
+    "description": "Badge on unavailable items in the preview."
+  },
+  "themePremium": "Premium",
+  "@themePremium": {
+    "description": "Badge on themes outside the Free plan."
+  },
+  "themeSelected": "Selected",
+  "@themeSelected": {
+    "description": "Screen-reader state of the chosen theme card."
+  },
+  "themeFontSample": "Aa",
+  "@themeFontSample": {
+    "description": "Short sample drawn in the theme font on theme cards."
+  },
+  "themeEmpty": "No themes are available yet. Please try again later.",
+  "@themeEmpty": {
+    "description": "Gallery empty state."
+  },
+  "themeReplaceTitle": "Switch theme?",
+  "@themeReplaceTitle": {
+    "description": "Confirm dialog title when switching away from a customized theme."
+  },
+  "themeReplaceBody": "Your custom colours, font and layouts will be replaced by the {name} theme.",
+  "@themeReplaceBody": {
+    "description": "Confirm dialog body.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "themeReplaceConfirm": "Switch theme",
+  "@themeReplaceConfirm": {
+    "description": "Confirm button."
+  },
+  "themeChooseFirst": "Choose a theme first, then customize it.",
+  "@themeChooseFirst": {
+    "description": "Editor empty state when no theme is chosen."
+  },
+  "themeChooseAction": "Choose a theme",
+  "@themeChooseAction": {
+    "description": "Button to the gallery."
+  },
+  "themeEditorBasedOn": "Based on the {name} theme.",
+  "@themeEditorBasedOn": {
+    "description": "Editor intro line.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "themeSectionColours": "Colours",
+  "@themeSectionColours": {
+    "description": "Editor section."
+  },
+  "themeSectionFont": "Font",
+  "@themeSectionFont": {
+    "description": "Editor section."
+  },
+  "themeSectionLayout": "Layout",
+  "@themeSectionLayout": {
+    "description": "Editor section."
+  },
+  "themeSectionMode": "Appearance",
+  "@themeSectionMode": {
+    "description": "Editor section for light or dark mode."
+  },
+  "themePrimary": "Primary colour",
+  "@themePrimary": {
+    "description": "Colour field label."
+  },
+  "themePrimaryHelp": "Buttons, the selected category, headings and prices.",
+  "@themePrimaryHelp": {
+    "description": "Colour field help."
+  },
+  "themeSecondary": "Secondary colour",
+  "@themeSecondary": {
+    "description": "Colour field label."
+  },
+  "themeSecondaryHelp": "Image placeholders and accents.",
+  "@themeSecondaryHelp": {
+    "description": "Colour field help."
+  },
+  "themeBackground": "Background colour",
+  "@themeBackground": {
+    "description": "Colour field label."
+  },
+  "themeBackgroundHelp": "Behind the whole menu.",
+  "@themeBackgroundHelp": {
+    "description": "Colour field help."
+  },
+  "themeHexLabel": "{field} (hex)",
+  "@themeHexLabel": {
+    "description": "Hex input label, for example Primary colour (hex).",
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
+  },
+  "themeHexInvalid": "Enter a colour like #A8550A.",
+  "@themeHexInvalid": {
+    "description": "Hex input error."
+  },
+  "themeResetColour": "Use theme colour",
+  "@themeResetColour": {
+    "description": "Removes a colour override."
+  },
+  "themeResetAll": "Reset to theme defaults",
+  "@themeResetAll": {
+    "description": "Removes every override."
+  },
+  "themeSwatch": "Colour {hex}",
+  "@themeSwatch": {
+    "description": "Screen-reader label of a colour swatch.",
+    "placeholders": {
+      "hex": {
+        "type": "String"
+      }
+    }
+  },
+  "themeFont": "Menu font",
+  "@themeFont": {
+    "description": "Font dropdown label."
+  },
+  "themeLayout": "Menu layout",
+  "@themeLayout": {
+    "description": "Layout selector label."
+  },
+  "themeLayoutList": "List",
+  "@themeLayoutList": {
+    "description": "Menu layout option."
+  },
+  "themeLayoutGrid": "Grid",
+  "@themeLayoutGrid": {
+    "description": "Menu layout option."
+  },
+  "themeCardLayout": "Item cards",
+  "@themeCardLayout": {
+    "description": "Card layout selector label."
+  },
+  "themeCardCompact": "Compact, no image",
+  "@themeCardCompact": {
+    "description": "Card layout option."
+  },
+  "themeCardImageTop": "Image on top",
+  "@themeCardImageTop": {
+    "description": "Card layout option."
+  },
+  "themeCardImageLeft": "Image at the side",
+  "@themeCardImageLeft": {
+    "description": "Card layout option."
+  },
+  "themeDarkMode": "Dark mode",
+  "@themeDarkMode": {
+    "description": "Switch label."
+  },
+  "themeDarkModeHelp": "Light text on a dark background.",
+  "@themeDarkModeHelp": {
+    "description": "Switch help."
+  },
+  "themeDevicePhone": "Phone",
+  "@themeDevicePhone": {
+    "description": "Preview size option."
+  },
+  "themeDeviceDesktop": "Desktop",
+  "@themeDeviceDesktop": {
+    "description": "Preview size option."
+  },
+  "themeContrastOk": "All text is easy to read (WCAG AA contrast).",
+  "@themeContrastOk": {
+    "description": "Shown when every colour pair passes."
+  },
+  "themeContrastTitle": "Some text would be hard to read",
+  "@themeContrastTitle": {
+    "description": "Contrast warning title."
+  },
+  "themeContrastText": "Text on your background has a contrast of {ratio}:1; at least 4.5:1 is needed. Your menu will use {colour} text instead.",
+  "@themeContrastText": {
+    "description": "Contrast warning for body text.",
+    "placeholders": {
+      "ratio": {
+        "type": "String"
+      },
+      "colour": {
+        "type": "String"
+      }
+    }
+  },
+  "themeContrastSurfaceText": "Text on item cards has a contrast of {ratio}:1; at least 4.5:1 is needed. Cards will use {colour} text instead.",
+  "@themeContrastSurfaceText": {
+    "description": "Contrast warning for card text.",
+    "placeholders": {
+      "ratio": {
+        "type": "String"
+      },
+      "colour": {
+        "type": "String"
+      }
+    }
+  },
+  "themeContrastAccent": "Your primary colour has a contrast of {ratio}:1 as text; at least 4.5:1 is needed. Headings and prices will use an adjusted shade.",
+  "@themeContrastAccent": {
+    "description": "Contrast warning for the primary colour used as text.",
+    "placeholders": {
+      "ratio": {
+        "type": "String"
+      }
+    }
+  },
+  "themeColourWhite": "white",
+  "@themeColourWhite": {
+    "description": "Colour name in contrast warnings."
+  },
+  "themeColourBlack": "black",
+  "@themeColourBlack": {
+    "description": "Colour name in contrast warnings."
+  },
+  "sampleStarters": "Starters",
+  "@sampleStarters": {
+    "description": "Sample category in the preview."
+  },
+  "sampleMains": "Mains",
+  "@sampleMains": {
+    "description": "Sample category in the preview."
+  },
+  "sampleItemPaneer": "Paneer tikka",
+  "@sampleItemPaneer": {
+    "description": "Sample dish."
+  },
+  "sampleItemPaneerDesc": "Cottage cheese marinated in yogurt and spices, grilled in a tandoor.",
+  "@sampleItemPaneerDesc": {
+    "description": "Sample dish description."
+  },
+  "sampleItemChicken": "Chicken 65",
+  "@sampleItemChicken": {
+    "description": "Sample dish."
+  },
+  "sampleItemChickenDesc": "Crispy fried chicken with curry leaves and chillies.",
+  "@sampleItemChickenDesc": {
+    "description": "Sample dish description."
+  },
+  "sampleItemDosa": "Masala dosa",
+  "@sampleItemDosa": {
+    "description": "Sample dish."
+  },
+  "sampleItemDosaDesc": "Rice and lentil crepe with spiced potato, sambar and chutney.",
+  "@sampleItemDosaDesc": {
+    "description": "Sample dish description."
+  },
+  "sampleItemBiryani": "Vegetable biryani",
+  "@sampleItemBiryani": {
+    "description": "Sample dish."
+  },
+  "sampleItemBiryaniDesc": "Basmati rice slow-cooked with vegetables and whole spices.",
+  "@sampleItemBiryaniDesc": {
+    "description": "Sample dish description."
   }
 }

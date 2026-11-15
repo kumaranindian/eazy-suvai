@@ -19,7 +19,7 @@ M04. M11's plan screen for admins (can be built in parallel).
 ## Inputs from other modules
 
 - M04 (done 2026-11-14): `createCategory`, `createItem` and `restoreDeleted` already call the shared `getPlanLimits(read, planId)` in `functions/src/lib/plan-limits.ts` inside their transactions. It reads `plans/{planId}.limits.{maxItems, maxCategories}` (`null` or a negative number = unlimited) and falls back to the FRD values while the plan documents are missing. Seed `plans/free` and `plans/pro` and extend this helper (themes, analytics, QR logo) rather than adding another. `limit-reached` errors carry `{limit, max, planId}`; the owner app's prompt opens `Routes.plan` (`/settings/plan`, a placeholder `PlanPage` to replace with the plans and upgrade screen). FR-101 hiding uses `items.hiddenOverLimit` (written as `false` on create); hidden items still count toward the limit.
-- M05: premium theme flag. M08: `qrLogo` flag. M09: `analyticsDays`. M07: `removeBranding`.
+- M05 (done 2026-11-14): `themes/{id}.premium` (seeded non-premium: `saffron`, `minimal`; premium: `banana-leaf`, `midnight`, `cafe-cream`, `coastal`). Owners write `themeId` directly; the rules only check that the theme exists. To gate premium themes server-side (BR-011), add a check to the rules (`themes/{id}.premium == false || plan allows`) or move the choice to a callable, and lock premium cards in `ThemeGalleryPage` (they only show a badge now). On downgrade keep `themeSettings` and switch `themeId` to the plan default. M08: `qrLogo` flag. M09: `analyticsDays`. M07: `removeBranding`.
 
 ## Plans (FR-078)
 

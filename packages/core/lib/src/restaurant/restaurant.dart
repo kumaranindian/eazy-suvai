@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import '../geo/business_type.dart';
 import '../l10n/generated/core_localizations.dart';
 import '../media/image_object.dart';
+import '../theme/menu_theme.dart';
 import 'opening_hours.dart';
 
 /// Social networks a profile can link to (FR-011).
@@ -175,6 +176,8 @@ abstract final class RestaurantFields {
   static const visibility = 'visibility';
   static const currency = 'currency';
   static const timezone = 'timezone';
+  static const themeId = 'themeId';
+  static const themeSettings = 'themeSettings';
   static const draftUpdatedAt = 'draftUpdatedAt';
   static const setupCompletedAt = 'setupCompletedAt';
 
@@ -215,6 +218,7 @@ class Restaurant {
     this.categoryCount = 0,
     this.itemCount = 0,
     this.themeId,
+    this.themeSettings = const ThemeSettings(),
     this.draftUpdatedAt,
     this.setupCompletedAt,
   });
@@ -247,6 +251,7 @@ class Restaurant {
       categoryCount: count('categories'),
       itemCount: count('items'),
       themeId: data['themeId'] as String?,
+      themeSettings: ThemeSettings.fromMap(data['themeSettings']),
       draftUpdatedAt: time(data['draftUpdatedAt']),
       setupCompletedAt: time(data['setupCompletedAt']),
     );
@@ -281,7 +286,12 @@ class Restaurant {
   final bool pricesNeedReview;
   final int categoryCount;
   final int itemCount;
+
+  /// The chosen predefined theme (`themes/{id}`, M05); null until chosen.
   final String? themeId;
+
+  /// The owner's overrides of the theme (M05).
+  final ThemeSettings themeSettings;
   final DateTime? draftUpdatedAt;
 
   /// When the first-run setup wizard was finished or skipped.
@@ -300,6 +310,8 @@ class Restaurant {
     String? currency,
     String? timezone,
     String? slug,
+    ValueGetter<String?>? themeId,
+    ThemeSettings? themeSettings,
   }) => Restaurant(
     id: id,
     name: name ?? this.name,
@@ -321,7 +333,8 @@ class Restaurant {
     pricesNeedReview: pricesNeedReview,
     categoryCount: categoryCount,
     itemCount: itemCount,
-    themeId: themeId,
+    themeId: themeId != null ? themeId() : this.themeId,
+    themeSettings: themeSettings ?? this.themeSettings,
     draftUpdatedAt: draftUpdatedAt,
     setupCompletedAt: setupCompletedAt,
   );

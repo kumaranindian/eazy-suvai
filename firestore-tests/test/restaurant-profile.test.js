@@ -55,6 +55,7 @@ beforeEach(async () => {
     await setDoc(doc(db, `restaurants/${RID}`), restaurant("u1"));
     await setDoc(doc(db, `restaurants/${OTHER}`), restaurant("u2", { slug: "other" }));
     await setDoc(doc(db, "restaurants/susp"), restaurant("u3", { status: "suspended" }));
+    await setDoc(doc(db, "themes/saffron"), { name: "Saffron", premium: false });
   });
 });
 
@@ -108,7 +109,7 @@ describe("owner profile updates (AC-002)", () => {
     for (const [key, value] of Object.entries(FULL_PROFILE)) {
       await assertSucceeds(updateDoc(ref(owner()), draft({ [key]: value })));
     }
-    await assertSucceeds(updateDoc(ref(owner()), draft({ themeId: "classic", themeSettings: { mode: "light" } })));
+    await assertSucceeds(updateDoc(ref(owner()), draft({ themeId: "saffron", themeSettings: { mode: "light" } })));
   });
 
   it("visibility toggles are stored as booleans (FR-013)", async () => {
@@ -253,8 +254,17 @@ describe("value checks", () => {
           openingHours: week,
           logo: null,
           cover: null,
-          themeId: "classic",
-          themeSettings: { mode: "dark" },
+          themeId: "saffron",
+          // Every theme override at its longest (M05).
+          themeSettings: {
+            primary: "#A8550A",
+            secondary: "#3B7A20",
+            background: "#FFF8EE",
+            font: "Playfair Display",
+            layout: "grid",
+            cardLayout: "image-left",
+            mode: "dark",
+          },
           setupCompletedAt: serverTimestamp(),
         }),
       ),

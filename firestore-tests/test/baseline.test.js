@@ -29,6 +29,7 @@ const SEED = {
   [`upgradeRequests/r1`]: { restaurantId: RID, status: "pending" },
   [`dietaryLabels/vegetarian`]: { name: "Vegetarian" },
   [`itemTags/spicy`]: { name: "Spicy" },
+  [`themes/saffron`]: { name: "Saffron", premium: false },
 };
 
 let env;
@@ -59,8 +60,8 @@ const callers = {
 };
 
 // Paths each caller may read, opened by a module (M01: accounts.test.js,
-// M03: restaurant-profile.test.js, M04: menu.test.js). Everything else
-// stays denied.
+// M03: restaurant-profile.test.js, M04: menu.test.js, M05: theme.test.js).
+// Everything else stays denied.
 const OPENED = {
   "verified owner": [
     "users/u1",
@@ -69,12 +70,14 @@ const OPENED = {
     `restaurants/${RID}/items/i1`,
     "dietaryLabels/vegetarian",
     "itemTags/spicy",
+    "themes/saffron",
+    "config/platform",
   ],
 };
 
-// Collections each caller may list (M04: menu.test.js).
+// Collections each caller may list (M04: menu.test.js, M05: theme.test.js).
 const OPENED_LISTS = {
-  "verified owner": [`restaurants/${RID}/items`, "dietaryLabels", "itemTags"],
+  "verified owner": [`restaurants/${RID}/items`, "dietaryLabels", "itemTags", "themes"],
 };
 
 describe("Firestore deny-all baseline", () => {
@@ -93,7 +96,7 @@ describe("Firestore deny-all baseline", () => {
         for (const name of [
           "users", "restaurants", "slugs", "qrCodes", "plans", "auditLogs",
           "analyticsEvents", "upgradeRequests", `restaurants/${RID}/items`,
-          "dietaryLabels", "itemTags",
+          "dietaryLabels", "itemTags", "themes", "config",
         ]) {
           if (OPENED_LISTS[who]?.includes(name)) continue;
           await assertFails(getDocs(collection(db, name)));

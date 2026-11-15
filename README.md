@@ -105,7 +105,7 @@ On the Android emulator the apps reach the host at `10.0.2.2` automatically. On 
 
 ### Trying menu management (M04)
 
-The item editor needs the platform dietary labels and tags. Seed them once per emulator run (or keep them with `--export-on-exit`):
+The item editor needs the platform dietary labels and tags, and the theme gallery needs the themes and fonts (M05). Seed them once per emulator run (or keep them with `--export-on-exit`):
 
 ```bash
 (cd functions && npm run build)
