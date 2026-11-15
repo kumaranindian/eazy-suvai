@@ -471,7 +471,7 @@ describe("renderMenuPage", () => {
     const html = renderMenuPage(s, { availability: { i1: false } });
     expect(html).not.toContain("noindex");
     expect(html.match(/aria-disabled="true"/g)).toHaveLength(1);
-    expect(html).toContain("Sold out");
+    expect(html).toContain("Currently unavailable");
   });
 
   it("uses srcset with the three renditions", () => {

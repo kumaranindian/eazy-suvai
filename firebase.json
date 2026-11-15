@@ -68,6 +68,8 @@
       "target": "menu",
       "public": "hosting/menu",
       "ignore": ["firebase.json", "**/.*"],
+      "predeploy": ["node \"$PROJECT_DIR/functions/scripts/write-robots.mjs\""],
+      "rewrites": [{ "source": "**", "function": { "functionId": "renderMenu", "region": "asia-south1" } }],
       "headers": [
         {
           "source": "**",

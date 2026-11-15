@@ -13,6 +13,9 @@ import 'package:owner_app/features/auth/data/registration_repository.dart';
 import 'package:owner_app/features/menu/data/menu_repository.dart';
 import 'package:owner_app/features/publishing/data/publishing_repository.dart';
 import 'package:owner_app/features/publishing/presentation/menu_html_view.dart';
+import 'package:owner_app/features/qr/application/qr_image.dart';
+import 'package:owner_app/features/qr/application/qr_providers.dart';
+import 'package:owner_app/features/qr/presentation/qr_pdf_preview.dart';
 import 'package:owner_app/features/restaurant/data/restaurant_repository.dart';
 import 'package:owner_app/features/theme/data/theme_repository.dart';
 import 'package:owner_app/router/app_router.dart';
@@ -271,6 +274,7 @@ Future<TestApp> pumpOwnerApp(
   FakeMenuRepository? menu,
   FakeThemeRepository? themes,
   FakePublishingRepository? publishing,
+  QrArtifactBuilder? qrBuilder,
   List<Override> overrides = const [],
 }) async {
   await setWidth(tester, width, height: height);
@@ -293,6 +297,14 @@ Future<TestApp> pumpOwnerApp(
         themeRepositoryProvider.overrideWithValue(themeRepo),
         publishingRepositoryProvider.overrideWithValue(publishingRepo),
         menuHtmlViewBuilderProvider.overrideWithValue(fakeMenuHtmlView),
+        // QR codes render in the test zone (no isolate); PDFs are not
+        // rasterised (M08). qr_share_test.dart fakes sharing and the logo.
+        qrArtifactBuilderProvider.overrideWithValue(
+          qrBuilder ?? (job) async => buildQrArtifact(job),
+        ),
+        qrPdfViewBuilderProvider.overrideWithValue(
+          (pdf) => Text('PDF ${pdf.length} bytes'),
+        ),
         // Google Fonts are not fetched in tests.
         menuFontResolverProvider.overrideWithValue(
           const PlainMenuFontResolver(),

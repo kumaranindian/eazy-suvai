@@ -2793,6 +2793,210 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Version history'**
   String get statusActionHistory;
+
+  /// QR screen: heading of the preview card.
+  ///
+  /// In en, this message translates to:
+  /// **'Your QR code'**
+  String get qrPreviewHeading;
+
+  /// QR screen: screen-reader label of the QR image.
+  ///
+  /// In en, this message translates to:
+  /// **'QR code that opens {url}'**
+  String qrImageLabel(String url);
+
+  /// QR screen: why the code is permanent (FR-051).
+  ///
+  /// In en, this message translates to:
+  /// **'The code opens {shortUrl} and always leads to your current menu, even after you change your menu link. Print it once.'**
+  String qrPermanentNote(String shortUrl);
+
+  /// QR screen: shown before the first publish (FR-049).
+  ///
+  /// In en, this message translates to:
+  /// **'Your menu isn\'t published yet. Until you publish, scanning shows a \"Menu coming soon\" page.'**
+  String get qrNotPublishedNote;
+
+  /// QR screen: while the code is rendered.
+  ///
+  /// In en, this message translates to:
+  /// **'Making your QR code…'**
+  String get qrGenerating;
+
+  /// QR screen: size of the PNG under the preview.
+  ///
+  /// In en, this message translates to:
+  /// **'{size} × {size} px PNG'**
+  String qrImageInfo(int size);
+
+  /// QR screen: size of the PNG with the logo.
+  ///
+  /// In en, this message translates to:
+  /// **'{size} × {size} px PNG · with your logo'**
+  String qrImageInfoLogo(int size);
+
+  /// QR screen: switch for the logo (FR-053).
+  ///
+  /// In en, this message translates to:
+  /// **'Add my logo to the centre'**
+  String get qrLogoToggle;
+
+  /// QR screen: help under the logo switch.
+  ///
+  /// In en, this message translates to:
+  /// **'Uses extra error correction. We check that the code still scans before offering it.'**
+  String get qrLogoToggleHelp;
+
+  /// QR screen: logo switch disabled, no logo.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload a logo in your profile to add it to the code.'**
+  String get qrLogoNone;
+
+  /// QR screen: the logo version failed the decode check (FR-053).
+  ///
+  /// In en, this message translates to:
+  /// **'With your logo the code didn\'t scan reliably, so we\'re offering the plain code instead.'**
+  String get qrLogoRejected;
+
+  /// QR screen: the logo could not be downloaded.
+  ///
+  /// In en, this message translates to:
+  /// **'We couldn\'t load your logo, so we\'re offering the plain code.'**
+  String get qrLogoLoadFailed;
+
+  /// QR screen: section heading.
+  ///
+  /// In en, this message translates to:
+  /// **'Download and print'**
+  String get qrDownloadHeading;
+
+  /// QR screen: button.
+  ///
+  /// In en, this message translates to:
+  /// **'Download PNG'**
+  String get qrDownloadPng;
+
+  /// QR screen: label of the template choice.
+  ///
+  /// In en, this message translates to:
+  /// **'Print template'**
+  String get qrTemplateLabel;
+
+  /// QR screen: template name.
+  ///
+  /// In en, this message translates to:
+  /// **'A4 poster'**
+  String get qrTemplatePoster;
+
+  /// QR screen: template name.
+  ///
+  /// In en, this message translates to:
+  /// **'A6 table card'**
+  String get qrTemplateCard;
+
+  /// QR screen: opens the PDF preview (FR-054).
+  ///
+  /// In en, this message translates to:
+  /// **'Preview'**
+  String get qrPreviewPdf;
+
+  /// QR screen: button.
+  ///
+  /// In en, this message translates to:
+  /// **'Download PDF'**
+  String get qrDownloadPdf;
+
+  /// Title of the PDF preview.
+  ///
+  /// In en, this message translates to:
+  /// **'{template} preview'**
+  String qrTemplatePreviewTitle(String template);
+
+  /// QR screen: section heading.
+  ///
+  /// In en, this message translates to:
+  /// **'Share your menu'**
+  String get qrShareHeading;
+
+  /// QR screen: button (FR-067).
+  ///
+  /// In en, this message translates to:
+  /// **'Copy link'**
+  String get qrCopyLink;
+
+  /// QR screen: button (FR-068).
+  ///
+  /// In en, this message translates to:
+  /// **'WhatsApp'**
+  String get qrShareWhatsApp;
+
+  /// QR screen: opens the native share sheet (FR-069).
+  ///
+  /// In en, this message translates to:
+  /// **'Share…'**
+  String get qrShareMore;
+
+  /// Prefilled message for WhatsApp and the share sheet (FR-068).
+  ///
+  /// In en, this message translates to:
+  /// **'Take a look at the menu of {name}: {url}'**
+  String qrShareMessage(String name, String url);
+
+  /// Subject of the shared link.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} – Menu'**
+  String qrShareSubject(String name);
+
+  /// QR screen: Web Share API missing.
+  ///
+  /// In en, this message translates to:
+  /// **'This browser has no share menu, so we copied the link instead.'**
+  String get qrShareUnsupported;
+
+  /// QR screen: wa.me link could not be opened.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t open WhatsApp. We copied the link so you can paste it.'**
+  String get qrWhatsAppFailed;
+
+  /// QR screen: web download started.
+  ///
+  /// In en, this message translates to:
+  /// **'Downloading {file}'**
+  String qrDownloadStarted(String file);
+
+  /// QR screen: mobile share sheet handled the file.
+  ///
+  /// In en, this message translates to:
+  /// **'{file} is ready to save or share'**
+  String qrFileShared(String file);
+
+  /// QR screen: saving failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t save the file. Please try again.'**
+  String get qrSaveFailed;
+
+  /// Printed on the PDF templates (FR-050).
+  ///
+  /// In en, this message translates to:
+  /// **'Scan to view our menu'**
+  String get qrPdfScanToView;
+
+  /// Printed on the PDF templates before the short URL.
+  ///
+  /// In en, this message translates to:
+  /// **'or visit'**
+  String get qrPdfOrVisit;
+
+  /// PDF preview: close button.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get qrClose;
 }
 
 class _AppLocalizationsDelegate

@@ -9,13 +9,13 @@ import '../features/auth/presentation/sign_in_page.dart';
 import '../features/auth/presentation/sign_up_page.dart';
 import '../features/auth/presentation/verify_email_page.dart';
 import '../features/home/presentation/dashboard_page.dart';
-import '../features/home/presentation/placeholder_page.dart';
 import '../features/home/presentation/plan_page.dart';
 import '../features/menu/application/menu_state.dart';
 import '../features/menu/presentation/menu_page.dart';
 import '../features/menu/presentation/recently_deleted_page.dart';
 import '../features/publishing/presentation/preview_page.dart';
 import '../features/publishing/presentation/version_history_page.dart';
+import '../features/qr/presentation/qr_share_page.dart';
 import '../features/restaurant/presentation/menu_link_page.dart';
 import '../features/restaurant/presentation/opening_hours_page.dart';
 import '../features/restaurant/presentation/profile_page.dart';
@@ -191,8 +191,7 @@ GoRouter appRouter(Ref ref) {
             routes: [
               GoRoute(
                 path: Routes.share,
-                builder: (context, state) =>
-                    const PlaceholderPage(section: OwnerSection.share),
+                builder: (context, state) => const QrSharePage(),
               ),
             ],
           ),

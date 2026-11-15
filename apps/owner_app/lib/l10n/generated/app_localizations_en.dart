@@ -1734,4 +1734,131 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get statusActionHistory => 'Version history';
+
+  @override
+  String get qrPreviewHeading => 'Your QR code';
+
+  @override
+  String qrImageLabel(String url) {
+    return 'QR code that opens $url';
+  }
+
+  @override
+  String qrPermanentNote(String shortUrl) {
+    return 'The code opens $shortUrl and always leads to your current menu, even after you change your menu link. Print it once.';
+  }
+
+  @override
+  String get qrNotPublishedNote =>
+      'Your menu isn\'t published yet. Until you publish, scanning shows a \"Menu coming soon\" page.';
+
+  @override
+  String get qrGenerating => 'Making your QR code…';
+
+  @override
+  String qrImageInfo(int size) {
+    return '$size × $size px PNG';
+  }
+
+  @override
+  String qrImageInfoLogo(int size) {
+    return '$size × $size px PNG · with your logo';
+  }
+
+  @override
+  String get qrLogoToggle => 'Add my logo to the centre';
+
+  @override
+  String get qrLogoToggleHelp =>
+      'Uses extra error correction. We check that the code still scans before offering it.';
+
+  @override
+  String get qrLogoNone =>
+      'Upload a logo in your profile to add it to the code.';
+
+  @override
+  String get qrLogoRejected =>
+      'With your logo the code didn\'t scan reliably, so we\'re offering the plain code instead.';
+
+  @override
+  String get qrLogoLoadFailed =>
+      'We couldn\'t load your logo, so we\'re offering the plain code.';
+
+  @override
+  String get qrDownloadHeading => 'Download and print';
+
+  @override
+  String get qrDownloadPng => 'Download PNG';
+
+  @override
+  String get qrTemplateLabel => 'Print template';
+
+  @override
+  String get qrTemplatePoster => 'A4 poster';
+
+  @override
+  String get qrTemplateCard => 'A6 table card';
+
+  @override
+  String get qrPreviewPdf => 'Preview';
+
+  @override
+  String get qrDownloadPdf => 'Download PDF';
+
+  @override
+  String qrTemplatePreviewTitle(String template) {
+    return '$template preview';
+  }
+
+  @override
+  String get qrShareHeading => 'Share your menu';
+
+  @override
+  String get qrCopyLink => 'Copy link';
+
+  @override
+  String get qrShareWhatsApp => 'WhatsApp';
+
+  @override
+  String get qrShareMore => 'Share…';
+
+  @override
+  String qrShareMessage(String name, String url) {
+    return 'Take a look at the menu of $name: $url';
+  }
+
+  @override
+  String qrShareSubject(String name) {
+    return '$name – Menu';
+  }
+
+  @override
+  String get qrShareUnsupported =>
+      'This browser has no share menu, so we copied the link instead.';
+
+  @override
+  String get qrWhatsAppFailed =>
+      'Couldn\'t open WhatsApp. We copied the link so you can paste it.';
+
+  @override
+  String qrDownloadStarted(String file) {
+    return 'Downloading $file';
+  }
+
+  @override
+  String qrFileShared(String file) {
+    return '$file is ready to save or share';
+  }
+
+  @override
+  String get qrSaveFailed => 'Couldn\'t save the file. Please try again.';
+
+  @override
+  String get qrPdfScanToView => 'Scan to view our menu';
+
+  @override
+  String get qrPdfOrVisit => 'or visit';
+
+  @override
+  String get qrClose => 'Close';
 }

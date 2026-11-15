@@ -1,0 +1,578 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`menu page matches the template snapshot (live, Free plan) 1`] = `
+"<!DOCTYPE html>
+<html lang="en-IN" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Spice Garden – Menu | EazySuvai</title>
+
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#A8550A">
+<script>document.documentElement.classList.add("js")</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link id="es-font" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&amp;display=swap" media="print"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&amp;display=swap"></noscript>
+<style>:root{--es-primary:#A8550A;--es-on-primary:#FFFFFF;--es-secondary:#3B7A20;--es-on-secondary:#FFFFFF;--es-background:#FFF8EE;--es-surface:#FFFFFF;--es-text:#2B2B2B;--es-surface-text:#2B2B2B;--es-muted-text:#6B6966;--es-accent:#A8550A;--es-border:#DFD9D1;--es-font:"Poppins"}*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--es-background);color:var(--es-text);font-family:var(--es-font),system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.5}
+a{color:var(--es-accent)}:focus-visible{outline:3px solid var(--es-accent);outline-offset:2px}
+.wrap{max-width:1200px;margin:0 auto;padding-inline:16px}
+h1{margin:0;font-size:1.6rem;line-height:1.2;color:var(--es-text)}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+.skip{position:absolute;inset-inline-start:-999px;top:8px}.skip:focus{inset-inline-start:8px;background:var(--es-surface);color:var(--es-surface-text);padding:8px;z-index:20}
+.draft{background:#1A1A1A;color:#fff;padding:10px 16px;font-size:14px;text-align:center}
+.hero .cover{display:block;width:100%;height:180px;object-fit:cover}
+.hero-main{display:flex;gap:16px;align-items:center;padding:16px 0 8px}
+.logo{width:72px;height:72px;border-radius:16px;object-fit:cover;background:var(--es-surface);flex:none}
+.desc{margin:4px 0 0;color:var(--es-muted-text)}
+.now{margin:6px 0 0;font-weight:600;font-size:.95rem;display:flex;align-items:center;gap:6px}
+.dot{width:10px;height:10px;border-radius:50%;border:2px solid currentColor}.is-open .dot{background:currentColor}
+.contact{margin:0 0 4px}.addr{margin:0;color:var(--es-muted-text)}
+.acts{margin:0;display:flex;flex-wrap:wrap;column-gap:16px}
+.act{display:inline-flex;align-items:center;gap:4px;min-height:44px;font-weight:600}.num{font-weight:400}
+.hours{margin:0 0 12px}.hours summary{cursor:pointer;color:var(--es-accent);font-weight:600;min-height:44px;display:flex;align-items:center}
+.hours table{border-collapse:collapse}.hours th{text-align:start;font-weight:400;padding-block:2px;padding-inline:0 16px}.hours td{padding:2px 0}
+.hours .today th,.hours .today td{font-weight:700}
+.page{padding-bottom:8px}
+.cats{position:sticky;top:0;z-index:5;background:var(--es-background);border-bottom:1px solid var(--es-border);margin-inline:-16px;padding-inline:16px}
+.cats ul{position:relative;display:flex;gap:8px;list-style:none;margin:0;padding:10px 0;overflow-x:auto;scrollbar-width:none}
+.cats a{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--es-border);background:var(--es-surface);color:var(--es-surface-text);text-decoration:none;white-space:nowrap}
+.cats a[aria-current]{background:var(--es-primary);color:var(--es-on-primary);border-color:var(--es-primary);font-weight:600}
+section{padding:16px 0 8px;scroll-margin-top:72px}
+h2{margin:0 0 4px;font-size:1.3rem;color:var(--es-accent)}
+.cat-desc{margin:0 0 8px;color:var(--es-muted-text)}
+.items{list-style:none;margin:0;padding:0;display:grid;gap:12px;grid-template-columns:1fr}
+.item{background:var(--es-surface);color:var(--es-surface-text);border:1px solid var(--es-border);border-radius:12px;overflow:hidden;display:flex;gap:12px;padding:12px}
+.is-featured{border:2px solid var(--es-secondary)}
+.zoom{display:block;flex:none;border-radius:8px;overflow:hidden;line-height:0}
+.item-img{width:88px;height:88px;object-fit:cover}
+.item-body{min-width:0;flex:1}
+h3{margin:0;font-size:1.05rem;color:var(--es-surface-text)}
+.item-desc{margin:4px 0;color:var(--es-muted-text);font-size:.95rem;overflow-wrap:anywhere}
+.js .item-desc{display:-webkit-box;-webkit-line-clamp:3;line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.js .item-desc.open{display:block}
+.more{background:none;border:0;padding:0;margin:0 0 4px;color:var(--es-accent);font:inherit;font-weight:600;font-size:.9rem;cursor:pointer;min-height:32px;text-decoration:underline}
+.item-meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:4px}
+.price{font-weight:700;color:var(--es-accent)}
+.badge{display:inline-block;font-size:.75rem;font-weight:600;padding:2px 8px;border-radius:999px;vertical-align:middle}
+.featured{background:var(--es-secondary);color:var(--es-on-secondary)}
+.sold{background:var(--es-surface-text);color:var(--es-surface)}
+.sold-out{border-style:dashed;border-color:var(--es-muted-text)}.sold-out .item-img{filter:grayscale(1)}.sold-out .price{color:var(--es-muted-text)}
+.badges{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;font-size:.85rem}
+.label,.tag{display:inline-flex;align-items:center;gap:4px;border:1px solid var(--es-border);border-radius:999px;padding:1px 8px}
+.mark{width:14px;height:14px;flex:none}
+.card-compact .zoom{display:none}
+.card-image-top .item,.layout-grid .item{flex-direction:column}
+.card-image-top .item-img,.layout-grid .item-img{width:100%;height:auto;aspect-ratio:4/3}
+.empty{padding:32px 0;color:var(--es-muted-text)}
+footer{padding:24px 0 32px;color:var(--es-muted-text);font-size:.85rem;text-align:center}
+.lb{padding:0;border:0;margin:0;width:100%;height:100%;max-width:100%;max-height:100%;background:transparent;overflow:hidden}
+.lb::backdrop{background:rgba(0,0,0,.88)}
+.lb img{position:absolute;inset:0;margin:auto;max-width:100%;max-height:100%;object-fit:contain;transition:transform .15s}
+.lb-close{position:absolute;top:8px;inset-inline-end:8px;z-index:1;width:48px;height:48px;border-radius:50%;border:0;background:#fff;color:#111;font-size:28px;line-height:1;cursor:pointer}
+@media (min-width:600px){.items{grid-template-columns:repeat(2,1fr)}.hero .cover{height:240px}}
+@media (min-width:1024px){.hero .cover{height:300px}
+.page{display:grid;grid-template-columns:220px minmax(0,1fr);gap:32px;align-items:start}
+.cats{top:0;margin:0;padding:16px 0;border:0;max-height:100vh;overflow-y:auto}
+.cats ul{flex-direction:column;gap:4px;padding:0;overflow:visible}
+.cats a{border-radius:8px;white-space:normal;width:100%;border-color:transparent;background:transparent;color:var(--es-text)}
+.cats a[aria-current]{background:var(--es-primary);color:var(--es-on-primary)}
+section{scroll-margin-top:16px}
+.layout-grid .items{grid-template-columns:repeat(3,1fr)}}</style>
+<meta name="description" content="South Indian classics, biryani and filter coffee since 1998.">
+<link rel="canonical" href="https://menu.eazysuvai.com/spice-garden">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="EazySuvai">
+<meta property="og:title" content="Spice Garden – Menu | EazySuvai">
+<meta property="og:description" content="South Indian classics, biryani and filter coffee since 1998.">
+<meta property="og:url" content="https://menu.eazysuvai.com/spice-garden">
+<meta property="og:locale" content="en_IN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Spice Garden – Menu | EazySuvai">
+<meta name="twitter:description" content="South Indian classics, biryani and filter coffee since 1998.">
+<meta property="og:image" content="https://img.test/cover/w1280.webp">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="900">
+<meta property="og:image:alt" content="Spice Garden">
+<meta name="twitter:image" content="https://img.test/cover/w1280.webp">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Restaurant","name":"Spice Garden","url":"https://menu.eazysuvai.com/spice-garden","description":"South Indian classics, biryani and filter coffee since 1998.","image":["https://img.test/cover/w1280.webp","https://img.test/logo/w1280.webp"],"logo":"https://img.test/logo/w1280.webp","telephone":"+914423456789","email":"hello@spicegarden.example","address":{"@type":"PostalAddress","streetAddress":"12 Anna Salai","addressLocality":"Chennai","postalCode":"600002","addressCountry":"IN"},"sameAs":["https://spicegarden.example/","https://instagram.com/spicegarden"],"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":"https://schema.org/Monday","opens":"07:00","closes":"11:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":"https://schema.org/Monday","opens":"18:00","closes":"23:30"},{"@type":"OpeningHoursSpecification","dayOfWeek":"https://schema.org/Tuesday","opens":"07:00","closes":"11:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":"https://schema.org/Tuesday","opens":"18:00","closes":"23:30"},{"@type":"OpeningHoursSpecification","dayOfWeek":"https://schema.org/Wednesday","opens":"07:00","closes":"11:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":"https://schema.org/Wednesday","opens":"18:00","closes":"23:30"},{"@type":"OpeningHoursSpecification","dayOfWeek":"https://schema.org/Thursday","opens":"07:00","closes":"11:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":"https://schema.org/Thursday","opens":"18:00","closes":"23:30"},{"@type":"OpeningHoursSpecification","dayOfWeek":"https://schema.org/Friday","opens":"07:00","closes":"11:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":"https://schema.org/Friday","opens":"18:00","closes":"01:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":"https://schema.org/Saturday","opens":"00:00","closes":"23:59"}],"currenciesAccepted":"INR","hasMenu":{"@type":"Menu","name":"Spice Garden – Menu","url":"https://menu.eazysuvai.com/spice-garden","inLanguage":"en-IN","hasMenuSection":[{"@type":"MenuSection","name":"Tiffin","description":"Served from 7 am to 11 am.","hasMenuItem":[{"@type":"MenuItem","name":"Idli (2 pcs)","description":"Steamed rice cakes with sambar and three chutneys.","image":"https://img.test/item-tiffin-1/w1280.webp","offers":{"@type":"Offer","price":"60.00","priceCurrency":"INR","availability":"https://schema.org/InStock"},"suitableForDiet":"https://schema.org/VegetarianDiet"},{"@type":"MenuItem","name":"Ghee Roast Dosa","description":"A crisp, golden dosa roasted in pure ghee, served with coconut chutney, tomato chutney and a bowl of hot sambar. Ask for it extra crispy if you like.","image":"https://img.test/item-tiffin-2/w1280.webp","offers":{"@type":"Offer","price":"129.00","priceCurrency":"INR","availability":"https://schema.org/InStock"},"suitableForDiet":"https://schema.org/VegetarianDiet"},{"@type":"MenuItem","name":"Medu Vada (2 pcs)","offers":{"@type":"Offer","price":"70.00","priceCurrency":"INR","availability":"https://schema.org/InStock"},"suitableForDiet":"https://schema.org/VegetarianDiet"},{"@type":"MenuItem","name":"Pongal","description":"Rice and moong dal with pepper, cumin and cashews.","image":"https://img.test/item-tiffin-4/w1280.webp","offers":{"@type":"Offer","price":"90.00","priceCurrency":"INR","availability":"https://schema.org/InStock"},"suitableForDiet":"https://schema.org/VegetarianDiet"},{"@type":"MenuItem","name":"Poori Masala","image":"https://img.test/item-tiffin-5/w1280.webp","offers":{"@type":"Offer","price":"99.00","priceCurrency":"INR","availability":"https://schema.org/InStock"},"suitableForDiet":"https://schema.org/VegetarianDiet"},{"@type":"MenuItem","name":"Rava Kesari","offers":{"@type":"Offer","price":"50.00","priceCurrency":"INR","availability":"https://schema.org/InStock"},"suitableForDiet":"https://schema.org/VegetarianDiet"}]},{"@type":"MenuSection","name":"Meals","hasMenuItem":[{"@type":"MenuItem","name":"South Indian Meals","description":"Rice, sambar, rasam, two poriyal, kootu, appalam, curd and payasam.","image":"https://img.test/item-meals-1/w1280.webp","offers":{"@type":"Offer","price":"180.00","priceCurrency":"INR","availability":"https://schema.org/InStock"},"suitableForDiet":"https://schema.org/VegetarianDiet"},{"@type":"MenuItem","name":"Chettinad Chicken Meals","image":"https://img.test/item-meals-2/w1280.webp","offers":{"@type":"Offer","price":"260.00","priceCurrency":"INR","availability":"https://schema.org/InStock"}},{"@type":"MenuItem","name":"Fish Curry Meals","description":"Tangy tamarind fish curry with rice and sides.","offers":{"@type":"Offer","price":"280.00","priceCurrency":"INR","availability":"https://schema.org/InStock"}},{"@type":"MenuItem","name":"Curd Rice","image":"https://img.test/item-meals-4/w1280.webp","offers":{"@type":"Offer","price":"90.00","priceCurrency":"INR","availability":"https://schema.org/InStock"},"suitableForDiet":"https://schema.org/VegetarianDiet"},{"@type":"MenuItem","name":"Lemon Rice","image":"https://img.test/item-meals-5/w1280.webp","offers":{"@type":"Offer","price":"90.00","priceCurrency":"INR","availability":"https://schema.org/InStock"},"suitableForDiet":"https://schema.org/VeganDiet"},{"@type":"MenuItem","name":"Sambar Rice","offers":{"@type":"Offer","price":"100.00","priceCurrency":"INR","availability":"https://schema.org/InStock"},"suitableForDiet":"https://schema.org/VegetarianDiet"}]},{"@type":"MenuSection","name":"Biryani","description":"Slow-cooked on dum, served with raita and salna.","hasMenuItem":[{"@type":"MenuItem","name":"Chicken Biryani","description":"Seeraga samba rice, country chicken, and our house masala.","image":"https://img.test/item-biryani-1/w1280.webp","offers":{"@type":"Offer","price":"240.00","priceCurrency":"INR","availability":"https://schema.org/InStock"}},{"@type":"MenuItem","name":"Mutton Biryani","image":"https://img.test/item-biryani-2/w1280.webp","offers":{"@type":"Offer","price":"320.00","priceCurrency":"INR","availability":"https://schema.org/OutOfStock"}},{"@type":"MenuItem","name":"Egg Biryani","offers":{"@type":"Offer","price":"180.00","priceCurrency":"INR","availability":"https://schema.org/InStock"}},{"@type":"MenuItem","name":"Veg Biryani","image":"https://img.test/item-biryani-4/w1280.webp","offers":{"@type":"Offer","price":"160.00","priceCurrency":"INR","availability":"https://schema.org/InStock"},"suitableForDiet":"https://schema.org/VegetarianDiet"},{"@type":"MenuItem","name":"Prawn Biryani","image":"https://img.test/item-biryani-5/w1280.webp","offers":{"@type":"Offer","price":"340.00","priceCurrency":"INR","availability":"https://schema.org/InStock"}},{"@type":"MenuItem","name":"Mushroom Biryani","offers":{"@type":"Offer","price":"170.00","priceCurrency":"INR","availability":"https://schema.org/InStock"},"suitableForDiet":"https://schema.org/VegetarianDiet"}]},{"@type":"MenuSection","name":"Indo-Chinese","hasMenuItem":[{"@type":"MenuItem","name":"Gobi Manchurian","image":"https://img.test/item-chinese-1/w1280.webp","offers":{"@type":"Offer","price":"160.00","priceCurrency":"INR","availability":"https://schema.org/InStock"},"suitableForDiet":"https://schema.org/VegetarianDiet"},{"@type":"MenuItem","name":"Chilli Chicken","image":"https://img.test/item-chinese-2/w1280.webp","offers":{"@type":"Offer","price":"220.00","priceCurrency":"INR","availability":"https://schema.org/InStock"}},{"@type":"MenuItem","name":"Veg Fried Rice","offers":{"@type":"Offer","price":"150.00","priceCurrency":"INR","availability":"https://schema.org/InStock"},"suitableForDiet":"https://schema.org/VegetarianDiet"},{"@type":"MenuItem","name":"Schezwan Noodles","image":"https://img.test/item-chinese-4/w1280.webp","offers":{"@type":"Offer","price":"160.00","priceCurrency":"INR","availability":"https://schema.org/InStock"},"suitableForDiet":"https://schema.org/VegetarianDiet"},{"@type":"MenuItem","name":"Chicken 65","description":"Deep-fried, curry leaf tempered, fiery red.","image":"https://img.test/item-chinese-5/w1280.webp","offers":{"@type":"Offer","price":"220.00","priceCurrency":"INR","availability":"https://schema.org/InStock"}},{"@type":"MenuItem","name":"Paneer Chilli","offers":{"@type":"Offer","price":"200.00","priceCurrency":"INR","availability":"https://schema.org/InStock"},"suitableForDiet":"https://schema.org/VegetarianDiet"}]},{"@type":"MenuSection","name":"Desserts","hasMenuItem":[{"@type":"MenuItem","name":"Gulab Jamun (2 pcs)","image":"https://img.test/item-desserts-1/w1280.webp","offers":{"@type":"Offer","price":"60.00","priceCurrency":"INR","availability":"https://schema.org/InStock"},"suitableForDiet":"https://schema.org/VegetarianDiet"},{"@type":"MenuItem","name":"Elaneer Payasam","description":"Tender coconut kheer, served chilled.","image":"https://img.test/item-desserts-2/w1280.webp","offers":{"@type":"Offer","price":"120.00","priceCurrency":"INR","availability":"https://schema.org/InStock"},"suitableForDiet":"https://schema.org/VegetarianDiet"},{"@type":"MenuItem","name":"Carrot Halwa","offers":{"@type":"Offer","price":"90.00","priceCurrency":"INR","availability":"https://schema.org/InStock"},"suitableForDiet":"https://schema.org/VegetarianDiet"},{"@type":"MenuItem","name":"Kulfi","image":"https://img.test/item-desserts-4/w1280.webp","offers":{"@type":"Offer","price":"80.00","priceCurrency":"INR","availability":"https://schema.org/InStock"},"suitableForDiet":"https://schema.org/VegetarianDiet"},{"@type":"MenuItem","name":"Fruit Salad with Ice Cream","image":"https://img.test/item-desserts-5/w1280.webp","offers":{"@type":"Offer","price":"110.00","priceCurrency":"INR","availability":"https://schema.org/InStock"},"suitableForDiet":"https://schema.org/VegetarianDiet"},{"@type":"MenuItem","name":"Double Ka Meetha","offers":{"@type":"Offer","price":"100.00","priceCurrency":"INR","availability":"https://schema.org/InStock"},"suitableForDiet":"https://schema.org/VegetarianDiet"}]},{"@type":"MenuSection","name":"Drinks","hasMenuItem":[{"@type":"MenuItem","name":"Filter Coffee","description":"Degree coffee, brewed fresh.","image":"https://img.test/item-drinks-1/w1280.webp","offers":{"@type":"Offer","price":"40.00","priceCurrency":"INR","availability":"https://schema.org/InStock"},"suitableForDiet":"https://schema.org/VegetarianDiet"},{"@type":"MenuItem","name":"Masala Tea","image":"https://img.test/item-drinks-2/w1280.webp","offers":{"@type":"Offer","price":"35.00","priceCurrency":"INR","availability":"https://schema.org/InStock"},"suitableForDiet":"https://schema.org/VegetarianDiet"},{"@type":"MenuItem","name":"Fresh Lime Soda","offers":{"@type":"Offer","price":"60.00","priceCurrency":"INR","availability":"https://schema.org/InStock"},"suitableForDiet":"https://schema.org/VeganDiet"},{"@type":"MenuItem","name":"Rose Milk","image":"https://img.test/item-drinks-4/w1280.webp","offers":{"@type":"Offer","price":"70.00","priceCurrency":"INR","availability":"https://schema.org/InStock"},"suitableForDiet":"https://schema.org/VegetarianDiet"},{"@type":"MenuItem","name":"Buttermilk","image":"https://img.test/item-drinks-5/w1280.webp","offers":{"@type":"Offer","price":"40.00","priceCurrency":"INR","availability":"https://schema.org/InStock"},"suitableForDiet":"https://schema.org/VegetarianDiet"},{"@type":"MenuItem","name":"Mango Lassi","offers":{"@type":"Offer","price":"90.00","priceCurrency":"INR","availability":"https://schema.org/InStock"},"suitableForDiet":"https://schema.org/VegetarianDiet"}]}]}}</script>
+
+</head>
+<body class="layout-list card-image-left mode-light" data-slug="spice-garden" data-more="more" data-less="less" data-close="Close">
+<a class="skip" href="#menu">Skip to menu</a>
+
+<header class="hero">
+<img class="cover" src="https://img.test/cover/w640.webp" srcset="https://img.test/cover/w320.webp 320w, https://img.test/cover/w640.webp 640w, https://img.test/cover/w1280.webp 1280w" sizes="100vw" width="1200" height="900" fetchpriority="high" decoding="async" alt="">
+<div class="wrap">
+<div class="hero-main"><img class="logo" src="https://img.test/logo/w640.webp" srcset="https://img.test/logo/w320.webp 320w, https://img.test/logo/w640.webp 640w, https://img.test/logo/w1280.webp 1280w" sizes="72px" width="1200" height="900" fetchpriority="high" decoding="async" alt="Spice Garden"><div><h1>Spice Garden</h1><p class="desc">South Indian classics, biryani and filter coffee since 1998.</p><p class="now is-open"><span class="dot" aria-hidden="true"></span>Open now</p></div></div>
+<div class="contact"><p class="addr">12 Anna Salai, Chennai, 600002</p><p class="acts"><a class="act" href="tel:+914423456789">Call <span class="num">+914423456789</span></a><a class="act" href="https://www.google.com/maps/search/?api=1&amp;query=Spice%20Garden%2C%2012%20Anna%20Salai%2C%20Chennai%2C%20600002" rel="noopener" target="_blank">Map</a><a class="act" href="mailto:hello@spicegarden.example">hello@spicegarden.example</a><a class="act" href="https://spicegarden.example/" rel="noopener" target="_blank">Website</a><a class="act" href="https://instagram.com/spicegarden" rel="noopener" target="_blank">Instagram</a></p></div>
+<details class="hours"><summary>Opening hours</summary><table><tbody><tr><th scope="row">Monday</th><td>07:00–11:00, 18:00–23:30</td></tr><tr><th scope="row">Tuesday</th><td>07:00–11:00, 18:00–23:30</td></tr><tr><th scope="row">Wednesday</th><td>07:00–11:00, 18:00–23:30</td></tr><tr class="today"><th scope="row">Thursday</th><td>07:00–11:00, 18:00–23:30</td></tr><tr><th scope="row">Friday</th><td>07:00–11:00, 18:00–01:00</td></tr><tr><th scope="row">Saturday</th><td>Open 24 hours</td></tr><tr><th scope="row">Sunday</th><td>Closed</td></tr></tbody></table></details>
+</div>
+</header>
+<div class="wrap page">
+<nav class="cats" aria-label="Categories"><ul><li><a href="#c-tiffin" aria-current="true">Tiffin</a></li><li><a href="#c-meals">Meals</a></li><li><a href="#c-biryani">Biryani</a></li><li><a href="#c-chinese">Indo-Chinese</a></li><li><a href="#c-desserts">Desserts</a></li><li><a href="#c-drinks">Drinks</a></li></ul></nav>
+<main id="menu">
+<section id="featured" aria-labelledby="featured-h"><h2 id="featured-h">Featured</h2><ul class="items"><li class="item has-img is-featured" data-id="tiffin-2">
+<a class="zoom" href="https://img.test/item-tiffin-2/w1280.webp" aria-label="Enlarge photo of Ghee Roast Dosa"><img class="item-img" src="https://img.test/item-tiffin-2/w640.webp" srcset="https://img.test/item-tiffin-2/w320.webp 320w, https://img.test/item-tiffin-2/w640.webp 640w, https://img.test/item-tiffin-2/w1280.webp 1280w" sizes="(min-width: 1024px) 300px, (min-width: 600px) 45vw, 88px" width="1200" height="900" loading="lazy" decoding="async" alt="" data-alt="Ghee Roast Dosa"></a><div class="item-body">
+<h3 class="item-name">Ghee Roast Dosa <span class="badge featured">Featured</span></h3>
+<p class="item-desc">A crisp, golden dosa roasted in pure ghee, served with coconut chutney, tomato chutney and a bowl of hot sambar. Ask for it extra crispy if you like.</p>
+<div class="item-meta"><span class="price">₹129.00</span></div>
+<div class="badges"><span class="label"><svg class="mark" viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="1" width="14" height="14" fill="#fff" stroke="#0F7B0F" stroke-width="2"/><circle cx="8" cy="8" r="4" fill="#0F7B0F"/></svg>Vegetarian</span><span class="tag">Bestseller</span></div>
+</div></li><li class="item has-img is-featured" data-id="biryani-1">
+<a class="zoom" href="https://img.test/item-biryani-1/w1280.webp" aria-label="Enlarge photo of Chicken Biryani"><img class="item-img" src="https://img.test/item-biryani-1/w640.webp" srcset="https://img.test/item-biryani-1/w320.webp 320w, https://img.test/item-biryani-1/w640.webp 640w, https://img.test/item-biryani-1/w1280.webp 1280w" sizes="(min-width: 1024px) 300px, (min-width: 600px) 45vw, 88px" width="1200" height="900" loading="lazy" decoding="async" alt="" data-alt="Chicken Biryani"></a><div class="item-body">
+<h3 class="item-name">Chicken Biryani <span class="badge featured">Featured</span></h3>
+<p class="item-desc">Seeraga samba rice, country chicken, and our house masala.</p>
+<div class="item-meta"><span class="price">₹240.00</span></div>
+<div class="badges"><span class="label"><svg class="mark" viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="1" width="14" height="14" fill="#fff" stroke="#8B2E16" stroke-width="2"/><path d="M8 3.5 12.5 12h-9z" fill="#8B2E16"/></svg>Non-vegetarian</span></div>
+</div></li></ul></section>
+<section id="c-tiffin" aria-labelledby="c-tiffin-h"><h2 id="c-tiffin-h">Tiffin</h2><p class="cat-desc">Served from 7 am to 11 am.</p><ul class="items"><li class="item has-img" data-id="tiffin-1">
+<a class="zoom" href="https://img.test/item-tiffin-1/w1280.webp" aria-label="Enlarge photo of Idli (2 pcs)"><img class="item-img" src="https://img.test/item-tiffin-1/w640.webp" srcset="https://img.test/item-tiffin-1/w320.webp 320w, https://img.test/item-tiffin-1/w640.webp 640w, https://img.test/item-tiffin-1/w1280.webp 1280w" sizes="(min-width: 1024px) 300px, (min-width: 600px) 45vw, 88px" width="1200" height="900" loading="lazy" decoding="async" alt="" data-alt="Idli (2 pcs)"></a><div class="item-body">
+<h3 class="item-name">Idli (2 pcs)</h3>
+<p class="item-desc">Steamed rice cakes with sambar and three chutneys.</p>
+<div class="item-meta"><span class="price">₹60.00</span></div>
+<div class="badges"><span class="label"><svg class="mark" viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="1" width="14" height="14" fill="#fff" stroke="#0F7B0F" stroke-width="2"/><circle cx="8" cy="8" r="4" fill="#0F7B0F"/></svg>Vegetarian</span></div>
+</div></li><li class="item has-img is-featured" data-id="tiffin-2">
+<a class="zoom" href="https://img.test/item-tiffin-2/w1280.webp" aria-label="Enlarge photo of Ghee Roast Dosa"><img class="item-img" src="https://img.test/item-tiffin-2/w640.webp" srcset="https://img.test/item-tiffin-2/w320.webp 320w, https://img.test/item-tiffin-2/w640.webp 640w, https://img.test/item-tiffin-2/w1280.webp 1280w" sizes="(min-width: 1024px) 300px, (min-width: 600px) 45vw, 88px" width="1200" height="900" loading="lazy" decoding="async" alt="" data-alt="Ghee Roast Dosa"></a><div class="item-body">
+<h3 class="item-name">Ghee Roast Dosa <span class="badge featured">Featured</span></h3>
+<p class="item-desc">A crisp, golden dosa roasted in pure ghee, served with coconut chutney, tomato chutney and a bowl of hot sambar. Ask for it extra crispy if you like.</p>
+<div class="item-meta"><span class="price">₹129.00</span></div>
+<div class="badges"><span class="label"><svg class="mark" viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="1" width="14" height="14" fill="#fff" stroke="#0F7B0F" stroke-width="2"/><circle cx="8" cy="8" r="4" fill="#0F7B0F"/></svg>Vegetarian</span><span class="tag">Bestseller</span></div>
+</div></li><li class="item" data-id="tiffin-3">
+<div class="item-body">
+<h3 class="item-name">Medu Vada (2 pcs)</h3>
+
+<div class="item-meta"><span class="price">₹70.00</span></div>
+<div class="badges"><span class="label"><svg class="mark" viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="1" width="14" height="14" fill="#fff" stroke="#0F7B0F" stroke-width="2"/><circle cx="8" cy="8" r="4" fill="#0F7B0F"/></svg>Vegetarian</span></div>
+</div></li><li class="item has-img" data-id="tiffin-4">
+<a class="zoom" href="https://img.test/item-tiffin-4/w1280.webp" aria-label="Enlarge photo of Pongal"><img class="item-img" src="https://img.test/item-tiffin-4/w640.webp" srcset="https://img.test/item-tiffin-4/w320.webp 320w, https://img.test/item-tiffin-4/w640.webp 640w, https://img.test/item-tiffin-4/w1280.webp 1280w" sizes="(min-width: 1024px) 300px, (min-width: 600px) 45vw, 88px" width="1200" height="900" loading="lazy" decoding="async" alt="" data-alt="Pongal"></a><div class="item-body">
+<h3 class="item-name">Pongal</h3>
+<p class="item-desc">Rice and moong dal with pepper, cumin and cashews.</p>
+<div class="item-meta"><span class="price">₹90.00</span></div>
+<div class="badges"><span class="label"><svg class="mark" viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="1" width="14" height="14" fill="#fff" stroke="#0F7B0F" stroke-width="2"/><circle cx="8" cy="8" r="4" fill="#0F7B0F"/></svg>Vegetarian</span></div>
+</div></li><li class="item has-img" data-id="tiffin-5">
+<a class="zoom" href="https://img.test/item-tiffin-5/w1280.webp" aria-label="Enlarge photo of Poori Masala"><img class="item-img" src="https://img.test/item-tiffin-5/w640.webp" srcset="https://img.test/item-tiffin-5/w320.webp 320w, https://img.test/item-tiffin-5/w640.webp 640w, https://img.test/item-tiffin-5/w1280.webp 1280w" sizes="(min-width: 1024px) 300px, (min-width: 600px) 45vw, 88px" width="1200" height="900" loading="lazy" decoding="async" alt="" data-alt="Poori Masala"></a><div class="item-body">
+<h3 class="item-name">Poori Masala</h3>
+
+<div class="item-meta"><span class="price">₹99.00</span></div>
+<div class="badges"><span class="label"><svg class="mark" viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="1" width="14" height="14" fill="#fff" stroke="#0F7B0F" stroke-width="2"/><circle cx="8" cy="8" r="4" fill="#0F7B0F"/></svg>Vegetarian</span></div>
+</div></li><li class="item" data-id="tiffin-6">
+<div class="item-body">
+<h3 class="item-name">Rava Kesari</h3>
+
+<div class="item-meta"><span class="price">₹50.00</span></div>
+<div class="badges"><span class="label"><svg class="mark" viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="1" width="14" height="14" fill="#fff" stroke="#0F7B0F" stroke-width="2"/><circle cx="8" cy="8" r="4" fill="#0F7B0F"/></svg>Vegetarian</span></div>
+</div></li></ul></section>
+<section id="c-meals" aria-labelledby="c-meals-h"><h2 id="c-meals-h">Meals</h2><ul class="items"><li class="item has-img" data-id="meals-1">
+<a class="zoom" href="https://img.test/item-meals-1/w1280.webp" aria-label="Enlarge photo of South Indian Meals"><img class="item-img" src="https://img.test/item-meals-1/w640.webp" srcset="https://img.test/item-meals-1/w320.webp 320w, https://img.test/item-meals-1/w640.webp 640w, https://img.test/item-meals-1/w1280.webp 1280w" sizes="(min-width: 1024px) 300px, (min-width: 600px) 45vw, 88px" width="1200" height="900" loading="lazy" decoding="async" alt="" data-alt="South Indian Meals"></a><div class="item-body">
+<h3 class="item-name">South Indian Meals</h3>
+<p class="item-desc">Rice, sambar, rasam, two poriyal, kootu, appalam, curd and payasam.</p>
+<div class="item-meta"><span class="price">₹180.00</span></div>
+<div class="badges"><span class="label"><svg class="mark" viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="1" width="14" height="14" fill="#fff" stroke="#0F7B0F" stroke-width="2"/><circle cx="8" cy="8" r="4" fill="#0F7B0F"/></svg>Vegetarian</span></div>
+</div></li><li class="item has-img" data-id="meals-2">
+<a class="zoom" href="https://img.test/item-meals-2/w1280.webp" aria-label="Enlarge photo of Chettinad Chicken Meals"><img class="item-img" src="https://img.test/item-meals-2/w640.webp" srcset="https://img.test/item-meals-2/w320.webp 320w, https://img.test/item-meals-2/w640.webp 640w, https://img.test/item-meals-2/w1280.webp 1280w" sizes="(min-width: 1024px) 300px, (min-width: 600px) 45vw, 88px" width="1200" height="900" loading="lazy" decoding="async" alt="" data-alt="Chettinad Chicken Meals"></a><div class="item-body">
+<h3 class="item-name">Chettinad Chicken Meals</h3>
+
+<div class="item-meta"><span class="price">₹260.00</span></div>
+<div class="badges"><span class="label"><svg class="mark" viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="1" width="14" height="14" fill="#fff" stroke="#8B2E16" stroke-width="2"/><path d="M8 3.5 12.5 12h-9z" fill="#8B2E16"/></svg>Non-vegetarian</span></div>
+</div></li><li class="item" data-id="meals-3">
+<div class="item-body">
+<h3 class="item-name">Fish Curry Meals</h3>
+<p class="item-desc">Tangy tamarind fish curry with rice and sides.</p>
+<div class="item-meta"><span class="price">₹280.00</span></div>
+<div class="badges"><span class="label"><svg class="mark" viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="1" width="14" height="14" fill="#fff" stroke="#8B2E16" stroke-width="2"/><path d="M8 3.5 12.5 12h-9z" fill="#8B2E16"/></svg>Non-vegetarian</span></div>
+</div></li><li class="item has-img" data-id="meals-4">
+<a class="zoom" href="https://img.test/item-meals-4/w1280.webp" aria-label="Enlarge photo of Curd Rice"><img class="item-img" src="https://img.test/item-meals-4/w640.webp" srcset="https://img.test/item-meals-4/w320.webp 320w, https://img.test/item-meals-4/w640.webp 640w, https://img.test/item-meals-4/w1280.webp 1280w" sizes="(min-width: 1024px) 300px, (min-width: 600px) 45vw, 88px" width="1200" height="900" loading="lazy" decoding="async" alt="" data-alt="Curd Rice"></a><div class="item-body">
+<h3 class="item-name">Curd Rice</h3>
+
+<div class="item-meta"><span class="price">₹90.00</span></div>
+<div class="badges"><span class="label"><svg class="mark" viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="1" width="14" height="14" fill="#fff" stroke="#0F7B0F" stroke-width="2"/><circle cx="8" cy="8" r="4" fill="#0F7B0F"/></svg>Vegetarian</span></div>
+</div></li><li class="item has-img" data-id="meals-5">
+<a class="zoom" href="https://img.test/item-meals-5/w1280.webp" aria-label="Enlarge photo of Lemon Rice"><img class="item-img" src="https://img.test/item-meals-5/w640.webp" srcset="https://img.test/item-meals-5/w320.webp 320w, https://img.test/item-meals-5/w640.webp 640w, https://img.test/item-meals-5/w1280.webp 1280w" sizes="(min-width: 1024px) 300px, (min-width: 600px) 45vw, 88px" width="1200" height="900" loading="lazy" decoding="async" alt="" data-alt="Lemon Rice"></a><div class="item-body">
+<h3 class="item-name">Lemon Rice</h3>
+
+<div class="item-meta"><span class="price">₹90.00</span></div>
+<div class="badges"><span class="label"><svg class="mark" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5" fill="#2E7D32"/></svg>Vegan</span></div>
+</div></li><li class="item" data-id="meals-6">
+<div class="item-body">
+<h3 class="item-name">Sambar Rice</h3>
+
+<div class="item-meta"><span class="price">₹100.00</span></div>
+<div class="badges"><span class="label"><svg class="mark" viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="1" width="14" height="14" fill="#fff" stroke="#0F7B0F" stroke-width="2"/><circle cx="8" cy="8" r="4" fill="#0F7B0F"/></svg>Vegetarian</span></div>
+</div></li></ul></section>
+<section id="c-biryani" aria-labelledby="c-biryani-h"><h2 id="c-biryani-h">Biryani</h2><p class="cat-desc">Slow-cooked on dum, served with raita and salna.</p><ul class="items"><li class="item has-img is-featured" data-id="biryani-1">
+<a class="zoom" href="https://img.test/item-biryani-1/w1280.webp" aria-label="Enlarge photo of Chicken Biryani"><img class="item-img" src="https://img.test/item-biryani-1/w640.webp" srcset="https://img.test/item-biryani-1/w320.webp 320w, https://img.test/item-biryani-1/w640.webp 640w, https://img.test/item-biryani-1/w1280.webp 1280w" sizes="(min-width: 1024px) 300px, (min-width: 600px) 45vw, 88px" width="1200" height="900" loading="lazy" decoding="async" alt="" data-alt="Chicken Biryani"></a><div class="item-body">
+<h3 class="item-name">Chicken Biryani <span class="badge featured">Featured</span></h3>
+<p class="item-desc">Seeraga samba rice, country chicken, and our house masala.</p>
+<div class="item-meta"><span class="price">₹240.00</span></div>
+<div class="badges"><span class="label"><svg class="mark" viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="1" width="14" height="14" fill="#fff" stroke="#8B2E16" stroke-width="2"/><path d="M8 3.5 12.5 12h-9z" fill="#8B2E16"/></svg>Non-vegetarian</span></div>
+</div></li><li class="item sold-out has-img" data-id="biryani-2" aria-disabled="true">
+<a class="zoom" href="https://img.test/item-biryani-2/w1280.webp" aria-label="Enlarge photo of Mutton Biryani"><img class="item-img" src="https://img.test/item-biryani-2/w640.webp" srcset="https://img.test/item-biryani-2/w320.webp 320w, https://img.test/item-biryani-2/w640.webp 640w, https://img.test/item-biryani-2/w1280.webp 1280w" sizes="(min-width: 1024px) 300px, (min-width: 600px) 45vw, 88px" width="1200" height="900" loading="lazy" decoding="async" alt="" data-alt="Mutton Biryani"></a><div class="item-body">
+<h3 class="item-name">Mutton Biryani</h3>
+
+<div class="item-meta"><span class="price">₹320.00</span> <span class="badge sold">Currently unavailable</span></div>
+<div class="badges"><span class="label"><svg class="mark" viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="1" width="14" height="14" fill="#fff" stroke="#8B2E16" stroke-width="2"/><path d="M8 3.5 12.5 12h-9z" fill="#8B2E16"/></svg>Non-vegetarian</span></div>
+</div></li><li class="item" data-id="biryani-3">
+<div class="item-body">
+<h3 class="item-name">Egg Biryani</h3>
+
+<div class="item-meta"><span class="price">₹180.00</span></div>
+<div class="badges"><span class="label"><svg class="mark" viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="1" width="14" height="14" fill="#fff" stroke="#8B2E16" stroke-width="2"/><path d="M8 3.5 12.5 12h-9z" fill="#8B2E16"/></svg>Non-vegetarian</span></div>
+</div></li><li class="item has-img" data-id="biryani-4">
+<a class="zoom" href="https://img.test/item-biryani-4/w1280.webp" aria-label="Enlarge photo of Veg Biryani"><img class="item-img" src="https://img.test/item-biryani-4/w640.webp" srcset="https://img.test/item-biryani-4/w320.webp 320w, https://img.test/item-biryani-4/w640.webp 640w, https://img.test/item-biryani-4/w1280.webp 1280w" sizes="(min-width: 1024px) 300px, (min-width: 600px) 45vw, 88px" width="1200" height="900" loading="lazy" decoding="async" alt="" data-alt="Veg Biryani"></a><div class="item-body">
+<h3 class="item-name">Veg Biryani</h3>
+
+<div class="item-meta"><span class="price">₹160.00</span></div>
+<div class="badges"><span class="label"><svg class="mark" viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="1" width="14" height="14" fill="#fff" stroke="#0F7B0F" stroke-width="2"/><circle cx="8" cy="8" r="4" fill="#0F7B0F"/></svg>Vegetarian</span></div>
+</div></li><li class="item has-img" data-id="biryani-5">
+<a class="zoom" href="https://img.test/item-biryani-5/w1280.webp" aria-label="Enlarge photo of Prawn Biryani"><img class="item-img" src="https://img.test/item-biryani-5/w640.webp" srcset="https://img.test/item-biryani-5/w320.webp 320w, https://img.test/item-biryani-5/w640.webp 640w, https://img.test/item-biryani-5/w1280.webp 1280w" sizes="(min-width: 1024px) 300px, (min-width: 600px) 45vw, 88px" width="1200" height="900" loading="lazy" decoding="async" alt="" data-alt="Prawn Biryani"></a><div class="item-body">
+<h3 class="item-name">Prawn Biryani</h3>
+
+<div class="item-meta"><span class="price">₹340.00</span></div>
+<div class="badges"><span class="label"><svg class="mark" viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="1" width="14" height="14" fill="#fff" stroke="#8B2E16" stroke-width="2"/><path d="M8 3.5 12.5 12h-9z" fill="#8B2E16"/></svg>Non-vegetarian</span></div>
+</div></li><li class="item" data-id="biryani-6">
+<div class="item-body">
+<h3 class="item-name">Mushroom Biryani</h3>
+
+<div class="item-meta"><span class="price">₹170.00</span></div>
+<div class="badges"><span class="label"><svg class="mark" viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="1" width="14" height="14" fill="#fff" stroke="#0F7B0F" stroke-width="2"/><circle cx="8" cy="8" r="4" fill="#0F7B0F"/></svg>Vegetarian</span></div>
+</div></li></ul></section>
+<section id="c-chinese" aria-labelledby="c-chinese-h"><h2 id="c-chinese-h">Indo-Chinese</h2><ul class="items"><li class="item has-img" data-id="chinese-1">
+<a class="zoom" href="https://img.test/item-chinese-1/w1280.webp" aria-label="Enlarge photo of Gobi Manchurian"><img class="item-img" src="https://img.test/item-chinese-1/w640.webp" srcset="https://img.test/item-chinese-1/w320.webp 320w, https://img.test/item-chinese-1/w640.webp 640w, https://img.test/item-chinese-1/w1280.webp 1280w" sizes="(min-width: 1024px) 300px, (min-width: 600px) 45vw, 88px" width="1200" height="900" loading="lazy" decoding="async" alt="" data-alt="Gobi Manchurian"></a><div class="item-body">
+<h3 class="item-name">Gobi Manchurian</h3>
+
+<div class="item-meta"><span class="price">₹160.00</span></div>
+<div class="badges"><span class="label"><svg class="mark" viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="1" width="14" height="14" fill="#fff" stroke="#0F7B0F" stroke-width="2"/><circle cx="8" cy="8" r="4" fill="#0F7B0F"/></svg>Vegetarian</span></div>
+</div></li><li class="item has-img" data-id="chinese-2">
+<a class="zoom" href="https://img.test/item-chinese-2/w1280.webp" aria-label="Enlarge photo of Chilli Chicken"><img class="item-img" src="https://img.test/item-chinese-2/w640.webp" srcset="https://img.test/item-chinese-2/w320.webp 320w, https://img.test/item-chinese-2/w640.webp 640w, https://img.test/item-chinese-2/w1280.webp 1280w" sizes="(min-width: 1024px) 300px, (min-width: 600px) 45vw, 88px" width="1200" height="900" loading="lazy" decoding="async" alt="" data-alt="Chilli Chicken"></a><div class="item-body">
+<h3 class="item-name">Chilli Chicken</h3>
+
+<div class="item-meta"><span class="price">₹220.00</span></div>
+<div class="badges"><span class="label"><svg class="mark" viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="1" width="14" height="14" fill="#fff" stroke="#8B2E16" stroke-width="2"/><path d="M8 3.5 12.5 12h-9z" fill="#8B2E16"/></svg>Non-vegetarian</span><span class="tag">Spicy</span></div>
+</div></li><li class="item" data-id="chinese-3">
+<div class="item-body">
+<h3 class="item-name">Veg Fried Rice</h3>
+
+<div class="item-meta"><span class="price">₹150.00</span></div>
+<div class="badges"><span class="label"><svg class="mark" viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="1" width="14" height="14" fill="#fff" stroke="#0F7B0F" stroke-width="2"/><circle cx="8" cy="8" r="4" fill="#0F7B0F"/></svg>Vegetarian</span></div>
+</div></li><li class="item has-img" data-id="chinese-4">
+<a class="zoom" href="https://img.test/item-chinese-4/w1280.webp" aria-label="Enlarge photo of Schezwan Noodles"><img class="item-img" src="https://img.test/item-chinese-4/w640.webp" srcset="https://img.test/item-chinese-4/w320.webp 320w, https://img.test/item-chinese-4/w640.webp 640w, https://img.test/item-chinese-4/w1280.webp 1280w" sizes="(min-width: 1024px) 300px, (min-width: 600px) 45vw, 88px" width="1200" height="900" loading="lazy" decoding="async" alt="" data-alt="Schezwan Noodles"></a><div class="item-body">
+<h3 class="item-name">Schezwan Noodles</h3>
+
+<div class="item-meta"><span class="price">₹160.00</span></div>
+<div class="badges"><span class="label"><svg class="mark" viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="1" width="14" height="14" fill="#fff" stroke="#0F7B0F" stroke-width="2"/><circle cx="8" cy="8" r="4" fill="#0F7B0F"/></svg>Vegetarian</span></div>
+</div></li><li class="item has-img" data-id="chinese-5">
+<a class="zoom" href="https://img.test/item-chinese-5/w1280.webp" aria-label="Enlarge photo of Chicken 65"><img class="item-img" src="https://img.test/item-chinese-5/w640.webp" srcset="https://img.test/item-chinese-5/w320.webp 320w, https://img.test/item-chinese-5/w640.webp 640w, https://img.test/item-chinese-5/w1280.webp 1280w" sizes="(min-width: 1024px) 300px, (min-width: 600px) 45vw, 88px" width="1200" height="900" loading="lazy" decoding="async" alt="" data-alt="Chicken 65"></a><div class="item-body">
+<h3 class="item-name">Chicken 65</h3>
+<p class="item-desc">Deep-fried, curry leaf tempered, fiery red.</p>
+<div class="item-meta"><span class="price">₹220.00</span></div>
+<div class="badges"><span class="label"><svg class="mark" viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="1" width="14" height="14" fill="#fff" stroke="#8B2E16" stroke-width="2"/><path d="M8 3.5 12.5 12h-9z" fill="#8B2E16"/></svg>Non-vegetarian</span><span class="tag">Spicy</span></div>
+</div></li><li class="item" data-id="chinese-6">
+<div class="item-body">
+<h3 class="item-name">Paneer Chilli</h3>
+
+<div class="item-meta"><span class="price">₹200.00</span></div>
+<div class="badges"><span class="label"><svg class="mark" viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="1" width="14" height="14" fill="#fff" stroke="#0F7B0F" stroke-width="2"/><circle cx="8" cy="8" r="4" fill="#0F7B0F"/></svg>Vegetarian</span><span class="tag">Spicy</span></div>
+</div></li></ul></section>
+<section id="c-desserts" aria-labelledby="c-desserts-h"><h2 id="c-desserts-h">Desserts</h2><ul class="items"><li class="item has-img" data-id="desserts-1">
+<a class="zoom" href="https://img.test/item-desserts-1/w1280.webp" aria-label="Enlarge photo of Gulab Jamun (2 pcs)"><img class="item-img" src="https://img.test/item-desserts-1/w640.webp" srcset="https://img.test/item-desserts-1/w320.webp 320w, https://img.test/item-desserts-1/w640.webp 640w, https://img.test/item-desserts-1/w1280.webp 1280w" sizes="(min-width: 1024px) 300px, (min-width: 600px) 45vw, 88px" width="1200" height="900" loading="lazy" decoding="async" alt="" data-alt="Gulab Jamun (2 pcs)"></a><div class="item-body">
+<h3 class="item-name">Gulab Jamun (2 pcs)</h3>
+
+<div class="item-meta"><span class="price">₹60.00</span></div>
+<div class="badges"><span class="label"><svg class="mark" viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="1" width="14" height="14" fill="#fff" stroke="#0F7B0F" stroke-width="2"/><circle cx="8" cy="8" r="4" fill="#0F7B0F"/></svg>Vegetarian</span></div>
+</div></li><li class="item has-img" data-id="desserts-2">
+<a class="zoom" href="https://img.test/item-desserts-2/w1280.webp" aria-label="Enlarge photo of Elaneer Payasam"><img class="item-img" src="https://img.test/item-desserts-2/w640.webp" srcset="https://img.test/item-desserts-2/w320.webp 320w, https://img.test/item-desserts-2/w640.webp 640w, https://img.test/item-desserts-2/w1280.webp 1280w" sizes="(min-width: 1024px) 300px, (min-width: 600px) 45vw, 88px" width="1200" height="900" loading="lazy" decoding="async" alt="" data-alt="Elaneer Payasam"></a><div class="item-body">
+<h3 class="item-name">Elaneer Payasam</h3>
+<p class="item-desc">Tender coconut kheer, served chilled.</p>
+<div class="item-meta"><span class="price">₹120.00</span></div>
+<div class="badges"><span class="label"><svg class="mark" viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="1" width="14" height="14" fill="#fff" stroke="#0F7B0F" stroke-width="2"/><circle cx="8" cy="8" r="4" fill="#0F7B0F"/></svg>Vegetarian</span></div>
+</div></li><li class="item" data-id="desserts-3">
+<div class="item-body">
+<h3 class="item-name">Carrot Halwa</h3>
+
+<div class="item-meta"><span class="price">₹90.00</span></div>
+<div class="badges"><span class="label"><svg class="mark" viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="1" width="14" height="14" fill="#fff" stroke="#0F7B0F" stroke-width="2"/><circle cx="8" cy="8" r="4" fill="#0F7B0F"/></svg>Vegetarian</span></div>
+</div></li><li class="item has-img" data-id="desserts-4">
+<a class="zoom" href="https://img.test/item-desserts-4/w1280.webp" aria-label="Enlarge photo of Kulfi"><img class="item-img" src="https://img.test/item-desserts-4/w640.webp" srcset="https://img.test/item-desserts-4/w320.webp 320w, https://img.test/item-desserts-4/w640.webp 640w, https://img.test/item-desserts-4/w1280.webp 1280w" sizes="(min-width: 1024px) 300px, (min-width: 600px) 45vw, 88px" width="1200" height="900" loading="lazy" decoding="async" alt="" data-alt="Kulfi"></a><div class="item-body">
+<h3 class="item-name">Kulfi</h3>
+
+<div class="item-meta"><span class="price">₹80.00</span></div>
+<div class="badges"><span class="label"><svg class="mark" viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="1" width="14" height="14" fill="#fff" stroke="#0F7B0F" stroke-width="2"/><circle cx="8" cy="8" r="4" fill="#0F7B0F"/></svg>Vegetarian</span></div>
+</div></li><li class="item has-img" data-id="desserts-5">
+<a class="zoom" href="https://img.test/item-desserts-5/w1280.webp" aria-label="Enlarge photo of Fruit Salad with Ice Cream"><img class="item-img" src="https://img.test/item-desserts-5/w640.webp" srcset="https://img.test/item-desserts-5/w320.webp 320w, https://img.test/item-desserts-5/w640.webp 640w, https://img.test/item-desserts-5/w1280.webp 1280w" sizes="(min-width: 1024px) 300px, (min-width: 600px) 45vw, 88px" width="1200" height="900" loading="lazy" decoding="async" alt="" data-alt="Fruit Salad with Ice Cream"></a><div class="item-body">
+<h3 class="item-name">Fruit Salad with Ice Cream</h3>
+
+<div class="item-meta"><span class="price">₹110.00</span></div>
+<div class="badges"><span class="label"><svg class="mark" viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="1" width="14" height="14" fill="#fff" stroke="#0F7B0F" stroke-width="2"/><circle cx="8" cy="8" r="4" fill="#0F7B0F"/></svg>Vegetarian</span></div>
+</div></li><li class="item" data-id="desserts-6">
+<div class="item-body">
+<h3 class="item-name">Double Ka Meetha</h3>
+
+<div class="item-meta"><span class="price">₹100.00</span></div>
+<div class="badges"><span class="label"><svg class="mark" viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="1" width="14" height="14" fill="#fff" stroke="#0F7B0F" stroke-width="2"/><circle cx="8" cy="8" r="4" fill="#0F7B0F"/></svg>Vegetarian</span></div>
+</div></li></ul></section>
+<section id="c-drinks" aria-labelledby="c-drinks-h"><h2 id="c-drinks-h">Drinks</h2><ul class="items"><li class="item has-img" data-id="drinks-1">
+<a class="zoom" href="https://img.test/item-drinks-1/w1280.webp" aria-label="Enlarge photo of Filter Coffee"><img class="item-img" src="https://img.test/item-drinks-1/w640.webp" srcset="https://img.test/item-drinks-1/w320.webp 320w, https://img.test/item-drinks-1/w640.webp 640w, https://img.test/item-drinks-1/w1280.webp 1280w" sizes="(min-width: 1024px) 300px, (min-width: 600px) 45vw, 88px" width="1200" height="900" loading="lazy" decoding="async" alt="" data-alt="Filter Coffee"></a><div class="item-body">
+<h3 class="item-name">Filter Coffee</h3>
+<p class="item-desc">Degree coffee, brewed fresh.</p>
+<div class="item-meta"><span class="price">₹40.00</span></div>
+<div class="badges"><span class="label"><svg class="mark" viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="1" width="14" height="14" fill="#fff" stroke="#0F7B0F" stroke-width="2"/><circle cx="8" cy="8" r="4" fill="#0F7B0F"/></svg>Vegetarian</span></div>
+</div></li><li class="item has-img" data-id="drinks-2">
+<a class="zoom" href="https://img.test/item-drinks-2/w1280.webp" aria-label="Enlarge photo of Masala Tea"><img class="item-img" src="https://img.test/item-drinks-2/w640.webp" srcset="https://img.test/item-drinks-2/w320.webp 320w, https://img.test/item-drinks-2/w640.webp 640w, https://img.test/item-drinks-2/w1280.webp 1280w" sizes="(min-width: 1024px) 300px, (min-width: 600px) 45vw, 88px" width="1200" height="900" loading="lazy" decoding="async" alt="" data-alt="Masala Tea"></a><div class="item-body">
+<h3 class="item-name">Masala Tea</h3>
+
+<div class="item-meta"><span class="price">₹35.00</span></div>
+<div class="badges"><span class="label"><svg class="mark" viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="1" width="14" height="14" fill="#fff" stroke="#0F7B0F" stroke-width="2"/><circle cx="8" cy="8" r="4" fill="#0F7B0F"/></svg>Vegetarian</span></div>
+</div></li><li class="item" data-id="drinks-3">
+<div class="item-body">
+<h3 class="item-name">Fresh Lime Soda</h3>
+
+<div class="item-meta"><span class="price">₹60.00</span></div>
+<div class="badges"><span class="label"><svg class="mark" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5" fill="#2E7D32"/></svg>Vegan</span></div>
+</div></li><li class="item has-img" data-id="drinks-4">
+<a class="zoom" href="https://img.test/item-drinks-4/w1280.webp" aria-label="Enlarge photo of Rose Milk"><img class="item-img" src="https://img.test/item-drinks-4/w640.webp" srcset="https://img.test/item-drinks-4/w320.webp 320w, https://img.test/item-drinks-4/w640.webp 640w, https://img.test/item-drinks-4/w1280.webp 1280w" sizes="(min-width: 1024px) 300px, (min-width: 600px) 45vw, 88px" width="1200" height="900" loading="lazy" decoding="async" alt="" data-alt="Rose Milk"></a><div class="item-body">
+<h3 class="item-name">Rose Milk</h3>
+
+<div class="item-meta"><span class="price">₹70.00</span></div>
+<div class="badges"><span class="label"><svg class="mark" viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="1" width="14" height="14" fill="#fff" stroke="#0F7B0F" stroke-width="2"/><circle cx="8" cy="8" r="4" fill="#0F7B0F"/></svg>Vegetarian</span></div>
+</div></li><li class="item has-img" data-id="drinks-5">
+<a class="zoom" href="https://img.test/item-drinks-5/w1280.webp" aria-label="Enlarge photo of Buttermilk"><img class="item-img" src="https://img.test/item-drinks-5/w640.webp" srcset="https://img.test/item-drinks-5/w320.webp 320w, https://img.test/item-drinks-5/w640.webp 640w, https://img.test/item-drinks-5/w1280.webp 1280w" sizes="(min-width: 1024px) 300px, (min-width: 600px) 45vw, 88px" width="1200" height="900" loading="lazy" decoding="async" alt="" data-alt="Buttermilk"></a><div class="item-body">
+<h3 class="item-name">Buttermilk</h3>
+
+<div class="item-meta"><span class="price">₹40.00</span></div>
+<div class="badges"><span class="label"><svg class="mark" viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="1" width="14" height="14" fill="#fff" stroke="#0F7B0F" stroke-width="2"/><circle cx="8" cy="8" r="4" fill="#0F7B0F"/></svg>Vegetarian</span></div>
+</div></li><li class="item" data-id="drinks-6">
+<div class="item-body">
+<h3 class="item-name">Mango Lassi</h3>
+
+<div class="item-meta"><span class="price">₹90.00</span></div>
+<div class="badges"><span class="label"><svg class="mark" viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="1" width="14" height="14" fill="#fff" stroke="#0F7B0F" stroke-width="2"/><circle cx="8" cy="8" r="4" fill="#0F7B0F"/></svg>Vegetarian</span></div>
+</div></li></ul></section>
+</main>
+</div>
+<footer class="wrap">Powered by EazySuvai</footer>
+<script>(function(){
+var d=document,b=d.body,ds=b.dataset,w=window;
+var f=d.getElementById("es-font");if(f){if(f.sheet)f.media="all";else f.addEventListener("load",function(){f.media="all"})}
+var src=/[?&]src=qr(&|$)/.test(location.search)?"qr":"direct";
+if(src==="qr"&&history.replaceState){history.replaceState(null,"",location.pathname+location.hash)}
+function track(t,x){var u=ds.beacon;if(!u||!navigator.sendBeacon)return;
+try{var p={type:t,slug:ds.slug||"",src:src};for(var k in x)p[k]=x[k];
+navigator.sendBeacon(u,new Blob([JSON.stringify(p)],{type:"application/json"}))}catch(e){}}
+w.esTrack=track;
+track("view",{});
+var nav=d.querySelector(".cats"),links=nav?nav.querySelectorAll("a[href^='#']"):[];
+function setActive(id){for(var i=0;i<links.length;i++){var a=links[i];
+if(a.getAttribute("href")==="#"+id){a.setAttribute("aria-current","true");
+var ul=a.parentNode.parentNode;if(ul.scrollWidth>ul.clientWidth){ul.scrollLeft=a.offsetLeft-(ul.clientWidth-a.offsetWidth)/2}}
+else a.removeAttribute("aria-current")}}
+for(var i=0;i<links.length;i++){links[i].addEventListener("click",function(){var id=this.getAttribute("href").slice(1);
+setActive(id);track("cat",{id:id.replace(/^c-/,"")})})}
+if(links.length&&"IntersectionObserver" in w){var seen={};
+var io=new IntersectionObserver(function(es){es.forEach(function(e){seen[e.target.id]=e.isIntersecting});
+var secs=d.querySelectorAll("main section[id^='c-']");for(var j=0;j<secs.length;j++){if(seen[secs[j].id]){setActive(secs[j].id);break}}},
+{rootMargin:"-72px 0px -55% 0px"});
+d.querySelectorAll("main section[id^='c-']").forEach(function(s){io.observe(s)})}
+var more=ds.more||"more",less=ds.less||"less";
+d.querySelectorAll(".item-desc").forEach(function(p){if(p.scrollHeight<=p.clientHeight+2)return;
+var btn=d.createElement("button");btn.type="button";btn.className="more";btn.textContent=more;btn.setAttribute("aria-expanded","false");
+btn.addEventListener("click",function(){var o=p.classList.toggle("open");btn.textContent=o?less:more;btn.setAttribute("aria-expanded",String(o));
+if(o){var li=p.closest(".item");if(li)track("item",{id:li.getAttribute("data-id")})}});
+p.parentNode.insertBefore(btn,p.nextSibling)});
+var dlg=d.createElement("dialog");if(!dlg.showModal)return;
+dlg.className="lb";dlg.innerHTML='<button type="button" class="lb-close"><span aria-hidden="true">\\u00d7</span></button><img alt="">';
+var x=dlg.firstChild,img=dlg.lastChild;x.setAttribute("aria-label",ds.close||"Close");b.appendChild(dlg);
+function shut(){img.style.transform="";if(dlg.open)dlg.close()}
+x.addEventListener("click",shut);
+dlg.addEventListener("click",function(e){if(e.target===dlg)shut()});
+dlg.addEventListener("close",function(){img.removeAttribute("src")});
+var y0=null,dy=0;
+dlg.addEventListener("touchstart",function(e){y0=e.touches[0].clientY;dy=0},{passive:true});
+dlg.addEventListener("touchmove",function(e){if(y0===null)return;dy=Math.max(0,e.touches[0].clientY-y0);img.style.transform="translateY("+dy+"px)"},{passive:true});
+dlg.addEventListener("touchend",function(){if(dy>80)shut();else img.style.transform="";y0=null});
+d.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("a.zoom");if(!a)return;e.preventDefault();
+var im=a.querySelector("img");img.src=a.getAttribute("href");img.alt=im?im.getAttribute("data-alt")||"":"";dlg.showModal();x.focus();
+var li=a.closest(".item");if(li)track("item",{id:li.getAttribute("data-id")})});
+})();</script>
+
+</body>
+</html>"
+`;
+
+exports[`state pages (FR-099) coming-soon matches its snapshot and is valid HTML 1`] = `
+"<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Spice &lt;Garden&gt; – Menu coming soon</title>
+<style>:root{--es-background:#FFF8EE;--es-surface:#FFFFFF;--es-text:#2B2B2B;--es-muted-text:#5C5C5C;--es-accent:#A8550A;--es-border:#E8DCCB}*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--es-background);color:var(--es-text);font-family:var(--es-font),system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.5}
+a{color:var(--es-accent)}:focus-visible{outline:3px solid var(--es-accent);outline-offset:2px}
+.wrap{max-width:1200px;margin:0 auto;padding-inline:16px}
+h1{margin:0;font-size:1.6rem;line-height:1.2;color:var(--es-text)}
+main{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:32px 16px}
+.card{max-width:480px}
+.mark{width:56px;height:56px;margin:0 auto 16px;border-radius:16px;background:var(--es-accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:700}
+.name{margin:0 0 8px;color:var(--es-muted-text);font-weight:600}
+p{margin:12px 0 0;color:var(--es-muted-text)}
+.btn{display:inline-flex;align-items:center;min-height:48px;padding:0 24px;margin-top:20px;border-radius:999px;background:var(--es-accent);color:#fff;text-decoration:none;font-weight:600}
+footer{position:fixed;bottom:12px;left:0;right:0;text-align:center;font-size:.85rem;color:var(--es-muted-text)}</style>
+</head>
+<body class="state state-coming-soon">
+<main>
+<div class="card">
+<div class="mark" aria-hidden="true">e</div>
+<p class="name">Spice &lt;Garden&gt;</p>
+<h1>Menu coming soon</h1>
+<p>Spice &lt;Garden&gt; is getting its menu ready. Please check back soon.</p>
+
+</div>
+</main>
+<footer>EazySuvai</footer>
+</body>
+</html>"
+`;
+
+exports[`state pages (FR-099) error matches its snapshot and is valid HTML 1`] = `
+"<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Something went wrong | EazySuvai</title>
+<style>:root{--es-background:#FFF8EE;--es-surface:#FFFFFF;--es-text:#2B2B2B;--es-muted-text:#5C5C5C;--es-accent:#A8550A;--es-border:#E8DCCB}*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--es-background);color:var(--es-text);font-family:var(--es-font),system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.5}
+a{color:var(--es-accent)}:focus-visible{outline:3px solid var(--es-accent);outline-offset:2px}
+.wrap{max-width:1200px;margin:0 auto;padding-inline:16px}
+h1{margin:0;font-size:1.6rem;line-height:1.2;color:var(--es-text)}
+main{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:32px 16px}
+.card{max-width:480px}
+.mark{width:56px;height:56px;margin:0 auto 16px;border-radius:16px;background:var(--es-accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:700}
+.name{margin:0 0 8px;color:var(--es-muted-text);font-weight:600}
+p{margin:12px 0 0;color:var(--es-muted-text)}
+.btn{display:inline-flex;align-items:center;min-height:48px;padding:0 24px;margin-top:20px;border-radius:999px;background:var(--es-accent);color:#fff;text-decoration:none;font-weight:600}
+footer{position:fixed;bottom:12px;left:0;right:0;text-align:center;font-size:.85rem;color:var(--es-muted-text)}</style>
+</head>
+<body class="state state-error">
+<main>
+<div class="card">
+<div class="mark" aria-hidden="true">e</div>
+
+<h1>Something went wrong</h1>
+<p>We couldn&#39;t load this menu. Please try again in a moment.</p>
+<a class="btn" href="/spice-garden">Try again</a>
+</div>
+</main>
+<footer>EazySuvai</footer>
+</body>
+</html>"
+`;
+
+exports[`state pages (FR-099) gone matches its snapshot and is valid HTML 1`] = `
+"<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Menu no longer available | EazySuvai</title>
+<style>:root{--es-background:#FFF8EE;--es-surface:#FFFFFF;--es-text:#2B2B2B;--es-muted-text:#5C5C5C;--es-accent:#A8550A;--es-border:#E8DCCB}*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--es-background);color:var(--es-text);font-family:var(--es-font),system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.5}
+a{color:var(--es-accent)}:focus-visible{outline:3px solid var(--es-accent);outline-offset:2px}
+.wrap{max-width:1200px;margin:0 auto;padding-inline:16px}
+h1{margin:0;font-size:1.6rem;line-height:1.2;color:var(--es-text)}
+main{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:32px 16px}
+.card{max-width:480px}
+.mark{width:56px;height:56px;margin:0 auto 16px;border-radius:16px;background:var(--es-accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:700}
+.name{margin:0 0 8px;color:var(--es-muted-text);font-weight:600}
+p{margin:12px 0 0;color:var(--es-muted-text)}
+.btn{display:inline-flex;align-items:center;min-height:48px;padding:0 24px;margin-top:20px;border-radius:999px;background:var(--es-accent);color:#fff;text-decoration:none;font-weight:600}
+footer{position:fixed;bottom:12px;left:0;right:0;text-align:center;font-size:.85rem;color:var(--es-muted-text)}</style>
+</head>
+<body class="state state-gone">
+<main>
+<div class="card">
+<div class="mark" aria-hidden="true">e</div>
+
+<h1>Menu no longer available</h1>
+<p>This menu is no longer available.</p>
+
+</div>
+</main>
+<footer>EazySuvai</footer>
+</body>
+</html>"
+`;
+
+exports[`state pages (FR-099) not-found matches its snapshot and is valid HTML 1`] = `
+"<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Menu not found | EazySuvai</title>
+<style>:root{--es-background:#FFF8EE;--es-surface:#FFFFFF;--es-text:#2B2B2B;--es-muted-text:#5C5C5C;--es-accent:#A8550A;--es-border:#E8DCCB}*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--es-background);color:var(--es-text);font-family:var(--es-font),system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.5}
+a{color:var(--es-accent)}:focus-visible{outline:3px solid var(--es-accent);outline-offset:2px}
+.wrap{max-width:1200px;margin:0 auto;padding-inline:16px}
+h1{margin:0;font-size:1.6rem;line-height:1.2;color:var(--es-text)}
+main{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:32px 16px}
+.card{max-width:480px}
+.mark{width:56px;height:56px;margin:0 auto 16px;border-radius:16px;background:var(--es-accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:700}
+.name{margin:0 0 8px;color:var(--es-muted-text);font-weight:600}
+p{margin:12px 0 0;color:var(--es-muted-text)}
+.btn{display:inline-flex;align-items:center;min-height:48px;padding:0 24px;margin-top:20px;border-radius:999px;background:var(--es-accent);color:#fff;text-decoration:none;font-weight:600}
+footer{position:fixed;bottom:12px;left:0;right:0;text-align:center;font-size:.85rem;color:var(--es-muted-text)}</style>
+</head>
+<body class="state state-not-found">
+<main>
+<div class="card">
+<div class="mark" aria-hidden="true">e</div>
+
+<h1>Menu not found</h1>
+<p>We couldn&#39;t find a menu at this address. Check the link or scan the QR code again.</p>
+
+</div>
+</main>
+<footer>EazySuvai</footer>
+</body>
+</html>"
+`;
+
+exports[`state pages (FR-099) unavailable matches its snapshot and is valid HTML 1`] = `
+"<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Spice &lt;Garden&gt; – Menu temporarily unavailable</title>
+<style>:root{--es-background:#FFF8EE;--es-surface:#FFFFFF;--es-text:#2B2B2B;--es-muted-text:#5C5C5C;--es-accent:#A8550A;--es-border:#E8DCCB}*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--es-background);color:var(--es-text);font-family:var(--es-font),system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.5}
+a{color:var(--es-accent)}:focus-visible{outline:3px solid var(--es-accent);outline-offset:2px}
+.wrap{max-width:1200px;margin:0 auto;padding-inline:16px}
+h1{margin:0;font-size:1.6rem;line-height:1.2;color:var(--es-text)}
+main{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:32px 16px}
+.card{max-width:480px}
+.mark{width:56px;height:56px;margin:0 auto 16px;border-radius:16px;background:var(--es-accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:700}
+.name{margin:0 0 8px;color:var(--es-muted-text);font-weight:600}
+p{margin:12px 0 0;color:var(--es-muted-text)}
+.btn{display:inline-flex;align-items:center;min-height:48px;padding:0 24px;margin-top:20px;border-radius:999px;background:var(--es-accent);color:#fff;text-decoration:none;font-weight:600}
+footer{position:fixed;bottom:12px;left:0;right:0;text-align:center;font-size:.85rem;color:var(--es-muted-text)}</style>
+</head>
+<body class="state state-unavailable">
+<main>
+<div class="card">
+<div class="mark" aria-hidden="true">e</div>
+<p class="name">Spice &lt;Garden&gt;</p>
+<h1>Menu temporarily unavailable</h1>
+<p>The menu of Spice &lt;Garden&gt; can&#39;t be shown right now. Please try again later.</p>
+
+</div>
+</main>
+<footer>EazySuvai</footer>
+</body>
+</html>"
+`;

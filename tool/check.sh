@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Runs every check CI runs. Usage: tool/check.sh [flutter|functions|rules|emulators|all]
+# Runs every check CI runs. Usage: tool/check.sh [flutter|functions|rules|emulators|lighthouse|all]
 # rules and emulators need Java 21+ (the Firebase emulators) and firebase-tools.
 # The owner app end-to-end test (Chrome) is separate: tool/integration.sh.
 set -euo pipefail
@@ -38,11 +38,17 @@ functions_emulator_checks() {
   (cd functions && npm ci && npm run test:emulators)
 }
 
+# Public menu Lighthouse budget and layout checks (M07; needs Chrome and network for Google Fonts).
+lighthouse_checks() {
+  (cd functions && npm ci && npm run test:lighthouse)
+}
+
 case "${1:-all}" in
   flutter) flutter_checks ;;
   functions) functions_checks ;;
   rules) rules_checks ;;
   emulators) functions_emulator_checks ;;
-  all) flutter_checks; functions_checks; rules_checks; functions_emulator_checks ;;
-  *) echo "Usage: $0 [flutter|functions|rules|emulators|all]" >&2; exit 2 ;;
+  lighthouse) lighthouse_checks ;;
+  all) flutter_checks; functions_checks; rules_checks; functions_emulator_checks; lighthouse_checks ;;
+  *) echo "Usage: $0 [flutter|functions|rules|emulators|lighthouse|all]" >&2; exit 2 ;;
 esac

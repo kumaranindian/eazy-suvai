@@ -7,6 +7,8 @@ import 'package:intl/intl.dart';
 
 import '../../../l10n/generated/app_localizations.dart';
 import '../../../router/app_router.dart';
+import '../../qr/domain/qr_link.dart';
+import '../../qr/presentation/qr_mini_view.dart';
 import '../../restaurant/data/restaurant_repository.dart';
 import '../../restaurant/presentation/menu_link_page.dart';
 
@@ -358,6 +360,17 @@ class _QrCard extends StatelessWidget {
           ],
         ),
         Text(l10n.qrCode(restaurant.qrCode), style: theme.textTheme.bodySmall),
+        const SizedBox(height: 12),
+        // A live preview of the permanent /q/ code (M08); tap for downloads.
+        InkWell(
+          key: const ValueKey('dashboard.qrPreview'),
+          borderRadius: BorderRadius.circular(8),
+          onTap: () => context.go(Routes.share),
+          child: QrMiniView(
+            data: qrUrlFor(restaurant.qrCode),
+            semanticLabel: l10n.qrImageLabel(qrUrlFor(restaurant.qrCode)),
+          ),
+        ),
         const SizedBox(height: 12),
         Wrap(
           spacing: 8,

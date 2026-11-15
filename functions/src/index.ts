@@ -30,3 +30,4 @@ export {
   restoreDeleted,
 } from "./menu";
 export { discardDraft, previewMenu, publishMenu, rollbackMenu } from "./publishing";
+export { renderMenu } from "./public";

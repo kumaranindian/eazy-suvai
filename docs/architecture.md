@@ -30,22 +30,24 @@ The FRD requires the customer menu to load in 2.5 s or less on 4G, with an initi
 
 ## 3. Public menu rendering
 
-- Firebase Hosting site `menu` rewrites every path to the HTTPS function `renderMenu`.
+- Firebase Hosting site `menu` rewrites every path to the HTTPS function `renderMenu`, except the static files in `hosting/menu/` (`favicon.ico`, `apple-touch-icon.png`, and `robots.txt`, which the Hosting predeploy step writes for the project; the Functions Framework answers `/robots.txt` itself, so the function can never serve it).
 - Routes:
 
 | Path | Result |
 | --- | --- |
-| `/{slug}` | The menu page. An old slug answers 301 to the current slug (FR-093). |
+| `/{slug}` | The menu page. An old slug answers 301 to the current slug (FR-093); upper case or a trailing slash answers 301 to the canonical form. |
 | `/q/{code}` | 302 to `/{slug}?src=qr`, and the visit counts as a QR visit (FR-048). |
 | `/sitemap.xml` | Active, published restaurants only |
-| `/robots.txt` | Allows the menu pages; disallows `/q/` |
-| `/e` (POST) | Analytics beacon (M09) |
+| `/robots.txt` | Static file: allows the menu pages; disallows `/q/`; points to the sitemap |
+| `/e` (POST) | Analytics beacon (M09; needs its own rewrite above `**`) |
 
 - The function reads `slugs/{slug}`, then `restaurants/{rid}` (status), the current version `restaurants/{rid}/versions/{n}`, and the live availability overlay `restaurants/{rid}/live/availability`.
-- Response header: `Cache-Control: public, max-age=0, s-maxage=60`. Changes therefore show within 60 s (FR-044).
+- Response header: `Cache-Control: public, max-age=0, s-maxage=60`. Changes therefore show within 60 s (FR-044). 200 responses carry an ETag (304 on `If-None-Match`) and are gzipped by the function. HTML pages carry a CSP that allows only the two inline scripts (by hash). The canonical origin comes from `MENU_ORIGINS` (by project id) in `functions/src/public/serve.ts`, with a `MENU_BASE_URL` environment override.
 - Account states follow FR-099: 200 live menu, 404 "coming soon", 503 "temporarily unavailable", 410 "no longer available". Pages that are not live carry `noindex`.
 - Templates live in `functions/src/public/` as TypeScript template functions (`renderMenuPage()` in `render-menu.ts`, built in M06 for the draft preview and extended by M07), with HTML escaping on every value. Theme colours are passed as CSS custom properties.
-- Images are served from the Storage rendition URLs with `srcset` (320/640/1280) and `loading="lazy"`.
+- Images are served from the Storage rendition token URLs (not a Hosting proxy) with `srcset` (320/640/1280) and `loading="lazy"`; the cover is loaded eagerly with `fetchpriority="high"` (LCP).
+- The Google Fonts stylesheet does not block the first paint. The inline JavaScript (under 10 KB) only enhances the page: category highlight, lightbox, "more", and the analytics hook. Without it the page works fully.
+- Performance budget: `npm run test:lighthouse` (FRD §7.1).
 
 ## 4. Firestore data model
 

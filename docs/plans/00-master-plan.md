@@ -17,8 +17,8 @@ Status values: `Not started` · `In progress` · `Blocked` · `Done`
 | M04 | Menu management (categories and items) | `M04-menu-management.md` | M03 | Done | 2026-11-14 | 2026-11-14 | Callables (create, delete, move, restore; plan limits in a transaction), triggers (counts, `draftUpdatedAt`, `live/availability`), rules whitelist, price field in minor units, labels/tags seed, menu manager at 1/2/3 panes, Recently deleted; Chrome end to end. Open: device runs, seed labels on real projects. |
 | M05 | Menu customization (themes) | `M05-customization.md` | M03 | Done | 2026-11-14 | 2026-11-14 | Shared WCAG contrast + `resolveTheme` (Dart and TS, one test-case file), 6 seed themes (2 Free) and fonts, rules for `themes`/`config/platform`/theme draft, gallery and editor with live phone/desktop preview and autosave; Chrome end to end. Open: premium lock (M10), device runs, seed real projects. |
 | M06 | Preview, publishing and versions | `M06-publishing.md` | M04, M05 | Done | 2026-11-15 | 2026-11-15 | Pure snapshot builder + diff + validation (stable problem codes), `publishMenu` (dry run; one transaction: version, pointer, availability reset, prune to 10, audit), `rollbackMenu`, `discardDraft`, `previewMenu` with the first public renderer; publish bar, dialog, preview (iframe / web view) and version history; Chrome end to end. Open: device runs of the web view, M07 owns SEO and account states. |
-| M07 | Public digital menu | `M07-public-menu.md` | M06 | Not started | | | |
-| M08 | QR codes and sharing | `M08-qr-sharing.md` | M07 | Not started | | | |
+| M07 | Public digital menu | `M07-public-menu.md` | M06 | Done | 2026-11-15 | 2026-11-15 | `renderMenu` behind Hosting `menu`: slug / old-slug 301 / `/q/` 302 / sitemap, FR-099 states, SEO + JSON-LD, lightbox and category script (3.4 KB), ETag, CSP, gzip; Lighthouse LCP 1.4–1.6 s, 47 KB, a11y 100; layouts checked at 360/768/1280. Open: real phones (AC-009), deploy and CDN check. |
+| M08 | QR codes and sharing | `M08-qr-sharing.md` | M07 | Done | 2026-11-15 | 2026-11-15 | QR & share screen (3 widths): ≥ 1024 px PNG of `/q/{code}`, logo (level H) only after a zxing2 decode check, else plain with the reason; A4 poster and A6 card PDFs with preview; web download / mobile share sheet; copy, WhatsApp, Web Share. Open: scans on real phones (AC-010), WhatsApp preview on the deployed site (AC-014). |
 | M09 | Analytics | `M09-analytics.md` | M07 | Not started | | | |
 | M10 | Subscriptions and plan limits | `M10-subscriptions.md` | M04, M11 (plans screen) | Not started | | | |
 | M11 | Platform administration | `M11-platform-admin.md` | M01, M03 | Not started | | | |
@@ -241,6 +241,50 @@ Add a dated line whenever a module changes something another module depends on.
   - `npm run test:emulators` also runs `scripts/check-storage-urls.mjs`. It checks the download URLs on the Storage emulator, because Jest can't load the Storage client's dynamic import.
   - `tool/integration.sh` also runs `publish_flow_test.dart`.
   - This machine's Java is 17: run the emulators with Android Studio's JBR 21 (`JAVA_HOME="C:/Program Files/Android/Android Studio/jbr"`).
+
+- 2026-11-15 (M07): **Public menu routes** (`functions/src/public/`, function `renderMenu`):
+  - `/{slug}`; an old slug, upper case or a trailing slash answers 301.
+  - `/q/{code}` answers 302 `/{slug}?src=qr` (any case; unknown 404; restaurant gone 410).
+  - `/sitemap.xml`.
+  - `robots.txt` is a **static** Hosting file written by `functions/scripts/write-robots.mjs` (Hosting predeploy). The Functions Framework answers `/robots.txt` and `/favicon.ico` before any function runs, so never route those to a function.
+  - The canonical origin comes from `MENU_ORIGINS` (by project id) in `serve.ts`, mirrored in `write-robots.mjs` (a test compares them); `MENU_BASE_URL` overrides it. Keep it in step with `AppEnv.menuBaseUrl` (owner app) when the final domain is chosen.
+- 2026-11-15 (M07): **For M08:** the QR target `{menuBaseUrl}/q/{qrCode}` works now and follows slug changes. Link previews come from `/{slug}`:
+  - `og:title` "{Name} – Menu | EazySuvai";
+  - `og:description`: the description, or "See the menu of {name} in {city}…";
+  - `og:image`: the cover at 1280 px, else the logo at 640 px.
+
+  Share the slug URL (canonical) in text and encode the `/q/` URL in the QR code.
+- 2026-11-15 (M07): **Where M09's beacon hooks in:**
+  - Set `beacon: "/e"` in the `renderMenuPage` options in `serve.ts` (`case "live"`). It writes `<body data-beacon="/e" data-slug="{slug}">`; without it the hook sends nothing.
+  - The inline script (`client-script.ts`) already calls `track(type, data)`, also exposed as `window.esTrack`, which sends JSON with `navigator.sendBeacon` to the beacon URL. Events: `view` on load, `cat` on a category tap (`{id}` without the `c-` prefix), `item` on a photo or "more" (`{id}`). Payload: `{type, slug, src: "qr"|"direct", ...data}`.
+  - `src` is read from `?src=qr` before the script removes it from the address bar.
+  - M09 adds the session id and the 30-minute dedup inside `track`, and keeps the scripts under 10 KB (a test checks it).
+  - `/e` needs its own Hosting rewrite to `collectEvent` **above** the `**` rewrite in `firebase.json`. `renderMenu` answers POST with 405. The CSP already allows `connect-src 'self'`.
+- 2026-11-15 (M07): **Branding flag (M10):** `plans/{planId}.limits.removeBranding` (boolean) hides "Powered by EazySuvai". Without the field, Free shows it and Pro hides it (`removeBrandingFrom()` in `functions/src/lib/plan-limits.ts`). Seed it when M10 creates the plans. Setting it on `plans/free` turns the footer off for everyone (open decision below).
+- 2026-11-15 (M07): **Renderer changes that show in the M06 preview:**
+  - Unavailable items now read "Currently unavailable" (FR-043), with a grey photo and a dashed border.
+  - Photos link to the 1280 px rendition.
+  - The category bar becomes a sidebar from 1024 px.
+  - Grid layouts have 1 / 2 / 3 columns.
+  - Customer-facing strings are in `functions/src/public/text.ts`.
+- 2026-11-15 (M07): **Tooling:**
+  - `npm run test:emulators` also starts `hosting:menu` (port 5000).
+  - New `npm run test:lighthouse`, `tool/check.sh lighthouse` and CI job `lighthouse`. They need Chrome; the report goes to `functions/lighthouse-report/`.
+
+- 2026-11-15 (M08): **QR codes in the owner app** (`lib/features/qr/`, route `/share`):
+  - The QR code always encodes `qrUrlFor(qrCode)` = `{AppEnv.menuBaseUrl}/q/{CODE}`. Shared links (copy, WhatsApp, share sheet) use `menuUrl(slug)`.
+  - Reuse `renderQrPng`, `decodeQrImage` / `qrDecodesTo` and `buildQrArtifact` (`application/qr_image.dart`) for Phase 2 table codes (FR-094) rather than writing new ones.
+- 2026-11-15 (M08): **For M10:** the logo in the QR code is open to every plan for now. Gate it with `limits.qrLogo`:
+  - disable `QrKeys.logoSwitch` with an upgrade hint in `QrSharePage`;
+  - keep `qrLogoChoiceProvider` false when the plan lacks it.
+
+  Nothing server-side is needed: the QR code is generated on the device and only the URL matters.
+- 2026-11-15 (M08): **Dependency change in core:** `image` is now `^4.5.0` (resolved 4.5.4, was ^4.13.0). `pdf` 3.11 needs `image` < 4.6, and newer `pdf` needs Dart 3.12 and a `vector_math` that Flutter 3.32 doesn't allow. Raise both together when the Flutter SDK moves.
+- 2026-11-15 (M08): **Tests:**
+  - `pumpOwnerApp(..., qrBuilder:)` renders QR codes in the test zone; the default builds directly, with no isolate.
+  - The PDF viewer is replaced by a text stand-in.
+  - Override `qrShareActionsProvider` / `qrLogoLoaderProvider` to fake sharing and the logo (`test/qr_share_test.dart` has `FakeQrShareActions` and `FakeLogoLoader`).
+- 2026-11-15 (M08): **Assets:** `apps/owner_app/assets/fonts/` (Poppins Regular and SemiBold + `OFL.txt`) for the PDFs.
 
 ## Open decisions
 

@@ -60,3 +60,19 @@ export async function getPlanLimits(read: DocDataReader, planId: unknown): Promi
   const id = typeof planId === "string" && /^[A-Za-z0-9_-]{1,64}$/.test(planId) ? planId : "free";
   return planLimitsFrom(id, await read(`plans/${id}`));
 }
+
+/**
+ * Whether the plan hides the "Powered by EazySuvai" footer on the public
+ * menu (M07; `plans/{planId}.limits.removeBranding`). Until M10 seeds the
+ * plans: Free shows it, Pro hides it. Whether Free shows it at all is an
+ * open decision (master plan); setting the flag on `plans/free` turns it off.
+ *
+ * @param planId The restaurant's `planId`.
+ * @param data `plans/{planId}` data, if the document exists.
+ * @return true when the footer is hidden.
+ */
+export function removeBrandingFrom(planId: string, data: Record<string, unknown> | undefined): boolean {
+  const flag = (data?.limits as Record<string, unknown> | undefined)?.removeBranding;
+  if (typeof flag === "boolean") return flag;
+  return planId === "pro";
+}

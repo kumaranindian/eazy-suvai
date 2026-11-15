@@ -2288,5 +2288,189 @@
   "statusActionHistory": "Version history",
   "@statusActionHistory": {
     "description": "Dashboard status card: button."
+  },
+  "qrPreviewHeading": "Your QR code",
+  "@qrPreviewHeading": {
+    "description": "QR screen: heading of the preview card."
+  },
+  "qrImageLabel": "QR code that opens {url}",
+  "@qrImageLabel": {
+    "description": "QR screen: screen-reader label of the QR image.",
+    "placeholders": {
+      "url": {
+        "type": "String"
+      }
+    }
+  },
+  "qrPermanentNote": "The code opens {shortUrl} and always leads to your current menu, even after you change your menu link. Print it once.",
+  "@qrPermanentNote": {
+    "description": "QR screen: why the code is permanent (FR-051).",
+    "placeholders": {
+      "shortUrl": {
+        "type": "String"
+      }
+    }
+  },
+  "qrNotPublishedNote": "Your menu isn't published yet. Until you publish, scanning shows a \"Menu coming soon\" page.",
+  "@qrNotPublishedNote": {
+    "description": "QR screen: shown before the first publish (FR-049)."
+  },
+  "qrGenerating": "Making your QR code…",
+  "@qrGenerating": {
+    "description": "QR screen: while the code is rendered."
+  },
+  "qrImageInfo": "{size} × {size} px PNG",
+  "@qrImageInfo": {
+    "description": "QR screen: size of the PNG under the preview.",
+    "placeholders": {
+      "size": {
+        "type": "int"
+      }
+    }
+  },
+  "qrImageInfoLogo": "{size} × {size} px PNG · with your logo",
+  "@qrImageInfoLogo": {
+    "description": "QR screen: size of the PNG with the logo.",
+    "placeholders": {
+      "size": {
+        "type": "int"
+      }
+    }
+  },
+  "qrLogoToggle": "Add my logo to the centre",
+  "@qrLogoToggle": {
+    "description": "QR screen: switch for the logo (FR-053)."
+  },
+  "qrLogoToggleHelp": "Uses extra error correction. We check that the code still scans before offering it.",
+  "@qrLogoToggleHelp": {
+    "description": "QR screen: help under the logo switch."
+  },
+  "qrLogoNone": "Upload a logo in your profile to add it to the code.",
+  "@qrLogoNone": {
+    "description": "QR screen: logo switch disabled, no logo."
+  },
+  "qrLogoRejected": "With your logo the code didn't scan reliably, so we're offering the plain code instead.",
+  "@qrLogoRejected": {
+    "description": "QR screen: the logo version failed the decode check (FR-053)."
+  },
+  "qrLogoLoadFailed": "We couldn't load your logo, so we're offering the plain code.",
+  "@qrLogoLoadFailed": {
+    "description": "QR screen: the logo could not be downloaded."
+  },
+  "qrDownloadHeading": "Download and print",
+  "@qrDownloadHeading": {
+    "description": "QR screen: section heading."
+  },
+  "qrDownloadPng": "Download PNG",
+  "@qrDownloadPng": {
+    "description": "QR screen: button."
+  },
+  "qrTemplateLabel": "Print template",
+  "@qrTemplateLabel": {
+    "description": "QR screen: label of the template choice."
+  },
+  "qrTemplatePoster": "A4 poster",
+  "@qrTemplatePoster": {
+    "description": "QR screen: template name."
+  },
+  "qrTemplateCard": "A6 table card",
+  "@qrTemplateCard": {
+    "description": "QR screen: template name."
+  },
+  "qrPreviewPdf": "Preview",
+  "@qrPreviewPdf": {
+    "description": "QR screen: opens the PDF preview (FR-054)."
+  },
+  "qrDownloadPdf": "Download PDF",
+  "@qrDownloadPdf": {
+    "description": "QR screen: button."
+  },
+  "qrTemplatePreviewTitle": "{template} preview",
+  "@qrTemplatePreviewTitle": {
+    "description": "Title of the PDF preview.",
+    "placeholders": {
+      "template": {
+        "type": "String"
+      }
+    }
+  },
+  "qrShareHeading": "Share your menu",
+  "@qrShareHeading": {
+    "description": "QR screen: section heading."
+  },
+  "qrCopyLink": "Copy link",
+  "@qrCopyLink": {
+    "description": "QR screen: button (FR-067)."
+  },
+  "qrShareWhatsApp": "WhatsApp",
+  "@qrShareWhatsApp": {
+    "description": "QR screen: button (FR-068)."
+  },
+  "qrShareMore": "Share…",
+  "@qrShareMore": {
+    "description": "QR screen: opens the native share sheet (FR-069)."
+  },
+  "qrShareMessage": "Take a look at the menu of {name}: {url}",
+  "@qrShareMessage": {
+    "description": "Prefilled message for WhatsApp and the share sheet (FR-068).",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "url": {
+        "type": "String"
+      }
+    }
+  },
+  "qrShareSubject": "{name} – Menu",
+  "@qrShareSubject": {
+    "description": "Subject of the shared link.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "qrShareUnsupported": "This browser has no share menu, so we copied the link instead.",
+  "@qrShareUnsupported": {
+    "description": "QR screen: Web Share API missing."
+  },
+  "qrWhatsAppFailed": "Couldn't open WhatsApp. We copied the link so you can paste it.",
+  "@qrWhatsAppFailed": {
+    "description": "QR screen: wa.me link could not be opened."
+  },
+  "qrDownloadStarted": "Downloading {file}",
+  "@qrDownloadStarted": {
+    "description": "QR screen: web download started.",
+    "placeholders": {
+      "file": {
+        "type": "String"
+      }
+    }
+  },
+  "qrFileShared": "{file} is ready to save or share",
+  "@qrFileShared": {
+    "description": "QR screen: mobile share sheet handled the file.",
+    "placeholders": {
+      "file": {
+        "type": "String"
+      }
+    }
+  },
+  "qrSaveFailed": "Couldn't save the file. Please try again.",
+  "@qrSaveFailed": {
+    "description": "QR screen: saving failed."
+  },
+  "qrPdfScanToView": "Scan to view our menu",
+  "@qrPdfScanToView": {
+    "description": "Printed on the PDF templates (FR-050)."
+  },
+  "qrPdfOrVisit": "or visit",
+  "@qrPdfOrVisit": {
+    "description": "Printed on the PDF templates before the short URL."
+  },
+  "qrClose": "Close",
+  "@qrClose": {
+    "description": "PDF preview: close button."
   }
 }

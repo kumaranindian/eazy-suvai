@@ -18,7 +18,12 @@ M07.
 
 ## Inputs from other modules
 
-- M07: public page and the `?src=qr` marker from the `/q/` redirect.
+- M07 (done 2026-11-15): the inline script already has the hook.
+  - Set `beacon: "/e"` in `serve.ts` (the `renderMenuPage` options for `live`). The script then sends `navigator.sendBeacon("/e", {type, slug, src, ...data})`.
+  - Events: `view` on load, `cat` on a category tap (`{id}`), `item` on a photo or "more" (`{id}`).
+  - `src` is `qr` when the URL had `?src=qr`; the script then removes it from the address bar.
+  - Add the session id and the dedup inside `track()` in `functions/src/public/client-script.ts`. Keep the total under 10 KB; a test checks it.
+  - Add a Hosting rewrite `{source: "/e", function: collectEvent}` **before** the `**` rewrite. `renderMenu` answers POST with 405; the CSP allows `connect-src 'self'`.
 - M03 (done 2026-11-14): `timezone` (IANA) is owner-editable on `restaurants/{rid}`; the day key for `analyticsDaily` uses the zone at event time (`TimeService.dayKey` in core).
 - M10 (later): `limits.analyticsDays` (Free 7, Pro 365).
 

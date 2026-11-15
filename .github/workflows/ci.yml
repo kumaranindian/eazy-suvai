@@ -57,6 +57,34 @@ jobs:
       - run: bash tool/check.sh rules
       - run: bash tool/check.sh emulators
 
+  lighthouse:
+    name: Public menu Lighthouse budget (emulators, Chrome)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: functions/package-lock.json
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - name: Cache emulator binaries
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/firebase/emulators
+          key: firebase-emulators-${{ runner.os }}-v1
+      - run: npm install -g firebase-tools@15
+      # The runner image ships Chrome; chrome-launcher finds it.
+      - run: bash tool/check.sh lighthouse
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: lighthouse-report
+          path: functions/lighthouse-report/
+
   integration:
     name: Owner app end-to-end (Chrome, emulators)
     runs-on: ubuntu-latest

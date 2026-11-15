@@ -15,6 +15,22 @@ export function currencyDigits(currency: string): number {
 }
 
 /**
+ * The major amount as an exact decimal string, for example `129.00` (INR)
+ * or `1.250` (KWD). Used for display and for schema.org `price`.
+ *
+ * @param minor Integer minor units.
+ * @param currency ISO 4217 code.
+ * @return The decimal string.
+ */
+export function majorAmount(minor: number, currency: string): string {
+  const digits = currencyDigits(currency);
+  const negative = minor < 0;
+  const abs = String(Math.abs(Math.trunc(minor))).padStart(digits + 1, "0");
+  const major = digits === 0 ? abs : `${abs.slice(0, abs.length - digits)}.${abs.slice(abs.length - digits)}`;
+  return `${negative ? "-" : ""}${major}`;
+}
+
+/**
  * Formats a price for display, for example `₹129.00` (en-IN) or
  * `KWD 1.250` (en-KW).
  *
@@ -25,10 +41,7 @@ export function currencyDigits(currency: string): number {
  */
 export function formatPrice(minor: number, currency: string, locale: string): string {
   const digits = currencyDigits(currency);
-  const negative = minor < 0;
-  const abs = String(Math.abs(Math.trunc(minor))).padStart(digits + 1, "0");
-  const major = digits === 0 ? abs : `${abs.slice(0, abs.length - digits)}.${abs.slice(abs.length - digits)}`;
-  const value = `${negative ? "-" : ""}${major}`;
+  const value = majorAmount(minor, currency);
   try {
     const nf = new Intl.NumberFormat(locale, {
       style: "currency",

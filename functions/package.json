@@ -14,7 +14,8 @@
     "serve": "npm run build && firebase emulators:start --only functions",
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log",
-    "test:emulators": "npm run build && firebase emulators:exec --project demo-eazysuvai --only auth,firestore,functions,storage --config ../firebase.json \"jest -c jest.emulator.config.js && node scripts/check-storage-urls.mjs\""
+    "test:emulators": "npm run build && node scripts/write-robots.mjs demo-eazysuvai && firebase emulators:exec --project demo-eazysuvai --only auth,firestore,functions,storage,hosting:menu --config ../firebase.json \"jest -c jest.emulator.config.js && node scripts/check-storage-urls.mjs\"",
+    "test:lighthouse": "npm run build && node scripts/write-robots.mjs demo-eazysuvai && firebase emulators:exec --project demo-eazysuvai --only firestore,functions,storage,hosting:menu --config ../firebase.json \"node scripts/lighthouse-budget.mjs\""
   },
   "dependencies": {
     "firebase-admin": "^14.5.1",
@@ -27,9 +28,13 @@
     "@eslint/js": "^10.0.1",
     "@types/jest": "^30.0.0",
     "@types/node": "^22.20.5",
+    "chrome-launcher": "1.2.2",
     "eslint": "^10.15.0",
     "globals": "^17.14.0",
+    "html-validate": "11.17.0",
     "jest": "^30.5.2",
+    "lighthouse": "13.6.0",
+    "puppeteer-core": "25.16.0",
     "ts-jest": "^29.4.15",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.72.2"

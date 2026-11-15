@@ -29,6 +29,13 @@ dependencies:
   timezone: ^0.10.1
   webview_flutter: ^4.13.1
   web: ^1.1.1
+  qr: ^3.0.3
+  zxing2: ^0.2.4
+  pdf: ^3.11.3
+  printing: ^5.14.3
+  share_plus: ^12.0.2
+  url_launcher: ^6.3.2
+  image: ^4.5.0
 
 dev_dependencies:
   flutter_test:
@@ -39,12 +46,13 @@ dev_dependencies:
   integration_test:
     sdk: flutter
   http: ^1.6.0
-  image: ^4.13.0
 
 flutter:
   uses-material-design: true
   assets:
     - assets/brand/
+    # Poppins (SIL OFL 1.1, OFL.txt) for the QR PDFs (M08).
+    - assets/fonts/
   generate: true
 
 # Generates Android and iOS launcher icons:
