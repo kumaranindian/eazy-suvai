@@ -64,7 +64,7 @@ h3{margin:0;font-size:1.05rem;color:var(--es-surface-text)}
 .card-image-top .item,.layout-grid .item{flex-direction:column}
 .card-image-top .item-img,.layout-grid .item-img{width:100%;height:auto;aspect-ratio:4/3}
 .empty{padding:32px 0;color:var(--es-muted-text)}
-footer{padding:24px 0 32px;color:var(--es-muted-text);font-size:.85rem;text-align:center}
+footer{padding:24px 0 32px;color:var(--es-muted-text);font-size:.85rem;text-align:center}footer a{color:inherit;display:inline-block;padding:12px 4px}
 .lb{padding:0;border:0;margin:0;width:100%;height:100%;max-width:100%;max-height:100%;background:transparent;overflow:hidden}
 .lb::backdrop{background:rgba(0,0,0,.88)}
 .lb img{position:absolute;inset:0;margin:auto;max-width:100%;max-height:100%;object-fit:contain;transition:transform .15s}
@@ -348,15 +348,18 @@ section{scroll-margin-top:16px}
 </div></li></ul></section>
 </main>
 </div>
-<footer class="wrap">Powered by EazySuvai</footer>
+<footer class="wrap">Powered by EazySuvai · <a href="/privacy">Privacy</a> · <a href="/terms">Terms</a></footer>
 <script>(function(){
 var d=document,b=d.body,ds=b.dataset,w=window;
 var f=d.getElementById("es-font");if(f){if(f.sheet)f.media="all";else f.addEventListener("load",function(){f.media="all"})}
 var src=/[?&]src=qr(&|$)/.test(location.search)?"qr":"direct";
 if(src==="qr"&&history.replaceState){history.replaceState(null,"",location.pathname+location.hash)}
+var ss=null;try{ss=w.sessionStorage}catch(e){}
 function track(t,x){var u=ds.beacon;if(!u||!navigator.sendBeacon)return;
-try{var p={type:t,slug:ds.slug||"",src:src};for(var k in x)p[k]=x[k];
-navigator.sendBeacon(u,new Blob([JSON.stringify(p)],{type:"application/json"}))}catch(e){}}
+try{if(t==="view"&&ss){var k="es_v_"+(ds.slug||""),n=Date.now(),l=+ss.getItem(k)||0;
+if(l&&n-l<18e5&&n>=l)return;ss.setItem(k,String(n))}}catch(e){}
+try{var p={type:t,slug:ds.slug||"",src:src};for(var k2 in x)p[k2]=x[k2];
+navigator.sendBeacon(u,new Blob([JSON.stringify(p)],{type:"text/plain"}))}catch(e){}}
 w.esTrack=track;
 track("view",{});
 var nav=d.querySelector(".cats"),links=nav?nav.querySelectorAll("a[href^='#']"):[];

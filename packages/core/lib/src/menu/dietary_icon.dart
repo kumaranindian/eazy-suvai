@@ -116,21 +116,21 @@ class MenuLabelBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Row(
-      mainAxisSize: MainAxisSize.min,
+    // A Wrap, not a Row: in a very narrow space (200 % text) the name moves
+    // under the icon instead of overflowing (M13).
+    return Wrap(
+      crossAxisAlignment: WrapCrossAlignment.center,
+      spacing: 4,
       children: [
         MenuLabelIcon(label: label, size: iconSize),
-        const SizedBox(width: 4),
-        Flexible(
-          child: Text(
-            label.name,
-            overflow: TextOverflow.ellipsis,
-            style:
-                style ??
-                theme.textTheme.labelMedium?.copyWith(
-                  color: theme.colorScheme.onSurfaceVariant,
-                ),
-          ),
+        Text(
+          label.name,
+          overflow: TextOverflow.ellipsis,
+          style:
+              style ??
+              theme.textTheme.labelMedium?.copyWith(
+                color: theme.colorScheme.onSurfaceVariant,
+              ),
         ),
       ],
     );

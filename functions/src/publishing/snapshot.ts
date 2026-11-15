@@ -268,9 +268,11 @@ function themeOf(restaurant: Data, themeTokens: unknown): SnapshotTheme {
   return { themeId, tokens, settings, resolved: resolved as Omit<ResolvedTheme, "issues"> };
 }
 
-/** Active, non-deleted categories in display order. */
+/** Active, non-deleted categories not hidden over the plan limit (FR-101), in display order. */
 export function publicCategories(categories: readonly DocEntry[]): DocEntry[] {
-  return categories.filter((c) => isLive(c.data) && c.data.active !== false).sort(compareSequenced);
+  return categories
+    .filter((c) => isLive(c.data) && c.data.active !== false && c.data.hiddenOverLimit !== true)
+    .sort(compareSequenced);
 }
 
 /** Non-deleted, not over-limit items whose category is public, in display order. */
@@ -484,6 +486,8 @@ export const ProblemCode = {
   pricesNeedReview: "prices-need-review",
   /** The snapshot does not fit in one document. */
   snapshotTooLarge: "snapshot-too-large",
+  /** A premium theme on a plan without premium themes (M10, BR-011). */
+  premiumTheme: "premium-theme",
 } as const;
 
 export type ProblemCode = (typeof ProblemCode)[keyof typeof ProblemCode];
@@ -506,6 +510,10 @@ export interface ValidationContext {
   maxItems: number | null;
   maxCategories: number | null;
   planId: string;
+  /** The chosen theme is premium (`themes/{id}.premium`, M10). */
+  themePremium?: boolean;
+  /** The plan allows premium themes (`limits.premiumThemes`, M10). Default true. */
+  premiumThemes?: boolean;
 }
 
 /** Why a day's opening hours are invalid (ports `OpeningHours.validateDay` from core). */
@@ -590,9 +598,14 @@ export function validateDraft(input: DraftInput, snapshot: MenuSnapshot, ctx: Va
 
   if (ctx.pricesNeedReview && !ctx.pricesReviewed) problems.push({ code: ProblemCode.pricesNeedReview });
 
+  // M10 (BR-011): premium themes only on plans that include them.
+  if (ctx.themePremium === true && ctx.premiumThemes === false) {
+    problems.push({ code: ProblemCode.premiumTheme, details: { themeId: input.restaurant.themeId ?? null, planId: ctx.planId } });
+  }
+
   // BR-011: the same counts the create callables use (non-deleted), except
   // items already hidden over the limit, which never go public (FR-101).
-  const liveCategories = input.categories.filter((c) => isLive(c.data)).length;
+  const liveCategories = input.categories.filter((c) => isLive(c.data) && c.data.hiddenOverLimit !== true).length;
   const liveItems = input.items.filter((i) => isLive(i.data) && i.data.hiddenOverLimit !== true).length;
   if (ctx.maxCategories !== null && liveCategories > ctx.maxCategories) {
     problems.push({
@@ -660,7 +673,7 @@ export const DRAFT_ROOT_FIELDS = [
   "themeSettings",
 ] as const;
 
-export const DRAFT_CATEGORY_FIELDS = ["name", "description", "image", "sequence", "active"] as const;
+export const DRAFT_CATEGORY_FIELDS = ["name", "description", "image", "sequence", "active", "hiddenOverLimit"] as const;
 
 /** `available` is not here: it is live and survives a discard (FR-095). */
 export const DRAFT_ITEM_FIELDS = [

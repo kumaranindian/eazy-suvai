@@ -7,6 +7,7 @@ import '../media/image_object.dart';
 import '../publishing/menu_version.dart';
 import '../theme/menu_theme.dart';
 import 'opening_hours.dart';
+import 'subscription.dart';
 
 /// Social networks a profile can link to (FR-011).
 enum SocialNetwork {
@@ -225,6 +226,10 @@ class Restaurant {
     this.publishedAt,
     this.publishedDraftAt,
     this.versionHistory = const [],
+    this.planFeatures = PlanFeatures.free,
+    this.subscription = const Subscription(),
+    this.planNotice,
+    this.pendingUpgradeRequestId,
   });
 
   factory Restaurant.fromMap(String id, Map<String, dynamic> data) {
@@ -261,6 +266,16 @@ class Restaurant {
       publishedAt: time(data['publishedAt']),
       publishedDraftAt: time(data['publishedDraftAt']),
       versionHistory: MenuVersionEntry.listFrom(data['versionHistory']),
+      planFeatures: PlanFeatures.fromMap(
+        data['planFeatures'],
+        planId: data['planId'] as String? ?? 'free',
+      ),
+      subscription: Subscription.fromMap(
+        data['subscription'],
+        planId: data['planId'] as String? ?? 'free',
+      ),
+      planNotice: PlanNotice.fromMap(data['planNotice']),
+      pendingUpgradeRequestId: data['pendingUpgradeRequestId'] as String?,
     );
   }
 
@@ -314,6 +329,24 @@ class Restaurant {
 
   /// Published versions, newest first (at most 10, FR-096).
   final List<MenuVersionEntry> versionHistory;
+
+  /// The plan's flags (M10; written by Functions on plan changes).
+  final PlanFeatures planFeatures;
+
+  /// Paid or free, with dates (M10, FR-080).
+  final Subscription subscription;
+
+  /// What the last plan change did to the menu (M10, FR-101).
+  final PlanNotice? planNotice;
+
+  /// The open upgrade request, if any (M10, FR-106).
+  final String? pendingUpgradeRequestId;
+
+  /// Over the plan's item or category limit (counts include hidden content).
+  bool get overLimit =>
+      (planFeatures.maxItems != null && itemCount > planFeatures.maxItems!) ||
+      (planFeatures.maxCategories != null &&
+          categoryCount > planFeatures.maxCategories!);
 
   bool get isPublished => publishedVersion != null;
 
@@ -369,6 +402,10 @@ class Restaurant {
     publishedAt: publishedAt,
     publishedDraftAt: publishedDraftAt,
     versionHistory: versionHistory,
+    planFeatures: planFeatures,
+    subscription: subscription,
+    planNotice: planNotice,
+    pendingUpgradeRequestId: pendingUpgradeRequestId,
   );
 }
 

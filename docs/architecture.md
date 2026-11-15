@@ -61,18 +61,20 @@ All timestamps are Firestore `Timestamp` in UTC. IDs are Firestore auto-IDs unle
 | `restaurants/{rid}` | Tenant root (4.2) | Owner (allowed fields only), Functions |
 | `slugs/{slug}` | `{restaurantId, current: bool, createdAt, replacedAt?, reclaimedAt?, releasedAt?}`; one doc per current or old slug. `changeSlug` (M03) sets the old one to `current: false` with `replacedAt` and keeps it for 301s | Functions |
 | `qrCodes/{code}` | `{restaurantId, kind: 'restaurant'}`; permanent, never reused | Functions |
-| `plans/{planId}` | `name`, `limits {maxItems, maxCategories, maxBranches, themeIds[], analyticsDays, qrLogo, removeBranding}`, `prices {INR, AED, KWD}`, `isFree`, `active` | Admin via Functions |
+| `plans/{planId}` | `name`, `limits {maxItems, maxCategories, maxBranches, premiumThemes, defaultThemeId, analyticsDays, qrLogo, removeBranding}`, `prices {CUR: {monthly, annual}}` (minor units), `billing[]`, `isFree`, `active`, `sort` (M10). Readable by owners and admins | Admin via Functions |
 | `dietaryLabels/{id}`, `itemTags/{id}` | `name`, `icon` (a key the apps draw: `veg`, `nonVeg`, `vegan`, `egg`, `spicy`, `bestseller`, `chefsSpecial`, `new`), `color` (`#RRGGBB`), `sort`, `retired` (FR-104). Seeded by `functions/scripts/seed-platform.mjs` (M04) | Admin via Functions |
 | `themes/{id}` | `name`, `premium`, `sort`, `retired`, `updatedAt`, `tokens {primary, secondary, background, surface, text, font, layout, cardLayout, mode}`: colours `#RRGGBB`, `layout` list or grid, `cardLayout` compact, image-top or image-left, `mode` light or dark. Seeded by `seed-platform.mjs` (M05: 6 themes, 2 non-premium). Readable by verified owners and admins | Admin via Functions |
 | `config/platform` | `reservedSlugs[]`, `graceDays` (default 14), `fonts[]` (Google Fonts families, M05), `currencies{code: decimals}`. Readable by verified owners and admins (M05, for the font list), so it must never hold secrets | Admin via Functions |
-| `upgradeRequests/{id}` | `restaurantId`, `requestedPlanId`, `status`, `createdAt` | Owner (create), Functions |
+| `upgradeRequests/{id}` | `restaurantId`, `restaurantName`, `ownerEmail`, `currentPlanId`, `requestedPlanId`, `billing`, `status` (`pending`, `activated`, `closed`), `createdAt`, `resolvedAt` | Functions (`requestUpgrade`, M10) |
+| `mail/{id}` | `{to, message {subject, text}, kind, restaurantId}` for the Trigger Email extension (M10) | Functions only |
 | `auditLogs/{id}` | `actorUid`, `actorRole`, `action`, `restaurantId?`, `target`, `reason?`, `details`, `at`, `expireAt` (TTL 2 years) | Functions only |
+| `paymentArchive/{rid}_{pid}` | Payments of purged restaurants: business name, amount, currency, method, reference, period, `retainUntil` (8 years) (M12) | Functions only |
 | `analyticsEvents/{id}` | Raw beacon events, `expireAt` (TTL 90 days) | Functions only |
-| `stats/platform` | Counters for the admin dashboard (FR-085) | Functions only |
+| `stats/platform` | Counters for the admin dashboard (FR-085): restaurants and subscriptions by status, items, views, QR visits; M13 (FRD §13): `activated`, `publishedMenus`, `qrDownloads`, `conversions`, `renewals`, `medianMinutesToFirstPublish`, `monthly.{yyyy-MM}.{views,qrVisits}` | Functions only |
 
 ### 4.2 Tenant subtree `restaurants/{rid}`
 
-Root document fields: `name`, `nameLower` (for admin search), `ownerName`, `ownerEmail`, `ownerMobile` (E.164), `pricesNeedReview`, `businessType`, `description`, `logo`, `cover` (image objects, 4.4), `contact {phone, email, address, city, postalCode, website, social{instagram, facebook, x, youtube, googleMaps}}`, `openingHours {mon: "07:00-11:00,18:00-23:30", …}`, `visibility {phone, email, address, hours, social}`, `country`, `currency`, `timezone`, `themeId`, `themeSettings {primary, secondary, background, font, layout, cardLayout, mode}`, `slug`, `qrCode`, `status` (`active`, `suspended`, `deactivated`, `deleted`), `ownerUid`, `planId`, `subscription {status, startAt, expiresAt, graceEndsAt}`, `counts {categories, items}`, `publishedVersion` (int or null), `publishedAt`, `publishedDraftAt`, `publishedCurrency`, `versionHistory[]` (M06), `draftUpdatedAt`, `setupCompletedAt?`, `createdAt`, `deactivatedAt?`.
+Root document fields: `name`, `nameLower` (for admin search), `ownerName`, `ownerEmail`, `ownerMobile` (E.164), `pricesNeedReview`, `businessType`, `description`, `logo`, `cover` (image objects, 4.4), `contact {phone, email, address, city, postalCode, website, social{instagram, facebook, x, youtube, googleMaps}}`, `openingHours {mon: "07:00-11:00,18:00-23:30", …}`, `visibility {phone, email, address, hours, social}`, `country`, `currency`, `timezone`, `themeId`, `themeSettings {primary, secondary, background, font, layout, cardLayout, mode}`, `slug`, `qrCode`, `status` (`active`, `suspended`, `deactivated`, `deleted`), `ownerUid`, `planId`, `planFeatures {maxItems, maxCategories, premiumThemes, analyticsDays, qrLogo, removeBranding}` (M10, copied from the plan), `subscription {status: free|active|grace, planId, billing, startAt, expiresAt, graceEndsAt, remindersSent[]}`, `pendingUpgradeRequestId`, `planNotice`, `counts {categories, items}`, `publishedVersion` (int or null), `publishedAt`, `publishedDraftAt`, `publishedCurrency`, `versionHistory[]` (M06), `draftUpdatedAt`, `setupCompletedAt?`, `createdAt`, `deactivatedAt?`.
 
 The root document's profile and theme fields are the **draft**. They go live only when published (FR-012).
 
@@ -205,9 +207,9 @@ A shared `ResponsiveScaffold` and `Breakpoint` helper in `packages/core` impleme
 | Publishing | `publishMenu` (with `dryRun`), `rollbackMenu`, `discardDraft`, `previewMenu` (draft HTML for the owner). Snapshot builder, change summary and validation in `functions/src/publishing/snapshot.ts`; the page renderer `renderMenuPage()` in `functions/src/public/` (M07 extends it) | callable | M06 |
 | Public | `renderMenu`, `collectEvent` | HTTPS | M07, M09 |
 | Analytics | `rollupAnalytics` (hourly, if needed) | schedule | M09 |
-| Subscriptions | `requestUpgrade`, `recordPaymentAndActivate`, `changeSubscription`, `subscriptionDaily` | callable, schedule | M10 |
-| Admin | `setRestaurantStatus`, `upsertPlan`, `upsertLabel`, `upsertTag`, `upsertTheme`, `updatePlatformConfig`, `setAdminRole` | callable | M11 |
-| Lifecycle | `requestAccountDeletion`, `exportMenu`, `purgeDaily` | callable, schedule | M12 |
+| Subscriptions | `requestUpgrade`, `recordPaymentAndActivate`, `changeSubscription`, `closeUpgradeRequest`, `adminListUpgradeRequests`, `setHiddenOverLimit`, `subscriptionDaily` | callable, schedule | M10 |
+| Admin | `setRestaurantStatus`, `adminSearchRestaurants`, `adminGetRestaurant`, `adminDashboard`, `recomputePlatformStats`, `upsertPlan`, `upsertLabel` (labels and tags), `upsertTheme`, `updatePlatformConfig`, `setAnnouncement`, `adminListCatalog`, `setAdminRole`, `adminListAdmins`; trigger `onRestaurantStats` | callable, trigger | M11 |
+| Lifecycle | `requestAccountDeletion`, `exportMenu`, `adminListAuditLogs`, `purgeDaily` (daily 02:30 IST; FRD §7.7 rules) | callable, schedule | M12 |
 | Shared | `writeAudit()`, `assertAdmin()`, `assertOwner()`, `getPlanLimits()` (M04; M10 extends it) | library | M00 |
 
 Every callable validates its input with a schema (zod) and returns typed errors with stable codes that the apps map to localized messages.

@@ -8,7 +8,7 @@ import {
   type Transaction,
 } from "firebase-admin/firestore";
 
-import { assertOwner, type CallerAuth } from "../lib/auth";
+import { assertOwner, type CallerAuth , assertSignedIn } from "../lib/auth";
 import { appError } from "../lib/errors";
 import { getPlanLimits, type PlanLimits } from "../lib/plan-limits";
 import { parseInput } from "../lib/validation";
@@ -139,6 +139,7 @@ export async function createCategory(
   auth: CallerAuth | undefined | null,
   data: unknown,
 ): Promise<{ id: string; sequence: number }> {
+  assertSignedIn(auth); // before input checks: anonymous callers learn nothing (M13)
   const input = parseInput(createCategorySchema, data);
   const { restaurantId } = await assertOwner(auth, input.restaurantId, { db });
   const { root, categories, items } = refs(db, restaurantId);
@@ -191,6 +192,7 @@ export async function createItem(
   auth: CallerAuth | undefined | null,
   data: unknown,
 ): Promise<{ id: string; sequence: number }> {
+  assertSignedIn(auth); // before input checks: anonymous callers learn nothing (M13)
   const input = parseInput(createItemSchema, data);
   const { restaurantId } = await assertOwner(auth, input.restaurantId, { db });
   const { root, categories, items } = refs(db, restaurantId);
@@ -262,6 +264,7 @@ export async function deleteCategory(
   auth: CallerAuth | undefined | null,
   data: unknown,
 ): Promise<{ moved: number; deleted: number }> {
+  assertSignedIn(auth); // before input checks: anonymous callers learn nothing (M13)
   const input = parseInput(deleteCategorySchema, data);
   const { restaurantId } = await assertOwner(auth, input.restaurantId, { db });
   const { root, categories, items } = refs(db, restaurantId);
@@ -334,6 +337,7 @@ export async function deleteItems(
   auth: CallerAuth | undefined | null,
   data: unknown,
 ): Promise<{ deleted: number }> {
+  assertSignedIn(auth); // before input checks: anonymous callers learn nothing (M13)
   const input = parseInput(deleteItemsSchema, data);
   const { restaurantId } = await assertOwner(auth, input.restaurantId, { db });
   const { root, items } = refs(db, restaurantId);
@@ -368,6 +372,7 @@ export async function moveItems(
   auth: CallerAuth | undefined | null,
   data: unknown,
 ): Promise<{ moved: number }> {
+  assertSignedIn(auth); // before input checks: anonymous callers learn nothing (M13)
   const input = parseInput(moveItemsSchema, data);
   const { restaurantId } = await assertOwner(auth, input.restaurantId, { db });
   const { root, categories, items } = refs(db, restaurantId);
@@ -422,6 +427,7 @@ export async function restoreDeleted(
   data: unknown,
   options: MenuCallOptions = {},
 ): Promise<{ categories: number; items: number; categoryId: string }> {
+  assertSignedIn(auth); // before input checks: anonymous callers learn nothing (M13)
   const input = parseInput(restoreDeletedSchema, data);
   const { restaurantId } = await assertOwner(auth, input.restaurantId, { db });
   const { root, categories, items } = refs(db, restaurantId);

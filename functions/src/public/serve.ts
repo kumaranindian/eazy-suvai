@@ -25,6 +25,9 @@ import { sitemapXml } from "./seo";
 import { STATE_STATUS, renderStatePage, type StateKind } from "./state-pages";
 
 export const CACHE_PUBLIC = "public, max-age=0, s-maxage=60";
+
+/** The analytics endpoint (M09; Hosting rewrites it to `collectEvent`). */
+export const BEACON_PATH = "/e";
 export const DEFAULT_MENU_BASE_URL = "https://menu.eazysuvai.com";
 
 export interface MenuRequest {
@@ -189,6 +192,7 @@ export async function handleMenuRequest(db: Firestore, req: MenuRequest, deps: S
           branding: m.branding,
           canonicalUrl: `${baseUrl}/${m.slug}`,
           slug: m.slug,
+          beacon: BEACON_PATH,
           now: deps.now,
         });
         return withEtag(req, html(200, body, deps));

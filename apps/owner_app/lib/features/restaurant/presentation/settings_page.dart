@@ -82,6 +82,13 @@ class SettingsPage extends ConsumerWidget {
         r == null ? null : menuUrl(r.slug),
         Routes.menuLink,
       ),
+      (
+        const ValueKey('settings.account'),
+        Icons.manage_accounts_outlined,
+        l10n.accountTitle,
+        l10n.accountSubtitle,
+        Routes.account,
+      ),
     ];
 
     return Align(

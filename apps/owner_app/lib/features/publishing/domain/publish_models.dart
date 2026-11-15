@@ -12,6 +12,7 @@ enum PublishProblemCode {
   limitExceeded('limit-exceeded'),
   pricesNeedReview('prices-need-review'),
   snapshotTooLarge('snapshot-too-large'),
+  premiumTheme('premium-theme'),
   unknown('unknown');
 
   const PublishProblemCode(this.wire);

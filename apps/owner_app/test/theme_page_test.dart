@@ -11,6 +11,7 @@ import 'package:owner_app/router/app_router.dart';
 
 import 'fake_menu.dart';
 import 'fake_theme.dart';
+import 'fake_plan.dart';
 import 'helpers.dart';
 
 Future<TestApp> _open(
@@ -55,7 +56,13 @@ void main() {
       testWidgets('${width.toInt()} px: themes, badges and choosing one', (
         tester,
       ) async {
-        final app = await _open(tester, Routes.theme, width: width);
+        // Pro: premium themes can be chosen (M10 locks them on Free; plan_test.dart).
+        final app = await _open(
+          tester,
+          Routes.theme,
+          width: width,
+          restaurant: proData(),
+        );
         expect(find.text('Theme'), findsWidgets);
         for (final p in seedPresets) {
           expect(find.byKey(ThemeGalleryPage.cardKey(p.id)), findsOneWidget);

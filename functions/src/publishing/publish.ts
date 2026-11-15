@@ -137,6 +137,8 @@ function validateWith(
     maxItems: draft.limits.maxItems,
     maxCategories: draft.limits.maxCategories,
     planId: draft.planId,
+    themePremium: draft.themePremium,
+    premiumThemes: draft.limits.premiumThemes,
   });
 }
 
@@ -166,11 +168,11 @@ export interface PublishResult {
  * so readers see the old or the new menu, never a mix (AC-022).
  */
 /** Versions that fall out of the last {@link VERSIONS_KEPT} once `n` is written. Read before any write. */
-function readStale(tx: Transaction, db: Firestore, restaurantId: string, n: number): Promise<QuerySnapshot> {
+export function readStale(tx: Transaction, db: Firestore, restaurantId: string, n: number): Promise<QuerySnapshot> {
   return tx.get(db.collection(`restaurants/${restaurantId}/versions`).where("n", "<=", n - VERSIONS_KEPT));
 }
 
-async function writeVersion(
+export async function writeVersion(
   tx: Transaction,
   db: Firestore,
   args: {
@@ -188,6 +190,8 @@ async function writeVersion(
     /** Root fields to set as well (draft replacement, `publishedDraftAt`). */
     rootPatch: Data;
     audit: { action: string; details: Data };
+    /** Who publishes: the owner, or the system for plan-limit publishes (M10). */
+    actorRole?: "owner" | "platformAdmin" | "system";
   },
 ): Promise<void> {
   const { restaurantId, n } = args;
@@ -221,6 +225,8 @@ async function writeVersion(
   tx.update(root, {
     publishedVersion: n,
     publishedAt: now,
+    // FRD §13 (M13): the first publish, for activation and time-to-publish.
+    ...(args.restaurant.firstPublishedAt === undefined || args.restaurant.firstPublishedAt === null ? { firstPublishedAt: now } : {}),
     publishedCurrency: args.snapshot.currency,
     pricesNeedReview: false,
     versionHistory: [entry, ...history].slice(0, VERSIONS_KEPT),
@@ -240,7 +246,7 @@ async function writeVersion(
   await writeAudit(
     {
       actorUid: args.uid,
-      actorRole: "owner",
+      actorRole: args.actorRole ?? "owner",
       action: args.audit.action,
       restaurantId,
       target: `restaurants/${restaurantId}/versions/${n}`,
@@ -270,6 +276,7 @@ export async function publishMenu(
   data: unknown,
   deps: PublishDeps = {},
 ): Promise<PublishCheck | PublishResult> {
+  assertSignedIn(auth); // before input checks: anonymous callers learn nothing (M13)
   const input = parseInput(publishMenuSchema, data);
   const owner = await assertPublisher(db, auth, input.restaurantId);
   const resolve = deps.resolveImageUrls ?? storageUrlResolver;
@@ -403,6 +410,7 @@ export async function rollbackMenu(
   auth: CallerAuth | undefined | null,
   data: unknown,
 ): Promise<PublishResult> {
+  assertSignedIn(auth); // before input checks: anonymous callers learn nothing (M13)
   const input = parseInput(rollbackMenuSchema, data);
   const owner = await assertPublisher(db, auth, input.restaurantId);
   if (!owner.emailVerified) blocked([{ code: ProblemCode.emailNotVerified }]);
@@ -471,6 +479,7 @@ export async function discardDraft(
   auth: CallerAuth | undefined | null,
   data: unknown,
 ): Promise<{ version: number }> {
+  assertSignedIn(auth); // before input checks: anonymous callers learn nothing (M13)
   const input = parseInput(restaurantOnlySchema, data);
   const owner = await assertOwner(auth, input.restaurantId, { db });
 
@@ -514,6 +523,7 @@ export async function previewMenu(
   data: unknown,
   deps: PublishDeps = {},
 ): Promise<{ html: string; problems: PublishProblem[] }> {
+  assertSignedIn(auth); // before input checks: anonymous callers learn nothing (M13)
   const input = parseInput(restaurantOnlySchema, data);
   const owner = await assertPublisher(db, auth, input.restaurantId);
   const draft = await loadDraft(db, input.restaurantId);

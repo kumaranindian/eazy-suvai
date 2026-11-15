@@ -1,4 +1,5 @@
 import 'package:admin_app/app.dart';
+import 'package:admin_app/data/admin_api.dart';
 import 'package:admin_app/features/auth/data/admin_mfa_repository.dart';
 import 'package:admin_app/router/app_router.dart';
 import 'package:core/core.dart';
@@ -8,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
+
+import 'fake_admin_api.dart';
 
 const validCode = '123456';
 
@@ -116,6 +119,7 @@ Future<AdminTestApp> pumpAdminApp(
   FakeUser? signedIn,
   String? secondFactor,
   bool mfaRequired = true,
+  FakeAdminApi? api,
 }) async {
   tester.view.devicePixelRatio = 1;
   tester.view.physicalSize = Size(width, 900);
@@ -133,6 +137,7 @@ Future<AdminTestApp> pumpAdminApp(
           FakeAdminMfaRepository(auth),
         ),
         adminMfaRequiredProvider.overrideWithValue(mfaRequired),
+        adminApiProvider.overrideWithValue(api ?? FakeAdminApi()),
       ],
       child: const AdminApp(),
     ),

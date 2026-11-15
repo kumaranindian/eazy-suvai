@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:core/core.dart';
@@ -81,6 +82,16 @@ class _QrSharePageState extends ConsumerState<QrSharePage> {
       );
       if (!mounted) return;
       if (outcome == ShareOutcome.done) {
+        // FRD §13: count it; a failed count never bothers the owner.
+        final rid = ref.read(currentRestaurantIdProvider);
+        if (rid != null) {
+          unawaited(
+            ref
+                .read(restaurantRepositoryProvider)
+                .countQrDownload(rid)
+                .catchError((Object _) {}),
+          );
+        }
         _snack(
           _actions.savesByDownload
               ? l10n.qrDownloadStarted(fileName)
@@ -215,6 +226,8 @@ class _QrSharePageState extends ConsumerState<QrSharePage> {
     final ready = qr.value;
     final template = ref.watch(qrTemplateChoiceProvider);
     final hasLogo = r.logo?.isReady ?? false;
+    // M10: the logo in the QR code is a plan feature (limits.qrLogo).
+    final logoAllowed = r.planFeatures.qrLogo;
     final wantLogo = ref.watch(qrLogoChoiceProvider);
     final link = menuUrl(r.slug);
     final message = l10n.qrShareMessage(r.name, link);
@@ -268,12 +281,21 @@ class _QrSharePageState extends ConsumerState<QrSharePage> {
           SwitchListTile(
             key: QrKeys.logoSwitch,
             contentPadding: EdgeInsetsDirectional.zero,
-            value: wantLogo && hasLogo,
-            onChanged: hasLogo
+            value: wantLogo && hasLogo && logoAllowed,
+            onChanged: hasLogo && logoAllowed
                 ? (v) => ref.read(qrLogoChoiceProvider.notifier).set(v)
                 : null,
             title: Text(l10n.qrLogoToggle),
-            subtitle: Text(hasLogo ? l10n.qrLogoToggleHelp : l10n.qrLogoNone),
+            subtitle: Text(
+              !logoAllowed
+                  ? l10n.qrLogoPro
+                  : hasLogo
+                  ? l10n.qrLogoToggleHelp
+                  : l10n.qrLogoNone,
+            ),
+            secondary: logoAllowed
+                ? null
+                : const Icon(Icons.workspace_premium_outlined),
           ),
           if (logoMessage != null)
             Semantics(

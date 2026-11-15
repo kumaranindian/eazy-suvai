@@ -38,33 +38,38 @@ class SaveStatusIndicator extends ConsumerWidget {
     };
     return Semantics(
       liveRegion: true,
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          if (icon == null)
-            const SizedBox.square(
-              dimension: 16,
-              child: CircularProgressIndicator(strokeWidth: 2),
-            )
-          else
-            Icon(icon, size: 18, color: color),
-          const SizedBox(width: 8),
-          Flexible(
-            child: Text(
-              text,
-              style: Theme.of(
-                context,
-              ).textTheme.bodyMedium?.copyWith(color: color),
-              overflow: TextOverflow.ellipsis,
+      // App bar actions have no width limit; large text must not overflow (M13).
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 240),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (icon == null)
+              const SizedBox.square(
+                dimension: 16,
+                child: CircularProgressIndicator(strokeWidth: 2),
+              )
+            else
+              Icon(icon, size: 18, color: color),
+            const SizedBox(width: 8),
+            Flexible(
+              child: Text(
+                text,
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyMedium?.copyWith(color: color),
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
-          ),
-          if (state.status == SaveStatus.failed)
-            TextButton(
-              key: retryKey,
-              onPressed: () => ref.read(draftAutosaveProvider.notifier).flush(),
-              child: Text(CoreLocalizations.of(context).actionRetry),
-            ),
-        ],
+            if (state.status == SaveStatus.failed)
+              TextButton(
+                key: retryKey,
+                onPressed: () =>
+                    ref.read(draftAutosaveProvider.notifier).flush(),
+                child: Text(CoreLocalizations.of(context).actionRetry),
+              ),
+          ],
+        ),
       ),
     );
   }

@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../../router/app_router.dart';
 import '../../restaurant/application/draft_autosave.dart';
+import '../../restaurant/data/restaurant_repository.dart';
 import '../../restaurant/presentation/save_status.dart';
 import '../application/theme_draft.dart';
 import '../data/theme_repository.dart';
@@ -122,6 +123,21 @@ class ThemeGalleryPage extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     final choice = ref.read(currentThemeChoiceProvider);
     if (choice.themeId == preset.id) return;
+    // M10 (BR-011): premium themes need a plan with premiumThemes; the
+    // rules refuse the write anyway.
+    final allowed =
+        ref.read(currentRestaurantProvider).value?.planFeatures.premiumThemes ??
+        false;
+    if (preset.premium && !allowed) {
+      final upgrade = await showConfirmDialog(
+        context,
+        title: l10n.themePremiumLockedTitle,
+        message: l10n.themePremiumLockedBody(preset.name),
+        confirmLabel: l10n.seePlans,
+      );
+      if (upgrade && context.mounted) context.go(Routes.plan);
+      return;
+    }
     if (!choice.settings.isEmpty) {
       final ok = await showConfirmDialog(
         context,
@@ -317,54 +333,57 @@ class ThemeCard extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // Miniature: background, a primary band, two item cards.
-              Container(
-                height: 120,
-                color: t.backgroundColor,
-                padding: const EdgeInsetsDirectional.all(10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Container(height: 18, color: t.primaryColor),
-                    const SizedBox(height: 6),
-                    Text(
-                      l10n.themeFontSample,
-                      style: sample,
-                      maxLines: 1,
-                      overflow: TextOverflow.clip,
-                    ),
-                    const Spacer(),
-                    for (final i in [0, 1]) ...[
-                      if (i == 1) const SizedBox(height: 4),
-                      Container(
-                        height: 18,
-                        decoration: BoxDecoration(
-                          color: t.surfaceColor,
-                          borderRadius: BorderRadius.circular(4),
-                          border: Border.all(color: t.borderColor),
-                        ),
-                        padding: const EdgeInsetsDirectional.symmetric(
-                          horizontal: 6,
-                        ),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Container(
-                                height: 4,
-                                color: t.surfaceTextColor,
-                              ),
-                            ),
-                            const SizedBox(width: 12),
-                            Container(
-                              width: 16,
-                              height: 4,
-                              color: t.accentColor,
-                            ),
-                          ],
-                        ),
+              // Miniature: background, a primary band, two item cards. A
+              // fixed-size picture, so its sample text does not scale (M13).
+              MediaQuery.withNoTextScaling(
+                child: Container(
+                  height: 120,
+                  color: t.backgroundColor,
+                  padding: const EdgeInsetsDirectional.all(10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Container(height: 18, color: t.primaryColor),
+                      const SizedBox(height: 6),
+                      Text(
+                        l10n.themeFontSample,
+                        style: sample,
+                        maxLines: 1,
+                        overflow: TextOverflow.clip,
                       ),
+                      const Spacer(),
+                      for (final i in [0, 1]) ...[
+                        if (i == 1) const SizedBox(height: 4),
+                        Container(
+                          height: 18,
+                          decoration: BoxDecoration(
+                            color: t.surfaceColor,
+                            borderRadius: BorderRadius.circular(4),
+                            border: Border.all(color: t.borderColor),
+                          ),
+                          padding: const EdgeInsetsDirectional.symmetric(
+                            horizontal: 6,
+                          ),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Container(
+                                  height: 4,
+                                  color: t.surfaceTextColor,
+                                ),
+                              ),
+                              const SizedBox(width: 12),
+                              Container(
+                                width: 16,
+                                height: 4,
+                                color: t.accentColor,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ],
-                  ],
+                  ),
                 ),
               ),
               Padding(

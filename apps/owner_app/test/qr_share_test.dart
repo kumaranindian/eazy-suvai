@@ -3,7 +3,9 @@ import 'dart:typed_data';
 
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:owner_app/features/restaurant/data/restaurant_repository.dart';
 import 'package:image/image.dart' as img;
 import 'package:owner_app/features/qr/application/qr_image.dart';
 import 'package:owner_app/features/qr/data/logo_loader.dart';
@@ -15,6 +17,7 @@ import 'package:owner_app/features/restaurant/presentation/menu_link_page.dart'
     show menuUrl;
 import 'package:owner_app/router/app_router.dart';
 
+import 'fake_plan.dart';
 import 'helpers.dart';
 import 'qr_image_test.dart' show sampleLogo;
 
@@ -198,11 +201,18 @@ void main() {
     expect(img.decodePng(bytes)!.width, greaterThanOrEqualTo(1024));
     expect(decodeQrImage(bytes), qrUrl);
     expect(find.text('Downloading spice-garden-qr.png'), findsOneWidget);
+    // FRD §13 (M13): the download is counted.
+    final repo =
+        ProviderScope.containerOf(
+              tester.element(find.byType(Scaffold).first),
+            ).read(restaurantRepositoryProvider)
+            as FakeRestaurantRepository;
+    expect(repo.qrDownloads, 1);
   });
 
   group('logo (FR-053)', () {
     testWidgets('is off and disabled without a logo', (tester) async {
-      await openQr(tester);
+      await openQr(tester, extra: {...proData(), 'publishedVersion': 1});
       final tile = tester.widget<SwitchListTile>(find.byKey(QrKeys.logoSwitch));
       expect(tile.onChanged, isNull);
       expect(
@@ -211,12 +221,19 @@ void main() {
       );
     });
 
+    testWidgets('is a Pro feature (M10)', (tester) async {
+      await openQr(tester, extra: {'publishedVersion': 1, 'logo': readyLogo()});
+      final tile = tester.widget<SwitchListTile>(find.byKey(QrKeys.logoSwitch));
+      expect(tile.onChanged, isNull);
+      expect(find.textContaining('part of Pro'), findsOneWidget);
+    });
+
     testWidgets('adds the logo, level H, and the PNG still decodes', (
       tester,
     ) async {
       final h = await openQr(
         tester,
-        extra: {'publishedVersion': 1, 'logo': readyLogo()},
+        extra: {...proData(), 'publishedVersion': 1, 'logo': readyLogo()},
       );
       final plain = shownPng(tester);
       await tapKey(tester, QrKeys.logoSwitch);
@@ -239,7 +256,7 @@ void main() {
       var calls = 0;
       final h = await openQr(
         tester,
-        extra: {'publishedVersion': 1, 'logo': readyLogo()},
+        extra: {...proData(), 'publishedVersion': 1, 'logo': readyLogo()},
         check: (png, url) => ++calls != 2 && qrDecodesTo(png, url),
       );
       await tapKey(tester, QrKeys.logoSwitch);
@@ -254,7 +271,7 @@ void main() {
     testWidgets('falls back when the logo cannot be loaded', (tester) async {
       await openQr(
         tester,
-        extra: {'publishedVersion': 1, 'logo': readyLogo()},
+        extra: {...proData(), 'publishedVersion': 1, 'logo': readyLogo()},
         logos: FakeLogoLoader(fail: true),
       );
       await tapKey(tester, QrKeys.logoSwitch);

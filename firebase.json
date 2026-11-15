@@ -69,7 +69,11 @@
       "public": "hosting/menu",
       "ignore": ["firebase.json", "**/.*"],
       "predeploy": ["node \"$PROJECT_DIR/functions/scripts/write-robots.mjs\""],
-      "rewrites": [{ "source": "**", "function": { "functionId": "renderMenu", "region": "asia-south1" } }],
+      "cleanUrls": true,
+      "rewrites": [
+        { "source": "/e", "function": { "functionId": "collectEvent", "region": "asia-south1" } },
+        { "source": "**", "function": { "functionId": "renderMenu", "region": "asia-south1" } }
+      ],
       "headers": [
         {
           "source": "**",

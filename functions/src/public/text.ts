@@ -28,6 +28,8 @@ export const MENU_TEXT_EN = {
   close: "Close",
   enlarge: "Enlarge photo of",
   poweredBy: "Powered by EazySuvai",
+  privacy: "Privacy",
+  terms: "Terms",
   previewBanner: "Preview – this is your unpublished draft. Customers can't see it yet.",
   empty: "This menu has no items yet.",
   /** Meta description when the owner wrote none: `{name}` and `{place}` are filled in. */

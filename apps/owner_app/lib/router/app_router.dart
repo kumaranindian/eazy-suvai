@@ -3,13 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../features/account/presentation/account_page.dart';
+import '../features/analytics/presentation/analytics_page.dart';
 import '../features/auth/presentation/finishing_setup_page.dart';
 import '../features/auth/presentation/forgot_password_page.dart';
 import '../features/auth/presentation/sign_in_page.dart';
 import '../features/auth/presentation/sign_up_page.dart';
 import '../features/auth/presentation/verify_email_page.dart';
 import '../features/home/presentation/dashboard_page.dart';
-import '../features/home/presentation/plan_page.dart';
+import '../features/plan/presentation/hidden_content_page.dart';
+import '../features/plan/presentation/plan_page.dart';
 import '../features/menu/application/menu_state.dart';
 import '../features/menu/presentation/menu_page.dart';
 import '../features/menu/presentation/recently_deleted_page.dart';
@@ -35,6 +38,7 @@ abstract final class Routes {
   static const home = '/';
   static const menu = '/menu';
   static const share = '/share';
+  static const analytics = '/analytics';
   static const settings = '/settings';
 
   // M01: account screens.
@@ -66,6 +70,9 @@ abstract final class Routes {
 
   /// Where "Upgrade" leads (M10 replaces the page).
   static const plan = '/settings/plan';
+  static const planHidden = '/settings/plan/hidden';
+  static const account = '/settings/account';
+  static const deleteAccount = '/settings/account/delete';
 
   // M06: draft preview (full screen) and version history.
   static const preview = '/preview';
@@ -198,6 +205,14 @@ GoRouter appRouter(Ref ref) {
           StatefulShellBranch(
             routes: [
               GoRoute(
+                path: Routes.analytics,
+                builder: (context, state) => const AnalyticsPage(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
                 path: Routes.settings,
                 builder: (context, state) => const SettingsPage(),
                 routes: [
@@ -220,6 +235,25 @@ GoRouter appRouter(Ref ref) {
                   GoRoute(
                     path: 'plan',
                     builder: (context, state) => const PlanPage(),
+                    routes: [
+                      GoRoute(
+                        path: 'hidden',
+                        builder: (context, state) => HiddenContentPage(
+                          downgrade:
+                              state.uri.queryParameters['downgrade'] == '1',
+                        ),
+                      ),
+                    ],
+                  ),
+                  GoRoute(
+                    path: 'account',
+                    builder: (context, state) => const AccountPage(),
+                    routes: [
+                      GoRoute(
+                        path: 'delete',
+                        builder: (context, state) => const DeleteAccountPage(),
+                      ),
+                    ],
                   ),
                   GoRoute(
                     path: 'versions',

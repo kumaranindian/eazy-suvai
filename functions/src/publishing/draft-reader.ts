@@ -9,7 +9,7 @@ import {
 import { getStorage } from "firebase-admin/storage";
 import { logger } from "firebase-functions/v2";
 
-import { getPlanLimits, type PlanLimits } from "../lib/plan-limits";
+import { getPlanFeatures, type PlanFeatures } from "../lib/plan-limits";
 import { imagePathsOf, type DocEntry, type DraftInput, type DraftSource, type MenuSnapshot } from "./snapshot";
 
 type Data = Record<string, unknown>;
@@ -27,7 +27,9 @@ export interface CurrentVersion {
 /** The draft plus everything publishing needs, minus image URLs. */
 export interface LoadedDraft {
   input: Omit<DraftInput, "imageUrls">;
-  limits: PlanLimits;
+  limits: PlanFeatures;
+  /** `themes/{themeId}.premium` (M10). */
+  themePremium: boolean;
   planId: string;
   current: CurrentVersion | null;
 }
@@ -98,7 +100,7 @@ export async function loadDraft(db: Firestore, rid: string, tx?: Transaction): P
     read.query(db.collection("dietaryLabels")),
     read.query(db.collection("itemTags")),
     themeId ? read.get(db.doc(`themes/${themeId}`)) : Promise.resolve(null),
-    getPlanLimits(async (path) => dataOf(await read.get(db.doc(path))), planId),
+    getPlanFeatures(async (path) => dataOf(await read.get(db.doc(path))), planId),
     published === null ? Promise.resolve(null) : loadVersion(db, read, rid, published),
   ]);
 
@@ -112,6 +114,7 @@ export async function loadDraft(db: Firestore, rid: string, tx?: Transaction): P
       themeTokens: theme ? (dataOf(theme)?.tokens ?? null) : null,
     },
     limits,
+    themePremium: theme ? dataOf(theme)?.premium === true : false,
     planId,
     current,
   };

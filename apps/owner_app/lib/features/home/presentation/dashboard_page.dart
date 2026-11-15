@@ -7,6 +7,8 @@ import 'package:intl/intl.dart';
 
 import '../../../l10n/generated/app_localizations.dart';
 import '../../../router/app_router.dart';
+import '../../account/presentation/account_notices_view.dart';
+import '../../plan/presentation/subscription_banner.dart';
 import '../../qr/domain/qr_link.dart';
 import '../../qr/presentation/qr_mini_view.dart';
 import '../../restaurant/data/restaurant_repository.dart';
@@ -81,23 +83,31 @@ class _Dashboard extends StatelessWidget {
     final padding = columns == 1 ? 16.0 : 24.0;
     return SingleChildScrollView(
       padding: EdgeInsetsDirectional.all(padding),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          for (var c = 0; c < columns; c++) ...[
-            if (c > 0) const SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                children: [
-                  for (var i = c; i < cards.length; i += columns)
-                    Padding(
-                      padding: const EdgeInsetsDirectional.only(bottom: 16),
-                      child: cards[i],
-                    ),
-                ],
-              ),
-            ),
-          ],
+          // Plan reminders, grace and hidden content (M10, FR-100, FR-101).
+          const AnnouncementBanner(),
+          const SubscriptionBanners(),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              for (var c = 0; c < columns; c++) ...[
+                if (c > 0) const SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    children: [
+                      for (var i = c; i < cards.length; i += columns)
+                        Padding(
+                          padding: const EdgeInsetsDirectional.only(bottom: 16),
+                          child: cards[i],
+                        ),
+                    ],
+                  ),
+                ),
+              ],
+            ],
+          ),
         ],
       ),
     );

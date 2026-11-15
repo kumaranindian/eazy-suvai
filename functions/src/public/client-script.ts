@@ -12,11 +12,25 @@
  * - Lightbox: a `<dialog>` with a close button, Escape, backdrop tap and
  *   swipe down (FR-041).
  * - "more" / "less" for descriptions longer than three lines.
- * - The analytics hook `track(type, data)` (M09). It does nothing unless
- *   `<body data-beacon="/e">` is set; M09 sets it and owns the payload.
- *   Events: `view` on load (`src` = `qr` | `direct`), `cat` on a category
- *   tap (`{id}`), `item` on a photo or "more" (`{id}`).
+ * - Analytics ({@link BEACON_SCRIPT}, M09).
  */
+
+/**
+ * The analytics beacon (M09, FR-071, FR-075), under 1 KB (a test checks).
+ * `track(type, data)` posts `{type, slug, src, id?}` with
+ * `navigator.sendBeacon` to `<body data-beacon>` (`/e`); without that
+ * attribute it sends nothing. No cookies and no identifiers leave the
+ * browser: a `view` is sent at most once per 30 minutes per tab session,
+ * remembered as a time stamp in `sessionStorage` (`es_v_{slug}`).
+ * Events: `view` on load (`src` = `qr` | `direct`), `cat` on a category
+ * tap (`{id}`), `item` on a photo or "more" (`{id}`).
+ */
+export const BEACON_SCRIPT = `var ss=null;try{ss=w.sessionStorage}catch(e){}
+function track(t,x){var u=ds.beacon;if(!u||!navigator.sendBeacon)return;
+try{if(t==="view"&&ss){var k="es_v_"+(ds.slug||""),n=Date.now(),l=+ss.getItem(k)||0;
+if(l&&n-l<18e5&&n>=l)return;ss.setItem(k,String(n))}}catch(e){}
+try{var p={type:t,slug:ds.slug||"",src:src};for(var k2 in x)p[k2]=x[k2];
+navigator.sendBeacon(u,new Blob([JSON.stringify(p)],{type:"text/plain"}))}catch(e){}}`;
 
 /** Runs in `<head>` before first paint, so the clamp applies without a jump. */
 export const HEAD_SCRIPT = "document.documentElement.classList.add(\"js\")";
@@ -27,9 +41,7 @@ var d=document,b=d.body,ds=b.dataset,w=window;
 var f=d.getElementById("es-font");if(f){if(f.sheet)f.media="all";else f.addEventListener("load",function(){f.media="all"})}
 var src=/[?&]src=qr(&|$)/.test(location.search)?"qr":"direct";
 if(src==="qr"&&history.replaceState){history.replaceState(null,"",location.pathname+location.hash)}
-function track(t,x){var u=ds.beacon;if(!u||!navigator.sendBeacon)return;
-try{var p={type:t,slug:ds.slug||"",src:src};for(var k in x)p[k]=x[k];
-navigator.sendBeacon(u,new Blob([JSON.stringify(p)],{type:"application/json"}))}catch(e){}}
+${BEACON_SCRIPT}
 w.esTrack=track;
 track("view",{});
 var nav=d.querySelector(".cats"),links=nav?nav.querySelectorAll("a[href^='#']"):[];

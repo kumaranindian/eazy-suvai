@@ -10,7 +10,15 @@ import { setGlobalOptions } from "firebase-functions/v2";
 
 const REGION = "asia-south1";
 
-setGlobalOptions({ region: REGION, maxInstances: 10 });
+// App Check (M13): every callable refuses calls without a valid App Check
+// token when ENFORCE_APP_CHECK=true. It is set per project in
+// functions/.env.<projectId> (true for prod); the emulators and dev leave it
+// off. HTTP functions (renderMenu, collectEvent) are public and unaffected.
+setGlobalOptions({
+  region: REGION,
+  maxInstances: 10,
+  enforceAppCheck: process.env.ENFORCE_APP_CHECK === "true",
+});
 initializeApp();
 
 // Shared helpers live in ./lib and are imported by each module directly.
@@ -31,3 +39,30 @@ export {
 } from "./menu";
 export { discardDraft, previewMenu, publishMenu, rollbackMenu } from "./publishing";
 export { renderMenu } from "./public";
+export { collectEvent } from "./analytics";
+export {
+  adminListUpgradeRequests,
+  changeSubscription,
+  closeUpgradeRequest,
+  recordPaymentAndActivate,
+  requestUpgrade,
+  setHiddenOverLimit,
+  subscriptionDaily,
+} from "./subscriptions";
+export {
+  adminDashboard,
+  adminGetRestaurant,
+  adminListAdmins,
+  adminListCatalog,
+  adminSearchRestaurants,
+  onRestaurantStats,
+  recomputePlatformStats,
+  setAdminRole,
+  setAnnouncement,
+  setRestaurantStatus,
+  updatePlatformConfig,
+  upsertLabel,
+  upsertPlan,
+  upsertTheme,
+} from "./admin";
+export { adminListAuditLogs, exportMenu, purgeDaily, requestAccountDeletion } from "./lifecycle";

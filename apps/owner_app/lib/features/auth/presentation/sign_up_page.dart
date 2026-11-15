@@ -8,6 +8,7 @@ import '../../../router/app_router.dart';
 import '../application/owner_auth_service.dart';
 import '../data/registration_repository.dart';
 import 'auth_widgets.dart';
+import 'legal_links.dart';
 
 /// Owner sign-up (FR-001, FR-002, FR-003).
 ///
@@ -224,6 +225,8 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
               expand: true,
               onPressed: _submit,
             ),
+            // FRD §7.7 / M13: the terms and privacy policy, before signing up.
+            const LegalLinks(),
             formGap,
             if (complete)
               Center(

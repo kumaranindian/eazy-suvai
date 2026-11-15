@@ -76,3 +76,96 @@ export function removeBrandingFrom(planId: string, data: Record<string, unknown>
   if (typeof flag === "boolean") return flag;
   return planId === "pro";
 }
+
+/**
+ * Every plan flag (FR-078; architecture §4.1 `plans/{planId}.limits`).
+ * Copied to `restaurants/{rid}.planFeatures` when the plan changes, so the
+ * security rules (premium themes) and the apps (QR logo, analytics range)
+ * read one field instead of the plan document (FR-077: plan edits reach
+ * subscribers only when applied).
+ */
+export interface PlanFeatures extends PlanLimits {
+  maxBranches: number;
+  /** Premium themes allowed (`themes/{id}.premium`). */
+  premiumThemes: boolean;
+  /** Theme a premium theme reverts to on downgrade (FR-101). */
+  defaultThemeId: string;
+  /** Analytics history in days (FR-074). */
+  analyticsDays: number;
+  /** Logo in the QR code (FR-053). */
+  qrLogo: boolean;
+  /** Hide "Powered by EazySuvai" on the public menu. */
+  removeBranding: boolean;
+}
+
+/** FRD §4.11 MVP plans. Categories "unlimited" is stored as 10000 in the seed. */
+export const DEFAULT_PLAN_FEATURES: Readonly<Record<string, PlanFeatures>> = {
+  free: {
+    ...DEFAULT_PLAN_LIMITS.free,
+    maxBranches: 1,
+    premiumThemes: false,
+    defaultThemeId: "saffron",
+    analyticsDays: 7,
+    qrLogo: false,
+    removeBranding: false,
+  },
+  pro: {
+    ...DEFAULT_PLAN_LIMITS.pro,
+    maxBranches: 1,
+    premiumThemes: true,
+    defaultThemeId: "saffron",
+    analyticsDays: 365,
+    qrLogo: true,
+    removeBranding: true,
+  },
+};
+
+function boolOf(v: unknown, fallback: boolean): boolean {
+  return typeof v === "boolean" ? v : fallback;
+}
+
+function intOf(v: unknown, fallback: number, min: number, max: number): number {
+  return typeof v === "number" && Number.isInteger(v) && v >= min && v <= max ? v : fallback;
+}
+
+/**
+ * All flags of a plan document, with the FRD defaults for anything
+ * missing (unknown plans fall back to Free).
+ */
+export function planFeaturesFrom(planId: string, data: Record<string, unknown> | undefined): PlanFeatures {
+  const fallback = DEFAULT_PLAN_FEATURES[planId] ?? DEFAULT_PLAN_FEATURES.free;
+  const l = (data?.limits ?? {}) as Record<string, unknown>;
+  const theme = typeof l.defaultThemeId === "string" && /^[A-Za-z0-9_-]{1,64}$/.test(l.defaultThemeId)
+    ? l.defaultThemeId
+    : fallback.defaultThemeId;
+  return {
+    ...planLimitsFrom(planId, data),
+    maxBranches: intOf(l.maxBranches, fallback.maxBranches, 1, 1000),
+    premiumThemes: boolOf(l.premiumThemes, fallback.premiumThemes),
+    defaultThemeId: theme,
+    analyticsDays: intOf(l.analyticsDays, fallback.analyticsDays, 1, 3660),
+    qrLogo: boolOf(l.qrLogo, fallback.qrLogo),
+    removeBranding: boolOf(l.removeBranding, fallback.removeBranding),
+  };
+}
+
+/** Reads `plans/{planId}` and returns all its flags. */
+export async function getPlanFeatures(read: DocDataReader, planId: unknown): Promise<PlanFeatures> {
+  const id = typeof planId === "string" && /^[A-Za-z0-9_-]{1,64}$/.test(planId) ? planId : "free";
+  return planFeaturesFrom(id, await read(`plans/${id}`));
+}
+
+/**
+ * The subset copied to `restaurants/{rid}.planFeatures` (read by the rules
+ * and the owner app).
+ */
+export function restaurantPlanFeatures(f: PlanFeatures): Record<string, unknown> {
+  return {
+    maxItems: f.maxItems,
+    maxCategories: f.maxCategories,
+    premiumThemes: f.premiumThemes,
+    analyticsDays: f.analyticsDays,
+    qrLogo: f.qrLogo,
+    removeBranding: f.removeBranding,
+  };
+}

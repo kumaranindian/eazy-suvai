@@ -1,266 +1,562 @@
 {
   "@@locale": "en",
   "actionRetry": "Try again",
-  "@actionRetry": { "description": "Button that repeats a failed action." },
+  "@actionRetry": {
+    "description": "Button that repeats a failed action."
+  },
   "actionCancel": "Cancel",
-  "@actionCancel": { "description": "Dismisses a dialog without doing anything." },
+  "@actionCancel": {
+    "description": "Dismisses a dialog without doing anything."
+  },
   "actionConfirm": "Confirm",
-  "@actionConfirm": { "description": "Default confirm button in a confirm dialog." },
+  "@actionConfirm": {
+    "description": "Default confirm button in a confirm dialog."
+  },
   "stateLoading": "Loading…",
-  "@stateLoading": { "description": "Accessibility label for a loading indicator." },
+  "@stateLoading": {
+    "description": "Accessibility label for a loading indicator."
+  },
   "stateErrorTitle": "Something went wrong",
-  "@stateErrorTitle": { "description": "Title of the generic error state." },
+  "@stateErrorTitle": {
+    "description": "Title of the generic error state."
+  },
   "errorUnauthenticated": "Please sign in to continue.",
-  "@errorUnauthenticated": { "description": "Server error: the user is not signed in." },
+  "@errorUnauthenticated": {
+    "description": "Server error: the user is not signed in."
+  },
   "errorEmailNotVerified": "Please verify your email address first.",
-  "@errorEmailNotVerified": { "description": "Server error: the user's email is not verified." },
+  "@errorEmailNotVerified": {
+    "description": "Server error: the user's email is not verified."
+  },
   "errorPermissionDenied": "You don't have permission to do this.",
-  "@errorPermissionDenied": { "description": "Server error: the user is not allowed to do this." },
+  "@errorPermissionDenied": {
+    "description": "Server error: the user is not allowed to do this."
+  },
   "errorAccountInactive": "This account is not active. Contact support for help.",
-  "@errorAccountInactive": { "description": "Server error: the restaurant is suspended, deactivated or deleted." },
+  "@errorAccountInactive": {
+    "description": "Server error: the restaurant is suspended, deactivated or deleted."
+  },
   "errorInvalidInput": "Some details are not valid. Check them and try again.",
-  "@errorInvalidInput": { "description": "Server error: the request failed validation." },
+  "@errorInvalidInput": {
+    "description": "Server error: the request failed validation."
+  },
   "errorLimitReached": "You've reached your plan's limit.",
-  "@errorLimitReached": { "description": "Server error: a plan limit was reached." },
+  "@errorLimitReached": {
+    "description": "Server error: a plan limit was reached."
+  },
   "errorNotFound": "We couldn't find what you were looking for.",
-  "@errorNotFound": { "description": "Server error: the record does not exist." },
+  "@errorNotFound": {
+    "description": "Server error: the record does not exist."
+  },
   "errorAlreadyExists": "This already exists.",
-  "@errorAlreadyExists": { "description": "Server error: the record already exists, for example a taken slug." },
+  "@errorAlreadyExists": {
+    "description": "Server error: the record already exists, for example a taken slug."
+  },
   "errorNetwork": "You seem to be offline. Check your connection and try again.",
-  "@errorNetwork": { "description": "The device could not reach the server." },
+  "@errorNetwork": {
+    "description": "The device could not reach the server."
+  },
   "errorUnknown": "Something went wrong. Please try again.",
-  "@errorUnknown": { "description": "Fallback for any unexpected error." },
+  "@errorUnknown": {
+    "description": "Fallback for any unexpected error."
+  },
   "errorRegistrationIncomplete": "Your account isn't set up yet. Add your restaurant details to finish.",
-  "@errorRegistrationIncomplete": { "description": "Server error: signed in, but the restaurant was never created." },
+  "@errorRegistrationIncomplete": {
+    "description": "Server error: signed in, but the restaurant was never created."
+  },
   "errorMfaRequired": "Sign in with your authenticator code to continue.",
-  "@errorMfaRequired": { "description": "Server error: an administrator signed in without two-factor authentication." },
+  "@errorMfaRequired": {
+    "description": "Server error: an administrator signed in without two-factor authentication."
+  },
   "errorSlugInvalid": "Use 3 to 60 lowercase letters, numbers and single hyphens, not starting or ending with a hyphen.",
-  "@errorSlugInvalid": { "description": "Server error: the menu link (slug) breaks the FR-092 format." },
+  "@errorSlugInvalid": {
+    "description": "Server error: the menu link (slug) breaks the FR-092 format."
+  },
   "errorSlugReserved": "This link is reserved. Choose another one.",
-  "@errorSlugReserved": { "description": "Server error: the menu link is a reserved word." },
+  "@errorSlugReserved": {
+    "description": "Server error: the menu link is a reserved word."
+  },
   "errorSlugTaken": "Another restaurant already uses this link. Try adding your area or city.",
-  "@errorSlugTaken": { "description": "Server error: the menu link is used by another restaurant." },
-
+  "@errorSlugTaken": {
+    "description": "Server error: the menu link is used by another restaurant."
+  },
   "authErrorInvalidEmail": "Enter a valid email address.",
-  "@authErrorInvalidEmail": { "description": "Auth error: the email address is malformed." },
+  "@authErrorInvalidEmail": {
+    "description": "Auth error: the email address is malformed."
+  },
   "authErrorInvalidCredential": "That email and password don't match. Check them and try again.",
-  "@authErrorInvalidCredential": { "description": "Auth error: wrong email or password. Must not reveal which one." },
+  "@authErrorInvalidCredential": {
+    "description": "Auth error: wrong email or password. Must not reveal which one."
+  },
   "authErrorUserDisabled": "This account has been disabled. Contact support for help.",
-  "@authErrorUserDisabled": { "description": "Auth error: the account is disabled." },
+  "@authErrorUserDisabled": {
+    "description": "Auth error: the account is disabled."
+  },
   "authErrorEmailAlreadyInUse": "An account with this email already exists. Sign in instead, or reset your password.",
-  "@authErrorEmailAlreadyInUse": { "description": "Auth error: registering with an email that already has an account (FR-004)." },
+  "@authErrorEmailAlreadyInUse": {
+    "description": "Auth error: registering with an email that already has an account (FR-004)."
+  },
   "authErrorWeakPassword": "Choose a stronger password with at least 8 characters.",
-  "@authErrorWeakPassword": { "description": "Auth error: the password does not meet the policy." },
+  "@authErrorWeakPassword": {
+    "description": "Auth error: the password does not meet the policy."
+  },
   "authErrorTooManyRequests": "Too many attempts. Wait a few minutes and try again.",
-  "@authErrorTooManyRequests": { "description": "Auth error: rate limited after repeated attempts." },
+  "@authErrorTooManyRequests": {
+    "description": "Auth error: rate limited after repeated attempts."
+  },
   "authErrorRequiresRecentLogin": "For your security, sign in again and retry.",
-  "@authErrorRequiresRecentLogin": { "description": "Auth error: the action needs a recent sign-in." },
+  "@authErrorRequiresRecentLogin": {
+    "description": "Auth error: the action needs a recent sign-in."
+  },
   "authErrorExpiredActionCode": "This link has expired. Request a new one.",
-  "@authErrorExpiredActionCode": { "description": "Auth error: a verification or reset link expired." },
+  "@authErrorExpiredActionCode": {
+    "description": "Auth error: a verification or reset link expired."
+  },
   "authErrorInvalidActionCode": "This link is not valid or was already used. Request a new one.",
-  "@authErrorInvalidActionCode": { "description": "Auth error: a verification or reset link is invalid or used." },
+  "@authErrorInvalidActionCode": {
+    "description": "Auth error: a verification or reset link is invalid or used."
+  },
   "authErrorInvalidMfaCode": "That code is not correct. Enter the current 6-digit code from your authenticator app.",
-  "@authErrorInvalidMfaCode": { "description": "Auth error: wrong TOTP code." },
+  "@authErrorInvalidMfaCode": {
+    "description": "Auth error: wrong TOTP code."
+  },
   "authErrorMfaSessionExpired": "This sign-in took too long. Start again.",
-  "@authErrorMfaSessionExpired": { "description": "Auth error: the multi-factor sign-in session expired." },
+  "@authErrorMfaSessionExpired": {
+    "description": "Auth error: the multi-factor sign-in session expired."
+  },
   "authErrorUnverifiedEmail": "Verify your email address before setting up two-factor authentication.",
-  "@authErrorUnverifiedEmail": { "description": "Auth error: MFA enrolment needs a verified email." },
+  "@authErrorUnverifiedEmail": {
+    "description": "Auth error: MFA enrolment needs a verified email."
+  },
   "authErrorNotAdmin": "This account is not a platform administrator.",
-  "@authErrorNotAdmin": { "description": "Auth error: a non-admin tried to sign in to the admin app." },
+  "@authErrorNotAdmin": {
+    "description": "Auth error: a non-admin tried to sign in to the admin app."
+  },
   "authErrorAdminAccount": "This is an administrator account. Use the admin app to sign in.",
-  "@authErrorAdminAccount": { "description": "Auth error: an admin tried to sign in to the owner app." },
+  "@authErrorAdminAccount": {
+    "description": "Auth error: an admin tried to sign in to the owner app."
+  },
   "authErrorOperationNotAllowed": "This sign-in method is not available. Contact support.",
-  "@authErrorOperationNotAllowed": { "description": "Auth error: the sign-in method is disabled on the project." },
-
+  "@authErrorOperationNotAllowed": {
+    "description": "Auth error: the sign-in method is disabled on the project."
+  },
   "validationRequired": "This field is required.",
-  "@validationRequired": { "description": "Form validation: empty required field." },
+  "@validationRequired": {
+    "description": "Form validation: empty required field."
+  },
   "validationTooLong": "Use at most {max} characters.",
-  "@validationTooLong": { "description": "Form validation: text too long.", "placeholders": { "max": { "type": "int" } } },
+  "@validationTooLong": {
+    "description": "Form validation: text too long.",
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
   "validationEmail": "Enter a valid email address, like name@example.com.",
-  "@validationEmail": { "description": "Form validation: malformed email (FR-003)." },
+  "@validationEmail": {
+    "description": "Form validation: malformed email (FR-003)."
+  },
   "validationPasswordLength": "Use at least {min} characters.",
-  "@validationPasswordLength": { "description": "Form validation: password too short.", "placeholders": { "min": { "type": "int" } } },
+  "@validationPasswordLength": {
+    "description": "Form validation: password too short.",
+    "placeholders": {
+      "min": {
+        "type": "int"
+      }
+    }
+  },
   "validationMobile": "Enter a valid mobile number for the selected country.",
-  "@validationMobile": { "description": "Form validation: mobile number not valid for the chosen country (FR-003)." },
-
+  "@validationMobile": {
+    "description": "Form validation: mobile number not valid for the chosen country (FR-003)."
+  },
   "countryIN": "India",
-  "@countryIN": { "description": "Country name." },
+  "@countryIN": {
+    "description": "Country name."
+  },
   "countryAE": "United Arab Emirates",
-  "@countryAE": { "description": "Country name." },
+  "@countryAE": {
+    "description": "Country name."
+  },
   "countryKW": "Kuwait",
-  "@countryKW": { "description": "Country name." },
+  "@countryKW": {
+    "description": "Country name."
+  },
   "countrySA": "Saudi Arabia",
-  "@countrySA": { "description": "Country name." },
+  "@countrySA": {
+    "description": "Country name."
+  },
   "countryQA": "Qatar",
-  "@countryQA": { "description": "Country name." },
+  "@countryQA": {
+    "description": "Country name."
+  },
   "countryBH": "Bahrain",
-  "@countryBH": { "description": "Country name." },
+  "@countryBH": {
+    "description": "Country name."
+  },
   "countryOM": "Oman",
-  "@countryOM": { "description": "Country name." },
+  "@countryOM": {
+    "description": "Country name."
+  },
   "countryUS": "United States",
-  "@countryUS": { "description": "Country name." },
-
+  "@countryUS": {
+    "description": "Country name."
+  },
   "businessTypeRestaurant": "Restaurant",
-  "@businessTypeRestaurant": { "description": "Business type option." },
+  "@businessTypeRestaurant": {
+    "description": "Business type option."
+  },
   "businessTypeCafe": "Café",
-  "@businessTypeCafe": { "description": "Business type option." },
+  "@businessTypeCafe": {
+    "description": "Business type option."
+  },
   "businessTypeBakery": "Bakery",
-  "@businessTypeBakery": { "description": "Business type option." },
+  "@businessTypeBakery": {
+    "description": "Business type option."
+  },
   "businessTypeCloudKitchen": "Cloud kitchen",
-  "@businessTypeCloudKitchen": { "description": "Business type option: delivery-only kitchen." },
+  "@businessTypeCloudKitchen": {
+    "description": "Business type option: delivery-only kitchen."
+  },
   "businessTypeSweetShop": "Sweet shop",
-  "@businessTypeSweetShop": { "description": "Business type option." },
+  "@businessTypeSweetShop": {
+    "description": "Business type option."
+  },
   "businessTypeJuiceBar": "Juice bar",
-  "@businessTypeJuiceBar": { "description": "Business type option." },
+  "@businessTypeJuiceBar": {
+    "description": "Business type option."
+  },
   "businessTypeFoodTruck": "Food truck",
-  "@businessTypeFoodTruck": { "description": "Business type option." },
+  "@businessTypeFoodTruck": {
+    "description": "Business type option."
+  },
   "businessTypeBar": "Bar or pub",
-  "@businessTypeBar": { "description": "Business type option." },
+  "@businessTypeBar": {
+    "description": "Business type option."
+  },
   "businessTypeHotel": "Hotel",
-  "@businessTypeHotel": { "description": "Business type option." },
+  "@businessTypeHotel": {
+    "description": "Business type option."
+  },
   "businessTypeOther": "Other",
-  "@businessTypeOther": { "description": "Business type option." },
-
+  "@businessTypeOther": {
+    "description": "Business type option."
+  },
   "actionShowPassword": "Show password",
-  "@actionShowPassword": { "description": "Accessibility label of the button that reveals the password." },
+  "@actionShowPassword": {
+    "description": "Accessibility label of the button that reveals the password."
+  },
   "actionHidePassword": "Hide password",
-  "@actionHidePassword": { "description": "Accessibility label of the button that hides the password." },
-
+  "@actionHidePassword": {
+    "description": "Accessibility label of the button that hides the password."
+  },
   "imageAdd": "Add image",
-  "@imageAdd": { "description": "Button that opens the photo library or file dialog to add an image." },
+  "@imageAdd": {
+    "description": "Button that opens the photo library or file dialog to add an image."
+  },
   "imageReplace": "Replace",
-  "@imageReplace": { "description": "Button that picks a new image in place of the current one." },
+  "@imageReplace": {
+    "description": "Button that picks a new image in place of the current one."
+  },
   "imageRemove": "Remove",
-  "@imageRemove": { "description": "Button that removes the current image." },
+  "@imageRemove": {
+    "description": "Button that removes the current image."
+  },
   "imageRemoveTitle": "Remove this image?",
-  "@imageRemoveTitle": { "description": "Title of the dialog that confirms removing an image." },
+  "@imageRemoveTitle": {
+    "description": "Title of the dialog that confirms removing an image."
+  },
   "imageRemoveMessage": "You can add a new image at any time.",
-  "@imageRemoveMessage": { "description": "Body of the dialog that confirms removing an image." },
+  "@imageRemoveMessage": {
+    "description": "Body of the dialog that confirms removing an image."
+  },
   "imageHint": "JPEG, PNG or WebP, up to 5 MB, at least {width} × {height} px.",
   "@imageHint": {
     "description": "Help text under an image field (FR-102).",
-    "placeholders": { "width": { "type": "int" }, "height": { "type": "int" } }
+    "placeholders": {
+      "width": {
+        "type": "int"
+      },
+      "height": {
+        "type": "int"
+      }
+    }
   },
   "imagePreparing": "Preparing image…",
-  "@imagePreparing": { "description": "Shown while a picked image is checked, cropped or compressed on the device." },
+  "@imagePreparing": {
+    "description": "Shown while a picked image is checked, cropped or compressed on the device."
+  },
   "imageUploading": "Uploading… {percent}%",
   "@imageUploading": {
     "description": "Upload progress.",
-    "placeholders": { "percent": { "type": "int" } }
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
   },
   "imageCancelUpload": "Cancel upload",
-  "@imageCancelUpload": { "description": "Button that stops a running upload." },
+  "@imageCancelUpload": {
+    "description": "Button that stops a running upload."
+  },
   "imageProcessing": "Processing image…",
-  "@imageProcessing": { "description": "Shown after the upload while the server checks the image and makes web versions." },
+  "@imageProcessing": {
+    "description": "Shown after the upload while the server checks the image and makes web versions."
+  },
   "imageProcessingSlow": "This is taking longer than usual. The image will appear when it's ready.",
-  "@imageProcessingSlow": { "description": "Shown when server processing takes more than a minute." },
+  "@imageProcessingSlow": {
+    "description": "Shown when server processing takes more than a minute."
+  },
   "imageNone": "No image",
-  "@imageNone": { "description": "Accessibility label of an empty image placeholder." },
+  "@imageNone": {
+    "description": "Accessibility label of an empty image placeholder."
+  },
   "imageRejected": "Image not accepted",
-  "@imageRejected": { "description": "Accessibility label of the placeholder shown for a rejected image." },
+  "@imageRejected": {
+    "description": "Accessibility label of the placeholder shown for a rejected image."
+  },
   "imageCropTitle": "Crop image",
-  "@imageCropTitle": { "description": "Title of the crop dialog." },
+  "@imageCropTitle": {
+    "description": "Title of the crop dialog."
+  },
   "imageCropHint": "Drag to move. Pinch, scroll or use the slider to zoom.",
-  "@imageCropHint": { "description": "Instructions in the crop dialog." },
+  "@imageCropHint": {
+    "description": "Instructions in the crop dialog."
+  },
   "imageCropZoom": "Zoom",
-  "@imageCropZoom": { "description": "Label of the zoom slider in the crop dialog." },
+  "@imageCropZoom": {
+    "description": "Label of the zoom slider in the crop dialog."
+  },
   "imageCropDone": "Use image",
-  "@imageCropDone": { "description": "Confirms the crop and starts the upload." },
+  "@imageCropDone": {
+    "description": "Confirms the crop and starts the upload."
+  },
   "imageCropArea": "Crop area. Drag to move the image.",
-  "@imageCropArea": { "description": "Accessibility label of the crop area." },
-
+  "@imageCropArea": {
+    "description": "Accessibility label of the crop area."
+  },
   "imageErrorUnsupportedType": "This file type isn't supported. Choose a JPEG, PNG or WebP image.",
-  "@imageErrorUnsupportedType": { "description": "Image rejected: not JPEG, PNG or WebP by content (FR-102, AC-005)." },
+  "@imageErrorUnsupportedType": {
+    "description": "Image rejected: not JPEG, PNG or WebP by content (FR-102, AC-005)."
+  },
   "imageErrorTooLarge": "This file is larger than 5 MB. Choose a smaller image.",
-  "@imageErrorTooLarge": { "description": "Image rejected: over 5 MB or too many pixels (FR-102, AC-005)." },
+  "@imageErrorTooLarge": {
+    "description": "Image rejected: over 5 MB or too many pixels (FR-102, AC-005)."
+  },
   "imageErrorTooSmall": "This image is too small. Use one at least {width} × {height} px.",
   "@imageErrorTooSmall": {
     "description": "Image rejected: below the minimum dimensions for its purpose (FR-102).",
-    "placeholders": { "width": { "type": "int" }, "height": { "type": "int" } }
+    "placeholders": {
+      "width": {
+        "type": "int"
+      },
+      "height": {
+        "type": "int"
+      }
+    }
   },
   "imageErrorInvalid": "This image couldn't be read. It may be damaged. Try another file.",
-  "@imageErrorInvalid": { "description": "Image rejected: it has an image signature but cannot be decoded." },
+  "@imageErrorInvalid": {
+    "description": "Image rejected: it has an image signature but cannot be decoded."
+  },
   "imageErrorProcessingFailed": "We couldn't process this image. Please try again.",
-  "@imageErrorProcessingFailed": { "description": "Image rejected: unexpected server failure." },
+  "@imageErrorProcessingFailed": {
+    "description": "Image rejected: unexpected server failure."
+  },
   "imageErrorUploadFailed": "The upload didn't finish. Check your connection and try again.",
-  "@imageErrorUploadFailed": { "description": "The image upload failed on the device." },
+  "@imageErrorUploadFailed": {
+    "description": "The image upload failed on the device."
+  },
   "imageErrorPickFailed": "We couldn't open your photos. Check that the app is allowed to access them.",
-  "@imageErrorPickFailed": { "description": "The photo library or file dialog could not be opened." },
-
+  "@imageErrorPickFailed": {
+    "description": "The photo library or file dialog could not be opened."
+  },
   "validationPhone": "Enter a valid phone number for your restaurant's country.",
-  "@validationPhone": { "description": "Contact number is not valid for the restaurant's country (FR-011)." },
+  "@validationPhone": {
+    "description": "Contact number is not valid for the restaurant's country (FR-011)."
+  },
   "validationHttps": "Use a secure address that starts with https://.",
-  "@validationHttps": { "description": "Website entered with http:// (FR-011 needs https)." },
+  "@validationHttps": {
+    "description": "Website entered with http:// (FR-011 needs https)."
+  },
   "validationUrl": "Enter a valid web address, like https://example.com.",
-  "@validationUrl": { "description": "Website or link is not a valid address." },
+  "@validationUrl": {
+    "description": "Website or link is not a valid address."
+  },
   "validationSocialLink": "Enter a link to your {network} page.",
-  "@validationSocialLink": { "description": "Social link not recognised for the network.", "placeholders": {"network":{"type":"String"}} },
+  "@validationSocialLink": {
+    "description": "Social link not recognised for the network.",
+    "placeholders": {
+      "network": {
+        "type": "String"
+      }
+    }
+  },
   "validationPostalCode": "Enter a valid {label}.",
-  "@validationPostalCode": { "description": "Postal code is not valid for the country.", "placeholders": {"label":{"type":"String"}} },
+  "@validationPostalCode": {
+    "description": "Postal code is not valid for the country.",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
   "addressPostalCode": "Postal code",
-  "@addressPostalCode": { "description": "Address field label." },
+  "@addressPostalCode": {
+    "description": "Address field label."
+  },
   "addressPinCode": "PIN code",
-  "@addressPinCode": { "description": "Postal code label in India." },
+  "@addressPinCode": {
+    "description": "Postal code label in India."
+  },
   "addressZipCode": "ZIP code",
-  "@addressZipCode": { "description": "Postal code label in the United States." },
+  "@addressZipCode": {
+    "description": "Postal code label in the United States."
+  },
   "weekdayMon": "Monday",
-  "@weekdayMon": { "description": "Day name." },
+  "@weekdayMon": {
+    "description": "Day name."
+  },
   "weekdayTue": "Tuesday",
-  "@weekdayTue": { "description": "Day name." },
+  "@weekdayTue": {
+    "description": "Day name."
+  },
   "weekdayWed": "Wednesday",
-  "@weekdayWed": { "description": "Day name." },
+  "@weekdayWed": {
+    "description": "Day name."
+  },
   "weekdayThu": "Thursday",
-  "@weekdayThu": { "description": "Day name." },
+  "@weekdayThu": {
+    "description": "Day name."
+  },
   "weekdayFri": "Friday",
-  "@weekdayFri": { "description": "Day name." },
+  "@weekdayFri": {
+    "description": "Day name."
+  },
   "weekdaySat": "Saturday",
-  "@weekdaySat": { "description": "Day name." },
+  "@weekdaySat": {
+    "description": "Day name."
+  },
   "weekdaySun": "Sunday",
-  "@weekdaySun": { "description": "Day name." },
+  "@weekdaySun": {
+    "description": "Day name."
+  },
   "hoursErrorSameTime": "Opening and closing times must be different.",
-  "@hoursErrorSameTime": { "description": "Opening hours: a slot opens and closes at the same time." },
+  "@hoursErrorSameTime": {
+    "description": "Opening hours: a slot opens and closes at the same time."
+  },
   "hoursErrorOverlap": "Time slots overlap. List them in order through the day.",
-  "@hoursErrorOverlap": { "description": "Opening hours: slots overlap or are out of order." },
+  "@hoursErrorOverlap": {
+    "description": "Opening hours: slots overlap or are out of order."
+  },
   "hoursErrorOvernightNotLast": "Only the last time slot of a day can run past midnight.",
-  "@hoursErrorOvernightNotLast": { "description": "Opening hours: an overnight slot is not the last one." },
+  "@hoursErrorOvernightNotLast": {
+    "description": "Opening hours: an overnight slot is not the last one."
+  },
   "hoursErrorTooMany": "Use at most {max} time slots a day.",
-  "@hoursErrorTooMany": { "description": "Opening hours: too many slots.", "placeholders": {"max":{"type":"int"}} },
+  "@hoursErrorTooMany": {
+    "description": "Opening hours: too many slots.",
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
   "socialInstagram": "Instagram",
-  "@socialInstagram": { "description": "Social network name." },
+  "@socialInstagram": {
+    "description": "Social network name."
+  },
   "socialFacebook": "Facebook",
-  "@socialFacebook": { "description": "Social network name." },
+  "@socialFacebook": {
+    "description": "Social network name."
+  },
   "socialX": "X",
-  "@socialX": { "description": "Social network name (formerly Twitter)." },
+  "@socialX": {
+    "description": "Social network name (formerly Twitter)."
+  },
   "socialYoutube": "YouTube",
-  "@socialYoutube": { "description": "Social network name." },
+  "@socialYoutube": {
+    "description": "Social network name."
+  },
   "socialGoogleMaps": "Google Maps",
-  "@socialGoogleMaps": { "description": "Map service name." },
+  "@socialGoogleMaps": {
+    "description": "Map service name."
+  },
   "currencyINR": "Indian rupee",
-  "@currencyINR": { "description": "Currency name." },
+  "@currencyINR": {
+    "description": "Currency name."
+  },
   "currencyAED": "UAE dirham",
-  "@currencyAED": { "description": "Currency name." },
+  "@currencyAED": {
+    "description": "Currency name."
+  },
   "currencyKWD": "Kuwaiti dinar",
-  "@currencyKWD": { "description": "Currency name." },
+  "@currencyKWD": {
+    "description": "Currency name."
+  },
   "currencySAR": "Saudi riyal",
-  "@currencySAR": { "description": "Currency name." },
+  "@currencySAR": {
+    "description": "Currency name."
+  },
   "currencyQAR": "Qatari riyal",
-  "@currencyQAR": { "description": "Currency name." },
+  "@currencyQAR": {
+    "description": "Currency name."
+  },
   "currencyBHD": "Bahraini dinar",
-  "@currencyBHD": { "description": "Currency name." },
+  "@currencyBHD": {
+    "description": "Currency name."
+  },
   "currencyOMR": "Omani rial",
-  "@currencyOMR": { "description": "Currency name." },
+  "@currencyOMR": {
+    "description": "Currency name."
+  },
   "currencyUSD": "US dollar",
-  "@currencyUSD": { "description": "Currency name." },
+  "@currencyUSD": {
+    "description": "Currency name."
+  },
   "errorCategoryDeleted": "That category has been deleted. Choose another category.",
-  "@errorCategoryDeleted": {"description":"Error: the item's category is deleted (M04)."},
+  "@errorCategoryDeleted": {
+    "description": "Error: the item's category is deleted (M04)."
+  },
   "errorPublishBlocked": "Your menu can't be published yet. Fix the problems listed and try again.",
-  "@errorPublishBlocked": {"description":"Error: publishing is blocked by validation problems (M06)."},
+  "@errorPublishBlocked": {
+    "description": "Error: publishing is blocked by validation problems (M06)."
+  },
   "priceRequired": "Enter a price.",
-  "@priceRequired": {"description":"Price field: empty."},
+  "@priceRequired": {
+    "description": "Price field: empty."
+  },
   "priceInvalid": "Enter a price like {example}.",
-  "@priceInvalid": {"description":"Price field: not a valid amount.","placeholders":{"example":{"type":"String"}}},
+  "@priceInvalid": {
+    "description": "Price field: not a valid amount.",
+    "placeholders": {
+      "example": {
+        "type": "String"
+      }
+    }
+  },
   "priceTooHigh": "That price is too high.",
-  "@priceTooHigh": {"description":"Price field: above the maximum."},
+  "@priceTooHigh": {
+    "description": "Price field: above the maximum."
+  },
   "priceDecimalsHelp": "{code} prices have {decimals, plural, =0{no decimal places} =1{1 decimal place} other{{decimals} decimal places}}.",
-  "@priceDecimalsHelp": {"description":"Price field helper: how many decimals the currency uses (FR-029).","placeholders":{"code":{"type":"String"},"decimals":{"type":"int"}}}
+  "@priceDecimalsHelp": {
+    "description": "Price field helper: how many decimals the currency uses (FR-029).",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      },
+      "decimals": {
+        "type": "int"
+      }
+    }
+  },
+  "errorRequestPending": "You already have an upgrade request open. We will contact you soon.",
+  "@errorRequestPending": {
+    "description": "Error request-pending (M10)."
+  },
+  "errorAlreadyOnPlan": "Your restaurant is already on this plan.",
+  "@errorAlreadyOnPlan": {
+    "description": "Error already-on-plan (M10)."
+  }
 }

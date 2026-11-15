@@ -1512,10 +1512,6 @@
   "@planTitle": {
     "description": "Plans screen title."
   },
-  "planComingSoon": "Upgrading from the app is coming soon. Contact EazySuvai support to change your plan.",
-  "@planComingSoon": {
-    "description": "Plans placeholder until M10."
-  },
   "themeTitle": "Theme",
   "@themeTitle": {
     "description": "Theme gallery title and Settings entry."
@@ -2472,5 +2468,690 @@
   "qrClose": "Close",
   "@qrClose": {
     "description": "PDF preview: close button."
+  },
+  "navAnalytics": "Analytics",
+  "@navAnalytics": {
+    "description": "Navigation: analytics section (M09)."
+  },
+  "analyticsRange7": "7 days",
+  "@analyticsRange7": {
+    "description": "Analytics: range chip."
+  },
+  "analyticsRange30": "30 days",
+  "@analyticsRange30": {
+    "description": "Analytics: range chip."
+  },
+  "analyticsRangeCustom": "Custom",
+  "@analyticsRangeCustom": {
+    "description": "Analytics: range chip that opens a date picker."
+  },
+  "analyticsRangeLabel": "{start} – {end}",
+  "@analyticsRangeLabel": {
+    "description": "Analytics: the dates shown.",
+    "placeholders": {
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
+    }
+  },
+  "analyticsViews": "Menu views",
+  "@analyticsViews": {
+    "description": "Analytics tile (FR-071)."
+  },
+  "analyticsQrVisits": "QR visits",
+  "@analyticsQrVisits": {
+    "description": "Analytics tile (FR-071)."
+  },
+  "analyticsQrShare": "From the QR code",
+  "@analyticsQrShare": {
+    "description": "Analytics tile: share of views from the QR code."
+  },
+  "analyticsItemOpens": "Item interest",
+  "@analyticsItemOpens": {
+    "description": "Analytics tile: photo or description opens (FR-071)."
+  },
+  "analyticsChartTitle": "Daily views",
+  "@analyticsChartTitle": {
+    "description": "Analytics: chart heading."
+  },
+  "analyticsChartSemantics": "Chart of daily views: {views} views and {qr} QR visits from {start} to {end}.",
+  "@analyticsChartSemantics": {
+    "description": "Analytics: screen-reader summary of the chart.",
+    "placeholders": {
+      "views": {
+        "type": "int"
+      },
+      "qr": {
+        "type": "int"
+      },
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
+    }
+  },
+  "analyticsTopCategories": "Top categories",
+  "@analyticsTopCategories": {
+    "description": "Analytics: list heading."
+  },
+  "analyticsTopItems": "Top items",
+  "@analyticsTopItems": {
+    "description": "Analytics: list heading."
+  },
+  "analyticsTopEmpty": "Nothing yet in this period.",
+  "@analyticsTopEmpty": {
+    "description": "Analytics: empty top list."
+  },
+  "analyticsTaps": "{count, plural, =1{1 tap} other{{count} taps}}",
+  "@analyticsTaps": {
+    "description": "Analytics: category count.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "analyticsOpens": "{count, plural, =1{1 open} other{{count} opens}}",
+  "@analyticsOpens": {
+    "description": "Analytics: item count.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "analyticsRemoved": "Removed from the menu",
+  "@analyticsRemoved": {
+    "description": "Analytics: a category or item that no longer exists."
+  },
+  "analyticsMonthly": "Monthly totals",
+  "@analyticsMonthly": {
+    "description": "Analytics: card heading."
+  },
+  "analyticsMonthRow": "{views} views · {qr} QR visits",
+  "@analyticsMonthRow": {
+    "description": "Analytics: one month.",
+    "placeholders": {
+      "views": {
+        "type": "int"
+      },
+      "qr": {
+        "type": "int"
+      }
+    }
+  },
+  "analyticsEmptyTitle": "No visits in this period",
+  "@analyticsEmptyTitle": {
+    "description": "Analytics: empty state title."
+  },
+  "analyticsEmptyMessage": "Share your QR code or menu link and visits will show here.",
+  "@analyticsEmptyMessage": {
+    "description": "Analytics: empty state message."
+  },
+  "analyticsEmptyAction": "QR & share",
+  "@analyticsEmptyAction": {
+    "description": "Analytics: empty state button."
+  },
+  "analyticsNotPublished": "Publish your menu to start counting visits.",
+  "@analyticsNotPublished": {
+    "description": "Analytics: shown before the first publish."
+  },
+  "analyticsUpgradeTitle": "See more history on Pro",
+  "@analyticsUpgradeTitle": {
+    "description": "Analytics: upgrade prompt (FR-074)."
+  },
+  "analyticsUpgradeMessage": "Your plan shows the last {days} days. Upgrade to see up to a year.",
+  "@analyticsUpgradeMessage": {
+    "description": "Analytics: upgrade prompt.",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "analyticsUpgradeAction": "See plans",
+  "@analyticsUpgradeAction": {
+    "description": "Analytics: upgrade button."
+  },
+  "analyticsPrivacyNote": "Counted without cookies or personal data. A visitor's views count once every 30 minutes, and bots are left out.",
+  "@analyticsPrivacyNote": {
+    "description": "Analytics: how counting works (FR-071, FR-075)."
+  },
+  "analyticsLocked": "{label} (Pro)",
+  "@analyticsLocked": {
+    "description": "Analytics: a locked range chip.",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "planCurrent": "Your plan",
+  "@planCurrent": {
+    "description": "Plan page: current plan card heading."
+  },
+  "planFreeForever": "{plan} · never expires",
+  "@planFreeForever": {
+    "description": "Plan page: Free plan status.",
+    "placeholders": {
+      "plan": {
+        "type": "String"
+      }
+    }
+  },
+  "planActiveUntil": "{plan} · paid until {date}",
+  "@planActiveUntil": {
+    "description": "Plan page: active paid plan.",
+    "placeholders": {
+      "plan": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "planGraceUntil": "{plan} expired on {expired}. Everything keeps working until {date}.",
+  "@planGraceUntil": {
+    "description": "Plan page: grace period (FR-100).",
+    "placeholders": {
+      "plan": {
+        "type": "String"
+      },
+      "expired": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "planUsage": "Usage",
+  "@planUsage": {
+    "description": "Plan page: usage heading."
+  },
+  "planUsageItems": "Items: {count} of {max}",
+  "@planUsageItems": {
+    "description": "Plan page: item usage.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "planUsageCategories": "Categories: {count} of {max}",
+  "@planUsageCategories": {
+    "description": "Plan page: category usage.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "planUnlimited": "unlimited",
+  "@planUnlimited": {
+    "description": "Plan page: no limit."
+  },
+  "planCompare": "Plans",
+  "@planCompare": {
+    "description": "Plan page: comparison heading."
+  },
+  "planCurrentBadge": "Current plan",
+  "@planCurrentBadge": {
+    "description": "Plan page: badge on the current plan."
+  },
+  "planFeatureItems": "Up to {count} items",
+  "@planFeatureItems": {
+    "description": "Plan comparison row.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "planFeatureCategories": "Up to {count} categories",
+  "@planFeatureCategories": {
+    "description": "Plan comparison row.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "planFeatureCategoriesUnlimited": "Unlimited categories",
+  "@planFeatureCategoriesUnlimited": {
+    "description": "Plan comparison row."
+  },
+  "planFeatureThemesAll": "All themes, including premium",
+  "@planFeatureThemesAll": {
+    "description": "Plan comparison row."
+  },
+  "planFeatureThemesBasic": "2 standard themes",
+  "@planFeatureThemesBasic": {
+    "description": "Plan comparison row."
+  },
+  "planFeatureAnalytics": "{days} days of analytics history",
+  "@planFeatureAnalytics": {
+    "description": "Plan comparison row.",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "planFeatureQrLogo": "Your logo in the QR code",
+  "@planFeatureQrLogo": {
+    "description": "Plan comparison row."
+  },
+  "planFeatureNoQrLogo": "Plain QR code",
+  "@planFeatureNoQrLogo": {
+    "description": "Plan comparison row."
+  },
+  "planFeatureNoBranding": "No \"Powered by EazySuvai\" footer",
+  "@planFeatureNoBranding": {
+    "description": "Plan comparison row."
+  },
+  "planFeatureBranding": "\"Powered by EazySuvai\" footer",
+  "@planFeatureBranding": {
+    "description": "Plan comparison row."
+  },
+  "planRequest": "Request {plan}",
+  "@planRequest": {
+    "description": "Plan page: request button (FR-106).",
+    "placeholders": {
+      "plan": {
+        "type": "String"
+      }
+    }
+  },
+  "planRequestTitle": "Request {plan}",
+  "@planRequestTitle": {
+    "description": "Request dialog title.",
+    "placeholders": {
+      "plan": {
+        "type": "String"
+      }
+    }
+  },
+  "planRequestBody": "We'll contact you with payment details. Once we receive the payment, {plan} starts at once. There is no online payment yet.",
+  "@planRequestBody": {
+    "description": "Request dialog body (§5.5).",
+    "placeholders": {
+      "plan": {
+        "type": "String"
+      }
+    }
+  },
+  "planBillingMonthly": "Monthly",
+  "@planBillingMonthly": {
+    "description": "Billing choice."
+  },
+  "planBillingAnnual": "Annual",
+  "@planBillingAnnual": {
+    "description": "Billing choice."
+  },
+  "planRequestSend": "Send request",
+  "@planRequestSend": {
+    "description": "Request dialog button."
+  },
+  "planRequestSent": "Request sent. We'll contact you soon.",
+  "@planRequestSent": {
+    "description": "Snackbar and status after a request."
+  },
+  "planRequestPending": "Upgrade requested – we'll contact you with payment details.",
+  "@planRequestPending": {
+    "description": "Plan page: open request."
+  },
+  "planPrice": "{price} / {period}",
+  "@planPrice": {
+    "description": "Plan price.",
+    "placeholders": {
+      "price": {
+        "type": "String"
+      },
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "planPriceOnRequest": "Price on request",
+  "@planPriceOnRequest": {
+    "description": "Plan without a price set."
+  },
+  "planSwitchToFree": "Switch to Free",
+  "@planSwitchToFree": {
+    "description": "Plan page: owner downgrade (FR-101)."
+  },
+  "planManageHidden": "Choose hidden items",
+  "@planManageHidden": {
+    "description": "Plan page: link to the over-limit manager."
+  },
+  "bannerGrace": "Your {plan} plan has expired. Renew before {date} to keep your Pro features.",
+  "@bannerGrace": {
+    "description": "Dashboard banner (FR-100).",
+    "placeholders": {
+      "plan": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "bannerExpiring": "{plan} ends in {days, plural, =1{1 day} other{{days} days}} ({date}).",
+  "@bannerExpiring": {
+    "description": "Dashboard reminder (FR-100).",
+    "placeholders": {
+      "plan": {
+        "type": "String"
+      },
+      "days": {
+        "type": "int"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "bannerOverLimit": "Your menu is over the plan limit: {count} hidden. They are kept, not deleted.",
+  "@bannerOverLimit": {
+    "description": "Dashboard banner (FR-101).",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "bannerRestored": "Hidden content is back in your draft. Publish to show it.",
+  "@bannerRestored": {
+    "description": "Dashboard banner after an upgrade (FR-101)."
+  },
+  "bannerRenew": "Renew",
+  "@bannerRenew": {
+    "description": "Banner button."
+  },
+  "bannerManage": "Manage",
+  "@bannerManage": {
+    "description": "Banner button."
+  },
+  "bannerPublish": "Publish",
+  "@bannerPublish": {
+    "description": "Banner button."
+  },
+  "hiddenTitle": "Hidden items",
+  "@hiddenTitle": {
+    "description": "Over-limit manager title (FR-101)."
+  },
+  "hiddenDowngradeTitle": "Switch to Free",
+  "@hiddenDowngradeTitle": {
+    "description": "Over-limit manager in downgrade mode."
+  },
+  "hiddenIntro": "Your plan shows up to {max} items. Choose which ones customers see; the others are kept, not deleted.",
+  "@hiddenIntro": {
+    "description": "Over-limit manager intro.",
+    "placeholders": {
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "hiddenDowngradeIntro": "Free shows up to {max} items and {cats} categories. Choose what stays visible. The rest is hidden, not deleted, and comes back if you upgrade again.",
+  "@hiddenDowngradeIntro": {
+    "description": "Over-limit manager intro (downgrade).",
+    "placeholders": {
+      "max": {
+        "type": "int"
+      },
+      "cats": {
+        "type": "int"
+      }
+    }
+  },
+  "hiddenVisible": "Visible ({count} of {max})",
+  "@hiddenVisible": {
+    "description": "Over-limit manager list heading.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "hiddenHidden": "Hidden ({count})",
+  "@hiddenHidden": {
+    "description": "Over-limit manager list heading.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "hiddenCategories": "Categories",
+  "@hiddenCategories": {
+    "description": "Over-limit manager section."
+  },
+  "hiddenItems": "Items",
+  "@hiddenItems": {
+    "description": "Over-limit manager section."
+  },
+  "hiddenShow": "Show {name}",
+  "@hiddenShow": {
+    "description": "Button: make visible.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "hiddenHide": "Hide {name}",
+  "@hiddenHide": {
+    "description": "Button: hide.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "hiddenOver": "{count} too many visible. Hide some to save.",
+  "@hiddenOver": {
+    "description": "Over-limit manager: over the limit.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "hiddenSave": "Save",
+  "@hiddenSave": {
+    "description": "Over-limit manager save."
+  },
+  "hiddenSaved": "Saved. Publish to update your menu.",
+  "@hiddenSaved": {
+    "description": "Snackbar after a swap."
+  },
+  "hiddenConfirmDowngrade": "Switch to Free now",
+  "@hiddenConfirmDowngrade": {
+    "description": "Downgrade confirm button."
+  },
+  "hiddenDowngradeConfirmTitle": "Switch to Free?",
+  "@hiddenDowngradeConfirmTitle": {
+    "description": "Downgrade dialog title."
+  },
+  "hiddenDowngradeConfirmBody": "Your paid plan ends now and is not refunded. The hidden content leaves your menu at once.",
+  "@hiddenDowngradeConfirmBody": {
+    "description": "Downgrade dialog body."
+  },
+  "hiddenDowngraded": "You're on the Free plan now.",
+  "@hiddenDowngraded": {
+    "description": "Snackbar after downgrade."
+  },
+  "hiddenNone": "Nothing is hidden.",
+  "@hiddenNone": {
+    "description": "Over-limit manager: empty."
+  },
+  "themePremiumLockedTitle": "Premium theme",
+  "@themePremiumLockedTitle": {
+    "description": "Theme gallery: premium on Free (M10)."
+  },
+  "themePremiumLockedBody": "{name} is part of Pro. Upgrade to use premium themes.",
+  "@themePremiumLockedBody": {
+    "description": "Theme gallery: premium on Free.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "qrLogoPro": "Adding your logo to the QR code is part of Pro.",
+  "@qrLogoPro": {
+    "description": "QR screen: logo switch on Free (M10)."
+  },
+  "seePlans": "See plans",
+  "@seePlans": {
+    "description": "Button to the plan page."
+  },
+  "problemPremiumTheme": "Your theme is a premium theme. Choose a standard theme, or upgrade to Pro.",
+  "@problemPremiumTheme": {
+    "description": "Publish problem premium-theme (M10)."
+  },
+  "blockedSuspendedTitle": "Your account is suspended",
+  "@blockedSuspendedTitle": {
+    "description": "Owner notice (FR-099)."
+  },
+  "blockedSuspendedBody": "You can't make changes while the account is suspended. Customers see a \"temporarily unavailable\" page.",
+  "@blockedSuspendedBody": {
+    "description": "Owner notice (FR-099)."
+  },
+  "blockedDeactivatedTitle": "Your account is deactivated",
+  "@blockedDeactivatedTitle": {
+    "description": "Owner notice (FR-099)."
+  },
+  "blockedDeactivatedBody": "Your menu is no longer available. The account can be reactivated within 90 days of deactivation.",
+  "@blockedDeactivatedBody": {
+    "description": "Owner notice (FR-099)."
+  },
+  "blockedContact": "Contact EazySuvai support: {email}",
+  "@blockedContact": {
+    "description": "Owner notice support line.",
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "accountTitle": "Account",
+  "@accountTitle": {
+    "description": "Settings entry and page title (M12)."
+  },
+  "accountSubtitle": "Export your menu, delete your account",
+  "@accountSubtitle": {
+    "description": "Settings entry subtitle."
+  },
+  "exportTitle": "Export your menu",
+  "@exportTitle": {
+    "description": "Account section (FR-105)."
+  },
+  "exportHelp": "Download every category and item with prices, as a spreadsheet (CSV) or a data file (JSON).",
+  "@exportHelp": {
+    "description": "Account help."
+  },
+  "exportCsv": "Download CSV",
+  "@exportCsv": {
+    "description": "Button."
+  },
+  "exportJson": "Download JSON",
+  "@exportJson": {
+    "description": "Button."
+  },
+  "exportDone": "{file} is ready",
+  "@exportDone": {
+    "description": "Snackbar.",
+    "placeholders": {
+      "file": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteTitle": "Delete account",
+  "@deleteTitle": {
+    "description": "Account section and page title (FR-105)."
+  },
+  "deleteHelp": "Your menu goes offline at once. Everything is deleted after 90 days; until then support can reopen the account.",
+  "@deleteHelp": {
+    "description": "Account help."
+  },
+  "deleteStart": "Delete my account…",
+  "@deleteStart": {
+    "description": "Button."
+  },
+  "deleteStepExport": "Keep a copy",
+  "@deleteStepExport": {
+    "description": "Delete flow step 1."
+  },
+  "deleteExportOffer": "Download your menu before you go. You can't get it back after the account is deleted.",
+  "@deleteExportOffer": {
+    "description": "Delete flow step 1."
+  },
+  "deleteContinue": "Continue",
+  "@deleteContinue": {
+    "description": "Delete flow button."
+  },
+  "deleteStepName": "Confirm the restaurant",
+  "@deleteStepName": {
+    "description": "Delete flow step 2."
+  },
+  "deleteTypeName": "Type \"{name}\" to confirm.",
+  "@deleteTypeName": {
+    "description": "Delete flow step 2.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteNameLabel": "Restaurant name",
+  "@deleteNameLabel": {
+    "description": "Field."
+  },
+  "deleteStepConfirm": "Delete",
+  "@deleteStepConfirm": {
+    "description": "Delete flow step 3."
+  },
+  "deleteConsequences": "Your menu and QR code stop working now and customers see \"Menu no longer available\". You are signed out. All data, photos and analytics are deleted after 90 days. Payment records are kept as tax law requires.",
+  "@deleteConsequences": {
+    "description": "Delete flow step 3 (§7.7)."
+  },
+  "deleteConfirm": "Delete my account",
+  "@deleteConfirm": {
+    "description": "Final button."
+  },
+  "legalAgreePrefix": "By creating an account, you agree to the",
+  "@legalAgreePrefix": {
+    "description": "Sign-up: text before the Terms of service link."
+  },
+  "legalAnd": "and the",
+  "@legalAnd": {
+    "description": "Sign-up: between the two legal links."
+  },
+  "legalTerms": "Terms of service",
+  "@legalTerms": {
+    "description": "Link to the terms page."
+  },
+  "legalPrivacy": "Privacy policy",
+  "@legalPrivacy": {
+    "description": "Link to the privacy policy page."
   }
 }

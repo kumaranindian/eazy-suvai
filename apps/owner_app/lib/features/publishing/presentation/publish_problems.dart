@@ -20,6 +20,7 @@ String problemMessage(
     PublishProblemCode.menuEmpty => l10n.problemMenuEmpty,
     PublishProblemCode.pricesNeedReview => l10n.problemPrices,
     PublishProblemCode.snapshotTooLarge => l10n.problemTooLarge,
+    PublishProblemCode.premiumTheme => l10n.problemPremiumTheme,
     PublishProblemCode.limitExceeded =>
       p.details['limit'] == 'categories'
           ? l10n.problemLimitCategories(detail('count'), detail('max'))
@@ -61,6 +62,7 @@ String _dayLabel(String key, CoreLocalizations core) {
       route: Routes.verifyEmail,
       categoryId: null,
     ),
+    PublishProblemCode.premiumTheme => (route: Routes.theme, categoryId: null),
     PublishProblemCode.missingField ||
     PublishProblemCode.invalidField => switch (p.target) {
       ProblemTarget.restaurant when field.startsWith('openingHours') => (

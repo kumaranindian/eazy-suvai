@@ -1,0 +1,35 @@
+{
+  "displayName": "Public menu: slow responses",
+  "documentation": {
+    "content": "renderMenu p95 latency above 1.5 s for 10 minutes (target LCP 2.5 s on 4G; most requests come from the CDN, so this is the origin).",
+    "mimeType": "text/markdown"
+  },
+  "combiner": "OR",
+  "conditions": [
+    {
+      "displayName": "renderMenu p95 latency",
+      "conditionThreshold": {
+        "filter": "metric.type=\"run.googleapis.com/request_latencies\" AND resource.type=\"cloud_run_revision\" AND resource.label.service_name=\"rendermenu\"",
+        "aggregations": [
+          {
+            "alignmentPeriod": "60s",
+            "perSeriesAligner": "ALIGN_DELTA",
+            "crossSeriesReducer": "REDUCE_PERCENTILE_95"
+          }
+        ],
+        "comparison": "COMPARISON_GT",
+        "thresholdValue": 1500,
+        "duration": "600s",
+        "trigger": {
+          "count": 1
+        }
+      }
+    }
+  ],
+  "notificationChannels": [
+    "__CHANNEL__"
+  ],
+  "alertStrategy": {
+    "autoClose": "1800s"
+  }
+}

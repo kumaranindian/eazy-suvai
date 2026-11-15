@@ -7,13 +7,24 @@ import '../../../l10n/generated/app_localizations.dart';
 import '../../auth/application/admin_auth_service.dart';
 
 /// Top-level sections of the admin app, in navigation order.
-enum AdminSection { dashboard, restaurants, plans, settings }
+enum AdminSection {
+  dashboard,
+  restaurants,
+  upgrades,
+  plans,
+  catalog,
+  audit,
+  settings,
+}
 
 extension AdminSectionView on AdminSection {
   String label(AppLocalizations l10n) => switch (this) {
     AdminSection.dashboard => l10n.navDashboard,
     AdminSection.restaurants => l10n.navRestaurants,
+    AdminSection.upgrades => l10n.navUpgrades,
     AdminSection.plans => l10n.navPlans,
+    AdminSection.catalog => l10n.navCatalog,
+    AdminSection.audit => l10n.navAudit,
     AdminSection.settings => l10n.navSettings,
   };
 
@@ -28,9 +39,24 @@ extension AdminSectionView on AdminSection {
       selectedIcon: Icons.storefront,
       label: label(l10n),
     ),
+    AdminSection.upgrades => AppDestination(
+      icon: Icons.upgrade_outlined,
+      selectedIcon: Icons.upgrade,
+      label: label(l10n),
+    ),
     AdminSection.plans => AppDestination(
       icon: Icons.workspace_premium_outlined,
       selectedIcon: Icons.workspace_premium,
+      label: label(l10n),
+    ),
+    AdminSection.catalog => AppDestination(
+      icon: Icons.category_outlined,
+      selectedIcon: Icons.category,
+      label: label(l10n),
+    ),
+    AdminSection.audit => AppDestination(
+      icon: Icons.history_outlined,
+      selectedIcon: Icons.history,
       label: label(l10n),
     ),
     AdminSection.settings => AppDestination(

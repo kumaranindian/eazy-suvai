@@ -20,6 +20,8 @@ enum AppErrorCode {
   slugTaken('slug-taken'),
   categoryDeleted('category-deleted'),
   publishBlocked('publish-blocked'),
+  requestPending('request-pending'),
+  alreadyOnPlan('already-on-plan'),
   network('network'),
   unknown('unknown');
 
@@ -52,6 +54,8 @@ extension AppErrorMessage on CoreLocalizations {
     AppErrorCode.slugTaken => errorSlugTaken,
     AppErrorCode.categoryDeleted => errorCategoryDeleted,
     AppErrorCode.publishBlocked => errorPublishBlocked,
+    AppErrorCode.requestPending => errorRequestPending,
+    AppErrorCode.alreadyOnPlan => errorAlreadyOnPlan,
     AppErrorCode.network => errorNetwork,
     AppErrorCode.unknown => errorUnknown,
   };

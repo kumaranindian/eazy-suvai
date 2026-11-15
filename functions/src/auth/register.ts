@@ -5,6 +5,7 @@ import { z } from "zod";
 
 import { writeAudit, type AuditDb } from "../lib/audit";
 import { appError } from "../lib/errors";
+import { DEFAULT_PLAN_FEATURES, restaurantPlanFeatures } from "../lib/plan-limits";
 import { parseInput } from "../lib/validation";
 import { BUSINESS_TYPES, COUNTRIES, COUNTRY_CODES } from "./countries";
 import { generateQrCode } from "./qr-code";
@@ -161,7 +162,9 @@ export async function registerOwner(
         qrCode,
         status: "active",
         planId: FREE_PLAN_ID,
-        subscription: { status: "free", startAt: now, expiresAt: null, graceEndsAt: null },
+        subscription: { status: "free", planId: FREE_PLAN_ID, billing: null, startAt: now, expiresAt: null, graceEndsAt: null, remindersSent: [] },
+        // M10: the plan flags the rules and the owner app read.
+        planFeatures: restaurantPlanFeatures(DEFAULT_PLAN_FEATURES.free),
         counts: { categories: 0, items: 0 },
         publishedVersion: null,
         pricesNeedReview: false,

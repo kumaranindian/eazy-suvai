@@ -31,6 +31,8 @@ import sharp from "sharp";
 
 const require = createRequire(import.meta.url);
 const { sampleSnapshot } = require("../lib/public/sample-menu.js");
+const { SEED_THEMES } = require("../lib/theme/index.js");
+const { resolveTheme } = require("../lib/theme/index.js");
 const { downloadUrl } = require("../lib/publishing/draft-reader.js");
 
 if (!process.env.FIRESTORE_EMULATOR_HOST || !process.env.FIREBASE_STORAGE_EMULATOR_HOST) {
@@ -79,6 +81,28 @@ async function seedMenu(slug, rid, layout) {
   for (const n of names) images[n] = await image(n, n === "cover" ? 1500 : 1200, n === "cover" ? 500 : n === "logo" ? 1200 : 900);
   const s = sampleSnapshot((n) => images[n]);
   if (layout === "grid") s.theme.resolved = { ...s.theme.resolved, layout: "grid", cardLayout: "image-top" };
+  if (layout === "large") {
+    // M13: a large Kuwaiti cafe menu: 200 items in KWD (3 decimals), long
+    // names and descriptions, the cafe-cream theme. The heaviest realistic
+    // page for the payload budget.
+    const base = s.items;
+    s.items = [];
+    for (let copy = 0; copy < 200; copy++) {
+      const b = base[copy % base.length];
+      const item = { ...b, id: `${b.id}-x${copy}`, name: `${b.name} (Kuwait special ${copy + 1})`, priceMinor: 1250 + copy * 25, sequence: (copy + 1) * 1000 };
+      item.description = "Slow-cooked with saffron, cardamom and dried lime; served with warm khubz, pickled vegetables and a choice of laban or karak tea.";
+      if (copy % 4 !== 0) delete item.image;
+      s.items.push(item);
+    }
+    const cream = SEED_THEMES.find((t) => t.id === "cafe-cream");
+    const resolved = resolveTheme(cream.tokens, {});
+    delete resolved.issues;
+    s.theme = { themeId: "cafe-cream", tokens: cream.tokens, settings: {}, resolved };
+    s.profile = { ...s.profile, name: "Al Bahar Cafe", contact: { ...s.profile.contact, city: "Kuwait City", phone: "+96522001122" } };
+    s.currency = "KWD";
+    s.locale = "en-KW";
+    s.timezone = "Asia/Kuwait";
+  }
   await Promise.all([
     db.doc(`restaurants/${rid}`).set({ name: s.profile.name, slug, qrCode: "LHTEST22", status: "active", planId: "free", publishedVersion: 1, publishedAt: Timestamp.now() }),
     db.doc(`slugs/${slug}`).set({ restaurantId: rid, current: true }),
@@ -89,7 +113,14 @@ async function seedMenu(slug, rid, layout) {
 
 await seedMenu("lh-list", "lh_list", "list");
 await seedMenu("lh-grid", "lh_grid", "grid");
-console.log("seeded lh-list and lh-grid");
+await seedMenu("lh-large", "lh_large", "large");
+console.log("seeded lh-list, lh-grid and lh-large");
+{
+  // AC-029: KWD prices show 3 decimals on the public menu.
+  const html = await (await fetch(`${HOST}/lh-large`)).text();
+  assert.match(html, /1.250/, "KWD price with 3 decimals");
+  assert.ok((html.match(/Kuwait special [0-9]+[)]/g) ?? []).length >= 200, "all 200 items in the page");
+}
 
 // ---- Lighthouse ------------------------------------------------------------
 
@@ -97,7 +128,7 @@ const chrome = await chromeLauncher.launch({ chromeFlags: ["--headless=new", "--
 const failures = [];
 const summary = {};
 try {
-  for (const slug of ["lh-list", "lh-grid"]) {
+  for (const slug of ["lh-list", "lh-grid", "lh-large"]) {
     const url = `${HOST}/${slug}`;
     // Warm the function, as a CDN-cached page would be (a cold emulator worker adds 1-2 s of TTFB).
     for (let i = 0; i < 2; i++) await fetch(url);
@@ -130,8 +161,8 @@ try {
   const { webSocketDebuggerUrl } = await res.json();
   const browser = await puppeteer.connect({ browserWSEndpoint: webSocketDebuggerUrl });
   const page = await browser.newPage();
-  const expectCols = { "lh-list": { 360: 1, 768: 2, 1280: 2 }, "lh-grid": { 360: 1, 768: 2, 1280: 3 } };
-  for (const slug of ["lh-list", "lh-grid"]) {
+  const expectCols = { "lh-list": { 360: 1, 768: 2, 1280: 2 }, "lh-grid": { 360: 1, 768: 2, 1280: 3 }, "lh-large": { 360: 1, 768: 2, 1280: 2 } };
+  for (const slug of ["lh-list", "lh-grid", "lh-large"]) {
     for (const width of [360, 768, 1280]) {
       await page.setViewport({ width, height: 800, deviceScaleFactor: 1 });
       await page.goto(`${HOST}/${slug}`, { waitUntil: "networkidle0" });

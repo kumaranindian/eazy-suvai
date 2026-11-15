@@ -19,11 +19,11 @@ Status values: `Not started` · `In progress` · `Blocked` · `Done`
 | M06 | Preview, publishing and versions | `M06-publishing.md` | M04, M05 | Done | 2026-11-15 | 2026-11-15 | Pure snapshot builder + diff + validation (stable problem codes), `publishMenu` (dry run; one transaction: version, pointer, availability reset, prune to 10, audit), `rollbackMenu`, `discardDraft`, `previewMenu` with the first public renderer; publish bar, dialog, preview (iframe / web view) and version history; Chrome end to end. Open: device runs of the web view, M07 owns SEO and account states. |
 | M07 | Public digital menu | `M07-public-menu.md` | M06 | Done | 2026-11-15 | 2026-11-15 | `renderMenu` behind Hosting `menu`: slug / old-slug 301 / `/q/` 302 / sitemap, FR-099 states, SEO + JSON-LD, lightbox and category script (3.4 KB), ETag, CSP, gzip; Lighthouse LCP 1.4–1.6 s, 47 KB, a11y 100; layouts checked at 360/768/1280. Open: real phones (AC-009), deploy and CDN check. |
 | M08 | QR codes and sharing | `M08-qr-sharing.md` | M07 | Done | 2026-11-15 | 2026-11-15 | QR & share screen (3 widths): ≥ 1024 px PNG of `/q/{code}`, logo (level H) only after a zxing2 decode check, else plain with the reason; A4 poster and A6 card PDFs with preview; web download / mobile share sheet; copy, WhatsApp, Web Share. Open: scans on real phones (AC-010), WhatsApp preview on the deployed site (AC-014). |
-| M09 | Analytics | `M09-analytics.md` | M07 | Not started | | | |
-| M10 | Subscriptions and plan limits | `M10-subscriptions.md` | M04, M11 (plans screen) | Not started | | | |
-| M11 | Platform administration | `M11-platform-admin.md` | M01, M03 | Not started | | | |
-| M12 | Audit, account lifecycle and data retention | `M12-lifecycle.md` | M10, M11 | Not started | | | |
-| M13 | Hardening, acceptance and launch | `M13-launch.md` | All | Not started | | | |
+| M09 | Analytics | `M09-analytics.md` | M07 | Done | 2026-11-15 | 2026-11-15 | Cookieless 0.4 KB beacon (30-min view dedup in sessionStorage), `collectEvent` at `POST /e` (bots, schema, rate limit, live ids; daily aggregates in the restaurant's zone, raw events with 90-day TTL, `stats/platform`), rules, owner Analytics section (7/30/custom by plan, tiles, chart, top lists, monthly). Open: TTL check and phone check after deploy. |
+| M10 | Subscriptions and plan limits | `M10-subscriptions.md` | M04, M11 (plans screen) | Done | 2026-11-15 | 2026-11-15 | Seeded plans, `planFeatures` on restaurants, upgrade request → offline payment → activate (audited), `subscriptionDaily` (14/7/1 reminders, grace, downgrade), `applyPlanLimits` (hide last first, publish from live), owner plan page, banners, over-limit manager, gates (premium themes, QR logo, analytics, footer), admin Upgrades queue. Open: Trigger Email + SMTP, Blaze scheduler, prices. |
+| M11 | Platform administration | `M11-platform-admin.md` | M01, M03 | Done | 2026-11-15 | 2026-11-15 | Admin callables (status with reasons, revocation and `accountStatus`; search, detail, plans, labels, tags, themes, config, announcement, admin roles), `stats/platform` trigger + recompute, indexes; admin app dashboard, restaurants, detail, editors, settings (read-only < 600 px); owner announcement and blocked notice. Open: Identity Platform TOTP, deploy indexes. |
+| M12 | Audit, account lifecycle and data retention | `M12-lifecycle.md` | M10, M11 | Done | 2026-11-15 | 2026-11-15 | `exportMenu` (JSON/CSV), `requestAccountDeletion`, `purgeDaily` (soft-deleted 30 d, tenant purge 90 d with tombstone, payments archived 8 y, slugs held 12 m, audit anonymised, orphan images), TTL on audit logs, admin Audit log viewer, owner Account page and delete flow; audit coverage listed. Open: legal review, TTL/scheduler on real projects. |
+| M13 | Hardening, acceptance and launch | `M13-launch.md` | All | Done (pre-launch) | 2026-11-15 | 2026-11-15 | AC-001..030 pass (AC-009/010/014 also need devices); e2e journey + callable security sweep; owner/admin route sweeps (widths, 200 % text, RTL, a11y); App Check, Crashlytics; Lighthouse 3 menus, load test, 5–10× faster render; ops scripts for backups, restore test, monitoring, auth; legal pages; FRD §13 metrics. Open: real-project steps in `docs/launch/runbook.md`, legal review, stores. |
 
 M10 and M11 can be built in parallel once M04 is done; M10 needs M11's plan-editing screen only for its admin activation screen.
 
@@ -285,6 +285,89 @@ Add a dated line whenever a module changes something another module depends on.
   - The PDF viewer is replaced by a text stand-in.
   - Override `qrShareActionsProvider` / `qrLogoLoaderProvider` to fake sharing and the logo (`test/qr_share_test.dart` has `FakeQrShareActions` and `FakeLogoLoader`).
 - 2026-11-15 (M08): **Assets:** `apps/owner_app/assets/fonts/` (Poppins Regular and SemiBold + `OFL.txt`) for the PDFs.
+
+- 2026-11-15 (M09): **Analytics data:**
+  - `restaurants/{rid}/analyticsDaily/{yyyy-MM-dd}` = `{day, views, qrVisits, categoryTaps {cid: n}, itemOpens {iid: n}, updatedAt}`.
+  - `analyticsEvents/{auto}` = `{restaurantId, type, src, id?, day, at, expireAt}` (TTL 90 days).
+  - `stats/platform` gains `menuViews` and `qrVisits` (increments; M11 adds its own counters to the same document).
+  - Only `collectEvent` writes them; the rules let the owner and admins read `analyticsDaily`.
+  - M12 must delete `analyticsDaily` with the restaurant and may rely on TTL for `analyticsEvents`.
+- 2026-11-15 (M09): **For M10:** the history limit is `analyticsHistoryDaysProvider` (owner app, `features/analytics/data/analytics_repository.dart`), today `defaultAnalyticsDays(planId)` (Free 7, Pro 365). Point it at `plans/{planId}.limits.analyticsDays`. The screen already shows the lock and upgrade prompt from that number.
+- 2026-11-15 (M09): **Hosting `menu` rewrites:** `/e` → `collectEvent`, then `**` → `renderMenu`. Keep `/e` first.
+- 2026-11-15 (M09): **Owner app:**
+  - New navigation section `OwnerSection.analytics` (`/analytics`), between QR & share and Settings.
+  - Widget tests get `FakeAnalyticsRepository` and a fixed "today" (`analyticsTestNow`, 15 Nov 2026) through `pumpOwnerApp(..., analytics:)`.
+  - `fl_chart` is held below 1.1 until the Flutter SDK moves past `vector_math` 2.1.4.
+
+- 2026-11-15 (M10): **Plan data:**
+  - `plans/{free,pro}` = `{name, isFree, active, sort, billing[], prices {CUR: {monthly, annual}}, limits {maxItems, maxCategories, maxBranches, premiumThemes, defaultThemeId, analyticsDays, qrLogo, removeBranding}}` (seeded by `seed-platform.mjs`).
+  - Restaurants carry a copy of the flags: `planFeatures {maxItems, maxCategories, premiumThemes, analyticsDays, qrLogo, removeBranding}`. It is written at registration and on plan changes; existing restaurants get it from `scripts/backfill-plan-features.mjs`.
+  - `subscription {status: free|active|grace, planId, billing, startAt, expiresAt, graceEndsAt, remindersSent[]}`, `pendingUpgradeRequestId`, `planNotice {kind: limitsApplied|restored, …}`.
+  - Subcollections `payments/{id}` (`provider: 'offline'`) and `subscriptionHistory/{id}`.
+  - Global `upgradeRequests/{id}` and `mail/{id}` (Trigger Email format).
+- 2026-11-15 (M10): **For M11:**
+  - The admin app now has `AdminApi` (`lib/data/admin_api.dart`): every admin read and write goes through callables (tests use `FakeAdminApi` via `pumpAdminApp(api:)`).
+  - `ReadOnlyNotice` / `adminReadOnly(context)` (`lib/widgets/read_only.dart`) implement "read-only below 600 px".
+  - New section `AdminSection.upgrades` (`/upgrades`, `UpgradeRequestsPage`, `RecordPaymentDialog` reusable from the restaurant detail).
+  - Callables for the restaurant detail: `changeSubscription({action: extend|modify|downgrade, reason})` and `recordPaymentAndActivate`.
+  - Plan edits (`upsertPlan`) should offer "apply to subscribers" by calling the same sync as `backfill-plan-features.mjs` (`syncPlanFeatures` in `functions/src/subscriptions/daily.ts`).
+- 2026-11-15 (M10): **For M12:** audit actions added: `subscription.requestUpgrade`, `.activate`, `.extend`, `.modify`, `.downgrade`, `.closeRequest`, `.grace`, `.expire`, `.applyLimits`, `.restoreHidden`, `.ownerDowngrade`, `menu.publishPlanLimits` and `menu.swapHidden`. `actorRole: 'system'` is used by the daily job. Deleting a restaurant must also delete `payments` and `subscriptionHistory` per the retention table, and any open `upgradeRequests`.
+- 2026-11-15 (M10): **Publishing:** new problem code `premium-theme` (`ProblemCode.premiumTheme` / `PublishProblemCode.premiumTheme`). Categories can have `hiddenOverLimit` (excluded from the snapshot). `writeVersion` / `readStale` are exported from `publish.ts` with an `actorRole` for system publishes.
+- 2026-11-15 (M10): **Error codes:** `request-pending` and `already-on-plan` (functions, Dart, core arb).
+- 2026-11-15 (M10): **Owner app tests:** `pumpAdminApp` / `pumpOwnerApp(..., plans:)` with `FakePlanRepository` (`test/fake_plan.dart`, `proData()` for a Pro restaurant, `planTestNow` = 15 Nov 2026).
+
+- 2026-11-15 (M11): **Admin data and callables:**
+  - `restaurants/{rid}` gains `statusReason`, `statusChangedAt`, `statusChangedBy` and `deactivatedAt`.
+  - `users/{uid}.accountStatus` (`active` | `suspended` | `deactivated`) is mirrored by `setRestaurantStatus` for the owner app's notice.
+  - `config/platform` gains `supportEmail` and `announcement {text, level, active, until, updatedAt}`.
+  - `stats/platform` = `{restaurants, restaurantsByStatus{…}, subscriptionsByStatus{free, active, grace}, subscriptionsExpired, totalItems, menuViews, qrVisits}`.
+  - Callables: `setRestaurantStatus`, `adminSearchRestaurants`, `adminGetRestaurant`, `adminDashboard`, `recomputePlatformStats`, `upsertPlan`, `upsertLabel` (labels and tags), `upsertTheme`, `updatePlatformConfig`, `setAnnouncement`, `adminListCatalog`, `setAdminRole` and `adminListAdmins`.
+- 2026-11-15 (M11): **For M12:**
+  - Account deletion sets `status: 'deleted'`; `setRestaurantStatus` never does. `canTransition` refuses any change from `deleted`.
+  - Reactivation within 90 days relies on `deactivatedAt`; M12's purge should use the same 90 days.
+  - The audit log viewer can be a new `AdminSection` (the shell has six). The restaurant detail's activity card lists `auditLogs` filtered by restaurant. Index `auditLogs (restaurantId, at desc)` exists; the viewer needs `(actorUid, at)` and `(action, at)`.
+  - Audit actions added in M11: `restaurant.suspend`, `.activate`, `.deactivate`, `.reactivate`; `plan.create` / `.update`; `label.*`, `tag.*`, `theme.*` (create, update, retire); `platform.updateConfig`, `.announcement`, `.recomputeStats`; `admin.grant` / `.revoke`.
+- 2026-11-15 (M11): **Admin app:**
+  - Sections dashboard, restaurants (`/restaurants/:rid` detail), upgrades, plans, catalog and settings.
+  - Reuse `AdminPageBody` (includes the read-only notice), `askReason()` and `runAdminAction()` from `lib/widgets/admin_widgets.dart`.
+  - Tests: `FakeAdminApi` handlers by callable name.
+- 2026-11-15 (M11): **Owner app tests:** `pumpOwnerApp(..., accountStatus:, notice:)` overrides `accountStatusProvider` and `platformNoticeProvider`.
+
+- 2026-11-15 (M12): **Lifecycle data:**
+  - Deletion request: `restaurants/{rid}.deletionRequestedAt` + `status: deactivated`.
+  - Purged tenants leave a tombstone `restaurants/{rid}` = `{status: 'deleted', slug, qrCode, deletedAt, purgedAt, counts: 0}`.
+  - `paymentArchive/{rid}_{pid}` (`retainUntil`).
+  - `slugs/{slug}.releasedAt` / `releaseAfter`; until then the slug stays blocked.
+  - `auditLogs` entries can carry `anonymizedAt`.
+  - `config/purge.imageCursor`.
+  - Callables `exportMenu`, `requestAccountDeletion` and `adminListAuditLogs`; schedule `purgeDaily` (02:30 IST).
+  - New audit actions: `menu.export`, `account.requestDeletion`, `account.purge` and `platform.purge`.
+- 2026-11-15 (M12): **Apps:**
+  - Owner: `/settings/account` (export) and `/settings/account/delete`. Tests: `pumpOwnerApp(..., account:)` with `FakeAccountRepository`.
+  - Admin: section `AdminSection.audit` (`/audit?restaurant=`).
+- 2026-11-15 (M12): **For M13:**
+  - The full audit coverage table is in M12's Completion notes.
+  - Backups and a test restore are M13's (FRD §7.7: 35 days).
+  - TTL and indexes must be deployed and checked on each project.
+
+- 2026-11-15 (M13): **Launch preparation:**
+  - Launch steps: `docs/launch/runbook.md`; store checklist: `docs/launch/store-listing.md`.
+  - Real-project changes go through `ops/*.sh`: dry run by default, `--apply`, and `CONFIRM_PROD=yes` for prod.
+  - `seed-platform.mjs` needs `--confirm-prod`.
+- 2026-11-15 (M13): **App Check:**
+  - Core `initFirebase` activates it (`AppCheckPlan`; web needs `--dart-define=RECAPTCHA_ENTERPRISE_KEY`).
+  - Callables enforce it when `ENFORCE_APP_CHECK=true` in `functions/.env.<projectId>` (prod true).
+  - Every callable checks `assertSignedIn` before parsing input (`e2e/inputs.emu.test.ts` keeps it so).
+- 2026-11-15 (M13): **Metrics:**
+  - `restaurants/{rid}.firstPublishedAt` (first publish) and `qrDownloads` (owner +1 only; rules).
+  - `stats/platform` adds `activated`, `publishedMenus`, `qrDownloads`, `conversions`, `renewals`, `medianMinutesToFirstPublish`, `monthly.{yyyy-MM}.{views,qrVisits}`.
+  - `purgeDaily` ends with `recomputeStats`. Tombstones carry `activated`.
+- 2026-11-15 (M13): **Public menu:**
+  - The footer always links `/privacy` and `/terms`: static pages in `hosting/menu` (`cleanUrls`).
+  - Price and day formatters are cached per instance (`public/format.ts`, `analytics/collect.ts`).
+- 2026-11-15 (M13): **Tests:**
+  - Route sweeps (`route_sweep_test.dart` in both apps) fail on any layout error at 3 widths, 200 % text and RTL. Add new routes to their lists.
+  - Owner app: `textDirectionOverrideProvider` forces RTL in tests.
 
 ## Open decisions
 

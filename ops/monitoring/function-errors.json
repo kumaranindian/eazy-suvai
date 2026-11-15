@@ -1,0 +1,35 @@
+{
+  "displayName": "Functions: error logs",
+  "documentation": {
+    "content": "More than 10 ERROR log entries from Cloud Functions in 5 minutes. Open Logs Explorer with `severity>=ERROR`.",
+    "mimeType": "text/markdown"
+  },
+  "combiner": "OR",
+  "conditions": [
+    {
+      "displayName": "Error log rate",
+      "conditionThreshold": {
+        "filter": "metric.type=\"logging.googleapis.com/user/function_errors\" AND resource.type=\"cloud_run_revision\"",
+        "aggregations": [
+          {
+            "alignmentPeriod": "300s",
+            "perSeriesAligner": "ALIGN_SUM",
+            "crossSeriesReducer": "REDUCE_SUM"
+          }
+        ],
+        "comparison": "COMPARISON_GT",
+        "thresholdValue": 10,
+        "duration": "0s",
+        "trigger": {
+          "count": 1
+        }
+      }
+    }
+  ],
+  "notificationChannels": [
+    "__CHANNEL__"
+  ],
+  "alertStrategy": {
+    "autoClose": "1800s"
+  }
+}

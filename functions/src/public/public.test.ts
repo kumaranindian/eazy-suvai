@@ -205,7 +205,7 @@ describe("menu page", () => {
     // The cover is the likely LCP element: never lazy.
     expect(html).toMatch(/<img class="cover"[^>]*fetchpriority="high"/);
     expect(html).not.toMatch(/<img class="cover"[^>]*loading="lazy"/);
-    expect(html).toContain("<footer class=\"wrap\">Powered by EazySuvai</footer>");
+    expect(html).toContain("<footer class=\"wrap\">Powered by EazySuvai · <a href=\"/privacy\">Privacy</a> · <a href=\"/terms\">Terms</a></footer>");
     expect(html).toContain("application/ld+json");
     expect(html).not.toContain("noindex");
     expect(html).not.toMatch(/undefined|\[object Object\]|NaN/);
@@ -215,6 +215,8 @@ describe("menu page", () => {
     const html = live(sampleSnapshot(), { now: new Date("2026-11-15T08:00:00Z"), branding: false });
     expect(html).toContain("Closed now");
     expect(html).not.toContain("Powered by EazySuvai");
+    // Privacy and terms stay without branding (M13).
+    expect(html).toContain("<footer class=\"wrap\"><a href=\"/privacy\">Privacy</a> · <a href=\"/terms\">Terms</a></footer>");
   });
 
   it("shows KWD prices with 3 decimals", () => {

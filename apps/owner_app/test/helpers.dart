@@ -9,7 +9,11 @@ import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:owner_app/app.dart';
+import 'package:owner_app/features/account/data/account_notices.dart';
+import 'package:owner_app/features/account/data/account_repository.dart';
+import 'package:owner_app/features/analytics/data/analytics_repository.dart';
 import 'package:owner_app/features/auth/data/registration_repository.dart';
+import 'package:owner_app/features/plan/data/plan_repository.dart';
 import 'package:owner_app/features/menu/data/menu_repository.dart';
 import 'package:owner_app/features/publishing/data/publishing_repository.dart';
 import 'package:owner_app/features/publishing/presentation/menu_html_view.dart';
@@ -20,7 +24,9 @@ import 'package:owner_app/features/restaurant/data/restaurant_repository.dart';
 import 'package:owner_app/features/theme/data/theme_repository.dart';
 import 'package:owner_app/router/app_router.dart';
 
+import 'fake_analytics.dart';
 import 'fake_menu.dart';
+import 'fake_plan.dart';
 import 'fake_publishing.dart';
 import 'fake_theme.dart';
 
@@ -108,6 +114,10 @@ class FakeRestaurantRepository implements RestaurantRepository {
   final slugChecks = <String>[];
   final slugChanges = <String>[];
   int setupCompletions = 0;
+  int qrDownloads = 0;
+
+  @override
+  Future<void> countQrDownload(String restaurantId) async => qrDownloads++;
 
   /// Thrown once by the next [updateDraft].
   Object? nextError;
@@ -275,6 +285,11 @@ Future<TestApp> pumpOwnerApp(
   FakeThemeRepository? themes,
   FakePublishingRepository? publishing,
   QrArtifactBuilder? qrBuilder,
+  FakeAnalyticsRepository? analytics,
+  FakePlanRepository? plans,
+  String accountStatus = 'active',
+  PlatformNotice notice = const PlatformNotice(),
+  AccountRepository? account,
   List<Override> overrides = const [],
 }) async {
   await setWidth(tester, width, height: height);
@@ -302,6 +317,24 @@ Future<TestApp> pumpOwnerApp(
         qrArtifactBuilderProvider.overrideWithValue(
           qrBuilder ?? (job) async => buildQrArtifact(job),
         ),
+        // Analytics (M09): fixed "today", in-memory daily documents.
+        analyticsRepositoryProvider.overrideWithValue(
+          analytics ?? FakeAnalyticsRepository(),
+        ),
+        analyticsClockProvider.overrideWithValue(() => analyticsTestNow),
+        // Plans (M10): in memory, with a fixed "now" for banners.
+        planRepositoryProvider.overrideWithValue(
+          plans ?? FakePlanRepository(restaurants: restaurants),
+        ),
+        planClockProvider.overrideWithValue(() => planTestNow),
+        // M11: account status and the announcement.
+        accountStatusProvider.overrideWith(
+          (ref) => Stream.value(accountStatus),
+        ),
+        platformNoticeProvider.overrideWith((ref) => Stream.value(notice)),
+        accountRepositoryProvider.overrideWithValue(
+          account ?? FakeAccountRepository(),
+        ),
         qrPdfViewBuilderProvider.overrideWithValue(
           (pdf) => Text('PDF ${pdf.length} bytes'),
         ),
@@ -325,4 +358,35 @@ Future<TestApp> pumpOwnerApp(
     themeRepo,
     publishingRepo,
   );
+}
+
+/// Export and deletion callables (M12), in memory.
+class FakeAccountRepository implements AccountRepository {
+  final exports = <String>[];
+  final deletions = <(String, String)>[];
+  Object? nextError;
+
+  @override
+  Future<MenuExportFiles> exportMenu(String restaurantId) async {
+    exports.add(restaurantId);
+    return const MenuExportFiles(
+      fileBase: 'spice-garden-menu-2026-11-15',
+      json: '{"items":[]}',
+      csv: 'category,item',
+    );
+  }
+
+  @override
+  Future<DateTime?> requestDeletion(
+    String restaurantId,
+    String confirmName,
+  ) async {
+    final e = nextError;
+    if (e != null) {
+      nextError = null;
+      throw e;
+    }
+    deletions.add((restaurantId, confirmName));
+    return DateTime.utc(2027, 2, 13);
+  }
 }

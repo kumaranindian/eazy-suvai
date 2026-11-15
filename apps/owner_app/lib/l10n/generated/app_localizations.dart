@@ -1954,12 +1954,6 @@ abstract class AppLocalizations {
   /// **'Plans'**
   String get planTitle;
 
-  /// Plans placeholder until M10.
-  ///
-  /// In en, this message translates to:
-  /// **'Upgrading from the app is coming soon. Contact EazySuvai support to change your plan.'**
-  String get planComingSoon;
-
   /// Theme gallery title and Settings entry.
   ///
   /// In en, this message translates to:
@@ -2997,6 +2991,714 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Close'**
   String get qrClose;
+
+  /// Navigation: analytics section (M09).
+  ///
+  /// In en, this message translates to:
+  /// **'Analytics'**
+  String get navAnalytics;
+
+  /// Analytics: range chip.
+  ///
+  /// In en, this message translates to:
+  /// **'7 days'**
+  String get analyticsRange7;
+
+  /// Analytics: range chip.
+  ///
+  /// In en, this message translates to:
+  /// **'30 days'**
+  String get analyticsRange30;
+
+  /// Analytics: range chip that opens a date picker.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom'**
+  String get analyticsRangeCustom;
+
+  /// Analytics: the dates shown.
+  ///
+  /// In en, this message translates to:
+  /// **'{start} – {end}'**
+  String analyticsRangeLabel(String start, String end);
+
+  /// Analytics tile (FR-071).
+  ///
+  /// In en, this message translates to:
+  /// **'Menu views'**
+  String get analyticsViews;
+
+  /// Analytics tile (FR-071).
+  ///
+  /// In en, this message translates to:
+  /// **'QR visits'**
+  String get analyticsQrVisits;
+
+  /// Analytics tile: share of views from the QR code.
+  ///
+  /// In en, this message translates to:
+  /// **'From the QR code'**
+  String get analyticsQrShare;
+
+  /// Analytics tile: photo or description opens (FR-071).
+  ///
+  /// In en, this message translates to:
+  /// **'Item interest'**
+  String get analyticsItemOpens;
+
+  /// Analytics: chart heading.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily views'**
+  String get analyticsChartTitle;
+
+  /// Analytics: screen-reader summary of the chart.
+  ///
+  /// In en, this message translates to:
+  /// **'Chart of daily views: {views} views and {qr} QR visits from {start} to {end}.'**
+  String analyticsChartSemantics(int views, int qr, String start, String end);
+
+  /// Analytics: list heading.
+  ///
+  /// In en, this message translates to:
+  /// **'Top categories'**
+  String get analyticsTopCategories;
+
+  /// Analytics: list heading.
+  ///
+  /// In en, this message translates to:
+  /// **'Top items'**
+  String get analyticsTopItems;
+
+  /// Analytics: empty top list.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing yet in this period.'**
+  String get analyticsTopEmpty;
+
+  /// Analytics: category count.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 tap} other{{count} taps}}'**
+  String analyticsTaps(int count);
+
+  /// Analytics: item count.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 open} other{{count} opens}}'**
+  String analyticsOpens(int count);
+
+  /// Analytics: a category or item that no longer exists.
+  ///
+  /// In en, this message translates to:
+  /// **'Removed from the menu'**
+  String get analyticsRemoved;
+
+  /// Analytics: card heading.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly totals'**
+  String get analyticsMonthly;
+
+  /// Analytics: one month.
+  ///
+  /// In en, this message translates to:
+  /// **'{views} views · {qr} QR visits'**
+  String analyticsMonthRow(int views, int qr);
+
+  /// Analytics: empty state title.
+  ///
+  /// In en, this message translates to:
+  /// **'No visits in this period'**
+  String get analyticsEmptyTitle;
+
+  /// Analytics: empty state message.
+  ///
+  /// In en, this message translates to:
+  /// **'Share your QR code or menu link and visits will show here.'**
+  String get analyticsEmptyMessage;
+
+  /// Analytics: empty state button.
+  ///
+  /// In en, this message translates to:
+  /// **'QR & share'**
+  String get analyticsEmptyAction;
+
+  /// Analytics: shown before the first publish.
+  ///
+  /// In en, this message translates to:
+  /// **'Publish your menu to start counting visits.'**
+  String get analyticsNotPublished;
+
+  /// Analytics: upgrade prompt (FR-074).
+  ///
+  /// In en, this message translates to:
+  /// **'See more history on Pro'**
+  String get analyticsUpgradeTitle;
+
+  /// Analytics: upgrade prompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Your plan shows the last {days} days. Upgrade to see up to a year.'**
+  String analyticsUpgradeMessage(int days);
+
+  /// Analytics: upgrade button.
+  ///
+  /// In en, this message translates to:
+  /// **'See plans'**
+  String get analyticsUpgradeAction;
+
+  /// Analytics: how counting works (FR-071, FR-075).
+  ///
+  /// In en, this message translates to:
+  /// **'Counted without cookies or personal data. A visitor\'s views count once every 30 minutes, and bots are left out.'**
+  String get analyticsPrivacyNote;
+
+  /// Analytics: a locked range chip.
+  ///
+  /// In en, this message translates to:
+  /// **'{label} (Pro)'**
+  String analyticsLocked(String label);
+
+  /// Plan page: current plan card heading.
+  ///
+  /// In en, this message translates to:
+  /// **'Your plan'**
+  String get planCurrent;
+
+  /// Plan page: Free plan status.
+  ///
+  /// In en, this message translates to:
+  /// **'{plan} · never expires'**
+  String planFreeForever(String plan);
+
+  /// Plan page: active paid plan.
+  ///
+  /// In en, this message translates to:
+  /// **'{plan} · paid until {date}'**
+  String planActiveUntil(String plan, String date);
+
+  /// Plan page: grace period (FR-100).
+  ///
+  /// In en, this message translates to:
+  /// **'{plan} expired on {expired}. Everything keeps working until {date}.'**
+  String planGraceUntil(String plan, String expired, String date);
+
+  /// Plan page: usage heading.
+  ///
+  /// In en, this message translates to:
+  /// **'Usage'**
+  String get planUsage;
+
+  /// Plan page: item usage.
+  ///
+  /// In en, this message translates to:
+  /// **'Items: {count} of {max}'**
+  String planUsageItems(int count, String max);
+
+  /// Plan page: category usage.
+  ///
+  /// In en, this message translates to:
+  /// **'Categories: {count} of {max}'**
+  String planUsageCategories(int count, String max);
+
+  /// Plan page: no limit.
+  ///
+  /// In en, this message translates to:
+  /// **'unlimited'**
+  String get planUnlimited;
+
+  /// Plan page: comparison heading.
+  ///
+  /// In en, this message translates to:
+  /// **'Plans'**
+  String get planCompare;
+
+  /// Plan page: badge on the current plan.
+  ///
+  /// In en, this message translates to:
+  /// **'Current plan'**
+  String get planCurrentBadge;
+
+  /// Plan comparison row.
+  ///
+  /// In en, this message translates to:
+  /// **'Up to {count} items'**
+  String planFeatureItems(int count);
+
+  /// Plan comparison row.
+  ///
+  /// In en, this message translates to:
+  /// **'Up to {count} categories'**
+  String planFeatureCategories(int count);
+
+  /// Plan comparison row.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlimited categories'**
+  String get planFeatureCategoriesUnlimited;
+
+  /// Plan comparison row.
+  ///
+  /// In en, this message translates to:
+  /// **'All themes, including premium'**
+  String get planFeatureThemesAll;
+
+  /// Plan comparison row.
+  ///
+  /// In en, this message translates to:
+  /// **'2 standard themes'**
+  String get planFeatureThemesBasic;
+
+  /// Plan comparison row.
+  ///
+  /// In en, this message translates to:
+  /// **'{days} days of analytics history'**
+  String planFeatureAnalytics(int days);
+
+  /// Plan comparison row.
+  ///
+  /// In en, this message translates to:
+  /// **'Your logo in the QR code'**
+  String get planFeatureQrLogo;
+
+  /// Plan comparison row.
+  ///
+  /// In en, this message translates to:
+  /// **'Plain QR code'**
+  String get planFeatureNoQrLogo;
+
+  /// Plan comparison row.
+  ///
+  /// In en, this message translates to:
+  /// **'No \"Powered by EazySuvai\" footer'**
+  String get planFeatureNoBranding;
+
+  /// Plan comparison row.
+  ///
+  /// In en, this message translates to:
+  /// **'\"Powered by EazySuvai\" footer'**
+  String get planFeatureBranding;
+
+  /// Plan page: request button (FR-106).
+  ///
+  /// In en, this message translates to:
+  /// **'Request {plan}'**
+  String planRequest(String plan);
+
+  /// Request dialog title.
+  ///
+  /// In en, this message translates to:
+  /// **'Request {plan}'**
+  String planRequestTitle(String plan);
+
+  /// Request dialog body (§5.5).
+  ///
+  /// In en, this message translates to:
+  /// **'We\'ll contact you with payment details. Once we receive the payment, {plan} starts at once. There is no online payment yet.'**
+  String planRequestBody(String plan);
+
+  /// Billing choice.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly'**
+  String get planBillingMonthly;
+
+  /// Billing choice.
+  ///
+  /// In en, this message translates to:
+  /// **'Annual'**
+  String get planBillingAnnual;
+
+  /// Request dialog button.
+  ///
+  /// In en, this message translates to:
+  /// **'Send request'**
+  String get planRequestSend;
+
+  /// Snackbar and status after a request.
+  ///
+  /// In en, this message translates to:
+  /// **'Request sent. We\'ll contact you soon.'**
+  String get planRequestSent;
+
+  /// Plan page: open request.
+  ///
+  /// In en, this message translates to:
+  /// **'Upgrade requested – we\'ll contact you with payment details.'**
+  String get planRequestPending;
+
+  /// Plan price.
+  ///
+  /// In en, this message translates to:
+  /// **'{price} / {period}'**
+  String planPrice(String price, String period);
+
+  /// Plan without a price set.
+  ///
+  /// In en, this message translates to:
+  /// **'Price on request'**
+  String get planPriceOnRequest;
+
+  /// Plan page: owner downgrade (FR-101).
+  ///
+  /// In en, this message translates to:
+  /// **'Switch to Free'**
+  String get planSwitchToFree;
+
+  /// Plan page: link to the over-limit manager.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose hidden items'**
+  String get planManageHidden;
+
+  /// Dashboard banner (FR-100).
+  ///
+  /// In en, this message translates to:
+  /// **'Your {plan} plan has expired. Renew before {date} to keep your Pro features.'**
+  String bannerGrace(String plan, String date);
+
+  /// Dashboard reminder (FR-100).
+  ///
+  /// In en, this message translates to:
+  /// **'{plan} ends in {days, plural, =1{1 day} other{{days} days}} ({date}).'**
+  String bannerExpiring(String plan, int days, String date);
+
+  /// Dashboard banner (FR-101).
+  ///
+  /// In en, this message translates to:
+  /// **'Your menu is over the plan limit: {count} hidden. They are kept, not deleted.'**
+  String bannerOverLimit(int count);
+
+  /// Dashboard banner after an upgrade (FR-101).
+  ///
+  /// In en, this message translates to:
+  /// **'Hidden content is back in your draft. Publish to show it.'**
+  String get bannerRestored;
+
+  /// Banner button.
+  ///
+  /// In en, this message translates to:
+  /// **'Renew'**
+  String get bannerRenew;
+
+  /// Banner button.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage'**
+  String get bannerManage;
+
+  /// Banner button.
+  ///
+  /// In en, this message translates to:
+  /// **'Publish'**
+  String get bannerPublish;
+
+  /// Over-limit manager title (FR-101).
+  ///
+  /// In en, this message translates to:
+  /// **'Hidden items'**
+  String get hiddenTitle;
+
+  /// Over-limit manager in downgrade mode.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch to Free'**
+  String get hiddenDowngradeTitle;
+
+  /// Over-limit manager intro.
+  ///
+  /// In en, this message translates to:
+  /// **'Your plan shows up to {max} items. Choose which ones customers see; the others are kept, not deleted.'**
+  String hiddenIntro(String max);
+
+  /// Over-limit manager intro (downgrade).
+  ///
+  /// In en, this message translates to:
+  /// **'Free shows up to {max} items and {cats} categories. Choose what stays visible. The rest is hidden, not deleted, and comes back if you upgrade again.'**
+  String hiddenDowngradeIntro(int max, int cats);
+
+  /// Over-limit manager list heading.
+  ///
+  /// In en, this message translates to:
+  /// **'Visible ({count} of {max})'**
+  String hiddenVisible(int count, String max);
+
+  /// Over-limit manager list heading.
+  ///
+  /// In en, this message translates to:
+  /// **'Hidden ({count})'**
+  String hiddenHidden(int count);
+
+  /// Over-limit manager section.
+  ///
+  /// In en, this message translates to:
+  /// **'Categories'**
+  String get hiddenCategories;
+
+  /// Over-limit manager section.
+  ///
+  /// In en, this message translates to:
+  /// **'Items'**
+  String get hiddenItems;
+
+  /// Button: make visible.
+  ///
+  /// In en, this message translates to:
+  /// **'Show {name}'**
+  String hiddenShow(String name);
+
+  /// Button: hide.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide {name}'**
+  String hiddenHide(String name);
+
+  /// Over-limit manager: over the limit.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} too many visible. Hide some to save.'**
+  String hiddenOver(int count);
+
+  /// Over-limit manager save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get hiddenSave;
+
+  /// Snackbar after a swap.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved. Publish to update your menu.'**
+  String get hiddenSaved;
+
+  /// Downgrade confirm button.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch to Free now'**
+  String get hiddenConfirmDowngrade;
+
+  /// Downgrade dialog title.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch to Free?'**
+  String get hiddenDowngradeConfirmTitle;
+
+  /// Downgrade dialog body.
+  ///
+  /// In en, this message translates to:
+  /// **'Your paid plan ends now and is not refunded. The hidden content leaves your menu at once.'**
+  String get hiddenDowngradeConfirmBody;
+
+  /// Snackbar after downgrade.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re on the Free plan now.'**
+  String get hiddenDowngraded;
+
+  /// Over-limit manager: empty.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing is hidden.'**
+  String get hiddenNone;
+
+  /// Theme gallery: premium on Free (M10).
+  ///
+  /// In en, this message translates to:
+  /// **'Premium theme'**
+  String get themePremiumLockedTitle;
+
+  /// Theme gallery: premium on Free.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} is part of Pro. Upgrade to use premium themes.'**
+  String themePremiumLockedBody(String name);
+
+  /// QR screen: logo switch on Free (M10).
+  ///
+  /// In en, this message translates to:
+  /// **'Adding your logo to the QR code is part of Pro.'**
+  String get qrLogoPro;
+
+  /// Button to the plan page.
+  ///
+  /// In en, this message translates to:
+  /// **'See plans'**
+  String get seePlans;
+
+  /// Publish problem premium-theme (M10).
+  ///
+  /// In en, this message translates to:
+  /// **'Your theme is a premium theme. Choose a standard theme, or upgrade to Pro.'**
+  String get problemPremiumTheme;
+
+  /// Owner notice (FR-099).
+  ///
+  /// In en, this message translates to:
+  /// **'Your account is suspended'**
+  String get blockedSuspendedTitle;
+
+  /// Owner notice (FR-099).
+  ///
+  /// In en, this message translates to:
+  /// **'You can\'t make changes while the account is suspended. Customers see a \"temporarily unavailable\" page.'**
+  String get blockedSuspendedBody;
+
+  /// Owner notice (FR-099).
+  ///
+  /// In en, this message translates to:
+  /// **'Your account is deactivated'**
+  String get blockedDeactivatedTitle;
+
+  /// Owner notice (FR-099).
+  ///
+  /// In en, this message translates to:
+  /// **'Your menu is no longer available. The account can be reactivated within 90 days of deactivation.'**
+  String get blockedDeactivatedBody;
+
+  /// Owner notice support line.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact EazySuvai support: {email}'**
+  String blockedContact(String email);
+
+  /// Settings entry and page title (M12).
+  ///
+  /// In en, this message translates to:
+  /// **'Account'**
+  String get accountTitle;
+
+  /// Settings entry subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Export your menu, delete your account'**
+  String get accountSubtitle;
+
+  /// Account section (FR-105).
+  ///
+  /// In en, this message translates to:
+  /// **'Export your menu'**
+  String get exportTitle;
+
+  /// Account help.
+  ///
+  /// In en, this message translates to:
+  /// **'Download every category and item with prices, as a spreadsheet (CSV) or a data file (JSON).'**
+  String get exportHelp;
+
+  /// Button.
+  ///
+  /// In en, this message translates to:
+  /// **'Download CSV'**
+  String get exportCsv;
+
+  /// Button.
+  ///
+  /// In en, this message translates to:
+  /// **'Download JSON'**
+  String get exportJson;
+
+  /// Snackbar.
+  ///
+  /// In en, this message translates to:
+  /// **'{file} is ready'**
+  String exportDone(String file);
+
+  /// Account section and page title (FR-105).
+  ///
+  /// In en, this message translates to:
+  /// **'Delete account'**
+  String get deleteTitle;
+
+  /// Account help.
+  ///
+  /// In en, this message translates to:
+  /// **'Your menu goes offline at once. Everything is deleted after 90 days; until then support can reopen the account.'**
+  String get deleteHelp;
+
+  /// Button.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete my account…'**
+  String get deleteStart;
+
+  /// Delete flow step 1.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep a copy'**
+  String get deleteStepExport;
+
+  /// Delete flow step 1.
+  ///
+  /// In en, this message translates to:
+  /// **'Download your menu before you go. You can\'t get it back after the account is deleted.'**
+  String get deleteExportOffer;
+
+  /// Delete flow button.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get deleteContinue;
+
+  /// Delete flow step 2.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm the restaurant'**
+  String get deleteStepName;
+
+  /// Delete flow step 2.
+  ///
+  /// In en, this message translates to:
+  /// **'Type \"{name}\" to confirm.'**
+  String deleteTypeName(String name);
+
+  /// Field.
+  ///
+  /// In en, this message translates to:
+  /// **'Restaurant name'**
+  String get deleteNameLabel;
+
+  /// Delete flow step 3.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get deleteStepConfirm;
+
+  /// Delete flow step 3 (§7.7).
+  ///
+  /// In en, this message translates to:
+  /// **'Your menu and QR code stop working now and customers see \"Menu no longer available\". You are signed out. All data, photos and analytics are deleted after 90 days. Payment records are kept as tax law requires.'**
+  String get deleteConsequences;
+
+  /// Final button.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete my account'**
+  String get deleteConfirm;
+
+  /// Sign-up: text before the Terms of service link.
+  ///
+  /// In en, this message translates to:
+  /// **'By creating an account, you agree to the'**
+  String get legalAgreePrefix;
+
+  /// Sign-up: between the two legal links.
+  ///
+  /// In en, this message translates to:
+  /// **'and the'**
+  String get legalAnd;
+
+  /// Link to the terms page.
+  ///
+  /// In en, this message translates to:
+  /// **'Terms of service'**
+  String get legalTerms;
+
+  /// Link to the privacy policy page.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy policy'**
+  String get legalPrivacy;
 }
 
 class _AppLocalizationsDelegate

@@ -33,3 +33,18 @@ const res = await fetch(urls[path]);
 assert.equal(res.status, 200, `anonymous GET ${urls[path]}`);
 assert.equal(Buffer.from(await res.arrayBuffer()).toString(), "webp");
 console.log("check-storage-urls: ok", urls[path]);
+
+// M12: the purge's Storage helpers (list image folders, delete a prefix).
+const { storagePurgeDeps } = require("../lib/lifecycle/index.js");
+const purge = storagePurgeDeps();
+for (const name of ["restaurants/check2/images/a/w320.webp", "restaurants/check2/images/a/w640.webp", "restaurants/check2/images/b/w320.webp"]) {
+  await getStorage().bucket().file(name).save(Buffer.from("x"), { contentType: "image/webp" });
+}
+let folders = (await purge.listImageFolders("check2")).map((f) => f.folder).sort();
+assert.deepEqual(folders, ["restaurants/check2/images/a/", "restaurants/check2/images/b/"]);
+await purge.deletePrefix("restaurants/check2/images/a/");
+folders = (await purge.listImageFolders("check2")).map((f) => f.folder);
+assert.deepEqual(folders, ["restaurants/check2/images/b/"]);
+await purge.deletePrefix("restaurants/check2/");
+assert.deepEqual(await purge.listImageFolders("check2"), []);
+console.log("check-storage-purge: ok");

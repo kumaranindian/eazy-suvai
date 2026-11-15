@@ -1,0 +1,38 @@
+{
+  "displayName": "Public menu: down",
+  "documentation": {
+    "content": "The sample menu failed its uptime check from 2 or more regions for 2 minutes (FRD §7.4: 99.9 % monthly).",
+    "mimeType": "text/markdown"
+  },
+  "combiner": "OR",
+  "conditions": [
+    {
+      "displayName": "Uptime check failing",
+      "conditionThreshold": {
+        "filter": "metric.type=\"monitoring.googleapis.com/uptime_check/check_passed\" AND resource.type=\"uptime_url\" AND resource.label.host=\"__HOST__\"",
+        "aggregations": [
+          {
+            "alignmentPeriod": "60s",
+            "perSeriesAligner": "ALIGN_NEXT_OLDER",
+            "crossSeriesReducer": "REDUCE_COUNT_FALSE",
+            "groupByFields": [
+              "resource.label.host"
+            ]
+          }
+        ],
+        "comparison": "COMPARISON_GT",
+        "thresholdValue": 1,
+        "duration": "120s",
+        "trigger": {
+          "count": 1
+        }
+      }
+    }
+  ],
+  "notificationChannels": [
+    "__CHANNEL__"
+  ],
+  "alertStrategy": {
+    "autoClose": "1800s"
+  }
+}

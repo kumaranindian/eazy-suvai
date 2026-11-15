@@ -6,6 +6,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'l10n/generated/app_localizations.dart';
 import 'router/app_router.dart';
 
+/// Forces a text direction for the whole app (M13 QA: the RTL readiness
+/// test, FRD §6.3). Null in the app: the locale decides.
+final textDirectionOverrideProvider = Provider<TextDirection?>((ref) => null);
+
 class OwnerApp extends ConsumerWidget {
   const OwnerApp({super.key});
 
@@ -24,5 +28,11 @@ class OwnerApp extends ConsumerWidget {
       GlobalCupertinoLocalizations.delegate,
     ],
     supportedLocales: AppLocalizations.supportedLocales,
+    builder: (context, child) {
+      final direction = ref.watch(textDirectionOverrideProvider);
+      return direction == null
+          ? child!
+          : Directionality(textDirection: direction, child: child!);
+    },
   );
 }

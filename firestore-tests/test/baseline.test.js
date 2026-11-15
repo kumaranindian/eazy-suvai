@@ -20,6 +20,10 @@ const SEED = {
   [`restaurants/${RID}/versions/1`]: { n: 1 },
   [`restaurants/${RID}/versions/1/private/source`]: { items: [] },
   [`restaurants/${RID}/live/availability`]: { items: { i1: true } },
+  [`restaurants/${RID}/analyticsDaily/2026-11-15`]: { views: 3 },
+  [`restaurants/${RID}/payments/p1`]: { amountMinor: 100 },
+  [`restaurants/${RID}/subscriptionHistory/h1`]: { action: "activate" },
+  [`mail/m1`]: { to: "owner@example.com" },
   [`slugs/saravana-bhavan`]: { restaurantId: RID, current: true },
   [`qrCodes/abc123`]: { restaurantId: RID, kind: "restaurant" },
   [`plans/free`]: { name: "Free", isFree: true, active: true },
@@ -62,7 +66,7 @@ const callers = {
 
 // Paths each caller may read, opened by a module (M01: accounts.test.js,
 // M03: restaurant-profile.test.js, M04: menu.test.js, M05: theme.test.js,
-// M06: publishing.test.js).
+// M06: publishing.test.js, M09: analytics.test.js).
 // Everything else stays denied.
 const OPENED = {
   "verified owner": [
@@ -71,17 +75,19 @@ const OPENED = {
     `restaurants/${RID}/categories/c1`,
     `restaurants/${RID}/items/i1`,
     `restaurants/${RID}/versions/1`,
+    `restaurants/${RID}/analyticsDaily/2026-11-15`,
     "dietaryLabels/vegetarian",
     "itemTags/spicy",
     "themes/saffron",
     "config/platform",
+    "plans/free",
   ],
 };
 
 // Collections each caller may list (M04: menu.test.js, M05: theme.test.js,
 // M06: publishing.test.js).
 const OPENED_LISTS = {
-  "verified owner": [`restaurants/${RID}/items`, `restaurants/${RID}/versions`, "dietaryLabels", "itemTags", "themes"],
+  "verified owner": [`restaurants/${RID}/items`, `restaurants/${RID}/versions`, `restaurants/${RID}/analyticsDaily`, "dietaryLabels", "itemTags", "themes", "plans"],
 };
 
 describe("Firestore deny-all baseline", () => {
@@ -101,7 +107,8 @@ describe("Firestore deny-all baseline", () => {
           "users", "restaurants", "slugs", "qrCodes", "plans", "auditLogs",
           "analyticsEvents", "upgradeRequests", `restaurants/${RID}/items`,
           "dietaryLabels", "itemTags", "themes", "config", `restaurants/${RID}/versions`,
-          `restaurants/${RID}/versions/1/private`,
+          `restaurants/${RID}/versions/1/private`, `restaurants/${RID}/analyticsDaily`, "stats",
+          `restaurants/${RID}/payments`, `restaurants/${RID}/subscriptionHistory`, "mail",
         ]) {
           if (OPENED_LISTS[who]?.includes(name)) continue;
           await assertFails(getDocs(collection(db, name)));

@@ -1168,10 +1168,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get planTitle => 'Plans';
 
   @override
-  String get planComingSoon =>
-      'Upgrading from the app is coming soon. Contact EazySuvai support to change your plan.';
-
-  @override
   String get themeTitle => 'Theme';
 
   @override
@@ -1861,4 +1857,455 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get qrClose => 'Close';
+
+  @override
+  String get navAnalytics => 'Analytics';
+
+  @override
+  String get analyticsRange7 => '7 days';
+
+  @override
+  String get analyticsRange30 => '30 days';
+
+  @override
+  String get analyticsRangeCustom => 'Custom';
+
+  @override
+  String analyticsRangeLabel(String start, String end) {
+    return '$start – $end';
+  }
+
+  @override
+  String get analyticsViews => 'Menu views';
+
+  @override
+  String get analyticsQrVisits => 'QR visits';
+
+  @override
+  String get analyticsQrShare => 'From the QR code';
+
+  @override
+  String get analyticsItemOpens => 'Item interest';
+
+  @override
+  String get analyticsChartTitle => 'Daily views';
+
+  @override
+  String analyticsChartSemantics(int views, int qr, String start, String end) {
+    return 'Chart of daily views: $views views and $qr QR visits from $start to $end.';
+  }
+
+  @override
+  String get analyticsTopCategories => 'Top categories';
+
+  @override
+  String get analyticsTopItems => 'Top items';
+
+  @override
+  String get analyticsTopEmpty => 'Nothing yet in this period.';
+
+  @override
+  String analyticsTaps(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count taps',
+      one: '1 tap',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String analyticsOpens(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count opens',
+      one: '1 open',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get analyticsRemoved => 'Removed from the menu';
+
+  @override
+  String get analyticsMonthly => 'Monthly totals';
+
+  @override
+  String analyticsMonthRow(int views, int qr) {
+    return '$views views · $qr QR visits';
+  }
+
+  @override
+  String get analyticsEmptyTitle => 'No visits in this period';
+
+  @override
+  String get analyticsEmptyMessage =>
+      'Share your QR code or menu link and visits will show here.';
+
+  @override
+  String get analyticsEmptyAction => 'QR & share';
+
+  @override
+  String get analyticsNotPublished =>
+      'Publish your menu to start counting visits.';
+
+  @override
+  String get analyticsUpgradeTitle => 'See more history on Pro';
+
+  @override
+  String analyticsUpgradeMessage(int days) {
+    return 'Your plan shows the last $days days. Upgrade to see up to a year.';
+  }
+
+  @override
+  String get analyticsUpgradeAction => 'See plans';
+
+  @override
+  String get analyticsPrivacyNote =>
+      'Counted without cookies or personal data. A visitor\'s views count once every 30 minutes, and bots are left out.';
+
+  @override
+  String analyticsLocked(String label) {
+    return '$label (Pro)';
+  }
+
+  @override
+  String get planCurrent => 'Your plan';
+
+  @override
+  String planFreeForever(String plan) {
+    return '$plan · never expires';
+  }
+
+  @override
+  String planActiveUntil(String plan, String date) {
+    return '$plan · paid until $date';
+  }
+
+  @override
+  String planGraceUntil(String plan, String expired, String date) {
+    return '$plan expired on $expired. Everything keeps working until $date.';
+  }
+
+  @override
+  String get planUsage => 'Usage';
+
+  @override
+  String planUsageItems(int count, String max) {
+    return 'Items: $count of $max';
+  }
+
+  @override
+  String planUsageCategories(int count, String max) {
+    return 'Categories: $count of $max';
+  }
+
+  @override
+  String get planUnlimited => 'unlimited';
+
+  @override
+  String get planCompare => 'Plans';
+
+  @override
+  String get planCurrentBadge => 'Current plan';
+
+  @override
+  String planFeatureItems(int count) {
+    return 'Up to $count items';
+  }
+
+  @override
+  String planFeatureCategories(int count) {
+    return 'Up to $count categories';
+  }
+
+  @override
+  String get planFeatureCategoriesUnlimited => 'Unlimited categories';
+
+  @override
+  String get planFeatureThemesAll => 'All themes, including premium';
+
+  @override
+  String get planFeatureThemesBasic => '2 standard themes';
+
+  @override
+  String planFeatureAnalytics(int days) {
+    return '$days days of analytics history';
+  }
+
+  @override
+  String get planFeatureQrLogo => 'Your logo in the QR code';
+
+  @override
+  String get planFeatureNoQrLogo => 'Plain QR code';
+
+  @override
+  String get planFeatureNoBranding => 'No \"Powered by EazySuvai\" footer';
+
+  @override
+  String get planFeatureBranding => '\"Powered by EazySuvai\" footer';
+
+  @override
+  String planRequest(String plan) {
+    return 'Request $plan';
+  }
+
+  @override
+  String planRequestTitle(String plan) {
+    return 'Request $plan';
+  }
+
+  @override
+  String planRequestBody(String plan) {
+    return 'We\'ll contact you with payment details. Once we receive the payment, $plan starts at once. There is no online payment yet.';
+  }
+
+  @override
+  String get planBillingMonthly => 'Monthly';
+
+  @override
+  String get planBillingAnnual => 'Annual';
+
+  @override
+  String get planRequestSend => 'Send request';
+
+  @override
+  String get planRequestSent => 'Request sent. We\'ll contact you soon.';
+
+  @override
+  String get planRequestPending =>
+      'Upgrade requested – we\'ll contact you with payment details.';
+
+  @override
+  String planPrice(String price, String period) {
+    return '$price / $period';
+  }
+
+  @override
+  String get planPriceOnRequest => 'Price on request';
+
+  @override
+  String get planSwitchToFree => 'Switch to Free';
+
+  @override
+  String get planManageHidden => 'Choose hidden items';
+
+  @override
+  String bannerGrace(String plan, String date) {
+    return 'Your $plan plan has expired. Renew before $date to keep your Pro features.';
+  }
+
+  @override
+  String bannerExpiring(String plan, int days, String date) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days days',
+      one: '1 day',
+    );
+    return '$plan ends in $_temp0 ($date).';
+  }
+
+  @override
+  String bannerOverLimit(int count) {
+    return 'Your menu is over the plan limit: $count hidden. They are kept, not deleted.';
+  }
+
+  @override
+  String get bannerRestored =>
+      'Hidden content is back in your draft. Publish to show it.';
+
+  @override
+  String get bannerRenew => 'Renew';
+
+  @override
+  String get bannerManage => 'Manage';
+
+  @override
+  String get bannerPublish => 'Publish';
+
+  @override
+  String get hiddenTitle => 'Hidden items';
+
+  @override
+  String get hiddenDowngradeTitle => 'Switch to Free';
+
+  @override
+  String hiddenIntro(String max) {
+    return 'Your plan shows up to $max items. Choose which ones customers see; the others are kept, not deleted.';
+  }
+
+  @override
+  String hiddenDowngradeIntro(int max, int cats) {
+    return 'Free shows up to $max items and $cats categories. Choose what stays visible. The rest is hidden, not deleted, and comes back if you upgrade again.';
+  }
+
+  @override
+  String hiddenVisible(int count, String max) {
+    return 'Visible ($count of $max)';
+  }
+
+  @override
+  String hiddenHidden(int count) {
+    return 'Hidden ($count)';
+  }
+
+  @override
+  String get hiddenCategories => 'Categories';
+
+  @override
+  String get hiddenItems => 'Items';
+
+  @override
+  String hiddenShow(String name) {
+    return 'Show $name';
+  }
+
+  @override
+  String hiddenHide(String name) {
+    return 'Hide $name';
+  }
+
+  @override
+  String hiddenOver(int count) {
+    return '$count too many visible. Hide some to save.';
+  }
+
+  @override
+  String get hiddenSave => 'Save';
+
+  @override
+  String get hiddenSaved => 'Saved. Publish to update your menu.';
+
+  @override
+  String get hiddenConfirmDowngrade => 'Switch to Free now';
+
+  @override
+  String get hiddenDowngradeConfirmTitle => 'Switch to Free?';
+
+  @override
+  String get hiddenDowngradeConfirmBody =>
+      'Your paid plan ends now and is not refunded. The hidden content leaves your menu at once.';
+
+  @override
+  String get hiddenDowngraded => 'You\'re on the Free plan now.';
+
+  @override
+  String get hiddenNone => 'Nothing is hidden.';
+
+  @override
+  String get themePremiumLockedTitle => 'Premium theme';
+
+  @override
+  String themePremiumLockedBody(String name) {
+    return '$name is part of Pro. Upgrade to use premium themes.';
+  }
+
+  @override
+  String get qrLogoPro => 'Adding your logo to the QR code is part of Pro.';
+
+  @override
+  String get seePlans => 'See plans';
+
+  @override
+  String get problemPremiumTheme =>
+      'Your theme is a premium theme. Choose a standard theme, or upgrade to Pro.';
+
+  @override
+  String get blockedSuspendedTitle => 'Your account is suspended';
+
+  @override
+  String get blockedSuspendedBody =>
+      'You can\'t make changes while the account is suspended. Customers see a \"temporarily unavailable\" page.';
+
+  @override
+  String get blockedDeactivatedTitle => 'Your account is deactivated';
+
+  @override
+  String get blockedDeactivatedBody =>
+      'Your menu is no longer available. The account can be reactivated within 90 days of deactivation.';
+
+  @override
+  String blockedContact(String email) {
+    return 'Contact EazySuvai support: $email';
+  }
+
+  @override
+  String get accountTitle => 'Account';
+
+  @override
+  String get accountSubtitle => 'Export your menu, delete your account';
+
+  @override
+  String get exportTitle => 'Export your menu';
+
+  @override
+  String get exportHelp =>
+      'Download every category and item with prices, as a spreadsheet (CSV) or a data file (JSON).';
+
+  @override
+  String get exportCsv => 'Download CSV';
+
+  @override
+  String get exportJson => 'Download JSON';
+
+  @override
+  String exportDone(String file) {
+    return '$file is ready';
+  }
+
+  @override
+  String get deleteTitle => 'Delete account';
+
+  @override
+  String get deleteHelp =>
+      'Your menu goes offline at once. Everything is deleted after 90 days; until then support can reopen the account.';
+
+  @override
+  String get deleteStart => 'Delete my account…';
+
+  @override
+  String get deleteStepExport => 'Keep a copy';
+
+  @override
+  String get deleteExportOffer =>
+      'Download your menu before you go. You can\'t get it back after the account is deleted.';
+
+  @override
+  String get deleteContinue => 'Continue';
+
+  @override
+  String get deleteStepName => 'Confirm the restaurant';
+
+  @override
+  String deleteTypeName(String name) {
+    return 'Type \"$name\" to confirm.';
+  }
+
+  @override
+  String get deleteNameLabel => 'Restaurant name';
+
+  @override
+  String get deleteStepConfirm => 'Delete';
+
+  @override
+  String get deleteConsequences =>
+      'Your menu and QR code stop working now and customers see \"Menu no longer available\". You are signed out. All data, photos and analytics are deleted after 90 days. Payment records are kept as tax law requires.';
+
+  @override
+  String get deleteConfirm => 'Delete my account';
+
+  @override
+  String get legalAgreePrefix => 'By creating an account, you agree to the';
+
+  @override
+  String get legalAnd => 'and the';
+
+  @override
+  String get legalTerms => 'Terms of service';
+
+  @override
+  String get legalPrivacy => 'Privacy policy';
 }

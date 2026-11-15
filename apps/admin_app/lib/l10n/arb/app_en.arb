@@ -1,17 +1,29 @@
 {
   "@@locale": "en",
   "appTitle": "EazySuvai Admin",
-  "@appTitle": { "description": "Product name shown in the browser tab and app bar." },
+  "@appTitle": {
+    "description": "Product name shown in the browser tab and app bar."
+  },
   "navDashboard": "Dashboard",
-  "@navDashboard": { "description": "Navigation: platform dashboard." },
+  "@navDashboard": {
+    "description": "Navigation: platform dashboard."
+  },
   "navRestaurants": "Restaurants",
-  "@navRestaurants": { "description": "Navigation: list of restaurants on the platform." },
+  "@navRestaurants": {
+    "description": "Navigation: list of restaurants on the platform."
+  },
   "navPlans": "Plans",
-  "@navPlans": { "description": "Navigation: subscription plans." },
+  "@navPlans": {
+    "description": "Navigation: subscription plans."
+  },
   "navSettings": "Settings",
-  "@navSettings": { "description": "Navigation: platform configuration." },
+  "@navSettings": {
+    "description": "Navigation: platform configuration."
+  },
   "placeholderMessage": "This screen is coming soon.",
-  "@placeholderMessage": { "description": "Body of a placeholder screen that a later module replaces." },
+  "@placeholderMessage": {
+    "description": "Body of a placeholder screen that a later module replaces."
+  },
   "layoutLabel": "Layout: {layout}",
   "@layoutLabel": {
     "description": "Shows the current responsive layout class on placeholder screens.",
@@ -22,61 +34,1024 @@
     }
   },
   "layoutCompact": "compact",
-  "@layoutCompact": { "description": "Responsive layout name below 600 px." },
+  "@layoutCompact": {
+    "description": "Responsive layout name below 600 px."
+  },
   "layoutMedium": "medium",
-  "@layoutMedium": { "description": "Responsive layout name from 600 to 1023 px." },
+  "@layoutMedium": {
+    "description": "Responsive layout name from 600 to 1023 px."
+  },
   "layoutExpanded": "expanded",
-  "@layoutExpanded": { "description": "Responsive layout name from 1024 px." },
+  "@layoutExpanded": {
+    "description": "Responsive layout name from 1024 px."
+  },
   "signInTitle": "Sign in",
-  "@signInTitle": { "description": "Title of the sign-in screen." },
+  "@signInTitle": {
+    "description": "Title of the sign-in screen."
+  },
   "notFoundTitle": "Page not found",
-  "@notFoundTitle": { "description": "Title shown for an unknown route." },
+  "@notFoundTitle": {
+    "description": "Title shown for an unknown route."
+  },
   "actionGoHome": "Go to dashboard",
-  "@actionGoHome": { "description": "Button that returns to the dashboard." },
+  "@actionGoHome": {
+    "description": "Button that returns to the dashboard."
+  },
   "authTagline": "Platform administration. Two-factor sign-in is required.",
-  "@authTagline": { "description": "Tagline in the brand panel of the admin sign-in screen." },
+  "@authTagline": {
+    "description": "Tagline in the brand panel of the admin sign-in screen."
+  },
   "signInSubtitle": "Sign in with your administrator account.",
-  "@signInSubtitle": { "description": "Subtitle of the admin sign-in screen." },
+  "@signInSubtitle": {
+    "description": "Subtitle of the admin sign-in screen."
+  },
   "fieldEmail": "Email",
-  "@fieldEmail": { "description": "Email field label." },
+  "@fieldEmail": {
+    "description": "Email field label."
+  },
   "fieldPassword": "Password",
-  "@fieldPassword": { "description": "Password field label." },
+  "@fieldPassword": {
+    "description": "Password field label."
+  },
   "actionSignIn": "Sign in",
-  "@actionSignIn": { "description": "Button that signs in." },
+  "@actionSignIn": {
+    "description": "Button that signs in."
+  },
   "actionSignOut": "Sign out",
-  "@actionSignOut": { "description": "Signs the user out." },
+  "@actionSignOut": {
+    "description": "Signs the user out."
+  },
   "actionCancel": "Cancel",
-  "@actionCancel": { "description": "Abandons the code step and returns to email and password." },
+  "@actionCancel": {
+    "description": "Abandons the code step and returns to email and password."
+  },
   "mfaCodeTitle": "Enter your code",
-  "@mfaCodeTitle": { "description": "Title of the two-factor code step." },
+  "@mfaCodeTitle": {
+    "description": "Title of the two-factor code step."
+  },
   "mfaCodeSubtitle": "Open your authenticator app and enter the 6-digit code for EazySuvai Admin.",
-  "@mfaCodeSubtitle": { "description": "Subtitle of the two-factor code step." },
+  "@mfaCodeSubtitle": {
+    "description": "Subtitle of the two-factor code step."
+  },
   "fieldMfaCode": "6-digit code",
-  "@fieldMfaCode": { "description": "Label of the authenticator code field." },
+  "@fieldMfaCode": {
+    "description": "Label of the authenticator code field."
+  },
   "validationMfaCode": "Enter the 6 digits from your authenticator app.",
-  "@validationMfaCode": { "description": "Validation: the TOTP code must be 6 digits." },
+  "@validationMfaCode": {
+    "description": "Validation: the TOTP code must be 6 digits."
+  },
   "actionVerify": "Verify",
-  "@actionVerify": { "description": "Submits the authenticator code." },
+  "@actionVerify": {
+    "description": "Submits the authenticator code."
+  },
   "mfaSetupTitle": "Set up two-factor sign-in",
-  "@mfaSetupTitle": { "description": "Title of the TOTP enrolment screen (FR-084)." },
+  "@mfaSetupTitle": {
+    "description": "Title of the TOTP enrolment screen (FR-084)."
+  },
   "mfaSetupSubtitle": "Administrators must use an authenticator app, such as Google Authenticator or Microsoft Authenticator.",
-  "@mfaSetupSubtitle": { "description": "Subtitle of the TOTP enrolment screen." },
+  "@mfaSetupSubtitle": {
+    "description": "Subtitle of the TOTP enrolment screen."
+  },
   "mfaSetupStep1": "1. Scan this QR code with your authenticator app.",
-  "@mfaSetupStep1": { "description": "Enrolment step 1." },
+  "@mfaSetupStep1": {
+    "description": "Enrolment step 1."
+  },
   "mfaSetupStep2": "Or enter this key by hand:",
-  "@mfaSetupStep2": { "description": "Text before the manual TOTP key." },
+  "@mfaSetupStep2": {
+    "description": "Text before the manual TOTP key."
+  },
   "mfaSetupStep3": "2. Enter the 6-digit code the app shows.",
-  "@mfaSetupStep3": { "description": "Enrolment step 3." },
+  "@mfaSetupStep3": {
+    "description": "Enrolment step 3."
+  },
   "mfaQrLabel": "QR code for your authenticator app",
-  "@mfaQrLabel": { "description": "Accessibility label of the TOTP QR code." },
+  "@mfaQrLabel": {
+    "description": "Accessibility label of the TOTP QR code."
+  },
   "actionCopyKey": "Copy key",
-  "@actionCopyKey": { "description": "Copies the TOTP secret to the clipboard." },
+  "@actionCopyKey": {
+    "description": "Copies the TOTP secret to the clipboard."
+  },
   "mfaKeyCopied": "Key copied.",
-  "@mfaKeyCopied": { "description": "Shown after copying the TOTP key." },
+  "@mfaKeyCopied": {
+    "description": "Shown after copying the TOTP key."
+  },
   "actionEnable": "Turn on two-factor sign-in",
-  "@actionEnable": { "description": "Confirms TOTP enrolment." },
+  "@actionEnable": {
+    "description": "Confirms TOTP enrolment."
+  },
   "mfaEnrolled": "Two-factor sign-in is on. Sign in again with your code.",
-  "@mfaEnrolled": { "description": "Shown on the sign-in screen after enrolment." },
+  "@mfaEnrolled": {
+    "description": "Shown on the sign-in screen after enrolment."
+  },
   "actionStartSetup": "Start setup",
-  "@actionStartSetup": { "description": "Generates a new TOTP secret." }
+  "@actionStartSetup": {
+    "description": "Generates a new TOTP secret."
+  },
+  "navUpgrades": "Upgrades",
+  "@navUpgrades": {
+    "description": "Navigation: upgrade requests (M10)."
+  },
+  "readOnlyNotice": "Read-only on small screens. Use a tablet or computer to make changes.",
+  "@readOnlyNotice": {
+    "description": "Admin app below 600 px (M11)."
+  },
+  "upgradesPending": "Pending",
+  "@upgradesPending": {
+    "description": "Upgrade request status."
+  },
+  "upgradesActivated": "Activated",
+  "@upgradesActivated": {
+    "description": "Upgrade request status."
+  },
+  "upgradesClosed": "Declined",
+  "@upgradesClosed": {
+    "description": "Upgrade request status."
+  },
+  "upgradesEmpty": "No requests here.",
+  "@upgradesEmpty": {
+    "description": "Upgrade requests: empty."
+  },
+  "colRestaurant": "Restaurant",
+  "@colRestaurant": {
+    "description": "Table column."
+  },
+  "colContact": "Contact",
+  "@colContact": {
+    "description": "Table column."
+  },
+  "colPlan": "Plan",
+  "@colPlan": {
+    "description": "Table column."
+  },
+  "colBilling": "Billing",
+  "@colBilling": {
+    "description": "Table column."
+  },
+  "colRequested": "Requested",
+  "@colRequested": {
+    "description": "Table column."
+  },
+  "colActions": "Actions",
+  "@colActions": {
+    "description": "Table column."
+  },
+  "billingMonthly": "Monthly",
+  "@billingMonthly": {
+    "description": "Billing period."
+  },
+  "billingAnnual": "Annual",
+  "@billingAnnual": {
+    "description": "Billing period."
+  },
+  "recordPayment": "Record payment",
+  "@recordPayment": {
+    "description": "Button (FR-106)."
+  },
+  "decline": "Decline",
+  "@decline": {
+    "description": "Button."
+  },
+  "recordPaymentTitle": "Record payment – {name}",
+  "@recordPaymentTitle": {
+    "description": "Dialog title.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "recordPaymentPlan": "Plan: {plan}",
+  "@recordPaymentPlan": {
+    "description": "Dialog line.",
+    "placeholders": {
+      "plan": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentAmount": "Amount",
+  "@paymentAmount": {
+    "description": "Field."
+  },
+  "paymentAmountInvalid": "Enter the amount received.",
+  "@paymentAmountInvalid": {
+    "description": "Validation."
+  },
+  "paymentCurrency": "Currency",
+  "@paymentCurrency": {
+    "description": "Field."
+  },
+  "paymentMethod": "Method",
+  "@paymentMethod": {
+    "description": "Field."
+  },
+  "paymentMethodName": "{method, select, bankTransfer{Bank transfer} upi{UPI} cash{Cash} cheque{Cheque} card{Card} other{Other}}",
+  "@paymentMethodName": {
+    "description": "Payment method names.",
+    "placeholders": {
+      "method": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentReference": "Reference (transaction or receipt number)",
+  "@paymentReference": {
+    "description": "Field."
+  },
+  "paymentPaidAt": "Paid on",
+  "@paymentPaidAt": {
+    "description": "Field."
+  },
+  "paymentStartAt": "Plan starts",
+  "@paymentStartAt": {
+    "description": "Field."
+  },
+  "paymentEndAt": "Plan ends",
+  "@paymentEndAt": {
+    "description": "Field."
+  },
+  "paymentNote": "Note (optional, kept in the audit log)",
+  "@paymentNote": {
+    "description": "Field."
+  },
+  "recordAndActivate": "Record and activate",
+  "@recordAndActivate": {
+    "description": "Dialog button."
+  },
+  "paymentRecorded": "Payment recorded. The plan is active and the owner has been emailed.",
+  "@paymentRecorded": {
+    "description": "Snackbar."
+  },
+  "declineTitle": "Decline request",
+  "@declineTitle": {
+    "description": "Dialog title."
+  },
+  "reasonLabel": "Reason",
+  "@reasonLabel": {
+    "description": "Field: audit reason."
+  },
+  "reasonHelp": "Required. Saved in the audit log.",
+  "@reasonHelp": {
+    "description": "Field help."
+  },
+  "requestDeclined": "Request declined.",
+  "@requestDeclined": {
+    "description": "Snackbar."
+  },
+  "fieldRequired": "Required.",
+  "@fieldRequired": {
+    "description": "Validation."
+  },
+  "navCatalog": "Catalog",
+  "@navCatalog": {
+    "description": "Navigation: labels, tags and themes."
+  },
+  "edit": "Edit",
+  "@edit": {
+    "description": "Button."
+  },
+  "add": "Add",
+  "@add": {
+    "description": "Button."
+  },
+  "save": "Save",
+  "@save": {
+    "description": "Button."
+  },
+  "saved": "Saved.",
+  "@saved": {
+    "description": "Snackbar."
+  },
+  "none": "None yet.",
+  "@none": {
+    "description": "Empty list."
+  },
+  "premium": "Premium",
+  "@premium": {
+    "description": "Theme flag."
+  },
+  "retired": "Retired",
+  "@retired": {
+    "description": "Label, tag or theme flag (FR-104)."
+  },
+  "retiredHelp": "Hidden from new choices; existing menus keep it.",
+  "@retiredHelp": {
+    "description": "Retired help (FR-104)."
+  },
+  "planSummary": "Items {items} · categories {categories} · analytics {days} days",
+  "@planSummary": {
+    "description": "Plan card.",
+    "placeholders": {
+      "items": {
+        "type": "String"
+      },
+      "categories": {
+        "type": "String"
+      },
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "planPrices": "Prices (monthly / annual, minor units): {prices}",
+  "@planPrices": {
+    "description": "Plan card.",
+    "placeholders": {
+      "prices": {
+        "type": "String"
+      }
+    }
+  },
+  "planInactive": "Inactive: not offered to owners.",
+  "@planInactive": {
+    "description": "Plan card."
+  },
+  "pricesFormat": "Write one currency per line: code, monthly, annual (for example INR 49900 499900).",
+  "@pricesFormat": {
+    "description": "Plan editor validation."
+  },
+  "pricesHelp": "One per line: INR 49900 499900 (minor units: 49900 = ₹499.00).",
+  "@pricesHelp": {
+    "description": "Plan editor help."
+  },
+  "editPlan": "Edit plan {id}",
+  "@editPlan": {
+    "description": "Dialog title.",
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "fieldName": "Name",
+  "@fieldName": {
+    "description": "Field."
+  },
+  "fieldMaxItems": "Maximum items",
+  "@fieldMaxItems": {
+    "description": "Field."
+  },
+  "fieldMaxCategories": "Maximum categories",
+  "@fieldMaxCategories": {
+    "description": "Field."
+  },
+  "emptyUnlimited": "Leave empty for unlimited.",
+  "@emptyUnlimited": {
+    "description": "Field help."
+  },
+  "fieldAnalyticsDays": "Analytics history (days)",
+  "@fieldAnalyticsDays": {
+    "description": "Field."
+  },
+  "fieldPremiumThemes": "Premium themes",
+  "@fieldPremiumThemes": {
+    "description": "Field."
+  },
+  "fieldQrLogo": "Logo in the QR code",
+  "@fieldQrLogo": {
+    "description": "Field."
+  },
+  "fieldRemoveBranding": "No \"Powered by EazySuvai\" footer",
+  "@fieldRemoveBranding": {
+    "description": "Field."
+  },
+  "fieldActive": "Offered to owners",
+  "@fieldActive": {
+    "description": "Field."
+  },
+  "fieldPrices": "Prices",
+  "@fieldPrices": {
+    "description": "Field."
+  },
+  "applyToSubscribers": "Apply to current subscribers now",
+  "@applyToSubscribers": {
+    "description": "Plan editor (FR-077)."
+  },
+  "applyToSubscribersHelp": "Otherwise the change reaches restaurants at their next plan change.",
+  "@applyToSubscribersHelp": {
+    "description": "Plan editor help (FR-077)."
+  },
+  "tabLabels": "Dietary labels",
+  "@tabLabels": {
+    "description": "Tab."
+  },
+  "tabTags": "Tags",
+  "@tabTags": {
+    "description": "Tab."
+  },
+  "tabThemes": "Themes",
+  "@tabThemes": {
+    "description": "Tab."
+  },
+  "sortOrder": "Order {n}",
+  "@sortOrder": {
+    "description": "List subtitle.",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "addEntry": "Add",
+  "@addEntry": {
+    "description": "Dialog title."
+  },
+  "editEntry": "Edit {name}",
+  "@editEntry": {
+    "description": "Dialog title.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "fieldId": "Id",
+  "@fieldId": {
+    "description": "Field."
+  },
+  "idHelp": "Lower-case letters, digits and dashes. Can't be changed later.",
+  "@idHelp": {
+    "description": "Field help."
+  },
+  "fieldIcon": "Icon",
+  "@fieldIcon": {
+    "description": "Field."
+  },
+  "fieldColor": "Colour (#RRGGBB)",
+  "@fieldColor": {
+    "description": "Field."
+  },
+  "fieldSort": "Order",
+  "@fieldSort": {
+    "description": "Field."
+  },
+  "fieldFont": "Font (Google Fonts family)",
+  "@fieldFont": {
+    "description": "Field."
+  },
+  "fieldLayout": "Layout",
+  "@fieldLayout": {
+    "description": "Field."
+  },
+  "fieldCardLayout": "Card layout",
+  "@fieldCardLayout": {
+    "description": "Field."
+  },
+  "fieldMode": "Mode",
+  "@fieldMode": {
+    "description": "Field."
+  },
+  "previewHeading": "Starters",
+  "@previewHeading": {
+    "description": "Theme preview heading."
+  },
+  "previewBody": "Idli, sambar and chutney",
+  "@previewBody": {
+    "description": "Theme preview text."
+  },
+  "contrastIssues": "{count, plural, =1{1 text colour fails} other{{count} text colours fail}} WCAG AA. The menu would adjust it automatically.",
+  "@contrastIssues": {
+    "description": "Theme editor (FR-060).",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "acceptContrastFixes": "Save anyway, with the automatic fix",
+  "@acceptContrastFixes": {
+    "description": "Theme editor."
+  },
+  "dashRestaurants": "Restaurants",
+  "@dashRestaurants": {
+    "description": "Dashboard tile (FR-085)."
+  },
+  "dashActive": "Active",
+  "@dashActive": {
+    "description": "Dashboard tile."
+  },
+  "dashSuspended": "Suspended",
+  "@dashSuspended": {
+    "description": "Dashboard tile."
+  },
+  "dashDeactivated": "Deactivated",
+  "@dashDeactivated": {
+    "description": "Dashboard tile."
+  },
+  "dashFree": "Free plans",
+  "@dashFree": {
+    "description": "Dashboard tile."
+  },
+  "dashPaid": "Paid plans",
+  "@dashPaid": {
+    "description": "Dashboard tile."
+  },
+  "dashGrace": "In grace",
+  "@dashGrace": {
+    "description": "Dashboard tile."
+  },
+  "dashExpired": "Expired (to date)",
+  "@dashExpired": {
+    "description": "Dashboard tile: paid plans that ran out."
+  },
+  "dashPending": "Upgrade requests",
+  "@dashPending": {
+    "description": "Dashboard tile."
+  },
+  "dashItems": "Menu items",
+  "@dashItems": {
+    "description": "Dashboard tile."
+  },
+  "dashViews": "Menu views",
+  "@dashViews": {
+    "description": "Dashboard tile."
+  },
+  "dashQrVisits": "QR visits",
+  "@dashQrVisits": {
+    "description": "Dashboard tile."
+  },
+  "dashRecent": "Recent sign-ups",
+  "@dashRecent": {
+    "description": "Dashboard card."
+  },
+  "dashRecompute": "Recalculate",
+  "@dashRecompute": {
+    "description": "Dashboard: recompute counters."
+  },
+  "dashRecomputed": "Counters recalculated.",
+  "@dashRecomputed": {
+    "description": "Snackbar."
+  },
+  "dashNoSignups": "No restaurants yet.",
+  "@dashNoSignups": {
+    "description": "Dashboard empty."
+  },
+  "statusName": "{status, select, active{Active} suspended{Suspended} deactivated{Deactivated} deleted{Deleted} other{{status}}}",
+  "@statusName": {
+    "description": "Restaurant status.",
+    "placeholders": {
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "subscriptionStatusName": "{status, select, free{Free} active{Paid} grace{In grace} other{{status}}}",
+  "@subscriptionStatusName": {
+    "description": "Subscription status.",
+    "placeholders": {
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "filterAny": "Any",
+  "@filterAny": {
+    "description": "Filter value."
+  },
+  "searchRestaurants": "Name, slug, email or mobile",
+  "@searchRestaurants": {
+    "description": "Search field (FR-086)."
+  },
+  "filterStatus": "Status",
+  "@filterStatus": {
+    "description": "Filter."
+  },
+  "filterPlan": "Plan",
+  "@filterPlan": {
+    "description": "Filter."
+  },
+  "filterCountry": "Country",
+  "@filterCountry": {
+    "description": "Filter."
+  },
+  "filterDates": "Registered between",
+  "@filterDates": {
+    "description": "Filter."
+  },
+  "noRestaurants": "No restaurants match.",
+  "@noRestaurants": {
+    "description": "Empty search."
+  },
+  "pageNumber": "Page {n}",
+  "@pageNumber": {
+    "description": "Pager.",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "previousPage": "Previous page",
+  "@previousPage": {
+    "description": "Pager tooltip."
+  },
+  "nextPage": "Next page",
+  "@nextPage": {
+    "description": "Pager tooltip."
+  },
+  "colSlug": "Slug",
+  "@colSlug": {
+    "description": "Table column."
+  },
+  "colCountry": "Country",
+  "@colCountry": {
+    "description": "Table column."
+  },
+  "colStatus": "Status",
+  "@colStatus": {
+    "description": "Table column."
+  },
+  "colItems": "Items",
+  "@colItems": {
+    "description": "Table column."
+  },
+  "colRegistered": "Registered",
+  "@colRegistered": {
+    "description": "Table column."
+  },
+  "restaurantDetail": "Restaurant",
+  "@restaurantDetail": {
+    "description": "Detail title while loading."
+  },
+  "statusActionTitle": "{to, select, suspended{Suspend this restaurant?} deactivated{Deactivate this restaurant?} other{Activate this restaurant?}}",
+  "@statusActionTitle": {
+    "description": "Status dialog title (FR-088).",
+    "placeholders": {
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "statusActionMessage": "{to, select, suspended{The owner is signed out and can't log in to edit. The public menu shows \"temporarily unavailable\" (503).} deactivated{The owner is signed out. The menu shows \"no longer available\" (410) and leaves the sitemap. It can be reactivated within 90 days.} other{The owner can sign in again and the menu goes live.}}",
+  "@statusActionMessage": {
+    "description": "Status dialog message (FR-099).",
+    "placeholders": {
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "statusActionLabel": "{to, select, suspended{Suspend} deactivated{Deactivate} reactivate{Reactivate} other{Activate}}",
+  "@statusActionLabel": {
+    "description": "Status button.",
+    "placeholders": {
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "statusChanged": "Status changed and logged.",
+  "@statusChanged": {
+    "description": "Snackbar."
+  },
+  "extendPick": "New expiry date",
+  "@extendPick": {
+    "description": "Date picker help."
+  },
+  "extendTitle": "Extend the subscription",
+  "@extendTitle": {
+    "description": "Reason dialog title (FR-081)."
+  },
+  "extend": "Extend",
+  "@extend": {
+    "description": "Button."
+  },
+  "subscriptionChanged": "Subscription changed and logged.",
+  "@subscriptionChanged": {
+    "description": "Snackbar."
+  },
+  "downgradeTitle": "Move to Free now?",
+  "@downgradeTitle": {
+    "description": "Dialog title."
+  },
+  "downgradeMessage": "Content over the Free limits is hidden (not deleted) and a new version is published. The owner is emailed.",
+  "@downgradeMessage": {
+    "description": "Dialog message (FR-101)."
+  },
+  "downgrade": "Downgrade to Free",
+  "@downgrade": {
+    "description": "Button."
+  },
+  "detailProfile": "Profile",
+  "@detailProfile": {
+    "description": "Detail card."
+  },
+  "detailStatus": "Account status",
+  "@detailStatus": {
+    "description": "Detail card."
+  },
+  "detailSubscription": "Subscription",
+  "@detailSubscription": {
+    "description": "Detail card."
+  },
+  "detailPayments": "Payments",
+  "@detailPayments": {
+    "description": "Detail card (FR-087)."
+  },
+  "detailHistory": "Plan history",
+  "@detailHistory": {
+    "description": "Detail card (FR-087)."
+  },
+  "detailActivity": "Activity",
+  "@detailActivity": {
+    "description": "Detail card (FR-089)."
+  },
+  "fieldOwner": "Owner",
+  "@fieldOwner": {
+    "description": "Field."
+  },
+  "fieldMobile": "Mobile",
+  "@fieldMobile": {
+    "description": "Field."
+  },
+  "fieldCountry": "Country, city",
+  "@fieldCountry": {
+    "description": "Field."
+  },
+  "fieldBusiness": "Business type",
+  "@fieldBusiness": {
+    "description": "Field."
+  },
+  "fieldCurrency": "Currency, time zone",
+  "@fieldCurrency": {
+    "description": "Field."
+  },
+  "fieldMenu": "Categories / items",
+  "@fieldMenu": {
+    "description": "Field."
+  },
+  "notPublished": "not published",
+  "@notPublished": {
+    "description": "Detail."
+  },
+  "publishedVersion": "version {n} on {date}",
+  "@publishedVersion": {
+    "description": "Detail.",
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "fieldQrCode": "QR code",
+  "@fieldQrCode": {
+    "description": "Field."
+  },
+  "fieldRegistered": "Registered",
+  "@fieldRegistered": {
+    "description": "Field."
+  },
+  "fieldLastSignIn": "Last sign-in",
+  "@fieldLastSignIn": {
+    "description": "Field."
+  },
+  "copyLink": "Copy link",
+  "@copyLink": {
+    "description": "Tooltip."
+  },
+  "fieldReason": "Reason",
+  "@fieldReason": {
+    "description": "Field."
+  },
+  "fieldDeactivated": "Deactivated on",
+  "@fieldDeactivated": {
+    "description": "Field."
+  },
+  "fieldStarts": "Starts",
+  "@fieldStarts": {
+    "description": "Field."
+  },
+  "fieldExpires": "Expires",
+  "@fieldExpires": {
+    "description": "Field."
+  },
+  "fieldGraceEnds": "Grace ends",
+  "@fieldGraceEnds": {
+    "description": "Field."
+  },
+  "activitySignIn": "Last sign-in",
+  "@activitySignIn": {
+    "description": "Activity row."
+  },
+  "settingsPlatform": "Platform settings",
+  "@settingsPlatform": {
+    "description": "Settings card."
+  },
+  "fieldReservedSlugs": "Reserved slugs",
+  "@fieldReservedSlugs": {
+    "description": "Field."
+  },
+  "commaSeparated": "Separate with commas.",
+  "@commaSeparated": {
+    "description": "Field help."
+  },
+  "fieldGraceDays": "Grace period (days, 0–30)",
+  "@fieldGraceDays": {
+    "description": "Field (FR-100)."
+  },
+  "graceDaysHelp": "After a paid plan expires, everything keeps working this long.",
+  "@graceDaysHelp": {
+    "description": "Field help."
+  },
+  "fieldFonts": "Fonts owners can choose",
+  "@fieldFonts": {
+    "description": "Field (FR-059)."
+  },
+  "fieldCurrencies": "Currencies",
+  "@fieldCurrencies": {
+    "description": "Field."
+  },
+  "currenciesHelp": "Code=decimals, separated by commas (INR=2, KWD=3).",
+  "@currenciesHelp": {
+    "description": "Field help."
+  },
+  "fieldSupportEmail": "Support email (shown to suspended owners)",
+  "@fieldSupportEmail": {
+    "description": "Field."
+  },
+  "settingsAnnouncement": "Announcement",
+  "@settingsAnnouncement": {
+    "description": "Settings card."
+  },
+  "announcementHelp": "A short banner every owner sees on their dashboard.",
+  "@announcementHelp": {
+    "description": "Settings help."
+  },
+  "fieldAnnouncement": "Text",
+  "@fieldAnnouncement": {
+    "description": "Field."
+  },
+  "levelInfo": "Information",
+  "@levelInfo": {
+    "description": "Level."
+  },
+  "levelWarning": "Warning",
+  "@levelWarning": {
+    "description": "Level."
+  },
+  "showToOwners": "Show to owners",
+  "@showToOwners": {
+    "description": "Switch."
+  },
+  "settingsAdmins": "Administrators",
+  "@settingsAdmins": {
+    "description": "Settings card."
+  },
+  "addAdminHelp": "Add someone who already has an account. They must set up an authenticator app at their next sign-in.",
+  "@addAdminHelp": {
+    "description": "Admins help."
+  },
+  "grantAdmin": "Make admin",
+  "@grantAdmin": {
+    "description": "Button."
+  },
+  "revokeAdmin": "Remove",
+  "@revokeAdmin": {
+    "description": "Button."
+  },
+  "grantAdminTitle": "Make {email} an administrator?",
+  "@grantAdminTitle": {
+    "description": "Dialog title.",
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "revokeAdminTitle": "Remove {email} as administrator?",
+  "@revokeAdminTitle": {
+    "description": "Dialog title.",
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "navAudit": "Audit log",
+  "@navAudit": {
+    "description": "Navigation (M12)."
+  },
+  "auditActor": "Actor (uid)",
+  "@auditActor": {
+    "description": "Filter and column."
+  },
+  "auditAction": "Action (for example restaurant.suspend)",
+  "@auditAction": {
+    "description": "Filter and column."
+  },
+  "auditRestaurant": "Restaurant id",
+  "@auditRestaurant": {
+    "description": "Filter and column."
+  },
+  "auditApply": "Filter",
+  "@auditApply": {
+    "description": "Button."
+  },
+  "auditEmpty": "No entries match.",
+  "@auditEmpty": {
+    "description": "Empty audit log."
+  },
+  "auditTime": "Time",
+  "@auditTime": {
+    "description": "Column."
+  },
+  "auditTarget": "Target",
+  "@auditTarget": {
+    "description": "Detail."
+  },
+  "auditDetails": "Details",
+  "@auditDetails": {
+    "description": "Detail."
+  },
+  "auditAnonymized": "Anonymised",
+  "@auditAnonymized": {
+    "description": "Detail: personal data removed (§7.7)."
+  },
+  "auditAnonymizedHelp": "Personal data was removed after the account was deleted.",
+  "@auditAnonymizedHelp": {
+    "description": "Detail help."
+  },
+  "viewAuditLog": "Full audit log",
+  "@viewAuditLog": {
+    "description": "Link from the restaurant activity card."
+  },
+  "metricsTitle": "Success metrics",
+  "@metricsTitle": {
+    "description": "Dashboard card title: the FRD success metrics."
+  },
+  "metricActivated": "Activated restaurants (published at least once)",
+  "@metricActivated": {
+    "description": "Metric label."
+  },
+  "metricPublished": "Live published menus",
+  "@metricPublished": {
+    "description": "Metric label."
+  },
+  "metricQrDownloads": "QR codes downloaded",
+  "@metricQrDownloads": {
+    "description": "Metric label."
+  },
+  "metricMedianPublish": "Median time from sign-up to first publish",
+  "@metricMedianPublish": {
+    "description": "Metric label."
+  },
+  "metricMinutes": "{minutes, plural, =1{1 minute} other{{minutes} minutes}}",
+  "@metricMinutes": {
+    "description": "A duration in minutes.",
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "metricMonthViews": "Menu views and QR visits, {month}",
+  "@metricMonthViews": {
+    "description": "Metric label; month is yyyy-MM.",
+    "placeholders": {
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "metricViewsAndQr": "{views} views · {qr} QR visits",
+  "@metricViewsAndQr": {
+    "description": "Metric value.",
+    "placeholders": {
+      "views": {
+        "type": "String"
+      },
+      "qr": {
+        "type": "String"
+      }
+    }
+  },
+  "metricConversion": "Free-to-paid conversions",
+  "@metricConversion": {
+    "description": "Metric label."
+  },
+  "metricRenewal": "Subscription renewals (renewal rate)",
+  "@metricRenewal": {
+    "description": "Metric label."
+  },
+  "metricChurn": "Churn (deactivated or deleted)",
+  "@metricChurn": {
+    "description": "Metric label."
+  },
+  "metricAvgItems": "Average items per restaurant",
+  "@metricAvgItems": {
+    "description": "Metric label."
+  },
+  "metricSupport": "Support requests per restaurant",
+  "@metricSupport": {
+    "description": "Metric label."
+  },
+  "metricSupportOutside": "Tracked in the support inbox",
+  "@metricSupportOutside": {
+    "description": "Metric value: not measured in the app."
+  }
 }

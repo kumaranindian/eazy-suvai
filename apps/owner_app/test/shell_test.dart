@@ -60,6 +60,7 @@ void main() {
     for (final (path, title) in const [
       (Routes.menu, 'Menu'),
       (Routes.share, 'QR & share'),
+      (Routes.analytics, 'Analytics'),
       (Routes.settings, 'Settings'),
       (Routes.profile, 'Restaurant profile'),
       (Routes.hours, 'Opening hours'),

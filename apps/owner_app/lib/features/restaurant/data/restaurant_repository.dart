@@ -44,6 +44,10 @@ abstract class RestaurantRepository {
 
   /// Changes the menu link; the old one keeps working (FR-093).
   Future<SlugChange> changeSlug(String restaurantId, String slug);
+
+  /// Counts one downloaded or shared QR file (FRD §13, M13). The rules
+  /// allow exactly +1 on `qrDownloads` and nothing else.
+  Future<void> countQrDownload(String restaurantId);
 }
 
 class FirestoreRestaurantRepository implements RestaurantRepository {
@@ -95,6 +99,10 @@ class FirestoreRestaurantRepository implements RestaurantRepository {
   @override
   Future<SlugChange> changeSlug(String restaurantId, String slug) =>
       _call(restaurantId, slug, dryRun: false);
+
+  @override
+  Future<void> countQrDownload(String restaurantId) =>
+      _doc(restaurantId).update({'qrDownloads': FieldValue.increment(1)});
 }
 
 final restaurantRepositoryProvider = Provider<RestaurantRepository>(

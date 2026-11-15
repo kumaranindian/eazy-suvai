@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 
+import 'app_check.dart';
 import 'app_env.dart';
 
 /// Firebase options for the emulator demo project. No real project is needed.
@@ -32,6 +33,7 @@ Future<void> initFirebase(
       ? demoFirebaseOptions()
       : optionsFor(env.environment);
   await Firebase.initializeApp(options: options);
+  await activateAppCheck(env);
   if (!env.useEmulators) return;
 
   final host = env.emulatorHost;

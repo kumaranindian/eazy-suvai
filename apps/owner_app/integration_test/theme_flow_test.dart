@@ -219,6 +219,8 @@ void main() {
       'permission-denied',
     );
     expect(await refused({'themeId': 'no-such-theme'}), 'permission-denied');
-    expect(await refused({'themeId': 'midnight'}), isNull);
+    // M10 (BR-011): a premium theme needs a paid plan; a free one is fine.
+    expect(await refused({'themeId': 'midnight'}), 'permission-denied');
+    expect(await refused({'themeId': 'saffron'}), isNull);
   });
 }

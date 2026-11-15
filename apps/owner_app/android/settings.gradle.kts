@@ -20,6 +20,8 @@ plugins {
     id("dev.flutter.flutter-plugin-loader") version "1.0.0"
     id("com.android.application") version "8.7.3" apply false
     id("org.jetbrains.kotlin.android") version "2.3.0" apply false
+    // Crashlytics build ID and symbol upload (M13).
+    id("com.google.firebase.crashlytics") version "3.0.2" apply false
 }
 
 include(":app")

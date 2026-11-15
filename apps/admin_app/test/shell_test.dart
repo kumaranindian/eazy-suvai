@@ -6,6 +6,7 @@ import 'package:admin_app/app.dart';
 import 'package:admin_app/router/app_router.dart';
 
 import 'package:admin_app/features/shell/presentation/admin_shell.dart';
+import 'package:admin_app/widgets/read_only.dart';
 
 import 'helpers.dart';
 
@@ -18,23 +19,31 @@ Future<void> pumpApp(WidgetTester tester, double width) => pumpAdminApp(
 
 void main() {
   const cases = [
-    (360.0, ResponsiveScaffold.bottomBarKey, 'compact'),
-    (768.0, ResponsiveScaffold.railKey, 'medium'),
-    (1280.0, ResponsiveScaffold.sideMenuKey, 'expanded'),
+    (360.0, ResponsiveScaffold.bottomBarKey, true),
+    (768.0, ResponsiveScaffold.railKey, false),
+    (1280.0, ResponsiveScaffold.sideMenuKey, false),
   ];
 
-  for (final (width, navKey, layout) in cases) {
+  for (final (width, navKey, readOnly) in cases) {
     testWidgets('admin shell at ${width.toInt()} px', (tester) async {
       await pumpApp(tester, width);
 
       expect(find.byKey(navKey), findsOneWidget);
-      expect(find.textContaining('Layout: $layout'), findsOneWidget);
+      // M11: read-only below 600 px.
+      expect(
+        find.byKey(ReadOnlyNotice.noticeKey),
+        readOnly ? findsOneWidget : findsNothing,
+      );
       expect(tester.takeException(), isNull);
 
       // Navigate to Settings and back to Home.
       await tester.tap(find.text('Settings').last);
       await tester.pumpAndSettle();
-      expect(find.textContaining('Layout: $layout'), findsOneWidget);
+      // M11: read-only below 600 px.
+      expect(
+        find.byKey(ReadOnlyNotice.noticeKey),
+        readOnly ? findsOneWidget : findsNothing,
+      );
       expect(find.widgetWithText(AppBar, 'Settings'), findsOneWidget);
 
       await tester.tap(find.text('Dashboard').last);
@@ -51,7 +60,10 @@ void main() {
     final router = container.read(appRouterProvider);
     for (final (path, title) in const [
       (Routes.restaurants, 'Restaurants'),
+      (Routes.upgrades, 'Upgrades'),
       (Routes.plans, 'Plans'),
+      (Routes.catalog, 'Catalog'),
+      (Routes.audit, 'Audit log'),
       (Routes.settings, 'Settings'),
       (Routes.dashboard, 'Dashboard'),
     ]) {

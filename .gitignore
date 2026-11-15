@@ -27,6 +27,9 @@ service-account*.json
 .env
 .env.*
 !.env.example
+# Per-project Functions settings without secrets (M13).
+!functions/.env.eazysuvai-prod
+!functions/.env.eazy-suvai-dev
 
 # Node
 node_modules/

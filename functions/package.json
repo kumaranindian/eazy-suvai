@@ -15,11 +15,13 @@
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log",
     "test:emulators": "npm run build && node scripts/write-robots.mjs demo-eazysuvai && firebase emulators:exec --project demo-eazysuvai --only auth,firestore,functions,storage,hosting:menu --config ../firebase.json \"jest -c jest.emulator.config.js && node scripts/check-storage-urls.mjs\"",
-    "test:lighthouse": "npm run build && node scripts/write-robots.mjs demo-eazysuvai && firebase emulators:exec --project demo-eazysuvai --only firestore,functions,storage,hosting:menu --config ../firebase.json \"node scripts/lighthouse-budget.mjs\""
+    "test:lighthouse": "npm run build && node scripts/write-robots.mjs demo-eazysuvai && firebase emulators:exec --project demo-eazysuvai --only firestore,functions,storage,hosting:menu --config ../firebase.json \"node scripts/lighthouse-budget.mjs\"",
+    "test:load": "npm run build && firebase emulators:exec --project demo-eazysuvai --only firestore,functions,hosting:menu --config ../firebase.json \"node scripts/load-test.mjs render && node scripts/load-test.mjs hosting\""
   },
   "dependencies": {
     "firebase-admin": "^14.5.1",
     "firebase-functions": "^7.4.0",
+    "isbot": "5.2.2",
     "libphonenumber-js": "^1.13.16",
     "sharp": "^0.35.5",
     "zod": "^4.6.7"

@@ -30,6 +30,10 @@ export const AppErrorCode = {
   categoryDeleted: "category-deleted",
   /** Publishing is blocked; `details.problems` lists why (FR-066, M06). */
   publishBlocked: "publish-blocked",
+  /** An upgrade request is already open (M10, FR-106). */
+  requestPending: "request-pending",
+  /** The restaurant is already on that plan (M10). */
+  alreadyOnPlan: "already-on-plan",
   unknown: "unknown",
 } as const;
 
@@ -52,6 +56,8 @@ const httpsCodeFor: Record<AppErrorCode, FunctionsErrorCode> = {
   "slug-taken": "already-exists",
   "category-deleted": "failed-precondition",
   "publish-blocked": "failed-precondition",
+  "request-pending": "failed-precondition",
+  "already-on-plan": "failed-precondition",
   "unknown": "internal",
 };
 

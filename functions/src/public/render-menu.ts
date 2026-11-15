@@ -231,7 +231,7 @@ h3{margin:0;font-size:1.05rem;color:var(--es-surface-text)}
 .card-image-top .item,.layout-grid .item{flex-direction:column}
 .card-image-top .item-img,.layout-grid .item-img{width:100%;height:auto;aspect-ratio:4/3}
 .empty{padding:32px 0;color:var(--es-muted-text)}
-footer{padding:24px 0 32px;color:var(--es-muted-text);font-size:.85rem;text-align:center}
+footer{padding:24px 0 32px;color:var(--es-muted-text);font-size:.85rem;text-align:center}footer a{color:inherit;display:inline-block;padding:12px 4px}
 .lb{padding:0;border:0;margin:0;width:100%;height:100%;max-width:100%;max-height:100%;background:transparent;overflow:hidden}
 .lb::backdrop{background:rgba(0,0,0,.88)}
 .lb img{position:absolute;inset:0;margin:auto;max-width:100%;max-height:100%;object-fit:contain;transition:transform .15s}
@@ -347,7 +347,7 @@ ${featuredHtml}
 ${sections || `<p class="empty">${esc(t.empty)}</p>`}
 </main>
 </div>
-${options.branding === false ? "" : `<footer class="wrap">${esc(t.poweredBy)}</footer>`}
+<footer class="wrap">${options.branding === false ? "" : `${esc(t.poweredBy)} · `}<a href="/privacy">${esc(t.privacy)}</a> · <a href="/terms">${esc(t.terms)}</a></footer>
 ${scripts ? `<script>${BODY_SCRIPT}</script>` : ""}
 ${options.bodyExtra ?? ""}
 </body>

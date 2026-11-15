@@ -57,6 +57,7 @@ class MenuCategory {
     this.sequence = 0,
     this.active = true,
     this.deletedAt,
+    this.hiddenOverLimit = false,
   });
 
   factory MenuCategory.fromMap(String id, Map<String, dynamic> data) =>
@@ -68,6 +69,7 @@ class MenuCategory {
         sequence: _int(data['sequence']),
         active: data['active'] != false,
         deletedAt: _time(data['deletedAt']),
+        hiddenOverLimit: data['hiddenOverLimit'] == true,
       );
 
   final String id;
@@ -81,6 +83,9 @@ class MenuCategory {
 
   /// Set when soft-deleted (FR-098).
   final DateTime? deletedAt;
+
+  /// Hidden after a downgrade (FR-101, M10); written by Functions only.
+  final bool hiddenOverLimit;
 
   bool get isDeleted => deletedAt != null;
 
@@ -100,6 +105,7 @@ class MenuCategory {
     sequence: sequence ?? this.sequence,
     active: active ?? this.active,
     deletedAt: deletedAt,
+    hiddenOverLimit: hiddenOverLimit,
   );
 
   @override
@@ -112,10 +118,12 @@ class MenuCategory {
       other.image?.status == image?.status &&
       other.sequence == sequence &&
       other.active == active &&
-      other.deletedAt == deletedAt;
+      other.deletedAt == deletedAt &&
+      other.hiddenOverLimit == hiddenOverLimit;
 
   @override
-  int get hashCode => Object.hash(id, name, sequence, active, deletedAt);
+  int get hashCode =>
+      Object.hash(id, name, sequence, active, deletedAt, hiddenOverLimit);
 }
 
 /// `restaurants/{rid}/items/{iid}` (FR-022, architecture §4.2).

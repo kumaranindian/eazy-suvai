@@ -262,12 +262,20 @@ class _ItemListPaneState extends ConsumerState<ItemListPane> {
               ),
               if (category != null) ...[
                 const SizedBox(width: 8),
-                FilledButton.icon(
-                  key: MenuKeys.addItem,
-                  onPressed: widget.onAddItem,
-                  icon: const Icon(Icons.add),
-                  label: Text(l10n.menuAddItem),
-                ),
+                if (MediaQuery.textScalerOf(context).scale(1) > 1.3)
+                  IconButton.filled(
+                    key: MenuKeys.addItem,
+                    tooltip: l10n.menuAddItem,
+                    onPressed: widget.onAddItem,
+                    icon: const Icon(Icons.add),
+                  )
+                else
+                  FilledButton.icon(
+                    key: MenuKeys.addItem,
+                    onPressed: widget.onAddItem,
+                    icon: const Icon(Icons.add),
+                    label: Text(l10n.menuAddItem),
+                  ),
               ],
             ],
           ),
@@ -438,21 +446,23 @@ class _ItemRow extends StatelessWidget {
                   )
                 else
                   const SizedBox(width: 8),
-                SizedBox.square(
-                  dimension: 48,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: Opacity(
-                      opacity: item.available ? 1 : 0.5,
-                      child: item.image == null
-                          ? ColoredBox(
-                              color: scheme.surfaceContainerHighest,
-                              child: const Icon(Icons.fastfood_outlined),
-                            )
-                          : ResponsiveImage(image: item.image!),
+                // The thumbnail gives way to the name at large text sizes (M13).
+                if (MediaQuery.textScalerOf(context).scale(1) <= 1.3)
+                  SizedBox.square(
+                    dimension: 48,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Opacity(
+                        opacity: item.available ? 1 : 0.5,
+                        child: item.image == null
+                            ? ColoredBox(
+                                color: scheme.surfaceContainerHighest,
+                                child: const Icon(Icons.fastfood_outlined),
+                              )
+                            : ResponsiveImage(image: item.image!),
+                      ),
                     ),
                   ),
-                ),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Column(

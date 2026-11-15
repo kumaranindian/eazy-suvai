@@ -5,13 +5,38 @@
  * `Intl.NumberFormat`, which takes strings exactly (Node 22).
  */
 
+// Intl.NumberFormat is expensive to construct (about 85 % of a menu's
+// render time before M13): one per currency and per locale + currency,
+// kept for the life of the instance. A few dozen entries at most.
+const digitsCache = new Map<string, number>();
+const formatterCache = new Map<string, Intl.NumberFormat | null>();
+
 /** Fraction digits of a currency (INR 2, KWD 3, JPY 0), from CLDR. */
 export function currencyDigits(currency: string): number {
-  try {
-    return new Intl.NumberFormat("en", { style: "currency", currency }).resolvedOptions().maximumFractionDigits ?? 2;
-  } catch {
-    return 2;
+  let digits = digitsCache.get(currency);
+  if (digits === undefined) {
+    try {
+      digits = new Intl.NumberFormat("en", { style: "currency", currency }).resolvedOptions().maximumFractionDigits ?? 2;
+    } catch {
+      digits = 2;
+    }
+    digitsCache.set(currency, digits);
   }
+  return digits;
+}
+
+function priceFormatter(locale: string, currency: string, digits: number): Intl.NumberFormat | null {
+  const key = `${locale}|${currency}`;
+  let nf = formatterCache.get(key);
+  if (nf === undefined) {
+    try {
+      nf = new Intl.NumberFormat(locale, { style: "currency", currency, minimumFractionDigits: digits, maximumFractionDigits: digits });
+    } catch {
+      nf = null;
+    }
+    formatterCache.set(key, nf);
+  }
+  return nf;
 }
 
 /**
@@ -42,18 +67,10 @@ export function majorAmount(minor: number, currency: string): string {
 export function formatPrice(minor: number, currency: string, locale: string): string {
   const digits = currencyDigits(currency);
   const value = majorAmount(minor, currency);
-  try {
-    const nf = new Intl.NumberFormat(locale, {
-      style: "currency",
-      currency,
-      minimumFractionDigits: digits,
-      maximumFractionDigits: digits,
-    });
-    // Strings are formatted exactly (Intl.NumberFormat v3).
-    return nf.format(value as unknown as number);
-  } catch {
-    return `${currency} ${value}`;
-  }
+  const nf = priceFormatter(locale, currency, digits);
+  if (nf === null) return `${currency} ${value}`;
+  // Strings are formatted exactly (Intl.NumberFormat v3).
+  return nf.format(value as unknown as number);
 }
 
 /**

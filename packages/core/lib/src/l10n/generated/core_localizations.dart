@@ -831,6 +831,18 @@ abstract class CoreLocalizations {
   /// In en, this message translates to:
   /// **'{code} prices have {decimals, plural, =0{no decimal places} =1{1 decimal place} other{{decimals} decimal places}}.'**
   String priceDecimalsHelp(String code, int decimals);
+
+  /// Error request-pending (M10).
+  ///
+  /// In en, this message translates to:
+  /// **'You already have an upgrade request open. We will contact you soon.'**
+  String get errorRequestPending;
+
+  /// Error already-on-plan (M10).
+  ///
+  /// In en, this message translates to:
+  /// **'Your restaurant is already on this plan.'**
+  String get errorAlreadyOnPlan;
 }
 
 class _CoreLocalizationsDelegate

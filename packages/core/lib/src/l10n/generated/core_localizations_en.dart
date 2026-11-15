@@ -442,4 +442,11 @@ class CoreLocalizationsEn extends CoreLocalizations {
     );
     return '$code prices have $_temp0.';
   }
+
+  @override
+  String get errorRequestPending =>
+      'You already have an upgrade request open. We will contact you soon.';
+
+  @override
+  String get errorAlreadyOnPlan => 'Your restaurant is already on this plan.';
 }

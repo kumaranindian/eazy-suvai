@@ -27,6 +27,44 @@ class PublishBar extends ConsumerWidget {
     final scheme = Theme.of(context).colorScheme;
     final compact = Breakpoint.of(context) == Breakpoint.compact;
     final label = r.isPublished ? l10n.publishBarChanges : l10n.publishBarDraft;
+    final stacked = MediaQuery.textScalerOf(context).scale(1) > 1.3;
+    final icon = ExcludeSemantics(
+      child: Icon(
+        r.isPublished ? Icons.edit_note : Icons.unpublished_outlined,
+        color: scheme.onSecondaryContainer,
+      ),
+    );
+    final text = Expanded(
+      child: ExcludeSemantics(
+        child: Text(
+          label,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+          style: Theme.of(
+            context,
+          ).textTheme.labelLarge?.copyWith(color: scheme.onSecondaryContainer),
+        ),
+      ),
+    );
+    final preview = TextButton(
+      key: PublishKeys.barPreview,
+      style: TextButton.styleFrom(
+        foregroundColor: scheme.onSecondaryContainer,
+        minimumSize: const Size(48, 48),
+        padding: const EdgeInsetsDirectional.symmetric(horizontal: 12),
+      ),
+      onPressed: () => context.push(Routes.preview),
+      child: Text(l10n.actionPreview),
+    );
+    final publish = FilledButton(
+      key: PublishKeys.barPublish,
+      style: FilledButton.styleFrom(
+        minimumSize: const Size(48, 48),
+        padding: const EdgeInsetsDirectional.symmetric(horizontal: 16),
+      ),
+      onPressed: () => showPublishDialog(context),
+      child: Text(l10n.actionPublish),
+    );
 
     return Material(
       key: PublishKeys.bar,
@@ -39,53 +77,29 @@ class PublishBar extends ConsumerWidget {
             horizontal: compact ? 12 : 24,
             vertical: 4,
           ),
-          child: Row(
-            children: [
-              ExcludeSemantics(
-                child: Icon(
-                  r.isPublished ? Icons.edit_note : Icons.unpublished_outlined,
-                  color: scheme.onSecondaryContainer,
-                ),
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: ExcludeSemantics(
-                  child: Text(
-                    label,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                      color: scheme.onSecondaryContainer,
+          // At large text sizes the buttons go under the label (M13, 200 %).
+          child: stacked
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Row(children: [icon, const SizedBox(width: 8), text]),
+                    Wrap(
+                      alignment: WrapAlignment.end,
+                      spacing: 4,
+                      children: [preview, publish],
                     ),
-                  ),
+                  ],
+                )
+              : Row(
+                  children: [
+                    icon,
+                    const SizedBox(width: 8),
+                    text,
+                    preview,
+                    const SizedBox(width: 4),
+                    publish,
+                  ],
                 ),
-              ),
-              TextButton(
-                key: PublishKeys.barPreview,
-                style: TextButton.styleFrom(
-                  foregroundColor: scheme.onSecondaryContainer,
-                  minimumSize: const Size(48, 48),
-                  padding: const EdgeInsetsDirectional.symmetric(
-                    horizontal: 12,
-                  ),
-                ),
-                onPressed: () => context.push(Routes.preview),
-                child: Text(l10n.actionPreview),
-              ),
-              const SizedBox(width: 4),
-              FilledButton(
-                key: PublishKeys.barPublish,
-                style: FilledButton.styleFrom(
-                  minimumSize: const Size(48, 48),
-                  padding: const EdgeInsetsDirectional.symmetric(
-                    horizontal: 16,
-                  ),
-                ),
-                onPressed: () => showPublishDialog(context),
-                child: Text(l10n.actionPublish),
-              ),
-            ],
-          ),
         ),
       ),
     );

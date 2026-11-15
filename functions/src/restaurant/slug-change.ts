@@ -2,7 +2,7 @@ import { FieldValue, type Firestore } from "firebase-admin/firestore";
 import { z } from "zod";
 
 import { writeAudit, type AuditDb } from "../lib/audit";
-import { assertOwner, type CallerAuth } from "../lib/auth";
+import { assertOwner, type CallerAuth , assertSignedIn } from "../lib/auth";
 import { appError } from "../lib/errors";
 import { parseInput } from "../lib/validation";
 import { reservedSlugs } from "../auth/register";
@@ -72,6 +72,7 @@ export async function changeSlug(
   auth: CallerAuth | undefined | null,
   data: unknown,
 ): Promise<ChangeSlugResult> {
+  assertSignedIn(auth); // before input checks: anonymous callers learn nothing (M13)
   const input = parseInput(changeSlugSchema, data);
   const { uid, restaurantId } = await assertOwner(auth, input.restaurantId, { db });
   const reserved = await reservedSlugs(db);
