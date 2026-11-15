@@ -94,16 +94,23 @@ function labelIcon(label: SnapshotLabel): string {
   return `<svg class="mark" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5" fill="${c}"/></svg>`;
 }
 
+/**
+ * One dish as a compact row (many per screen): a small thumbnail, the name
+ * and price on one line, a one-line description ("more" expands it) and one
+ * line of small pills (dietary label, tags, featured, sold out).
+ */
 function itemHtml(item: SnapshotItem, s: MenuSnapshot, available: boolean, t: MenuText): string {
   const price = formatPrice(item.priceMinor, s.currency, s.locale);
-  const badges: string[] = [];
+  const pills: string[] = [];
+  if (item.featured) pills.push(`<span class="badge featured">${esc(t.featured)}</span>`);
+  if (!available) pills.push(`<span class="badge sold">${esc(t.soldOut)}</span>`);
   if (item.dietaryLabel) {
-    badges.push(`<span class="label">${labelIcon(item.dietaryLabel)}${esc(item.dietaryLabel.name)}</span>`);
+    pills.push(`<span class="label">${labelIcon(item.dietaryLabel)}${esc(item.dietaryLabel.name)}</span>`);
   }
-  for (const tag of item.tags) badges.push(`<span class="tag">${esc(tag.name)}</span>`);
+  for (const tag of item.tags) pills.push(`<span class="tag">${esc(tag.name)}</span>`);
   const image = item.image
     ? zoomable(item.image, {
-      sizes: "(min-width: 1024px) 300px, (min-width: 600px) 45vw, 88px",
+      sizes: "56px",
       cls: "item-img",
       dataAlt: item.name,
       label: `${t.enlarge} ${item.name}`,
@@ -115,10 +122,9 @@ function itemHtml(item: SnapshotItem, s: MenuSnapshot, available: boolean, t: Me
     (item.tags.length > 0 ? ` data-t="${esc(item.tags.map((x) => x.id).join(" "))}"` : "");
   return `<li class="${cls}" data-id="${esc(item.id)}"${filterData}${available ? "" : " aria-disabled=\"true\""}>
 ${image}<div class="item-body">
-<h3 class="item-name">${esc(item.name)}${item.featured ? ` <span class="badge featured">${esc(t.featured)}</span>` : ""}</h3>
+<div class="item-head"><h3 class="item-name">${esc(item.name)}</h3><span class="price">${esc(price)}</span></div>
 ${item.description ? `<p class="item-desc">${esc(item.description)}</p>` : ""}
-<div class="item-meta"><span class="price">${esc(price)}</span>${available ? "" : ` <span class="badge sold">${esc(t.soldOut)}</span>`}</div>
-${badges.length > 0 ? `<div class="badges">${badges.join("")}</div>` : ""}
+${pills.length > 0 ? `<div class="item-meta">${pills.join("")}</div>` : ""}
 </div></li>`;
 }
 
@@ -248,47 +254,45 @@ const CSS = `${BASE_CSS}
 .cats ul{position:relative;display:flex;gap:8px;list-style:none;margin:0;padding:10px 0;overflow-x:auto;scrollbar-width:none}
 .cats a{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--es-border);background:var(--es-surface);color:var(--es-surface-text);text-decoration:none;white-space:nowrap}
 .cats a[aria-current]{background:var(--es-primary);color:var(--es-on-primary);border-color:var(--es-primary);font-weight:600}
-section{padding:16px 0 8px;scroll-margin-top:72px}
-h2{margin:0 0 4px;font-size:1.3rem;color:var(--es-accent)}
-.cat-desc{margin:0 0 8px;color:var(--es-muted-text)}
-.items{list-style:none;margin:0;padding:0;display:grid;gap:12px;grid-template-columns:1fr}
-.item{background:var(--es-surface);color:var(--es-surface-text);border:1px solid var(--es-border);border-radius:12px;overflow:hidden;display:flex;gap:12px;padding:12px}
-.is-featured{border:2px solid var(--es-secondary)}
-.zoom{display:block;flex:none;border-radius:8px;overflow:hidden;line-height:0}
-.item-img{width:88px;height:88px;object-fit:cover}
+section{padding:12px 0 4px;scroll-margin-top:72px}
+h2{margin:0 0 6px;font-size:1.15rem;color:var(--es-accent)}
+.cat-desc{margin:0 0 6px;color:var(--es-muted-text);font-size:.9rem}
+.items{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr;background:var(--es-surface);color:var(--es-surface-text);border-radius:12px;overflow:hidden}
+.item{display:flex;gap:10px;align-items:flex-start;padding:8px 12px;border-bottom:1px solid var(--es-border)}
+.item:last-child{border-bottom:0}
+.is-featured{box-shadow:inset 3px 0 0 var(--es-secondary)}
+.zoom{display:block;flex:none;border-radius:6px;overflow:hidden;line-height:0}
+.item-img{width:56px;height:56px;object-fit:cover}
 .item-body{min-width:0;flex:1}
-h3{margin:0;font-size:1.05rem;color:var(--es-surface-text)}
-.item-desc{margin:4px 0;color:var(--es-muted-text);font-size:.95rem;overflow-wrap:anywhere}
-.js .item-desc{display:-webkit-box;-webkit-line-clamp:3;line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.item-head{display:flex;gap:8px;align-items:baseline;justify-content:space-between}
+h3{margin:0;font-size:1rem;line-height:1.3;color:var(--es-surface-text)}
+.item-desc{margin:2px 0 0;color:var(--es-muted-text);font-size:.875rem;line-height:1.35;overflow-wrap:anywhere}
+.js .item-desc{display:-webkit-box;-webkit-line-clamp:1;line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
 .js .item-desc.open{display:block}
-.more{background:none;border:0;padding:0;margin:0 0 4px;color:var(--es-accent);font:inherit;font-weight:600;font-size:.9rem;cursor:pointer;min-height:32px;text-decoration:underline}
-.item-meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:4px}
-.price{font-weight:700;color:var(--es-accent)}
-.badge{display:inline-block;font-size:.75rem;font-weight:600;padding:2px 8px;border-radius:999px;vertical-align:middle}
+.more{background:none;border:0;padding:0 2px;margin:0;margin-inline-start:auto;color:var(--es-accent);font:inherit;font-weight:600;font-size:.8rem;cursor:pointer;min-height:24px;text-decoration:underline}
+.item-meta{display:flex;gap:4px 6px;align-items:center;flex-wrap:wrap;margin-top:4px;font-size:.75rem}
+.price{font-weight:700;color:var(--es-accent);white-space:nowrap}
+.badge{display:inline-block;font-size:.7rem;font-weight:600;padding:1px 6px;border-radius:999px}
 .featured{background:var(--es-secondary);color:var(--es-on-secondary)}
 .sold{background:var(--es-surface-text);color:var(--es-surface)}
-.sold-out{border-style:dashed;border-color:var(--es-muted-text)}.sold-out .item-img{filter:grayscale(1)}.sold-out .price{color:var(--es-muted-text)}
-.badges{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;font-size:.85rem}
-.label,.tag{display:inline-flex;align-items:center;gap:4px;border:1px solid var(--es-border);border-radius:999px;padding:1px 8px}
-.mark{width:14px;height:14px;flex:none}
+.sold-out .item-img{filter:grayscale(1)}.sold-out .price,.sold-out h3{color:var(--es-muted-text)}
+.label,.tag{display:inline-flex;align-items:center;gap:3px;border:1px solid var(--es-border);border-radius:999px;padding:0 6px;line-height:1.5}
+.mark{width:12px;height:12px;flex:none}
 .card-compact .zoom{display:none}
-.card-image-top .item,.layout-grid .item{flex-direction:column}
-.card-image-top .item-img,.layout-grid .item-img{width:100%;height:auto;aspect-ratio:4/3}
 .empty{padding:32px 0;color:var(--es-muted-text)}
 footer{padding:24px 0 32px;color:var(--es-muted-text);font-size:.85rem;text-align:center}footer a{color:inherit;display:inline-block;padding:12px 4px}
 .lb{padding:0;border:0;margin:0;width:100%;height:100%;max-width:100%;max-height:100%;background:transparent;overflow:hidden}
 .lb::backdrop{background:rgba(0,0,0,.88)}
 .lb img{position:absolute;inset:0;margin:auto;max-width:100%;max-height:100%;object-fit:contain;transition:transform .15s}
 .lb-close{position:absolute;top:8px;inset-inline-end:8px;z-index:1;width:48px;height:48px;border-radius:50%;border:0;background:#fff;color:#111;font-size:28px;line-height:1;cursor:pointer}
-@media (min-width:600px){.items{grid-template-columns:repeat(2,1fr)}.hero .cover{height:240px}}
+@media (min-width:600px){.items{grid-template-columns:repeat(2,1fr);column-gap:0}.item:nth-child(odd){border-inline-end:1px solid var(--es-border)}.item:nth-last-child(2):nth-child(odd){border-bottom:0}.hero .cover{height:240px}}
 @media (min-width:1024px){.hero .cover{height:300px}
 .page{display:grid;grid-template-columns:220px minmax(0,1fr);gap:32px;align-items:start}
 .cats{top:0;margin:0;padding:16px 0;border:0;max-height:100vh;overflow-y:auto}
 .cats ul{flex-direction:column;gap:4px;padding:0;overflow:visible}
 .cats a{border-radius:8px;white-space:normal;width:100%;border-color:transparent;background:transparent;color:var(--es-text)}
 .cats a[aria-current]{background:var(--es-primary);color:var(--es-on-primary)}
-section{scroll-margin-top:16px}
-.layout-grid .items{grid-template-columns:repeat(3,1fr)}}`;
+section{scroll-margin-top:16px}}`;
 
 /** The theme's CSS custom properties for `:root`. */
 export function rootCss(theme: MenuSnapshot["theme"]["resolved"]): string {

@@ -11,7 +11,8 @@
  *   and keeps the active pill visible (FR-039, FR-040).
  * - Lightbox: a `<dialog>` with a close button, Escape, backdrop tap and
  *   swipe down (FR-041).
- * - "more" / "less" for descriptions longer than three lines.
+ * - "more" / "less" for descriptions longer than one line, placed at the
+ *   end of the item's pill line so it takes no extra row.
  * - Filter chips (dietary labels and tags): shows the bar, hides items that
  *   don't match, then empty sections and their category links. Any chip
  *   within a group matches; the two groups narrow each other.
@@ -64,7 +65,7 @@ d.querySelectorAll(".item-desc").forEach(function(p){if(p.scrollHeight<=p.client
 var btn=d.createElement("button");btn.type="button";btn.className="more";btn.textContent=more;btn.setAttribute("aria-expanded","false");
 btn.addEventListener("click",function(){var o=p.classList.toggle("open");btn.textContent=o?less:more;btn.setAttribute("aria-expanded",String(o));
 if(o){var li=p.closest(".item");if(li)track("item",{id:li.getAttribute("data-id")})}});
-p.parentNode.insertBefore(btn,p.nextSibling)});
+var meta=p.parentNode.querySelector(".item-meta");if(meta)meta.appendChild(btn);else p.parentNode.insertBefore(btn,p.nextSibling)});
 var fb=d.querySelector(".filters");if(fb){fb.hidden=false;
 var chips=fb.querySelectorAll(".chip[data-g]"),clr=fb.querySelector(".clear"),nm=d.querySelector(".no-match"),st=d.querySelector("[data-shown]");
 function picked(g){var r=[];for(var i=0;i<chips.length;i++){var c=chips[i];if(c.getAttribute("data-g")===g&&c.getAttribute("aria-pressed")==="true")r.push(c.getAttribute("data-v"))}return r}
