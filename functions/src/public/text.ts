@@ -5,8 +5,6 @@
  * template, so adding a language means adding one more object of the same
  * shape and choosing it by locale in {@link menuText}.
  */
-import type { Weekday } from "../publishing/snapshot";
-
 export const MENU_TEXT_EN = {
   menu: "Menu",
   titleSuffix: "Menu | EazySuvai",
@@ -14,15 +12,6 @@ export const MENU_TEXT_EN = {
   categories: "Categories",
   featured: "Featured",
   soldOut: "Currently unavailable",
-  closed: "Closed",
-  allDay: "Open 24 hours",
-  hours: "Opening hours",
-  openNow: "Open now",
-  closedNow: "Closed now",
-  call: "Call",
-  email: "Email",
-  website: "Website",
-  map: "Map",
   more: "more",
   less: "less",
   close: "Close",
@@ -40,22 +29,6 @@ export const MENU_TEXT_EN = {
   shown: "Dishes shown: {count}",
   /** Meta description when the owner wrote none: `{name}` and `{place}` are filled in. */
   defaultDescription: "See the menu of {name}{place}: dishes, prices and opening hours.",
-  days: {
-    mon: "Monday",
-    tue: "Tuesday",
-    wed: "Wednesday",
-    thu: "Thursday",
-    fri: "Friday",
-    sat: "Saturday",
-    sun: "Sunday",
-  } as Record<Weekday, string>,
-  social: {
-    instagram: "Instagram",
-    facebook: "Facebook",
-    x: "X",
-    youtube: "YouTube",
-    googleMaps: "Google Maps",
-  } as Record<string, string>,
   states: {
     comingSoonTitle: "Menu coming soon",
     comingSoonBody: "{name} is getting its menu ready. Please check back soon.",

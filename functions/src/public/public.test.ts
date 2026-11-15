@@ -22,7 +22,7 @@ const CANONICAL = `${BASE}/spice-garden`;
 const THU_EVENING = new Date("2026-11-12T14:00:00Z");
 
 const live = (s = sampleSnapshot(), extra: Parameters<typeof renderMenuPage>[1] = {}) =>
-  renderMenuPage(s, { canonicalUrl: CANONICAL, slug: "spice-garden", now: THU_EVENING, availability: {}, branding: true, ...extra });
+  renderMenuPage(s, { canonicalUrl: CANONICAL, slug: "spice-garden", availability: {}, branding: true, ...extra });
 
 const validator = new HtmlValidate({
   extends: ["html-validate:recommended"],
@@ -185,9 +185,6 @@ describe("menu page", () => {
     expect(html).toContain("<title>Spice Garden – Menu | EazySuvai</title>");
     expect(html).toMatch(/<html lang="en-IN"/);
     expect(html).toContain("<h1>Spice Garden</h1>");
-    expect(html).toContain("Open now");
-    expect(html).toContain("href=\"tel:+914423456789\"");
-    expect(html).toContain("https://www.google.com/maps/search/?api=1&amp;query=");
     expect(html).toContain("<nav class=\"cats\" aria-label=\"Categories\">");
     expect(html).toContain("<section id=\"featured\"");
     expect(html).toContain("<h2 id=\"c-tiffin-h\">Tiffin</h2>");
@@ -212,9 +209,8 @@ describe("menu page", () => {
     expect(html).not.toMatch(/undefined|\[object Object\]|NaN/);
   });
 
-  it("shows Closed now outside the hours and hides branding on Pro", () => {
-    const html = live(sampleSnapshot(), { now: new Date("2026-11-15T08:00:00Z"), branding: false });
-    expect(html).toContain("Closed now");
+  it("hides branding on Pro", () => {
+    const html = live(sampleSnapshot(), { branding: false });
     expect(html).not.toContain("Powered by EazySuvai");
     // Privacy and terms stay without branding (M13).
     expect(html).toContain("<footer class=\"wrap\"><a href=\"/privacy\">Privacy</a> · <a href=\"/terms\">Terms</a></footer>");
@@ -293,12 +289,44 @@ describe("menu page", () => {
     });
   });
 
+  describe("header: cover band with logo and name only", () => {
+    it("puts the logo and name on the cover, and nothing else", () => {
+      const s = sampleSnapshot();
+      const header = live(s).match(/<header class="hero">[\s\S]*?<\/header>/)![0];
+      expect(header).toMatch(/<img class="cover"[^>]*fetchpriority="high"/);
+      expect(header).toMatch(
+        /<div class="hero-band"><div class="wrap hero-main"><img class="logo"[^>]*alt="Spice Garden"[^>]*><h1>Spice Garden<\/h1><\/div><\/div>/,
+      );
+      const page = live(s);
+      // Description, open-now, address, phone, map, email, website, socials and hours are gone.
+      for (const gone of [s.profile.description!, "Open now", "Closed now", "tel:", "12 Anna Salai", "google.com/maps", "mailto:", "Opening hours", "class=\"acts\"", "<details class=\"hours\""]) {
+        expect(header).not.toContain(gone);
+      }
+      expect(page).not.toContain("<details class=\"hours\"");
+      // Google still gets them from the structured data.
+      const ld = JSON.parse(page.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)![1]);
+      expect(ld.telephone).toBe("+914423456789");
+      expect(ld.address.streetAddress).toBe("12 Anna Salai");
+    });
+
+    it("uses the primary colour band without a cover", async () => {
+      const s = sampleSnapshot();
+      delete s.profile.cover;
+      const html = live(s);
+      expect(html).toContain("<header class=\"hero no-cover\">");
+      expect(html).not.toContain("class=\"cover\"");
+      await expectValidHtml(html);
+    });
+  });
+
   describe("opening splash card", () => {
     it("shows the logo on a plate, the name and Menu; decorative and never blocking", () => {
       const s = sampleSnapshot();
       const splash = splashHtml(s, MENU_TEXT_EN);
       expect(splash).toMatch(/^<div class="splash" aria-hidden="true">/);
       expect(splash).toContain("class=\"sp-plate\"");
+      expect(splash).toContain("class=\"sp-wisps\"");
+      expect(splash.match(/<path /g)).toHaveLength(3);
       expect(splash).toContain(`<p class="sp-name">${s.profile.name}</p>`);
       expect(splash).toContain(`<p class="sp-sub">${MENU_TEXT_EN.menu}</p>`);
       expect(live(s)).toContain(splash);
@@ -326,7 +354,7 @@ describe("menu page", () => {
     expect(html).not.toContain("<script");
     expect(html).not.toContain("rel=\"canonical\"");
     expect(html).toContain("noindex");
-    expect(html).not.toContain("Open now");
+    expect(html).not.toContain("class=\"splash\"");
   });
 });
 

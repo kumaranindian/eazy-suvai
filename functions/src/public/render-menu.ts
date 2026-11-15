@@ -18,10 +18,8 @@
  */
 import { cssVariables, type ResolvedTheme } from "../theme";
 import type { MenuSnapshot, SnapshotImage, SnapshotItem, SnapshotLabel } from "../publishing/snapshot";
-import { WEEKDAYS } from "../publishing/snapshot";
 import { BODY_SCRIPT, HEAD_SCRIPT } from "./client-script";
-import { formatDayHours, formatPrice } from "./format";
-import { isOpenAt, localTime } from "./hours";
+import { formatPrice } from "./format";
 import { anchorId, esc, safeUrl } from "./html";
 import { pageTitle, seoHead } from "./seo";
 import { MENU_TEXT_EN, menuText, type MenuText } from "./text";
@@ -44,8 +42,6 @@ export interface RenderOptions {
   beacon?: string;
   /** Include the inline script. Default: on for public pages, off for the draft. */
   scripts?: boolean;
-  /** The time used for "Open now" (default: now). */
-  now?: Date;
   /** Extra tags for `<head>`. Must be safe HTML. */
   headExtra?: string;
   /** Extra HTML before `</body>`. Must be safe HTML. */
@@ -128,10 +124,16 @@ ${pills.length > 0 ? `<div class="item-meta">${pills.join("")}</div>` : ""}
 </div></li>`;
 }
 
+/** Three wisps of steam; their rise and fade is the `sp-steam` animation. */
+const STEAM = `<g class="sp-steam" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round">
+<path d="M44 46c-6-8 6-12 0-22"/><path d="M60 42c-6-8 6-12 0-22"/><path d="M76 46c-6-8 6-12 0-22"/></g>`;
+
+/** Steam rising over the logo plate. */
+const WISPS_SVG = `<svg class="sp-wisps" viewBox="30 16 60 34" aria-hidden="true">${STEAM}</svg>`;
+
 /** A bowl with rising steam, drawn in the card's colours (no logo). */
 const BOWL_SVG = `<svg class="sp-bowl" viewBox="0 0 120 120" aria-hidden="true">
-<g class="sp-steam" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round">
-<path d="M44 46c-6-8 6-12 0-22"/><path d="M60 42c-6-8 6-12 0-22"/><path d="M76 46c-6-8 6-12 0-22"/></g>
+${STEAM}
 <ellipse cx="60" cy="62" rx="44" ry="8" fill="var(--es-secondary)"/>
 <circle cx="44" cy="58" r="6" fill="var(--es-surface)"/><circle cx="58" cy="55" r="7" fill="var(--es-surface)"/><circle cx="74" cy="58" r="6" fill="var(--es-surface)"/>
 <path d="M14 62h92c0 26-20 42-46 42S14 88 14 62z" fill="var(--es-surface)"/>
@@ -139,8 +141,8 @@ const BOWL_SVG = `<svg class="sp-bowl" viewBox="0 0 120 120" aria-hidden="true">
 <rect x="44" y="104" width="32" height="6" rx="3" fill="var(--es-surface)"/></svg>`;
 
 /**
- * The opening splash: a 3D card that swings in with the logo on a plate (or
- * a steaming bowl), the restaurant's name and "Menu", then fades out. CSS
+ * The opening splash: a 3D card that swings in with the logo on a steaming
+ * plate (or a steaming bowl), the restaurant's name and "Menu", then fades out. CSS
  * only: it never blocks taps (`pointer-events:none`) or the page load, it
  * is decorative (`aria-hidden`), it shows once per tab session (see
  * HEAD_SCRIPT) and briefly and still for reduced motion.
@@ -148,7 +150,7 @@ const BOWL_SVG = `<svg class="sp-bowl" viewBox="0 0 120 120" aria-hidden="true">
 export function splashHtml(s: MenuSnapshot, t: MenuText): string {
   const p = s.profile;
   const plate = p.logo
-    ? `<span class="sp-plate">${imgTag(p.logo, { sizes: "120px", cls: "sp-logo", eager: true })}</span>`
+    ? `${WISPS_SVG}<span class="sp-plate">${imgTag(p.logo, { sizes: "120px", cls: "sp-logo", eager: true })}</span>`
     : BOWL_SVG;
   return `<div class="splash" aria-hidden="true"><div class="sp-card">${plate}<p class="sp-name">${esc(p.name)}</p><p class="sp-sub">${esc(t.menu)}</p></div></div>`;
 }
@@ -187,48 +189,6 @@ export function filterBarHtml(items: SnapshotItem[], t: MenuText): string {
 <p class="no-match" hidden>${esc(t.noMatch)}</p><p class="sr-only" role="status" data-shown="${esc(t.shown)}"></p>`;
 }
 
-function contactHtml(s: MenuSnapshot, t: MenuText): string {
-  const c = s.profile.contact;
-  const links: string[] = [];
-  if (c.phone) {
-    links.push(`<a class="act" href="tel:${esc(c.phone.replace(/[^+0-9]/g, ""))}">${esc(t.call)} <span class="num">${esc(c.phone)}</span></a>`);
-  }
-  const address = [c.address, c.city, c.postalCode].filter(Boolean).join(", ");
-  const mapUrl = safeUrl(c.social?.googleMaps) ??
-    (address ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${s.profile.name}, ${address}`)}` : null);
-  if (mapUrl) links.push(`<a class="act" href="${esc(mapUrl)}" rel="noopener" target="_blank">${esc(t.map)}</a>`);
-  if (c.email) links.push(`<a class="act" href="mailto:${esc(c.email)}">${esc(c.email)}</a>`);
-  const web = safeUrl(c.website);
-  if (web) links.push(`<a class="act" href="${esc(web)}" rel="noopener" target="_blank">${esc(t.website)}</a>`);
-  for (const [k, v] of Object.entries(c.social ?? {})) {
-    if (k === "googleMaps") continue;
-    const url = safeUrl(v);
-    if (url) links.push(`<a class="act" href="${esc(url)}" rel="noopener" target="_blank">${esc(t.social[k] ?? k)}</a>`);
-  }
-  const rows: string[] = [];
-  if (address) rows.push(`<p class="addr">${esc(address)}</p>`);
-  if (links.length > 0) rows.push(`<p class="acts">${links.join("")}</p>`);
-  return rows.length > 0 ? `<div class="contact">${rows.join("")}</div>` : "";
-}
-
-function hoursHtml(s: MenuSnapshot, t: MenuText, now: Date | null): string {
-  const h = s.profile.openingHours;
-  if (!h) return "";
-  const today = now ? localTime(now, s.timezone).day : null;
-  const rows = WEEKDAYS.map((d) => {
-    const cur = d === today ? " class=\"today\"" : "";
-    return `<tr${cur}><th scope="row">${esc(t.days[d])}</th><td>${esc(formatDayHours(h[d] ?? "", t))}</td></tr>`;
-  }).join("");
-  return `<details class="hours"><summary>${esc(t.hours)}</summary><table><tbody>${rows}</tbody></table></details>`;
-}
-
-function openNowHtml(s: MenuSnapshot, t: MenuText, now: Date | null): string {
-  if (!now) return "";
-  const open = isOpenAt(s.profile.openingHours, s.timezone, now);
-  if (open === null) return "";
-  return `<p class="now ${open ? "is-open" : "is-closed"}"><span class="dot" aria-hidden="true"></span>${esc(open ? t.openNow : t.closedNow)}</p>`;
-}
-
 /**
  * The theme font from Google Fonts. On the public page it does not block
  * the first paint (LCP budget): the stylesheet starts as `media="print"` and
@@ -260,6 +220,7 @@ const CSS = `${BASE_CSS}
 .sp-plate{display:grid;place-items:center;width:132px;height:132px;border-radius:50%;background:var(--es-surface);box-shadow:0 0 0 8px var(--es-secondary),0 14px 24px -10px rgba(0,0,0,.45);transform:translateZ(40px);animation:sp-plate 1.1s cubic-bezier(.2,.8,.2,1) both}
 .sp-logo{width:96px;height:96px;border-radius:50%;object-fit:cover}
 .sp-bowl{width:128px;height:128px;transform:translateZ(40px)}
+.sp-wisps{width:84px;height:48px;margin-bottom:-6px;transform:translateZ(40px)}
 .sp-steam path{animation:sp-steam 1.4s ease-in-out infinite}.sp-steam path:nth-child(2){animation-delay:.25s}.sp-steam path:nth-child(3){animation-delay:.5s}
 .sp-name{margin:8px 0 0;font-size:1.3rem;font-weight:700;line-height:1.2;overflow-wrap:anywhere;transform:translateZ(24px)}
 .sp-sub{margin:0;font-size:.8rem;letter-spacing:.3em;text-transform:uppercase;opacity:.85;transform:translateZ(16px)}
@@ -276,18 +237,15 @@ const CSS = `${BASE_CSS}
 .no-match{padding:24px 0;color:var(--es-muted-text)}
 .skip{position:absolute;inset-inline-start:-999px;top:8px}.skip:focus{inset-inline-start:8px;background:var(--es-surface);color:var(--es-surface-text);padding:8px;z-index:20}
 .draft{background:#1A1A1A;color:#fff;padding:10px 16px;font-size:14px;text-align:center}
+.hero{position:relative;background:#1A1A1A;color:#fff}
 .hero .cover{display:block;width:100%;height:180px;object-fit:cover}
-.hero-main{display:flex;gap:16px;align-items:center;padding:16px 0 8px}
-.logo{width:72px;height:72px;border-radius:16px;object-fit:cover;background:var(--es-surface);flex:none}
-.desc{margin:4px 0 0;color:var(--es-muted-text)}
-.now{margin:6px 0 0;font-weight:600;font-size:.95rem;display:flex;align-items:center;gap:6px}
-.dot{width:10px;height:10px;border-radius:50%;border:2px solid currentColor}.is-open .dot{background:currentColor}
-.contact{margin:0 0 4px}.addr{margin:0;color:var(--es-muted-text)}
-.acts{margin:0;display:flex;flex-wrap:wrap;column-gap:16px}
-.act{display:inline-flex;align-items:center;gap:4px;min-height:44px;font-weight:600}.num{font-weight:400}
-.hours{margin:0 0 12px}.hours summary{cursor:pointer;color:var(--es-accent);font-weight:600;min-height:44px;display:flex;align-items:center}
-.hours table{border-collapse:collapse}.hours th{text-align:start;font-weight:400;padding-block:2px;padding-inline:0 16px}.hours td{padding:2px 0}
-.hours .today th,.hours .today td{font-weight:700}
+.hero-band{position:absolute;inset:auto 0 0;padding:40px 0 14px;background:linear-gradient(rgba(0,0,0,0),rgba(0,0,0,.7))}
+.hero-main{display:flex;gap:12px;align-items:center}
+.hero h1{margin:0;font-size:1.5rem;line-height:1.2;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.6);overflow-wrap:anywhere}
+.no-cover{background:var(--es-primary);color:var(--es-on-primary)}
+.no-cover .hero-band{position:static;background:none;padding:20px 0}
+.no-cover h1{color:var(--es-on-primary);text-shadow:none}
+.logo{width:64px;height:64px;border-radius:14px;object-fit:cover;background:var(--es-surface);border:2px solid #fff;flex:none}
 .page{padding-bottom:8px}
 .cats{position:sticky;top:0;z-index:5;background:var(--es-background);border-bottom:1px solid var(--es-border);margin-inline:-16px;padding-inline:16px}
 .cats ul{position:relative;display:flex;gap:8px;list-style:none;margin:0;padding:10px 0;overflow-x:auto;scrollbar-width:none}
@@ -355,7 +313,6 @@ export function renderMenuPage(s: MenuSnapshot, options: RenderOptions = {}): st
   const availability = options.availability ?? {};
   const isAvailable = (i: SnapshotItem) => availability[i.id] ?? i.available;
   const scripts = options.scripts ?? !options.draft;
-  const now = options.draft ? null : options.now ?? new Date();
 
   const byCategory = new Map<string, SnapshotItem[]>();
   for (const i of s.items) {
@@ -419,15 +376,9 @@ ${options.headExtra ?? ""}
 ${scripts ? splashHtml(s, t) : ""}
 <a class="skip" href="#menu">${esc(t.skip)}</a>
 ${options.draft ? `<div class="draft" role="note">${esc(t.previewBanner)}</div>` : ""}
-<header class="hero">
+<header class="hero${p.cover ? "" : " no-cover"}">
 ${p.cover ? imgTag(p.cover, { sizes: "100vw", cls: "cover", eager: true }) : ""}
-<div class="wrap">
-<div class="hero-main">${p.logo ? imgTag(p.logo, { sizes: "72px", cls: "logo", alt: p.name, eager: true }) : ""}<div><h1>${esc(p.name)}</h1>${
-    p.description ? `<p class="desc">${esc(p.description)}</p>` : ""
-  }${openNowHtml(s, t, now)}</div></div>
-${contactHtml(s, t)}
-${hoursHtml(s, t, now)}
-</div>
+<div class="hero-band"><div class="wrap hero-main">${p.logo ? imgTag(p.logo, { sizes: "64px", cls: "logo", alt: p.name, eager: true }) : ""}<h1>${esc(p.name)}</h1></div></div>
 </header>
 <div class="wrap page">
 ${nav}

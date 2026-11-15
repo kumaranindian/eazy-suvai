@@ -49,8 +49,6 @@ export interface MenuResponse {
 export interface ServeDeps {
   /** The public origin, without a trailing slash (canonical, sitemap). */
   baseUrl?: string;
-  /** "Now" for the "Open now" badge. */
-  now?: Date;
   /** Allow `http:` images (the Storage emulator). */
   allowHttpImages?: boolean;
   /** Error logger. */
@@ -193,7 +191,6 @@ export async function handleMenuRequest(db: Firestore, req: MenuRequest, deps: S
           canonicalUrl: `${baseUrl}/${m.slug}`,
           slug: m.slug,
           beacon: BEACON_PATH,
-          now: deps.now,
         });
         return withEtag(req, html(200, body, deps));
       }

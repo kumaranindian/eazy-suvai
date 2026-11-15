@@ -8,7 +8,9 @@
  * - Turns on the theme font stylesheet once loaded (it never blocks the
  *   first paint).
  * - Category bar: highlights the category in view (IntersectionObserver)
- *   and keeps the active pill visible (FR-039, FR-040).
+ *   and keeps the active pill visible (FR-039, FR-040). The zone starts
+ *   8 px below the bar (sections scroll to 72 px), so the previous section
+ *   ending at the bar never counts as the one in view.
  * - Lightbox: a `<dialog>` with a close button, Escape, backdrop tap and
  *   swipe down (FR-041).
  * - "more" / "less" for descriptions longer than one line, placed at the
@@ -63,7 +65,7 @@ setActive(id);track("cat",{id:id.replace(/^c-/,"")})})}
 if(links.length&&"IntersectionObserver" in w){var seen={};
 var io=new IntersectionObserver(function(es){es.forEach(function(e){seen[e.target.id]=e.isIntersecting});
 var secs=d.querySelectorAll("main section[id^='c-']");for(var j=0;j<secs.length;j++){if(seen[secs[j].id]){setActive(secs[j].id);break}}},
-{rootMargin:"-72px 0px -55% 0px"});
+{rootMargin:"-80px 0px -55% 0px"});
 d.querySelectorAll("main section[id^='c-']").forEach(function(s){io.observe(s)})}
 var more=ds.more||"more",less=ds.less||"less";
 d.querySelectorAll(".item-desc").forEach(function(p){if(p.scrollHeight<=p.clientHeight+2)return;
