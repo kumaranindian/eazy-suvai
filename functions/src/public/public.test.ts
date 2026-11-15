@@ -8,12 +8,13 @@ import { removeBrandingFrom } from "../lib/plan-limits";
 import { BODY_SCRIPT, HEAD_SCRIPT } from "./client-script";
 import { formatPrice, majorAmount } from "./format";
 import { isOpenAt, localTime, openingHoursSpecification } from "./hours";
-import { renderMenuPage } from "./render-menu";
+import { filterBarHtml, renderMenuPage } from "./render-menu";
 import { routeOf } from "./routes";
 import { sampleSnapshot } from "./sample-menu";
 import { jsonForScript, menuJsonLd, metaDescription, pageTitle, seoHead, sitemapXml, truncate } from "./seo";
 import { CACHE_PUBLIC, MENU_ORIGINS, contentSecurityPolicy, handleMenuRequest, menuBaseUrl } from "./serve";
 import { STATE_STATUS, renderStatePage, type StateKind } from "./state-pages";
+import { MENU_TEXT_EN } from "./text";
 
 const BASE = "https://menu.eazysuvai.com";
 const CANONICAL = `${BASE}/spice-garden`;
@@ -250,6 +251,46 @@ describe("menu page", () => {
     expect(bytes).toBeLessThan(10 * 1024);
     expect(() => new Function(BODY_SCRIPT)).not.toThrow();
     expect(() => new Function(HEAD_SCRIPT)).not.toThrow();
+  });
+
+  describe("filter bar (dietary labels and tags)", () => {
+    const s = sampleSnapshot();
+    const items = s.items;
+    const html = live(s);
+
+    it("offers a chip per dietary label and tag in use, hidden until the script runs", () => {
+      const bar = html.match(/<div class="filters"[^>]*>[\s\S]*?<\/div>/)![0];
+      expect(bar).toContain(" hidden>");
+      expect(bar).toContain(`aria-label="${MENU_TEXT_EN.filters}"`);
+      const dietary = new Set(items.map((i) => i.dietaryLabel?.id).filter(Boolean));
+      const tags = new Set(items.flatMap((i) => i.tags.map((x) => x.id)));
+      expect(bar.match(/data-g="d"/g)?.length).toBe(dietary.size);
+      expect(bar.match(/data-g="t"/g)?.length).toBe(tags.size);
+      expect(bar).toContain(MENU_TEXT_EN.clearFilters);
+      expect(html).toContain(`<p class="no-match" hidden>${MENU_TEXT_EN.noMatch}</p>`);
+    });
+
+    it("tags each item with its label and tag ids", () => {
+      const spicy = items.find((i) => i.tags.length > 0)!;
+      expect(html).toContain(
+        `data-id="${spicy.id}" data-d="${spicy.dietaryLabel!.id}" data-t="${spicy.tags.map((x) => x.id).join(" ")}"`,
+      );
+    });
+
+    it("leaves out chips that would filter nothing", () => {
+      const label = items[0].dietaryLabel!;
+      const same = { ...s, items: items.map((i) => ({ ...i, dietaryLabel: label, tags: [] })) };
+      expect(filterBarHtml(same.items, MENU_TEXT_EN)).toBe("");
+      expect(live(same)).not.toContain("class=\"filters\"");
+      // One label, but some items have none: the chip is useful.
+      const mixed = same.items.map((i, n) => (n === 0 ? { ...i, dietaryLabel: null } : i));
+      expect(filterBarHtml(mixed, MENU_TEXT_EN).match(/data-g="d"/g)).toHaveLength(1);
+    });
+
+    it("is valid HTML and absent from the draft preview", async () => {
+      await expectValidHtml(html);
+      expect(renderMenuPage(s, { draft: true })).not.toContain("class=\"filters\"");
+    });
   });
 
   it("keeps the draft preview script-free and noindex", () => {

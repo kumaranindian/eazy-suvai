@@ -68,10 +68,14 @@ Run the same scripts on dev first, without `CONFIRM_PROD`.
 ```
 cd functions && npm ci && npm run lint && npm test
 cd ..
-(cd apps/owner_app && flutter build web --release --dart-define=ENV=prod --dart-define=RECAPTCHA_ENTERPRISE_KEY=<owner key>)
-(cd apps/admin_app && flutter build web --release --dart-define=ENV=prod --dart-define=RECAPTCHA_ENTERPRISE_KEY=<admin key>)
+bash tool/build-web.sh owner --dart-define=ENV=prod --dart-define=RECAPTCHA_ENTERPRISE_KEY=<owner key>
+bash tool/build-web.sh admin --dart-define=ENV=prod --dart-define=RECAPTCHA_ENTERPRISE_KEY=<admin key>
 firebase deploy --project prod --only firestore:rules,firestore:indexes,storage,functions,hosting
 ```
+
+**First deploy of `storage.rules` to a project:** the rules call `firestore.get()` to check the owner, which needs the Storage service agent (`service-<project number>@gcp-sa-firebasestorage.iam.gserviceaccount.com`) to have **Firebase Rules Firestore Service Agent** (`roles/firebaserules.firestoreServiceAgent`). Run the deploy interactively and answer **yes** when it asks to allow cross-service rules. A `--non-interactive` deploy skips that, and then every image upload fails with `storage/unauthorized`.
+
+Always build the web apps with `tool/build-web.sh`, not `flutter build web` directly: Flutter keeps an old plugin registrant in `.dart_tool/flutter_build`, and a build from it lacks plugins (image picking, links, sharing and App Check fail). The script clears it and checks the registrant.
 
 After the deploy:
 

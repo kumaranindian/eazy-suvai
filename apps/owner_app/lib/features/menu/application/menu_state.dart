@@ -317,13 +317,17 @@ final editorDirtyProvider = NotifierProvider<ValueNotifierOf<bool>, bool>(
 );
 
 /// Search and filters of the item list.
+///
+/// Within a group the chips are alternatives (Veg or Egg); the groups
+/// narrow each other (Veg or Egg, and Spicy).
 @immutable
 class ItemFilter {
   const ItemFilter({
     this.query = '',
     this.soldOut = false,
     this.featured = false,
-    this.labelId,
+    this.labelIds = const {},
+    this.tagIds = const {},
   });
 
   final String query;
@@ -331,31 +335,56 @@ class ItemFilter {
   /// Only unavailable items (FRD §5.4).
   final bool soldOut;
   final bool featured;
-  final String? labelId;
+
+  /// Dietary labels; an item matches when it has any of them.
+  final Set<String> labelIds;
+
+  /// Tags; an item matches when it has any of them.
+  final Set<String> tagIds;
 
   bool get isActive =>
-      query.trim().isNotEmpty || soldOut || featured || labelId != null;
+      query.trim().isNotEmpty ||
+      soldOut ||
+      featured ||
+      labelIds.isNotEmpty ||
+      tagIds.isNotEmpty;
 
   bool matches(MenuItem item) {
     if (soldOut && item.available) return false;
     if (featured && !item.featured) return false;
-    if (labelId != null && item.dietaryLabelId != labelId) return false;
+    if (labelIds.isNotEmpty && !labelIds.contains(item.dietaryLabelId)) {
+      return false;
+    }
+    if (tagIds.isNotEmpty && !item.tagIds.any(tagIds.contains)) return false;
     final q = query.trim().toLowerCase();
     if (q.isEmpty) return true;
     return item.name.toLowerCase().contains(q) ||
         item.description.toLowerCase().contains(q);
   }
 
+  /// Adds or removes one dietary label.
+  ItemFilter toggleLabel(String id, bool on) =>
+      copyWith(labelIds: _toggle(labelIds, id, on));
+
+  /// Adds or removes one tag.
+  ItemFilter toggleTag(String id, bool on) =>
+      copyWith(tagIds: _toggle(tagIds, id, on));
+
+  static Set<String> _toggle(Set<String> set, String id, bool on) =>
+      on ? {...set, id} : ({...set}..remove(id));
+
   ItemFilter copyWith({
     String? query,
     bool? soldOut,
     bool? featured,
-    ValueGetter<String?>? labelId,
+    Set<String>? labelIds,
+    Set<String>? tagIds,
   }) => ItemFilter(
     query: query ?? this.query,
     soldOut: soldOut ?? this.soldOut,
     featured: featured ?? this.featured,
-    labelId: labelId != null ? labelId() : this.labelId,
+    labelIds: labelIds ?? this.labelIds,
+    tagIds: tagIds ?? this.tagIds,
   );
 }
 

@@ -12,6 +12,9 @@
  * - Lightbox: a `<dialog>` with a close button, Escape, backdrop tap and
  *   swipe down (FR-041).
  * - "more" / "less" for descriptions longer than three lines.
+ * - Filter chips (dietary labels and tags): shows the bar, hides items that
+ *   don't match, then empty sections and their category links. Any chip
+ *   within a group matches; the two groups narrow each other.
  * - Analytics ({@link BEACON_SCRIPT}, M09).
  */
 
@@ -62,6 +65,18 @@ var btn=d.createElement("button");btn.type="button";btn.className="more";btn.tex
 btn.addEventListener("click",function(){var o=p.classList.toggle("open");btn.textContent=o?less:more;btn.setAttribute("aria-expanded",String(o));
 if(o){var li=p.closest(".item");if(li)track("item",{id:li.getAttribute("data-id")})}});
 p.parentNode.insertBefore(btn,p.nextSibling)});
+var fb=d.querySelector(".filters");if(fb){fb.hidden=false;
+var chips=fb.querySelectorAll(".chip[data-g]"),clr=fb.querySelector(".clear"),nm=d.querySelector(".no-match"),st=d.querySelector("[data-shown]");
+function picked(g){var r=[];for(var i=0;i<chips.length;i++){var c=chips[i];if(c.getAttribute("data-g")===g&&c.getAttribute("aria-pressed")==="true")r.push(c.getAttribute("data-v"))}return r}
+function apply(){var D=picked("d"),T=picked("t"),on=D.length+T.length>0,n=0,its=d.querySelectorAll("main .item");
+for(var i=0;i<its.length;i++){var it=its[i],dv=it.getAttribute("data-d")||"",tv=(it.getAttribute("data-t")||"").split(" "),ok=!D.length||D.indexOf(dv)>=0;
+if(ok&&T.length){ok=false;for(var j=0;j<T.length;j++){if(tv.indexOf(T[j])>=0)ok=true}}
+it.hidden=!ok;if(ok&&it.closest("section[id^='c-']"))n++}
+var secs=d.querySelectorAll("main section");for(var k=0;k<secs.length;k++){var sc=secs[k],vis=!!sc.querySelector(".item:not([hidden])");sc.hidden=!vis;
+for(var m=0;m<links.length;m++){if(links[m].getAttribute("href")==="#"+sc.id)links[m].parentNode.hidden=!vis}}
+clr.hidden=!on;nm.hidden=!on||n>0;st.textContent=on?st.getAttribute("data-shown").replace("{count}",n):""}
+for(var q=0;q<chips.length;q++){chips[q].addEventListener("click",function(){this.setAttribute("aria-pressed",String(this.getAttribute("aria-pressed")!=="true"));apply()})}
+clr.addEventListener("click",function(){for(var i=0;i<chips.length;i++)chips[i].setAttribute("aria-pressed","false");apply();if(chips[0])chips[0].focus()})}
 var dlg=d.createElement("dialog");if(!dlg.showModal)return;
 dlg.className="lb";dlg.innerHTML='<button type="button" class="lb-close"><span aria-hidden="true">\\u00d7</span></button><img alt="">';
 var x=dlg.firstChild,img=dlg.lastChild;x.setAttribute("aria-label",ds.close||"Close");b.appendChild(dlg);

@@ -110,13 +110,50 @@ function itemHtml(item: SnapshotItem, s: MenuSnapshot, available: boolean, t: Me
     })
     : "";
   const cls = `item${available ? "" : " sold-out"}${image ? " has-img" : ""}${item.featured ? " is-featured" : ""}`;
-  return `<li class="${cls}" data-id="${esc(item.id)}"${available ? "" : " aria-disabled=\"true\""}>
+  // Filter keys read by the page script (dietary label and tag ids).
+  const filterData = (item.dietaryLabel ? ` data-d="${esc(item.dietaryLabel.id)}"` : "") +
+    (item.tags.length > 0 ? ` data-t="${esc(item.tags.map((x) => x.id).join(" "))}"` : "");
+  return `<li class="${cls}" data-id="${esc(item.id)}"${filterData}${available ? "" : " aria-disabled=\"true\""}>
 ${image}<div class="item-body">
 <h3 class="item-name">${esc(item.name)}${item.featured ? ` <span class="badge featured">${esc(t.featured)}</span>` : ""}</h3>
 ${item.description ? `<p class="item-desc">${esc(item.description)}</p>` : ""}
 <div class="item-meta"><span class="price">${esc(price)}</span>${available ? "" : ` <span class="badge sold">${esc(t.soldOut)}</span>`}</div>
 ${badges.length > 0 ? `<div class="badges">${badges.join("")}</div>` : ""}
 </div></li>`;
+}
+
+/**
+ * Chips for the dietary labels and tags used on the menu. Within a group the
+ * chips are alternatives; the groups narrow each other (the page script does
+ * the filtering). A chip that every item has would filter nothing and is
+ * left out; with no chips there is no bar. Rendered `hidden`: only the
+ * script shows it, so the page without JavaScript never offers a dead control.
+ */
+export function filterBarHtml(items: SnapshotItem[], t: MenuText): string {
+  const dietary = new Map<string, SnapshotLabel>();
+  const tags = new Map<string, SnapshotLabel>();
+  const tagCount = new Map<string, number>();
+  for (const i of items) {
+    if (i.dietaryLabel && !dietary.has(i.dietaryLabel.id)) dietary.set(i.dietaryLabel.id, i.dietaryLabel);
+    for (const tag of i.tags) {
+      if (!tags.has(tag.id)) tags.set(tag.id, tag);
+      tagCount.set(tag.id, (tagCount.get(tag.id) ?? 0) + 1);
+    }
+  }
+  const unlabelled = items.some((i) => !i.dietaryLabel);
+  const chips: string[] = [];
+  if (dietary.size > 1 || (dietary.size === 1 && unlabelled)) {
+    for (const l of dietary.values()) {
+      chips.push(`<li><button type="button" class="chip" aria-pressed="false" data-g="d" data-v="${esc(l.id)}">${labelIcon(l)}${esc(l.name)}</button></li>`);
+    }
+  }
+  for (const tag of tags.values()) {
+    if ((tagCount.get(tag.id) ?? 0) >= items.length) continue;
+    chips.push(`<li><button type="button" class="chip" aria-pressed="false" data-g="t" data-v="${esc(tag.id)}">${esc(tag.name)}</button></li>`);
+  }
+  if (chips.length === 0) return "";
+  return `<div class="filters" role="group" aria-label="${esc(t.filters)}" hidden><ul>${chips.join("")}<li><button type="button" class="chip clear" hidden>${esc(t.clearFilters)}</button></li></ul></div>
+<p class="no-match" hidden>${esc(t.noMatch)}</p><p class="sr-only" role="status" data-shown="${esc(t.shown)}"></p>`;
 }
 
 function contactHtml(s: MenuSnapshot, t: MenuText): string {
@@ -185,6 +222,13 @@ h1{margin:0;font-size:1.6rem;line-height:1.2;color:var(--es-text)}`;
 
 const CSS = `${BASE_CSS}
 @media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+[hidden]{display:none!important}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.filters ul{display:flex;gap:8px;list-style:none;margin:0;padding:12px 0 4px;overflow-x:auto;scrollbar-width:none}
+.chip{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 14px;border-radius:999px;border:1px solid var(--es-border);background:var(--es-surface);color:var(--es-surface-text);font:inherit;font-size:.9rem;white-space:nowrap;cursor:pointer}
+.chip[aria-pressed=true]{background:var(--es-primary);color:var(--es-on-primary);border-color:var(--es-primary);font-weight:600}
+.chip.clear{background:none;border-color:transparent;color:var(--es-accent);text-decoration:underline}
+.no-match{padding:24px 0;color:var(--es-muted-text)}
 .skip{position:absolute;inset-inline-start:-999px;top:8px}.skip:focus{inset-inline-start:8px;background:var(--es-surface);color:var(--es-surface-text);padding:8px;z-index:20}
 .draft{background:#1A1A1A;color:#fff;padding:10px 16px;font-size:14px;text-align:center}
 .hero .cover{display:block;width:100%;height:180px;object-fit:cover}
@@ -279,6 +323,7 @@ export function renderMenuPage(s: MenuSnapshot, options: RenderOptions = {}): st
   // Categories without items are not shown.
   const categories = s.categories.filter((c) => (byCategory.get(c.id) ?? []).length > 0);
   const featured = s.items.filter((i) => i.featured);
+  const filters = scripts ? filterBarHtml(categories.flatMap((c) => byCategory.get(c.id) ?? []), t) : "";
 
   const nav = categories.length > 1
     ? `<nav class="cats" aria-label="${esc(t.categories)}"><ul>${categories
@@ -343,6 +388,7 @@ ${hoursHtml(s, t, now)}
 <div class="wrap page">
 ${nav}
 <main id="menu">
+${filters}
 ${featuredHtml}
 ${sections || `<p class="empty">${esc(t.empty)}</p>`}
 </main>

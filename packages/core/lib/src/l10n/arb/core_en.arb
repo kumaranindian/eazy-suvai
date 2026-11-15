@@ -363,13 +363,25 @@
   "@imageErrorProcessingFailed": {
     "description": "Image rejected: unexpected server failure."
   },
-  "imageErrorUploadFailed": "The upload didn't finish. Check your connection and try again.",
+  "imageErrorUploadFailed": "Upload failed. Check your connection and try again.",
   "@imageErrorUploadFailed": {
     "description": "The image upload failed on the device."
   },
-  "imageErrorPickFailed": "We couldn't open your photos. Check that the app is allowed to access them.",
+  "imageErrorPickFailed": "We couldn't open the image picker. Please try again.",
   "@imageErrorPickFailed": {
     "description": "The photo library or file dialog could not be opened."
+  },
+  "imageErrorPhotoAccessDenied": "EazySuvai isn't allowed to access your photos. Allow access in Settings, then try again.",
+  "@imageErrorPhotoAccessDenied": {
+    "description": "Shown on iOS when the user refused access to the photo library."
+  },
+  "imageRetry": "Retry",
+  "@imageRetry": {
+    "description": "Button that repeats a failed image upload."
+  },
+  "imageOpenSettings": "Open settings",
+  "@imageOpenSettings": {
+    "description": "Button that opens the app's page in the phone settings to allow photo access."
   },
   "validationPhone": "Enter a valid phone number for your restaurant's country.",
   "@validationPhone": {

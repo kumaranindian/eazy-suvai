@@ -180,8 +180,8 @@ and formats them and fails if anything changed, so run it before committing.
 ## Building and deploying
 
 ```bash
-(cd apps/owner_app && flutter build web --dart-define=ENV=dev)
-(cd apps/admin_app && flutter build web --dart-define=ENV=dev)
+bash tool/build-web.sh owner --dart-define=ENV=dev   # clears the stale plugin registrant first
+bash tool/build-web.sh admin --dart-define=ENV=dev
 firebase use dev
 firebase deploy --only hosting,firestore,storage,functions
 ```

@@ -20,6 +20,7 @@ export 'src/media/crop_geometry.dart';
 export 'src/media/image_crop_dialog.dart'
     show ImageCropDialog, showImageCropDialog;
 export 'src/media/image_messages.dart';
+export 'src/media/media_error_log.dart';
 export 'src/media/image_object.dart';
 export 'src/media/image_picker_field.dart';
 export 'src/media/image_picker_service.dart';

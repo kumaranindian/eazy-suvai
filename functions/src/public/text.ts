@@ -32,6 +32,12 @@ export const MENU_TEXT_EN = {
   terms: "Terms",
   previewBanner: "Preview – this is your unpublished draft. Customers can't see it yet.",
   empty: "This menu has no items yet.",
+  /** Filter bar (dietary labels and tags). */
+  filters: "Filter dishes",
+  clearFilters: "Clear filters",
+  noMatch: "No dishes match these filters.",
+  /** Announced to screen readers after a filter change: `{count}` is filled in. */
+  shown: "Dishes shown: {count}",
   /** Meta description when the owner wrote none: `{name}` and `{place}` are filled in. */
   defaultDescription: "See the menu of {name}{place}: dishes, prices and opening hours.",
   days: {

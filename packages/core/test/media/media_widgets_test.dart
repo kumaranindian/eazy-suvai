@@ -1,8 +1,8 @@
-import 'dart:typed_data';
-
 import 'package:core/core.dart';
 import 'package:core/testing.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:image/image.dart' as img;
@@ -268,12 +268,55 @@ void main() {
       expect(find.bySemanticsLabel('Image not accepted'), findsOneWidget);
     });
 
-    testWidgets('the picker failing shows a permission hint', (tester) async {
-      final h = Harness()..picker.error = Exception('denied');
+    testWidgets('the picker failing is logged and shows no permission hint', (
+      tester,
+    ) async {
+      final logged = <String>[];
+      MediaErrorLog.sink = (e, _, c) => logged.add('$c: $e');
+      addTearDown(() => MediaErrorLog.sink = null);
+      final h = Harness()
+        ..picker.error = const ImagePickException(cause: 'MissingPlugin');
       await tester.pumpWidget(h.build());
       await tester.tap(find.text('Add image'));
       await tester.pump();
-      expect(find.textContaining("couldn't open your photos"), findsOneWidget);
+      expect(
+        find.textContaining("couldn't open the image picker"),
+        findsOneWidget,
+      );
+      expect(find.textContaining('access your photos'), findsNothing);
+      expect(find.text('Open settings'), findsNothing);
+      expect(logged.single, contains('opening the picker for logo'));
+      expect(logged.single, contains('MissingPlugin'));
+    });
+
+    testWidgets('a refused photo permission says so', (tester) async {
+      final h = Harness()
+        ..picker.error = const ImagePickException(accessDenied: true);
+      await tester.pumpWidget(h.build());
+      await tester.tap(find.text('Add image'));
+      await tester.pump();
+      expect(find.textContaining('access your photos'), findsOneWidget);
+    });
+
+    testWidgets('on iOS a refused permission offers the settings', (
+      tester,
+    ) async {
+      debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+      final h = Harness()
+        ..picker.error = const ImagePickException(accessDenied: true);
+      await tester.pumpWidget(h.build());
+      await tester.tap(find.text('Add image'));
+      await tester.pump();
+      expect(find.text('Open settings'), findsOneWidget);
+      debugDefaultTargetPlatformOverride = null;
+    });
+
+    test('iOS permission codes count as a refusal', () {
+      bool denied(String code) =>
+          DeviceImageFilePicker.isAccessDenied(PlatformException(code: code));
+      expect(denied('photo_access_denied'), isTrue);
+      expect(denied('photo_access_restricted'), isTrue);
+      expect(denied('invalid_image'), isFalse);
     });
   });
 
@@ -306,8 +349,20 @@ void main() {
       h.uploader.last.fail();
       await tester.pump();
       await tester.pump();
-      expect(find.textContaining("upload didn't finish"), findsOneWidget);
+      expect(find.textContaining('Upload failed'), findsOneWidget);
       expect(find.text('Add image'), findsOneWidget);
+      // Retry sends the same cropped image again.
+      final first = h.uploader.last.request.bytes;
+      await tester.tap(find.text('Retry'));
+      await tester.pump();
+      expect(h.uploader.uploads, hasLength(2));
+      expect(h.uploader.last.request.bytes, same(first));
+      expect(find.text('Cancel upload'), findsOneWidget);
+      expect(find.textContaining('Upload failed'), findsNothing);
+      h.uploader.last.complete();
+      await tester.pump();
+      await tester.pump();
+      expect(find.text('Retry'), findsNothing);
     });
 
     testWidgets('cancelling the crop uploads nothing', (tester) async {

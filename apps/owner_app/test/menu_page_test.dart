@@ -163,6 +163,35 @@ void main() {
       expect(find.text('Veg biryani'), findsOneWidget);
       expect(find.text('Paneer tikka'), findsNothing);
     });
+
+    testWidgets('dietary and tag filters: any within a group, both groups '
+        'narrow', (tester) async {
+      final app = await openMenu(tester);
+      await app.tap(find.byKey(MenuKeys.allItems));
+      Finder chip(String kind, String id) =>
+          find.byKey(ValueKey('menu.filter.$kind.$id'));
+      // Only labels and tags that items use get a chip.
+      expect(chip('label', 'contains-egg'), findsNothing);
+      expect(chip('tag', 'new'), findsNothing);
+      expect(chip('tag', 'spicy'), findsOneWidget);
+
+      await app.tap(chip('label', 'vegetarian'));
+      expect(find.text('Paneer tikka'), findsOneWidget);
+      expect(find.text('Veg biryani'), findsNothing);
+      await app.tap(chip('label', 'vegan'));
+      expect(find.text('Paneer tikka'), findsOneWidget);
+      expect(find.text('Veg biryani'), findsOneWidget);
+      expect(find.text('Chicken 65'), findsNothing);
+
+      await app.tap(chip('tag', 'spicy'));
+      expect(find.text('Paneer tikka'), findsOneWidget);
+      expect(find.text('Veg biryani'), findsNothing);
+
+      await app.tap(chip('label', 'vegetarian'));
+      await app.tap(chip('label', 'vegan'));
+      expect(find.text('Paneer tikka'), findsOneWidget);
+      expect(find.text('Chicken 65'), findsNothing);
+    });
   });
 
   group('bulk actions on wide screens (FR-097)', () {

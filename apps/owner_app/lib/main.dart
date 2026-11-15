@@ -39,4 +39,7 @@ Future<void> _initCrashlytics(AppEnv env) async {
     crashlytics.recordError(error, stack, fatal: true);
     return true;
   };
+  // Image errors the user sees as a message (picker, decode, upload).
+  MediaErrorLog.sink = (error, stack, context) =>
+      crashlytics.recordError(error, stack, reason: context);
 }

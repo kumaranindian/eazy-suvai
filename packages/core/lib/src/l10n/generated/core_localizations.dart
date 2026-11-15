@@ -595,14 +595,32 @@ abstract class CoreLocalizations {
   /// The image upload failed on the device.
   ///
   /// In en, this message translates to:
-  /// **'The upload didn\'t finish. Check your connection and try again.'**
+  /// **'Upload failed. Check your connection and try again.'**
   String get imageErrorUploadFailed;
 
   /// The photo library or file dialog could not be opened.
   ///
   /// In en, this message translates to:
-  /// **'We couldn\'t open your photos. Check that the app is allowed to access them.'**
+  /// **'We couldn\'t open the image picker. Please try again.'**
   String get imageErrorPickFailed;
+
+  /// Shown on iOS when the user refused access to the photo library.
+  ///
+  /// In en, this message translates to:
+  /// **'EazySuvai isn\'t allowed to access your photos. Allow access in Settings, then try again.'**
+  String get imageErrorPhotoAccessDenied;
+
+  /// Button that repeats a failed image upload.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get imageRetry;
+
+  /// Button that opens the app's page in the phone settings to allow photo access.
+  ///
+  /// In en, this message translates to:
+  /// **'Open settings'**
+  String get imageOpenSettings;
 
   /// Contact number is not valid for the restaurant's country (FR-011).
   ///

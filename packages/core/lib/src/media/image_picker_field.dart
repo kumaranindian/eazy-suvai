@@ -1,8 +1,9 @@
 import 'dart:async';
-import 'dart:typed_data';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../l10n/generated/core_localizations.dart';
 import '../layout/breakpoint.dart';
@@ -14,6 +15,7 @@ import 'image_object.dart';
 import 'image_picker_service.dart';
 import 'image_preparer.dart';
 import 'image_upload_service.dart';
+import 'media_error_log.dart';
 import 'responsive_image.dart';
 
 /// Pick, crop, preview, replace and remove one image (FR-031, FR-102).
@@ -97,6 +99,9 @@ class _ImagePickerFieldState extends ConsumerState<ImagePickerField> {
   bool _slow = false;
   StreamSubscription<double>? _progressSub;
 
+  /// The cropped image of an upload that failed, for Retry.
+  PreparedImage? _failedUpload;
+
   double get _aspect => widget.aspectRatio ?? widget.purpose.defaultAspectRatio;
 
   bool get _busy => _phase != _Phase.idle;
@@ -132,6 +137,7 @@ class _ImagePickerFieldState extends ConsumerState<ImagePickerField> {
     _localPreview = null;
     _slow = false;
     _localError = error;
+    if (error != ImageRejectReason.uploadFailed) _failedUpload = null;
   }
 
   void _reset({ImageRejectReason? error}) {
@@ -140,13 +146,28 @@ class _ImagePickerFieldState extends ConsumerState<ImagePickerField> {
   }
 
   Future<void> _pick() async {
-    setState(() => _localError = null);
+    // The picker is opened before anything else, with no await in between:
+    // a browser only shows its file dialog during the user's click.
+    final picking = ref.read(imageFilePickerProvider).pick();
+    setState(() {
+      _localError = null;
+      _failedUpload = null;
+    });
 
     final PickedImageFile? file;
     try {
-      file = await ref.read(imageFilePickerProvider).pick();
-    } on Object {
-      _reset(error: ImageRejectReason.pickFailed);
+      file = await picking;
+    } on Object catch (e, s) {
+      MediaErrorLog.record(
+        e,
+        s,
+        'opening the picker for ${widget.purpose.wire}',
+      );
+      _reset(
+        error: e is ImagePickException && e.accessDenied
+            ? ImageRejectReason.photoAccessDenied
+            : ImageRejectReason.pickFailed,
+      );
       return;
     }
     if (file == null || !mounted) return;
@@ -163,7 +184,8 @@ class _ImagePickerFieldState extends ConsumerState<ImagePickerField> {
     } on ImageRejectedException catch (e) {
       _reset(error: e.reason);
       return;
-    } on Object {
+    } on Object catch (e, s) {
+      MediaErrorLog.record(e, s, 'decoding the ${widget.purpose.wire} image');
       _reset(error: ImageRejectReason.invalidImage);
       return;
     }
@@ -188,7 +210,8 @@ class _ImagePickerFieldState extends ConsumerState<ImagePickerField> {
     final PreparedImage prepared;
     try {
       prepared = await preparer.crop(source, rect);
-    } on Object {
+    } on Object catch (e, s) {
+      MediaErrorLog.record(e, s, 'cropping the ${widget.purpose.wire} image');
       _reset(error: ImageRejectReason.invalidImage);
       return;
     } finally {
@@ -228,8 +251,10 @@ class _ImagePickerFieldState extends ConsumerState<ImagePickerField> {
     } on ImageUploadCanceled {
       _reset();
       return;
-    } on Object {
+    } on Object catch (e, s) {
+      MediaErrorLog.record(e, s, 'uploading the ${widget.purpose.wire} image');
       _reset(error: ImageRejectReason.uploadFailed);
+      if (mounted) setState(() => _failedUpload = prepared);
       return;
     }
     if (!mounted) return;
@@ -242,6 +267,28 @@ class _ImagePickerFieldState extends ConsumerState<ImagePickerField> {
     });
     widget.onUploaded?.call(ImageObject.processing(upload.path));
     setState(_followServer);
+  }
+
+  Future<void> _retryUpload() async {
+    final prepared = _failedUpload;
+    if (prepared == null) return;
+    setState(() {
+      _localError = null;
+      _failedUpload = null;
+    });
+    await _startUpload(prepared);
+  }
+
+  /// Only iOS can refuse photo access; its settings page has the switch.
+  static bool get _canOpenSettings =>
+      !kIsWeb && defaultTargetPlatform == TargetPlatform.iOS;
+
+  Future<void> _openSettings() async {
+    try {
+      await launchUrl(Uri.parse('app-settings:'));
+    } on Object catch (e, s) {
+      MediaErrorLog.record(e, s, 'opening the app settings');
+    }
   }
 
   Future<void> _cancel() async {
@@ -371,6 +418,22 @@ class _ImagePickerFieldState extends ConsumerState<ImagePickerField> {
             if (error != null) ...[
               const SizedBox(height: 8),
               _ErrorText(l10n.imageRejectMessage(error, widget.purpose)),
+              if (error == ImageRejectReason.uploadFailed &&
+                  _failedUpload != null)
+                TextButton.icon(
+                  onPressed: _retryUpload,
+                  icon: const Icon(Icons.refresh),
+                  label: Text(l10n.imageRetry),
+                  style: TextButton.styleFrom(minimumSize: const Size(48, 48)),
+                ),
+              if (error == ImageRejectReason.photoAccessDenied &&
+                  _canOpenSettings)
+                TextButton.icon(
+                  onPressed: _openSettings,
+                  icon: const Icon(Icons.settings_outlined),
+                  label: Text(l10n.imageOpenSettings),
+                  style: TextButton.styleFrom(minimumSize: const Size(48, 48)),
+                ),
             ],
           ],
         );

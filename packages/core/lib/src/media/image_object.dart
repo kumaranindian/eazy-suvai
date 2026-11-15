@@ -48,7 +48,7 @@ enum ImageStatus { processing, ready, rejected }
 
 /// Why an image was refused. Server codes come from `processImage`
 /// (`functions/src/media/policy.ts`, `RejectReason`); [uploadFailed] and
-/// [pickFailed] only happen on the device.
+/// [pickFailed] and [photoAccessDenied] only happen on the device.
 enum ImageRejectReason {
   unsupportedType('unsupported-type'),
   tooLarge('too-large'),
@@ -60,7 +60,10 @@ enum ImageRejectReason {
   uploadFailed('upload-failed'),
 
   /// Device only: the photo library or file dialog could not be opened.
-  pickFailed('pick-failed');
+  pickFailed('pick-failed'),
+
+  /// Device only (iOS): the user refused access to the photo library.
+  photoAccessDenied('photo-access-denied');
 
   const ImageRejectReason(this.wire);
 

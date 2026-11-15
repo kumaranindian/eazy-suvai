@@ -147,6 +147,20 @@ class _ItemListPaneState extends ConsumerState<ItemListPane> {
         if (filter.matches(i)) i,
     ];
     final soldOut = source.where((i) => !i.available).length;
+    // Chips only for labels and tags in use here (or already chosen).
+    final usedLabelIds = {
+      for (final i in source) i.dietaryLabelId,
+      ...filter.labelIds,
+    };
+    final usedTagIds = {for (final i in source) ...i.tagIds, ...filter.tagIds};
+    final usedLabels = [
+      for (final l in selectableLabels(labels, keep: filter.labelIds))
+        if (usedLabelIds.contains(l.id)) l,
+    ];
+    final usedTags = [
+      for (final t in selectableLabels(tags, keep: filter.tagIds))
+        if (usedTagIds.contains(t.id)) t,
+    ];
     final reorderable = !_all && !filter.isActive;
     final category = widget.menu.liveCategory(widget.categoryId);
     final visibleSelection = {
@@ -302,16 +316,34 @@ class _ItemListPaneState extends ConsumerState<ItemListPane> {
                     .read(itemFilterProvider.notifier)
                     .set(filter.copyWith(featured: v)),
               ),
-              for (final label in selectableLabels(labels)) ...[
+              for (final label in usedLabels) ...[
                 const SizedBox(width: 8),
                 FilterChip(
                   key: ValueKey('menu.filter.label.${label.id}'),
                   avatar: MenuLabelIcon(label: label, size: 16),
                   label: Text(label.name),
-                  selected: filter.labelId == label.id,
+                  selected: filter.labelIds.contains(label.id),
                   onSelected: (v) => ref
                       .read(itemFilterProvider.notifier)
-                      .set(filter.copyWith(labelId: () => v ? label.id : null)),
+                      .set(filter.toggleLabel(label.id, v)),
+                ),
+              ],
+              if (usedTags.isNotEmpty) ...[
+                const SizedBox(width: 8),
+                const SizedBox(height: 32, child: VerticalDivider(width: 8)),
+              ],
+              for (final tag in usedTags) ...[
+                const SizedBox(width: 8),
+                FilterChip(
+                  key: ValueKey('menu.filter.tag.${tag.id}'),
+                  avatar: tag.icon.isEmpty
+                      ? null
+                      : MenuLabelIcon(label: tag, size: 16),
+                  label: Text(tag.name),
+                  selected: filter.tagIds.contains(tag.id),
+                  onSelected: (v) => ref
+                      .read(itemFilterProvider.notifier)
+                      .set(filter.toggleTag(tag.id, v)),
                 ),
               ],
             ],

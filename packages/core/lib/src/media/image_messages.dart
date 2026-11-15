@@ -16,5 +16,6 @@ extension ImageMessages on CoreLocalizations {
         ImageRejectReason.processingFailed => imageErrorProcessingFailed,
         ImageRejectReason.uploadFailed => imageErrorUploadFailed,
         ImageRejectReason.pickFailed => imageErrorPickFailed,
+        ImageRejectReason.photoAccessDenied => imageErrorPhotoAccessDenied,
       };
 }

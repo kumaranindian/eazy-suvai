@@ -298,11 +298,21 @@ class CoreLocalizationsEn extends CoreLocalizations {
 
   @override
   String get imageErrorUploadFailed =>
-      'The upload didn\'t finish. Check your connection and try again.';
+      'Upload failed. Check your connection and try again.';
 
   @override
   String get imageErrorPickFailed =>
-      'We couldn\'t open your photos. Check that the app is allowed to access them.';
+      'We couldn\'t open the image picker. Please try again.';
+
+  @override
+  String get imageErrorPhotoAccessDenied =>
+      'EazySuvai isn\'t allowed to access your photos. Allow access in Settings, then try again.';
+
+  @override
+  String get imageRetry => 'Retry';
+
+  @override
+  String get imageOpenSettings => 'Open settings';
 
   @override
   String get validationPhone =>
