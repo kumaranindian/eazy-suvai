@@ -1216,6 +1216,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get themePreviewSoldOut => 'Sold out';
 
   @override
+  String get themePreviewFeatured => 'Featured';
+
+  @override
   String get themePremium => 'Premium';
 
   @override

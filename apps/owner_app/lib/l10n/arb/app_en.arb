@@ -1573,6 +1573,10 @@
   "@themePreviewSoldOut": {
     "description": "Badge on unavailable items in the preview."
   },
+  "themePreviewFeatured": "Featured",
+  "@themePreviewFeatured": {
+    "description": "Badge on a featured dish in the theme preview, as on the public menu."
+  },
   "themePremium": "Premium",
   "@themePremium": {
     "description": "Badge on themes outside the Free plan."

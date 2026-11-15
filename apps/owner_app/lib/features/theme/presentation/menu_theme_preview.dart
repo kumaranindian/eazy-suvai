@@ -1,5 +1,3 @@
-import 'dart:math' as math;
-
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -147,6 +145,10 @@ class MenuThemePreview extends ConsumerWidget {
           in ref.watch(dietaryLabelsProvider).value ?? const <MenuLabel>[])
         l.id: l,
     };
+    final tags = {
+      for (final l in ref.watch(itemTagsProvider).value ?? const <MenuLabel>[])
+        l.id: l,
+    };
     final fonts = ref.watch(menuFontResolverProvider);
 
     final base = ThemeData(
@@ -180,6 +182,7 @@ class MenuThemePreview extends ConsumerWidget {
             restaurant: restaurant,
             menu: menu,
             labels: labels,
+            tags: tags,
             device: device,
           ),
         ),
@@ -221,6 +224,7 @@ class _MenuPage extends StatelessWidget {
     required this.restaurant,
     required this.menu,
     required this.labels,
+    required this.tags,
     required this.device,
   });
 
@@ -228,6 +232,7 @@ class _MenuPage extends StatelessWidget {
   final Restaurant? restaurant;
   final PreviewMenu menu;
   final Map<String, MenuLabel> labels;
+  final Map<String, MenuLabel> tags;
   final PreviewDevice device;
 
   @override
@@ -237,8 +242,8 @@ class _MenuPage extends StatelessWidget {
     final t = theme;
     final r = restaurant;
     final wide = device == PreviewDevice.desktop;
-    final grid = t.layout == MenuLayout.grid;
-    final columns = grid ? (wide ? 4 : 2) : 1;
+    // Like the public page: compact rows, two columns from 600 px.
+    final columns = device.size.width >= 600 ? 2 : 1;
     final currency = r?.currency.isNotEmpty == true ? r!.currency : 'INR';
 
     String price(int minor) {
@@ -304,59 +309,33 @@ class _MenuPage extends StatelessWidget {
               ),
             ),
           ),
-          SliverLayoutBuilder(
-            builder: (context, constraints) {
-              final cards = [
-                for (final item in s.items)
-                  _ItemCard(
-                    item: item,
-                    theme: t,
-                    label: labels[item.dietaryLabelId],
-                    price: price(item.priceMinor),
-                    inGrid: grid,
-                  ),
-              ];
-              // List: one column of natural-height cards, at most 760 px
-              // wide. Grid: fixed columns; the cell height follows the
-              // cell width (image-top cards have a 4:3 image).
-              final width = constraints.crossAxisExtent;
-              final side = grid ? 16.0 : math.max(16.0, (width - 760) / 2);
-              final cellWidth = (width - 32 - 12 * (columns - 1)) / columns;
-              return SliverPadding(
-                padding: EdgeInsetsDirectional.symmetric(horizontal: side),
-                sliver: grid
-                    ? SliverGrid(
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: columns,
-                          mainAxisSpacing: 12,
-                          crossAxisSpacing: 12,
-                          mainAxisExtent: _gridCellHeight(t, cellWidth),
-                        ),
-                        delegate: SliverChildListDelegate(cards),
-                      )
-                    : SliverList.separated(
-                        itemCount: cards.length,
-                        itemBuilder: (context, i) => cards[i],
-                        separatorBuilder: (context, i) =>
-                            const SizedBox(height: 12),
-                      ),
-              );
-            },
+          SliverPadding(
+            padding: const EdgeInsetsDirectional.symmetric(horizontal: 16),
+            sliver: SliverToBoxAdapter(
+              child: _ItemBlock(
+                theme: t,
+                columns: columns,
+                rows: [
+                  for (final item in s.items)
+                    _ItemRow(
+                      item: item,
+                      theme: t,
+                      label: labels[item.dietaryLabelId],
+                      tags: [
+                        for (final id in item.tagIds)
+                          if (tags[id] case final tag?) tag,
+                      ],
+                      price: price(item.priceMinor),
+                    ),
+                ],
+              ),
+            ),
           ),
         ],
         const SliverToBoxAdapter(child: SizedBox(height: 24)),
       ],
     );
   }
-
-  /// Room for the details (name, one line of description, price and a
-  /// sold-out badge) plus the image. Taller fonts are clipped, not
-  /// overflowing; the exact page is M07's.
-  static double _gridCellHeight(ResolvedMenuTheme t, double cellWidth) =>
-      switch (t.cardLayout) {
-        CardLayout.compact || CardLayout.imageLeft => 150,
-        CardLayout.imageTop => (cellWidth - 24) * 3 / 4 + 150,
-      };
 }
 
 class _Header extends StatelessWidget {
@@ -483,23 +462,83 @@ class _Pill extends StatelessWidget {
   );
 }
 
-class _ItemCard extends StatelessWidget {
-  const _ItemCard({
+/// The items of one category in one rounded block, divided by thin lines,
+/// in [columns] columns: the public page's compact listing.
+class _ItemBlock extends StatelessWidget {
+  const _ItemBlock({
+    required this.theme,
+    required this.columns,
+    required this.rows,
+  });
+
+  final ResolvedMenuTheme theme;
+  final int columns;
+  final List<Widget> rows;
+
+  @override
+  Widget build(BuildContext context) {
+    final line = theme.borderColor;
+    final lines = <Widget>[];
+    for (var i = 0; i < rows.length; i += columns) {
+      lines.add(
+        IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              for (var j = 0; j < columns; j++) ...[
+                if (j > 0) VerticalDivider(width: 1, thickness: 1, color: line),
+                Expanded(
+                  child: i + j < rows.length ? rows[i + j] : const SizedBox(),
+                ),
+              ],
+            ],
+          ),
+        ),
+      );
+    }
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(12),
+      child: ColoredBox(
+        color: theme.surfaceColor,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            for (final (i, l) in lines.indexed) ...[
+              if (i > 0) Divider(height: 1, thickness: 1, color: line),
+              l,
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// One dish as the public page's compact row: a 56 px thumbnail (none for
+/// the "compact" card layout or without a photo), name and price on one
+/// line, one line of description, and small pills (featured, sold out,
+/// dietary label, tags). Featured dishes get a bar on the start side.
+class _ItemRow extends StatelessWidget {
+  const _ItemRow({
     required this.item,
     required this.theme,
     required this.label,
+    required this.tags,
     required this.price,
-    required this.inGrid,
   });
 
   final MenuItem item;
   final ResolvedMenuTheme theme;
   final MenuLabel? label;
+  final List<MenuLabel> tags;
   final String price;
 
-  /// In a grid cell of fixed height: smaller side image, one line of
-  /// description, and anything taller is clipped.
-  final bool inGrid;
+  static const _grey = ColorFilter.matrix(<double>[
+    0.2126, 0.7152, 0.0722, 0, 0, //
+    0.2126, 0.7152, 0.0722, 0, 0, //
+    0.2126, 0.7152, 0.0722, 0, 0, //
+    0, 0, 0, 1, 0,
+  ]);
 
   @override
   Widget build(BuildContext context) {
@@ -507,123 +546,147 @@ class _ItemCard extends StatelessWidget {
     final text = Theme.of(context).textTheme;
     final t = theme;
     final soldOut = !item.available;
+    final showImage = t.cardLayout != CardLayout.compact && item.image != null;
+    final small = text.labelSmall?.copyWith(fontSize: 11);
 
-    final image = ClipRRect(
-      borderRadius: BorderRadius.circular(8),
-      child: ColoredBox(
-        color: t.secondaryColor,
-        child: item.image == null
-            ? Center(child: Icon(Icons.restaurant, color: t.onSecondaryColor))
-            : ResponsiveImage(image: item.image, semanticLabel: item.name),
-      ),
-    );
+    Widget pill(Widget child, {Color? fill, bool outlined = false}) =>
+        Container(
+          padding: const EdgeInsetsDirectional.symmetric(
+            horizontal: 6,
+            vertical: 1,
+          ),
+          decoration: BoxDecoration(
+            color: fill,
+            borderRadius: BorderRadius.circular(999),
+            border: outlined ? Border.all(color: t.borderColor) : null,
+          ),
+          child: child,
+        );
+
+    final pills = <Widget>[
+      if (item.featured)
+        pill(
+          Text(
+            l10n.themePreviewFeatured,
+            style: small?.copyWith(
+              color: t.onSecondaryColor,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          fill: t.secondaryColor,
+        ),
+      if (soldOut)
+        pill(
+          Text(
+            l10n.themePreviewSoldOut,
+            style: small?.copyWith(
+              color: t.surfaceColor,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          fill: t.surfaceTextColor,
+        ),
+      if (label case final label?)
+        pill(
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              MenuLabelIcon(label: label, size: 12),
+              const SizedBox(width: 3),
+              Flexible(
+                child: Text(
+                  label.name,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: small?.copyWith(color: t.surfaceTextColor),
+                ),
+              ),
+            ],
+          ),
+          outlined: true,
+        ),
+      for (final tag in tags)
+        pill(
+          Text(tag.name, style: small?.copyWith(color: t.surfaceTextColor)),
+          outlined: true,
+        ),
+    ];
 
     final details = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (label != null) ...[
-              MenuLabelIcon(label: label!, size: 16),
-              const SizedBox(width: 6),
-            ],
             Expanded(
               child: Text(
                 item.name,
-                maxLines: 1,
+                maxLines: 2,
                 overflow: TextOverflow.ellipsis,
-                style: text.titleMedium?.copyWith(
-                  color: t.surfaceTextColor,
-                  fontWeight: FontWeight.w600,
+                style: text.titleSmall?.copyWith(
+                  color: soldOut ? t.mutedTextColor : t.surfaceTextColor,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
             ),
-          ],
-        ),
-        if (item.description.isNotEmpty) ...[
-          const SizedBox(height: 2),
-          Text(
-            item.description,
-            maxLines: inGrid ? 1 : 2,
-            overflow: TextOverflow.ellipsis,
-            style: text.bodySmall?.copyWith(color: t.mutedTextColor),
-          ),
-        ],
-        const SizedBox(height: 4),
-        Wrap(
-          spacing: 8,
-          runSpacing: 4,
-          crossAxisAlignment: WrapCrossAlignment.center,
-          children: [
+            const SizedBox(width: 8),
             Text(
               price,
               style: text.titleSmall?.copyWith(
-                color: t.accentColor,
+                color: soldOut ? t.mutedTextColor : t.accentColor,
                 fontWeight: FontWeight.w700,
               ),
             ),
-            if (soldOut)
-              Container(
-                padding: const EdgeInsetsDirectional.symmetric(
-                  horizontal: 8,
-                  vertical: 2,
-                ),
-                decoration: BoxDecoration(
-                  color: t.surfaceTextColor,
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                child: Text(
-                  l10n.themePreviewSoldOut,
-                  style: text.labelSmall?.copyWith(color: t.surfaceColor),
-                ),
-              ),
           ],
         ),
+        if (item.description.isNotEmpty)
+          Text(
+            item.description,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: text.bodySmall?.copyWith(color: t.mutedTextColor),
+          ),
+        if (pills.isNotEmpty) ...[
+          const SizedBox(height: 4),
+          Wrap(spacing: 6, runSpacing: 4, children: pills),
+        ],
       ],
     );
 
-    final content = switch (t.cardLayout) {
-      CardLayout.compact => details,
-      CardLayout.imageLeft => Row(
+    Widget thumbnail = ResponsiveImage(
+      image: item.image,
+      semanticLabel: item.name,
+    );
+    if (soldOut) {
+      thumbnail = ColorFiltered(colorFilter: _grey, child: thumbnail);
+    }
+
+    return Container(
+      decoration: item.featured
+          ? BoxDecoration(
+              border: BorderDirectional(
+                start: BorderSide(color: t.secondaryColor, width: 3),
+              ),
+            )
+          : null,
+      padding: const EdgeInsetsDirectional.fromSTEB(12, 8, 12, 8),
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox.square(dimension: inGrid ? 48 : 88, child: image),
-          SizedBox(width: inGrid ? 8 : 12),
+          if (showImage) ...[
+            SizedBox.square(
+              dimension: 56,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(6),
+                child: thumbnail,
+              ),
+            ),
+            const SizedBox(width: 10),
+          ],
           Expanded(child: details),
         ],
       ),
-      CardLayout.imageTop => Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          AspectRatio(aspectRatio: inGrid ? 4 / 3 : 16 / 9, child: image),
-          const SizedBox(height: 8),
-          details,
-        ],
-      ),
-    };
-
-    // Sold-out cards are not dimmed: that would take the text below AA.
-    return Container(
-      padding: const EdgeInsetsDirectional.all(12),
-      decoration: BoxDecoration(
-        color: t.surfaceColor,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: t.borderColor),
-      ),
-      // A grid cell has a fixed height: lay the card out at its natural
-      // height and clip what does not fit, instead of overflowing.
-      child: inGrid
-          ? ClipRect(
-              child: OverflowBox(
-                alignment: AlignmentDirectional.topStart,
-                minHeight: 0,
-                maxHeight: double.infinity,
-                child: content,
-              ),
-            )
-          : content,
     );
   }
 }

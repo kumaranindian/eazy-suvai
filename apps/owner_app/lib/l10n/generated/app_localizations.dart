@@ -2038,6 +2038,12 @@ abstract class AppLocalizations {
   /// **'Sold out'**
   String get themePreviewSoldOut;
 
+  /// Badge on a featured dish in the theme preview, as on the public menu.
+  ///
+  /// In en, this message translates to:
+  /// **'Featured'**
+  String get themePreviewFeatured;
+
   /// Badge on themes outside the Free plan.
   ///
   /// In en, this message translates to:
