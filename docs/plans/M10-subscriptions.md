@@ -84,7 +84,7 @@ Functions: limit checks, each scheduled transition with fake clocks, `applyPlanL
 **What was built**
 
 - **Plans** (`functions/src/subscriptions/seed-plans.ts`, seeded by `scripts/seed-platform.mjs`):
-  - `plans/free` and `plans/pro` as in the table above, with `limits {maxItems, maxCategories (Pro 10000 = unlimited), maxBranches, premiumThemes, defaultThemeId: 'saffron', analyticsDays, qrLogo, removeBranding}`, `billing` (Pro: monthly, annual), `prices: {}` (open decision), `isFree`, `active` and `sort`.
+  - `plans/free` and `plans/pro` as in the table above, with `limits {maxItems, maxCategories (Pro 10000 = unlimited), maxBranches, premiumThemes, defaultThemeId: 'saffron', analyticsDays, qrLogo, removeBranding}`, `billing` (Pro: monthly, annual), `prices` = `PRO_PRICES` for Pro (set 2026-11-15; Free has none), `isFree`, `active` and `sort`.
   - The shared helper `functions/src/lib/plan-limits.ts` now also has `PlanFeatures`, `planFeaturesFrom`, `getPlanFeatures(read, planId)` and `restaurantPlanFeatures()`, with FRD fallbacks. `getPlanLimits` is unchanged, so M04's create callables, M06 publish and the counts keep using it. The publish draft loader now reads the full features.
 - **`restaurants/{rid}.planFeatures`** `{maxItems, maxCategories, premiumThemes, analyticsDays, qrLogo, removeBranding}`:
   - written at registration (Free) and on every plan change;
@@ -188,7 +188,7 @@ Functions: limit checks, each scheduled transition with fake clocks, `applyPlanL
 
 - **Email delivery (needs your choice and the Blaze plan):** install the Firebase extension "Trigger Email from Firestore" on the `mail` collection with an SMTP provider (for example SendGrid, Amazon SES or Zoho), and set the sender to EazySuvai. Until then reminder, grace, downgrade and activation emails wait in `mail/`. The dashboard banners work without it.
 - **Cloud Scheduler for `subscriptionDaily`** needs the Blaze plan on the real projects. The emulator doesn't run schedules; the job is tested by calling `runSubscriptionDaily` with fixed dates.
-- **Prices** are empty (master plan open decision). Set `plans/pro.prices` as `{INR: {monthly, annual}, …}` in minor units (M11's plan editor). The owner app shows "Price on request" until then.
+- ~~**Prices**~~ Set 2026-11-15 from market rates (`PRO_PRICES` in `seed-plans.ts`; written to `plans/pro` on dev with an audit entry). Production gets them from the seed.
 - **Owner payment history:** payments are recorded but owners don't see a list yet (not in the FRD MVP; admins see it in M11).
 - **"Powered by EazySuvai" on Free** follows `plans/free.limits.removeBranding` (false = shown); this is still an open decision.
 - **After deploying:** run `seed-platform.mjs` (plans) and then `backfill-plan-features.mjs` on each project.
@@ -197,3 +197,4 @@ Functions: limit checks, each scheduled transition with fake clocks, `applyPlanL
 
 - 2026-11-14: Plan created.
 - 2026-11-15: Done. Seeded Free/Pro plans and the shared plan features helper (`planFeatures` copied to restaurants); `requestUpgrade`, `recordPaymentAndActivate`, `changeSubscription`, `closeUpgradeRequest`, `adminListUpgradeRequests`, `setHiddenOverLimit`; `subscriptionDaily` (reminders 14/7/1, grace, downgrade) on a pure state machine; `applyPlanLimits` (hide last first, revert premium theme, publish from the live version, notify) and restore on upgrade; premium-theme rule and publish problem; owner plan page, banners, over-limit manager and gates; admin Upgrades queue with the record-payment form.
+- 2026-11-15: Pro prices set from market rates for menu-only QR tools in India and the Gulf (`PRO_PRICES`, unit test for every sign-up currency in integer minor units); applied to `plans/pro` on dev.

@@ -4,9 +4,11 @@ import 'package:admin_app/features/dashboard/dashboard_page.dart';
 import 'package:admin_app/features/restaurants/restaurant_detail_page.dart';
 import 'package:admin_app/features/restaurants/restaurants_page.dart';
 import 'package:admin_app/features/settings/settings_page.dart';
+import 'package:admin_app/features/subscriptions/presentation/change_plan_dialog.dart';
 import 'package:admin_app/router/app_router.dart';
 import 'package:admin_app/widgets/admin_widgets.dart';
 import 'package:admin_app/widgets/read_only.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -348,11 +350,111 @@ void main() {
     );
   }
 
+  for (final width in [768.0, 1280.0]) {
+    testWidgets(
+      'change plan: promote a Free restaurant to Pro with dates and a reason, no payment, at ${width.toInt()} px',
+      (tester) async {
+        final a = api();
+        final detail = a.handlers['adminGetRestaurant']!;
+        a.handlers['adminGetRestaurant'] = (d) => {
+          ...detail(d)! as Map<String, Object?>,
+          'subscription': {'status': 'free', 'planId': 'free'},
+        };
+        final app = await open(
+          tester,
+          a,
+          Routes.restaurant('r1'),
+          width: width,
+        );
+        await app.tap(find.byKey(DetailKeys.changePlan));
+        expect(tester.takeException(), isNull);
+        expect(find.text('Current plan: Free'), findsOneWidget);
+        // Only the other active plans are offered.
+        expect(find.byKey(ChangePlanKeys.plan('free')), findsNothing);
+        FilledButton submit() =>
+            tester.widget<FilledButton>(find.byKey(ChangePlanKeys.submit));
+        expect(submit().onPressed, isNull);
+        await app.tap(find.byKey(ChangePlanKeys.plan('pro')));
+        expect(find.textContaining('No payment is recorded'), findsOneWidget);
+        expect(find.byKey(ChangePlanKeys.startAt), findsOneWidget);
+        expect(find.byKey(ChangePlanKeys.endAt), findsOneWidget);
+        // A reason is required (FR-081).
+        expect(submit().onPressed, isNull);
+        await tester.enterText(find.byKey(ChangePlanKeys.reason), 'Trial');
+        await tester.pump();
+        await app.tap(find.byKey(ChangePlanKeys.submit));
+        String iso(DateTime d) =>
+            '${d.year.toString().padLeft(4, '0')}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
+        final now = DateTime.now();
+        expect(a.callsTo('changeSubscription').single, {
+          'action': 'modify',
+          'restaurantId': 'r1',
+          'planId': 'pro',
+          'startAt': iso(DateTime.utc(now.year, now.month, now.day)),
+          'expiresAt': iso(DateTime.utc(now.year, now.month + 1, now.day)),
+          'reason': 'Trial',
+        });
+        expect(find.byKey(ChangePlanKeys.submit), findsNothing);
+        expect(find.text('Subscription changed and logged.'), findsOneWidget);
+      },
+    );
+  }
+
+  testWidgets(
+    'change plan: Pro to Free needs no dates and warns about hidden content',
+    (tester) async {
+      final a = api();
+      final app = await open(tester, a, Routes.restaurant('r1'), width: 1280);
+      await app.tap(find.byKey(DetailKeys.changePlan));
+      expect(find.text('Current plan: Pro'), findsOneWidget);
+      expect(find.byKey(ChangePlanKeys.plan('pro')), findsNothing);
+      await app.tap(find.byKey(ChangePlanKeys.plan('free')));
+      expect(
+        find.textContaining('hidden and the menu is republished'),
+        findsOneWidget,
+      );
+      expect(find.byKey(ChangePlanKeys.endAt), findsNothing);
+      await tester.enterText(find.byKey(ChangePlanKeys.reason), 'Comp ended');
+      await tester.pump();
+      await app.tap(find.byKey(ChangePlanKeys.submit));
+      expect(a.callsTo('changeSubscription').single, {
+        'action': 'modify',
+        'restaurantId': 'r1',
+        'planId': 'free',
+        'reason': 'Comp ended',
+      });
+    },
+  );
+
+  testWidgets(
+    'change plan: a refused change keeps the dialog open with the message',
+    (tester) async {
+      final a = api()
+        ..errors['changeSubscription'] = FirebaseFunctionsException(
+          code: 'invalid-argument',
+          message: 'A paid plan needs a future expiry.',
+          details: {'code': 'invalid-input'},
+        );
+      final app = await open(tester, a, Routes.restaurant('r1'), width: 1280);
+      await app.tap(find.byKey(DetailKeys.changePlan));
+      await app.tap(find.byKey(ChangePlanKeys.plan('free')));
+      await tester.enterText(find.byKey(ChangePlanKeys.reason), 'Correction');
+      await tester.pump();
+      await app.tap(find.byKey(ChangePlanKeys.submit));
+      expect(find.byKey(ChangePlanKeys.submit), findsOneWidget);
+      expect(
+        find.text('Some details are not valid. Check them and try again.'),
+        findsOneWidget,
+      );
+    },
+  );
+
   testWidgets('detail is read-only at 360 px', (tester) async {
     await open(tester, api(), Routes.restaurant('r1'), width: 360);
     expect(find.byKey(ReadOnlyNotice.noticeKey), findsOneWidget);
     expect(find.byKey(DetailKeys.statusAction('suspended')), findsNothing);
     expect(find.byKey(DetailKeys.recordPayment), findsNothing);
+    expect(find.byKey(DetailKeys.changePlan), findsNothing);
     expect(find.text('Priya'), findsOneWidget);
   });
 

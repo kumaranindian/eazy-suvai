@@ -1,3 +1,4 @@
+import { COUNTRIES } from "../auth/countries";
 import { DEFAULT_PLAN_FEATURES, planFeaturesFrom, restaurantPlanFeatures } from "../lib/plan-limits";
 import type { DocEntry } from "../publishing/snapshot";
 import { ProblemCode, validateDraft } from "../publishing/snapshot";
@@ -25,6 +26,19 @@ describe("plans (FR-078)", () => {
       maxItems: 50, maxCategories: 10, maxBranches: 1, premiumThemes: false, defaultThemeId: "saffron", analyticsDays: 7, qrLogo: false, removeBranding: false,
     });
     expect(planFeaturesFrom("pro", proPlan)).toMatchObject({ maxItems: 500, maxCategories: 10000, premiumThemes: true, analyticsDays: 365, qrLogo: true });
+  });
+
+  it("prices Pro in every sign-up currency, in integer minor units (BR-019)", () => {
+    const [free, proPlan] = SEED_PLANS;
+    expect(free.prices).toEqual({});
+    const currencies = [...new Set(Object.values(COUNTRIES).map((c) => c.currency))].sort();
+    expect(Object.keys(proPlan.prices).sort()).toEqual(currencies);
+    for (const { monthly, annual } of Object.values(proPlan.prices)) {
+      expect(Number.isInteger(monthly) && Number.isInteger(annual)).toBe(true);
+      expect(monthly).toBeGreaterThan(0);
+      // Annual is cheaper than twelve monthly payments.
+      expect(annual).toBeLessThan(monthly * 12);
+    }
   });
 
   it("falls back to the FRD values and ignores bad fields", () => {
