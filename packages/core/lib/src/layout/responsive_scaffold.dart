@@ -35,6 +35,8 @@ class ResponsiveScaffold extends StatelessWidget {
     this.sideMenuHeader,
     this.showAppBar = true,
     this.banner,
+    this.leading,
+    this.footer,
   }) : assert(destinations.length >= 2, 'Navigation needs 2+ destinations');
 
   static const bottomBarKey = ValueKey('responsive-scaffold-bottom-bar');
@@ -49,7 +51,8 @@ class ResponsiveScaffold extends StatelessWidget {
   final List<Widget> actions;
   final Widget? floatingActionButton;
 
-  /// Shown at the top of the side menu (for example the logo).
+  /// The brand (for example the logo). On expanded windows it sits in the
+  /// start segment of the portal header, directly above the side menu.
   final Widget? sideMenuHeader;
 
   /// False when the page inside [body] brings its own app bar (for example
@@ -63,6 +66,28 @@ class ResponsiveScaffold extends StatelessWidget {
 
   static const bannerKey = ValueKey('responsive-scaffold-banner');
 
+  /// Shown before the title in the app bar (for example a back button on a
+  /// detail page that stays inside the shell). Null keeps the default.
+  final Widget? leading;
+
+  /// A strip pinned under the content area on medium and expanded windows,
+  /// so the navigation, app bar and footer stay put and only the content
+  /// changes. Not shown on compact windows, where the bottom navigation
+  /// takes that place.
+  final Widget? footer;
+
+  static const footerKey = ValueKey('responsive-scaffold-footer');
+
+  /// The full-width portal header on expanded windows. Its start segment
+  /// ([headerBrandKey]) is as wide as the side menu and holds
+  /// [sideMenuHeader], so the brand sits above the navigation and the page
+  /// title, back button and actions sit above the content.
+  static const headerKey = ValueKey('responsive-scaffold-header');
+  static const headerBrandKey = ValueKey('responsive-scaffold-header-brand');
+
+  /// Height of the expanded-window portal header.
+  static const double headerHeight = 64;
+
   Widget _withBanner(Widget content) {
     final b = banner;
     if (b == null) return content;
@@ -74,11 +99,27 @@ class ResponsiveScaffold extends StatelessWidget {
     );
   }
 
+  Widget _withFooter(Widget content) {
+    final f = footer;
+    if (f == null) return content;
+    return Column(
+      children: [
+        Expanded(child: content),
+        KeyedSubtree(key: footerKey, child: f),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final breakpoint = Breakpoint.fromWidth(MediaQuery.sizeOf(context).width);
     final appBar = showAppBar
-        ? AppBar(title: Text(title), actions: actions)
+        ? AppBar(
+            leading: leading,
+            automaticallyImplyLeading: leading == null,
+            title: Text(title),
+            actions: actions,
+          )
         : null;
 
     switch (breakpoint) {
@@ -130,38 +171,92 @@ class ResponsiveScaffold extends StatelessWidget {
                   ],
                 ),
                 const VerticalDivider(width: 1, thickness: 1),
-                Expanded(child: _withBanner(body)),
+                Expanded(child: _withFooter(_withBanner(body))),
               ],
             ),
           ),
         );
       case Breakpoint.expanded:
+        final scheme = Theme.of(context).colorScheme;
         return Scaffold(
-          appBar: appBar,
           floatingActionButton: floatingActionButton,
           body: SafeArea(
-            child: Row(
+            child: Column(
               children: [
+                // Portal header: brand segment over the side menu, page
+                // header over the content. Same on every page.
                 SizedBox(
-                  key: sideMenuKey,
-                  width: Breakpoint.sideMenuWidth,
-                  child: _SideMenu(
-                    header: sideMenuHeader,
-                    destinations: destinations,
-                    selectedIndex: selectedIndex,
-                    onSelected: onDestinationSelected,
+                  key: headerKey,
+                  height: headerHeight,
+                  child: Row(
+                    children: [
+                      Material(
+                        key: headerBrandKey,
+                        color: scheme.surfaceContainerLow,
+                        child: SizedBox(
+                          width: Breakpoint.sideMenuWidth,
+                          height: headerHeight,
+                          child: Padding(
+                            padding: const EdgeInsetsDirectional.symmetric(
+                              horizontal: 24,
+                              vertical: 8,
+                            ),
+                            child: Align(
+                              alignment: AlignmentDirectional.centerStart,
+                              child: sideMenuHeader,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const VerticalDivider(width: 1, thickness: 1),
+                      Expanded(
+                        child: showAppBar
+                            ? AppBar(
+                                primary: false,
+                                toolbarHeight: headerHeight,
+                                leading: leading,
+                                automaticallyImplyLeading: leading == null,
+                                // Same colour as the brand segment, so the
+                                // header reads as one strip.
+                                backgroundColor: scheme.surfaceContainerLow,
+                                surfaceTintColor: Colors.transparent,
+                                scrolledUnderElevation: 0,
+                                title: Text(title),
+                                actions: actions,
+                              )
+                            : ColoredBox(color: scheme.surfaceContainerLow),
+                      ),
+                    ],
                   ),
                 ),
-                const VerticalDivider(width: 1, thickness: 1),
+                const Divider(height: 1, thickness: 1),
                 Expanded(
-                  child: Align(
-                    alignment: AlignmentDirectional.topCenter,
-                    child: ConstrainedBox(
-                      constraints: const BoxConstraints(
-                        maxWidth: Breakpoint.maxContentWidth,
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        key: sideMenuKey,
+                        width: Breakpoint.sideMenuWidth,
+                        child: _SideMenu(
+                          destinations: destinations,
+                          selectedIndex: selectedIndex,
+                          onSelected: onDestinationSelected,
+                        ),
                       ),
-                      child: _withBanner(body),
-                    ),
+                      const VerticalDivider(width: 1, thickness: 1),
+                      Expanded(
+                        child: _withFooter(
+                          Align(
+                            alignment: AlignmentDirectional.topCenter,
+                            child: ConstrainedBox(
+                              constraints: const BoxConstraints(
+                                maxWidth: Breakpoint.maxContentWidth,
+                              ),
+                              child: _withBanner(body),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -174,13 +269,11 @@ class ResponsiveScaffold extends StatelessWidget {
 
 class _SideMenu extends StatelessWidget {
   const _SideMenu({
-    required this.header,
     required this.destinations,
     required this.selectedIndex,
     required this.onSelected,
   });
 
-  final Widget? header;
   final List<AppDestination> destinations;
   final int selectedIndex;
   final ValueChanged<int> onSelected;
@@ -196,15 +289,6 @@ class _SideMenu extends StatelessWidget {
           vertical: 16,
         ),
         children: [
-          if (header != null)
-            Padding(
-              padding: const EdgeInsetsDirectional.only(
-                start: 12,
-                end: 12,
-                bottom: 16,
-              ),
-              child: header,
-            ),
           for (var i = 0; i < destinations.length; i++)
             Padding(
               padding: const EdgeInsetsDirectional.only(bottom: 4),

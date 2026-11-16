@@ -67,7 +67,14 @@ GoRouter appRouter(Ref ref) {
         pageBuilder: (context, state) => _instant(state, const MfaSetupPage()),
       ),
       StatefulShellRoute.indexedStack(
-        builder: (context, state, shell) => AdminShell(navigationShell: shell),
+        builder: (context, state, shell) => AdminShell(
+          navigationShell: shell,
+          // Detail pages (for example /restaurants/r1) stay inside the
+          // portal; the header shows a back button to the list.
+          backTo: state.uri.pathSegments.length > 1
+              ? '/${state.uri.pathSegments.first}'
+              : null,
+        ),
         branches: [
           for (final (path, section) in const [
             (Routes.dashboard, AdminSection.dashboard),
@@ -97,7 +104,6 @@ GoRouter appRouter(Ref ref) {
                     if (section == AdminSection.restaurants)
                       GoRoute(
                         path: ':rid',
-                        parentNavigatorKey: _rootKey,
                         builder: (context, state) => RestaurantDetailPage(
                           restaurantId: state.pathParameters['rid']!,
                         ),

@@ -369,6 +369,9 @@ Add a dated line whenever a module changes something another module depends on.
   - Route sweeps (`route_sweep_test.dart` in both apps) fail on any layout error at 3 widths, 200 % text and RTL. Add new routes to their lists.
   - Owner app: `textDirectionOverrideProvider` forces RTL in tests.
 
+- 2026-11-15 (M11 portal layout): **`ResponsiveScaffold` (core) gains optional `leading` (app-bar leading widget, for a back button on detail routes inside a shell) and `footer` (pinned under the content on medium and expanded windows, `ResponsiveScaffold.footerKey`; not shown on compact).** Both default to null, so the owner app is unchanged. The admin app uses both; its detail routes stay inside the shell.
+- 2026-11-16 (portal header): **On expanded windows (≥ 1024 px) `ResponsiveScaffold` (core) draws a full-width portal header (`headerKey`, 64 px).** Its start segment (`headerBrandKey`) is as wide as the side menu and holds `sideMenuHeader` (the logo), so the logo no longer sits inside the side menu; the page title, back button and actions sit over the content. Applies to both the owner and admin apps. When `showAppBar` is false (owner detail pages with their own app bar), the header still shows the brand segment.
+
 ## Open decisions
 
 - Slug-change rate limit: the FRD sets none; M03 suggests one (see M03 Open items).

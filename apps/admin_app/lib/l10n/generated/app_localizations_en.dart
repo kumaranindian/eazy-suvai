@@ -851,4 +851,12 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get changePlanEndInvalid =>
       'The plan must end after it starts and after today.';
+
+  @override
+  String footerCopyright(String year) {
+    return '© $year AVAIL404 (OPC) Private Limited';
+  }
+
+  @override
+  String get footerEnvironmentDev => 'Development';
 }

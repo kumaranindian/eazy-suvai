@@ -14,6 +14,7 @@ import '../subscriptions/presentation/upgrade_requests_page.dart';
 
 /// Keys, for tests.
 abstract final class DetailKeys {
+  static const heading = ValueKey('detail.heading');
   static const summary = ValueKey('detail.summary');
   static const status = ValueKey('detail.status');
   static const subscription = ValueKey('detail.subscription');
@@ -62,14 +63,14 @@ class RestaurantDetailPage extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     final core = CoreLocalizations.of(context);
     final detail = ref.watch(restaurantDetailProvider(restaurantId));
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
+    // Inside the portal shell: the shell keeps the navigation, header (with
+    // a back button) and footer; this page fills only the content area.
+    return Semantics(
+      label:
           detail.value?['restaurant']?['name'] as String? ??
-              l10n.restaurantDetail,
-        ),
-      ),
-      body: detail.when(
+          l10n.restaurantDetail,
+      container: true,
+      child: detail.when(
         loading: () => const LoadingState(),
         error: (e, _) => ErrorState(message: core.messageForError(e)),
         data: (d) => _Detail(restaurantId: restaurantId, data: d),
@@ -422,9 +423,19 @@ class _Detail extends ConsumerWidget {
       ],
     );
 
+    final heading = Padding(
+      padding: const EdgeInsetsDirectional.only(bottom: 16),
+      child: Text(
+        '${r['name']}',
+        key: DetailKeys.heading,
+        style: Theme.of(context).textTheme.headlineSmall,
+      ),
+    );
+
     if (!expanded) {
       return AdminPageBody(
         children: [
+          heading,
           statusCard,
           summary,
           subscriptionCard,
@@ -436,6 +447,7 @@ class _Detail extends ConsumerWidget {
     }
     return AdminPageBody(
       children: [
+        heading,
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
