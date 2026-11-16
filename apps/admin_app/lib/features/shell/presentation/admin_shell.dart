@@ -67,20 +67,31 @@ extension AdminSectionView on AdminSection {
   };
 }
 
-/// The admin app shell: [ResponsiveScaffold] around the current branch.
+/// The admin portal shell: [ResponsiveScaffold] around the current branch.
+/// The navigation, the header and the footer stay in place on every page,
+/// detail pages included; only the content area changes.
 class AdminShell extends ConsumerWidget {
-  const AdminShell({super.key, required this.navigationShell});
+  const AdminShell({super.key, required this.navigationShell, this.backTo});
 
   final StatefulNavigationShell navigationShell;
 
+  /// The list a detail page returns to (for example `/restaurants` from
+  /// `/restaurants/r1`). Null on top-level pages.
+  final String? backTo;
+
   static const signOutKey = ValueKey('shell.signOut');
+  static const backKey = ValueKey('shell.back');
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final section = AdminSection.values[navigationShell.currentIndex];
+    final back = backTo;
     return ResponsiveScaffold(
       title: section.label(l10n),
+      leading: back == null
+          ? null
+          : BackButton(key: backKey, onPressed: () => context.go(back)),
       actions: [
         AppIconButton(
           key: signOutKey,
@@ -103,7 +114,70 @@ class AdminShell extends ConsumerWidget {
         index,
         initialLocation: index == navigationShell.currentIndex,
       ),
+      footer: const AdminFooter(),
       body: navigationShell,
+    );
+  }
+}
+
+/// The portal footer: copyright and, on non-production builds, an
+/// environment badge.
+class AdminFooter extends StatelessWidget {
+  const AdminFooter({super.key});
+
+  static const envKey = ValueKey('footer.environment');
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
+    final style = theme.textTheme.bodySmall?.copyWith(
+      color: scheme.onSurfaceVariant,
+    );
+    final prod = AppEnv.fromDefines().isProd;
+    return Material(
+      color: scheme.surfaceContainerLow,
+      child: Container(
+        decoration: BoxDecoration(
+          border: BorderDirectional(
+            top: BorderSide(color: scheme.outlineVariant),
+          ),
+        ),
+        padding: const EdgeInsetsDirectional.symmetric(
+          horizontal: 24,
+          vertical: 10,
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: Text(
+                '${l10n.appTitle} · ${l10n.footerCopyright('${DateTime.now().year}')}',
+                style: style,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            if (!prod)
+              Container(
+                key: envKey,
+                padding: const EdgeInsetsDirectional.symmetric(
+                  horizontal: 8,
+                  vertical: 2,
+                ),
+                decoration: BoxDecoration(
+                  color: scheme.tertiaryContainer,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(
+                  l10n.footerEnvironmentDev,
+                  style: theme.textTheme.labelSmall?.copyWith(
+                    color: scheme.onTertiaryContainer,
+                  ),
+                ),
+              ),
+          ],
+        ),
+      ),
     );
   }
 }

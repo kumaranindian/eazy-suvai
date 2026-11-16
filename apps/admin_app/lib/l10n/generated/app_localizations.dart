@@ -1539,6 +1539,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The plan must end after it starts and after today.'**
   String get changePlanEndInvalid;
+
+  /// Admin portal footer: copyright line.
+  ///
+  /// In en, this message translates to:
+  /// **'© {year} AVAIL404 (OPC) Private Limited'**
+  String footerCopyright(String year);
+
+  /// Admin portal footer: badge on non-production builds.
+  ///
+  /// In en, this message translates to:
+  /// **'Development'**
+  String get footerEnvironmentDev;
 }
 
 class _AppLocalizationsDelegate

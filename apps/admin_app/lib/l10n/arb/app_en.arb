@@ -1095,5 +1095,18 @@
   "changePlanEndInvalid": "The plan must end after it starts and after today.",
   "@changePlanEndInvalid": {
     "description": "Change-plan dialog: bad dates."
+  },
+  "footerCopyright": "© {year} AVAIL404 (OPC) Private Limited",
+  "@footerCopyright": {
+    "description": "Admin portal footer: copyright line.",
+    "placeholders": {
+      "year": {
+        "type": "String"
+      }
+    }
+  },
+  "footerEnvironmentDev": "Development",
+  "@footerEnvironmentDev": {
+    "description": "Admin portal footer: badge on non-production builds."
   }
 }

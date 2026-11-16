@@ -107,6 +107,64 @@ void main() {
     });
   }
 
+  testWidgets('desktop portal header: brand segment over the side menu', (
+    tester,
+  ) async {
+    await setSurfaceWidth(tester, 1280);
+    await tester.pumpWidget(
+      testApp(
+        ResponsiveScaffold(
+          title: 'Title',
+          selectedIndex: 0,
+          onDestinationSelected: (_) {},
+          sideMenuHeader: const Text('Brand'),
+          destinations: const [
+            AppDestination(icon: Icons.home_outlined, label: 'Home'),
+            AppDestination(icon: Icons.settings_outlined, label: 'Settings'),
+          ],
+          body: const Text('Body'),
+        ),
+      ),
+    );
+    final header = tester.getRect(find.byKey(ResponsiveScaffold.headerKey));
+    final brand = tester.getRect(find.byKey(ResponsiveScaffold.headerBrandKey));
+    final menu = tester.getRect(find.byKey(ResponsiveScaffold.sideMenuKey));
+    final appBar = tester.getRect(find.byType(AppBar));
+    expect(header.width, 1280);
+    expect(header.height, ResponsiveScaffold.headerHeight);
+    // The brand segment lines up with the side menu, directly above it.
+    expect(brand.left, menu.left);
+    expect(brand.width, menu.width);
+    expect(brand.bottom, lessThanOrEqualTo(menu.top));
+    expect(
+      find.descendant(
+        of: find.byKey(ResponsiveScaffold.headerBrandKey),
+        matching: find.text('Brand'),
+      ),
+      findsOneWidget,
+    );
+    // The page header sits next to it, over the content.
+    expect(appBar.left, greaterThan(brand.right));
+    expect(appBar.top, header.top);
+    // One colour across the whole header.
+    final brandColor = tester
+        .widget<Material>(find.byKey(ResponsiveScaffold.headerBrandKey))
+        .color;
+    expect(
+      tester.widget<AppBar>(find.byType(AppBar)).backgroundColor,
+      brandColor,
+    );
+    expect(find.widgetWithText(AppBar, 'Title'), findsOneWidget);
+  });
+
+  testWidgets('desktop header stays when the page brings its own app bar', (
+    tester,
+  ) async {
+    await pumpAt(tester, 1280, shell(showAppBar: false));
+    expect(find.byKey(ResponsiveScaffold.headerKey), findsOneWidget);
+    expect(find.byKey(ResponsiveScaffold.headerBrandKey), findsOneWidget);
+  });
+
   testWidgets('works right-to-left', (tester) async {
     await setSurfaceWidth(tester, 1280);
     await tester.pumpWidget(

@@ -29,6 +29,16 @@ void main() {
       await pumpApp(tester, width);
 
       expect(find.byKey(navKey), findsOneWidget);
+      // Portal footer, pinned under the content on medium and wide windows.
+      expect(
+        find.byKey(ResponsiveScaffold.footerKey),
+        readOnly ? findsNothing : findsOneWidget,
+      );
+      if (!readOnly) {
+        expect(find.textContaining('AVAIL404 (OPC)'), findsOneWidget);
+        // Tests run as a dev build.
+        expect(find.byKey(AdminFooter.envKey), findsOneWidget);
+      }
       // M11: read-only below 600 px.
       expect(
         find.byKey(ReadOnlyNotice.noticeKey),

@@ -4,11 +4,13 @@ import 'package:admin_app/features/dashboard/dashboard_page.dart';
 import 'package:admin_app/features/restaurants/restaurant_detail_page.dart';
 import 'package:admin_app/features/restaurants/restaurants_page.dart';
 import 'package:admin_app/features/settings/settings_page.dart';
+import 'package:admin_app/features/shell/presentation/admin_shell.dart';
 import 'package:admin_app/features/subscriptions/presentation/change_plan_dialog.dart';
 import 'package:admin_app/router/app_router.dart';
 import 'package:admin_app/widgets/admin_widgets.dart';
 import 'package:admin_app/widgets/read_only.dart';
 import 'package:cloud_functions/cloud_functions.dart';
+import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -314,6 +316,23 @@ void main() {
           width: width,
         );
         expect(tester.takeException(), isNull);
+        // Portal: the detail stays inside the shell. Navigation, header
+        // (with a back button) and footer remain; the name heads the content.
+        expect(
+          find.byKey(
+            width < 1024
+                ? ResponsiveScaffold.railKey
+                : ResponsiveScaffold.sideMenuKey,
+          ),
+          findsOneWidget,
+        );
+        expect(find.widgetWithText(AppBar, 'Restaurants'), findsOneWidget);
+        expect(find.byKey(ResponsiveScaffold.footerKey), findsOneWidget);
+        expect(find.byKey(AdminShell.backKey), findsOneWidget);
+        expect(
+          tester.widget<Text>(find.byKey(DetailKeys.heading)).data,
+          'Spice Garden',
+        );
         expect(find.text('Priya'), findsOneWidget);
         expect(find.textContaining('NEFT-1'), findsOneWidget);
         expect(find.text('menu.publish'), findsOneWidget);
@@ -446,6 +465,18 @@ void main() {
         find.text('Some details are not valid. Check them and try again.'),
         findsOneWidget,
       );
+    },
+  );
+
+  testWidgets(
+    'detail: the header back button returns to the list inside the portal',
+    (tester) async {
+      final app = await open(tester, api(), Routes.restaurant('r1'));
+      await app.tap(find.byKey(AdminShell.backKey));
+      expect(app.location, Routes.restaurants);
+      expect(find.byKey(AdminShell.backKey), findsNothing);
+      expect(find.byKey(ResponsiveScaffold.sideMenuKey), findsOneWidget);
+      expect(find.text('Dosa Corner'), findsOneWidget);
     },
   );
 
