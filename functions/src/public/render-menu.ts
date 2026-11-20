@@ -8,9 +8,14 @@
  * preview and the public page never drift apart.
  *
  * Everything is escaped. Colours come only from the contrast-fixed theme
- * (`snapshot.theme.resolved`, FR-060). Unavailable items are "dimmed"
- * without opacity, which would break AA: their photo turns grey, the card
- * gets a dashed border and a "Currently unavailable" badge (FR-043).
+ * (`snapshot.theme.resolved`, FR-060). Unavailable items (FR-043) are
+ * shown "dimmed" by default, without opacity, which would break AA: the
+ * photo turns grey, the name and price are muted and a "Currently
+ * unavailable" badge is added. When the owner turns off
+ * `visibility.unavailableItems` (`profile.hideUnavailable`) they are
+ * rendered `hidden` instead, and so is a category whose items are all off,
+ * with its link. Either way they carry `data-off`, so the page script can
+ * switch them the moment availability changes (FR-095) without a reload.
  *
  * Layout (M07 plan): one column below 600 px; two columns from 600 px;
  * from 1024 px the category bar becomes a left sidebar and grid menus get
@@ -40,6 +45,12 @@ export interface RenderOptions {
   slug?: string;
   /** The analytics endpoint, for example `/e` (M09). Unset: the hook sends nothing. */
   beacon?: string;
+  /** The published version shown (`<body data-v>`), for the live check. */
+  version?: number;
+  /** The live-state URL the page polls (`<body data-live>`). Unset: no polling. */
+  live?: string;
+  /** When the page stops polling (`<body data-idle data-max>`, minutes). Unset: the script's defaults. */
+  liveLimits?: { idleMinutes: number; maxMinutes: number };
   /** Include the inline script. Default: on for public pages, off for the draft. */
   scripts?: boolean;
   /** Extra tags for `<head>`. Must be safe HTML. */
@@ -93,13 +104,15 @@ function labelIcon(label: SnapshotLabel): string {
 /**
  * One dish as a compact row (many per screen): a small thumbnail, the name
  * and price on one line, a one-line description ("more" expands it) and one
- * line of small pills (dietary label, tags, featured, sold out).
+ * line of small pills (unavailable, featured, dietary label, tags). An
+ * unavailable item is marked `data-off`, and is `hidden` when the owner
+ * hides unavailable items.
  */
 function itemHtml(item: SnapshotItem, s: MenuSnapshot, available: boolean, t: MenuText): string {
   const price = formatPrice(item.priceMinor, s.currency, s.locale);
   const pills: string[] = [];
-  if (item.featured) pills.push(`<span class="badge featured">${esc(t.featured)}</span>`);
   if (!available) pills.push(`<span class="badge sold">${esc(t.soldOut)}</span>`);
+  if (item.featured) pills.push(`<span class="badge featured">${esc(t.featured)}</span>`);
   if (item.dietaryLabel) {
     pills.push(`<span class="label">${labelIcon(item.dietaryLabel)}${esc(item.dietaryLabel.name)}</span>`);
   }
@@ -116,7 +129,7 @@ function itemHtml(item: SnapshotItem, s: MenuSnapshot, available: boolean, t: Me
   // Filter keys read by the page script (dietary label and tag ids).
   const filterData = (item.dietaryLabel ? ` data-d="${esc(item.dietaryLabel.id)}"` : "") +
     (item.tags.length > 0 ? ` data-t="${esc(item.tags.map((x) => x.id).join(" "))}"` : "");
-  return `<li class="${cls}" data-id="${esc(item.id)}"${filterData}${available ? "" : " aria-disabled=\"true\""}>
+  return `<li class="${cls}" data-id="${esc(item.id)}"${filterData}${available ? "" : ` data-off aria-disabled="true"${s.profile.hideUnavailable ? " hidden" : ""}`}>
 ${image}<div class="item-body">
 <div class="item-head"><h3 class="item-name">${esc(item.name)}</h3><span class="price">${esc(price)}</span></div>
 ${item.description ? `<p class="item-desc">${esc(item.description)}</p>` : ""}
@@ -325,9 +338,17 @@ export function renderMenuPage(s: MenuSnapshot, options: RenderOptions = {}): st
   const featured = s.items.filter((i) => i.featured);
   const filters = scripts ? filterBarHtml(categories.flatMap((c) => byCategory.get(c.id) ?? []), t) : "";
 
+  // When unavailable items are hidden, so is a category whose items are
+  // all off, with its link (FR-043).
+  const hide = s.profile.hideUnavailable === true;
+  const visible = (i: SnapshotItem) => !hide || isAvailable(i);
+  const shown = (c: { id: string }) => (byCategory.get(c.id) ?? []).some(visible);
+  const off = (on: boolean) => (on ? "" : " hidden");
+  const firstShown = categories.find(shown)?.id;
+
   const nav = categories.length > 1
     ? `<nav class="cats" aria-label="${esc(t.categories)}"><ul>${categories
-      .map((c, i) => `<li><a href="#${anchorId("c", c.id)}"${i === 0 ? " aria-current=\"true\"" : ""}>${esc(c.name)}</a></li>`)
+      .map((c) => `<li${off(shown(c))}><a href="#${anchorId("c", c.id)}"${c.id === firstShown ? " aria-current=\"true\"" : ""}>${esc(c.name)}</a></li>`)
       .join("")}</ul></nav>`
     : "";
 
@@ -335,14 +356,14 @@ export function renderMenuPage(s: MenuSnapshot, options: RenderOptions = {}): st
     .map((c) => {
       const items = byCategory.get(c.id) ?? [];
       const id = anchorId("c", c.id);
-      return `<section id="${id}" aria-labelledby="${id}-h"><h2 id="${id}-h">${esc(c.name)}</h2>${
+      return `<section id="${id}" aria-labelledby="${id}-h"${off(shown(c))}><h2 id="${id}-h">${esc(c.name)}</h2>${
         c.description ? `<p class="cat-desc">${esc(c.description)}</p>` : ""
       }<ul class="items">${items.map((i) => itemHtml(i, s, isAvailable(i), t)).join("")}</ul></section>`;
     })
     .join("\n");
 
   const featuredHtml = featured.length > 0 && categories.length > 0
-    ? `<section id="featured" aria-labelledby="featured-h"><h2 id="featured-h">${esc(t.featured)}</h2><ul class="items">${featured
+    ? `<section id="featured" aria-labelledby="featured-h"${off(featured.some(visible))}><h2 id="featured-h">${esc(t.featured)}</h2><ul class="items">${featured
       .map((i) => itemHtml(i, s, isAvailable(i), t))
       .join("")}</ul></section>`
     : "";
@@ -354,7 +375,12 @@ export function renderMenuPage(s: MenuSnapshot, options: RenderOptions = {}): st
   const data = [
     options.slug ? ` data-slug="${esc(options.slug)}"` : "",
     options.beacon ? ` data-beacon="${esc(options.beacon)}"` : "",
-    scripts ? ` data-more="${esc(t.more)}" data-less="${esc(t.less)}" data-close="${esc(t.close)}"` : "",
+    scripts ? ` data-more="${esc(t.more)}" data-less="${esc(t.less)}" data-close="${esc(t.close)}" data-sold="${esc(t.soldOut)}"${hide ? " data-hide-off" : ""}` : "",
+    scripts && options.version !== undefined ? ` data-v="${options.version}"` : "",
+    scripts && options.live ? ` data-live="${esc(options.live)}"` : "",
+    scripts && options.live && options.liveLimits
+      ? ` data-idle="${Math.round(options.liveLimits.idleMinutes)}" data-max="${Math.round(options.liveLimits.maxMinutes)}"`
+      : "",
   ].join("");
 
   return `<!DOCTYPE html>
@@ -385,7 +411,8 @@ ${nav}
 <main id="menu">
 ${filters}
 ${featuredHtml}
-${sections || `<p class="empty">${esc(t.empty)}</p>`}
+${sections}
+<p class="empty"${off(!categories.some(shown))}>${esc(t.empty)}</p>
 </main>
 </div>
 <footer class="wrap">${options.branding === false ? "" : `${esc(t.poweredBy)} · `}<a href="/privacy">${esc(t.privacy)}</a> · <a href="/terms">${esc(t.terms)}</a></footer>

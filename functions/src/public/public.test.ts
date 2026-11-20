@@ -12,6 +12,7 @@ import { filterBarHtml, renderMenuPage, splashHtml } from "./render-menu";
 import { routeOf } from "./routes";
 import { sampleSnapshot } from "./sample-menu";
 import { jsonForScript, menuJsonLd, metaDescription, pageTitle, seoHead, sitemapXml, truncate } from "./seo";
+import { liveLimitsOf } from "./live-limits";
 import { CACHE_PUBLIC, MENU_ORIGINS, contentSecurityPolicy, handleMenuRequest, menuBaseUrl } from "./serve";
 import { STATE_STATUS, renderStatePage, type StateKind } from "./state-pages";
 import { MENU_TEXT_EN } from "./text";
@@ -52,6 +53,9 @@ describe("routeOf", () => {
     ["/q/AB0K7MNP", "", { kind: "not-found" }],
     ["/q/short", "", { kind: "not-found" }],
     ["/sitemap.xml", "", { kind: "sitemap" }],
+    ["/spice-garden/live.json", "", { kind: "live", slug: "spice-garden" }],
+    ["/Spice-Garden/live.json", "", { kind: "not-found" }],
+    ["/-bad-/live.json", "", { kind: "not-found" }],
     ["/robots.txt", "", { kind: "not-found" }],
     ["/", "", { kind: "not-found" }],
     ["/a/b", "", { kind: "not-found" }],
@@ -192,10 +196,12 @@ describe("menu page", () => {
     expect(html).toContain("Vegetarian</span>");
     expect(html).toContain("Non-vegetarian</span>");
     expect(html).toContain("<span class=\"tag\">Bestseller</span>");
-    // Sold out from the snapshot and from the live overlay.
+    // Off in the snapshot and in the live overlay: shown dimmed by default (FR-043).
     expect(html.match(/<li class="item sold-out/g)).toHaveLength(2);
-    expect(html.match(/Currently unavailable/g)).toHaveLength(2);
-    expect(html).toContain("aria-disabled=\"true\"");
+    expect(html.match(/<span class="badge sold">Currently unavailable<\/span>/g)).toHaveLength(2);
+    expect(html).toMatch(/data-id="tiffin-1"[^>]* data-off aria-disabled="true">/);
+    expect(html).toMatch(/data-id="biryani-2"[^>]* data-off aria-disabled="true">/);
+    expect(html).not.toContain("data-hide-off");
     // Lightbox works as a plain link without JS.
     expect(html).toContain("<a class=\"zoom\" href=\"https://img.test/item-tiffin-1/w1280.webp\" aria-label=\"Enlarge photo of Idli (2 pcs)\">");
     expect(html).toContain("srcset=\"https://img.test/item-tiffin-1/w320.webp 320w, https://img.test/item-tiffin-1/w640.webp 640w, https://img.test/item-tiffin-1/w1280.webp 1280w\"");
@@ -207,6 +213,45 @@ describe("menu page", () => {
     expect(html).toContain("application/ld+json");
     expect(html).not.toContain("noindex");
     expect(html).not.toMatch(/undefined|\[object Object\]|NaN/);
+  });
+
+  it("keeps a category whose items are all off when unavailable items are shown", () => {
+    const s = sampleSnapshot();
+    const tiffin = s.items.filter((i) => i.categoryId === "tiffin");
+    const html = live(s, { availability: Object.fromEntries(tiffin.map((i) => [i.id, false])) });
+    expect(html).toContain("<section id=\"c-tiffin\" aria-labelledby=\"c-tiffin-h\"><h2");
+    expect(html).not.toMatch(/<li hidden>/);
+    expect(html).not.toMatch(/data-off[^>]* hidden>/);
+  });
+
+  it("hides unavailable items when the owner turns them off, and empty categories with their links", () => {
+    const s = sampleSnapshot();
+    s.profile.hideUnavailable = true;
+    const one = live(s, { availability: { "tiffin-1": false } });
+    expect(one).toMatch(/data-id="tiffin-1"[^>]* data-off aria-disabled="true" hidden>/);
+    expect(one).toMatch(/data-id="biryani-2"[^>]* data-off aria-disabled="true" hidden>/);
+    expect(one).toContain(" data-hide-off");
+    const tiffin = s.items.filter((i) => i.categoryId === "tiffin");
+    const html = live(s, { availability: Object.fromEntries(tiffin.map((i) => [i.id, false])) });
+    expect(html).toContain("<section id=\"c-tiffin\" aria-labelledby=\"c-tiffin-h\" hidden>");
+    expect(html).toContain("<li hidden><a href=\"#c-tiffin\">");
+    // The first visible link is the current one.
+    expect(html).not.toContain("<a href=\"#c-tiffin\" aria-current");
+    expect(html).toMatch(/<li><a href="#c-[a-z]+" aria-current="true">/);
+    expect(html).toContain("<p class=\"empty\" hidden>");
+
+    const allOff = live(s, { availability: Object.fromEntries(s.items.map((i) => [i.id, false])) });
+    expect(allOff).toContain("<p class=\"empty\">");
+    // And the draft preview, which has no script, matches.
+    expect(renderMenuPage(s, { draft: true, availability: { "tiffin-1": false } })).toMatch(/data-id="tiffin-1"[^>]* hidden>/);
+    expect(allOff).toContain("<section id=\"featured\" aria-labelledby=\"featured-h\" hidden>");
+  });
+
+  it("tells the script the version, where to check for changes and when to stop", () => {
+    const html = live(sampleSnapshot(), { version: 7, live: "/spice-garden/live.json", liveLimits: { idleMinutes: 15, maxMinutes: 90 } });
+    expect(html).toContain(" data-v=\"7\" data-live=\"/spice-garden/live.json\" data-idle=\"15\" data-max=\"90\"");
+    // The draft preview has no script, so it never polls.
+    expect(renderMenuPage(sampleSnapshot(), { draft: true, version: 7, live: "/x/live.json" })).not.toContain("data-live");
   });
 
   it("hides branding on Pro", () => {
@@ -381,6 +426,15 @@ describe("state pages (FR-099)", () => {
   });
 });
 
+describe("live-check limits (config/platform)", () => {
+  it("uses the configured minutes, or the defaults when missing or out of range", () => {
+    expect(liveLimitsOf(undefined)).toEqual({ idleMinutes: 30, maxMinutes: 120 });
+    expect(liveLimitsOf({ liveIdleMinutes: 10, liveMaxMinutes: 60 })).toEqual({ idleMinutes: 10, maxMinutes: 60 });
+    expect(liveLimitsOf({ liveIdleMinutes: 0, liveMaxMinutes: 9999 })).toEqual({ idleMinutes: 30, maxMinutes: 120 });
+    expect(liveLimitsOf({ liveIdleMinutes: "10", liveMaxMinutes: 7.5 })).toEqual({ idleMinutes: 30, maxMinutes: 120 });
+  });
+});
+
 describe("handleMenuRequest without data", () => {
   const failing = { doc: () => { throw new Error("db down"); } } as unknown as Firestore;
   const req = (path: string, query = "", method = "GET") => ({ method, path, query, headers: {} });
@@ -412,6 +466,14 @@ describe("handleMenuRequest without data", () => {
     expect(res.headers["Cache-Control"]).toBe("no-store");
     expect(res.body).toContain("href=\"/spice-garden\"");
     expect(errors).toEqual(["renderMenu /spice-garden"]);
+  });
+
+  it("answers live.json with a 503 the page ignores when Firestore fails", async () => {
+    const errors: string[] = [];
+    const res = await handleMenuRequest(failing, req("/spice-garden/live.json"), { logError: (m) => errors.push(m) });
+    expect(res.status).toBe(503);
+    expect(res.headers["Cache-Control"]).toBe("no-store");
+    expect(errors).toEqual(["renderMenu /spice-garden/live.json"]);
   });
 
   it("allows only the page's own scripts", () => {

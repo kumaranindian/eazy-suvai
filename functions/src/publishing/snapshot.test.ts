@@ -468,10 +468,22 @@ describe("renderMenuPage", () => {
 
   it("shows sold-out items with a badge and the availability overlay wins", () => {
     const s = buildSnapshot(draft());
+    expect(s.profile.hideUnavailable).toBeUndefined();
     const html = renderMenuPage(s, { availability: { i1: false } });
     expect(html).not.toContain("noindex");
     expect(html.match(/aria-disabled="true"/g)).toHaveLength(1);
     expect(html).toContain("Currently unavailable");
+  });
+
+  it("hides unavailable items when visibility.unavailableItems is off (FR-043)", () => {
+    const s = buildSnapshot(draft({}, { visibility: { unavailableItems: false } }));
+    expect(s.profile.hideUnavailable).toBe(true);
+    const html = renderMenuPage(s, { availability: { i1: false } });
+    expect(html).toMatch(/data-id="i1"[^>]* data-off aria-disabled="true" hidden>/);
+    // Turning it on again is a profile change in the publish summary.
+    const before = buildSnapshot(draft());
+    expect(diffSnapshots(before, s).profileChanged).toBe(true);
+    expect(diffSnapshots(before, buildSnapshot(draft({}, { visibility: { unavailableItems: true } }))).profileChanged).toBe(false);
   });
 
   it("uses srcset with the three renditions", () => {

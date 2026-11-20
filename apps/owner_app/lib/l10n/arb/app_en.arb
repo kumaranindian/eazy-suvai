@@ -392,6 +392,14 @@
   "@visibilitySocial": {
     "description": "Visibility switch and preview label."
   },
+  "visibilityUnavailableItems": "Unavailable items",
+  "@visibilityUnavailableItems": {
+    "description": "Visibility switch: show unavailable items on the public menu (FR-043)."
+  },
+  "visibilityUnavailableItemsHelp": "On: shown greyed out as \"Currently unavailable\". Off: hidden from customers. Applies after you publish.",
+  "@visibilityUnavailableItemsHelp": {
+    "description": "Help under the unavailable-items switch (FR-043)."
+  },
   "previewTitle": "Menu preview",
   "@previewTitle": {
     "description": "Title of the live preview of the public menu header."
@@ -1343,7 +1351,15 @@
   "@menuFieldAvailable": {
     "description": "Switch: item availability (FR-025)."
   },
-  "menuFieldAvailableHelp": "Turn off when sold out. Customers see it at once, without publishing.",
+  "menuAvailabilityLive": "{available, select, true{{count, plural, =1{Available again. Live now, no publish needed.} other{{count} items available again. Live now, no publish needed.}}} other{{count, plural, =1{Marked sold out. Live now, no publish needed.} other{{count} items marked sold out. Live now, no publish needed.}}}}",
+  "@menuAvailabilityLive": {
+    "description": "Shown after an availability switch in the item list. Availability goes live without a publish (FR-095, BR-018).",
+    "placeholders": {
+      "count": { "type": "int" },
+      "available": { "type": "String" }
+    }
+  },
+  "menuFieldAvailableHelp":"Turn off when sold out. Customers see it at once, without publishing.",
   "@menuFieldAvailableHelp": {
     "description": "Help for availability (FR-095)."
   },

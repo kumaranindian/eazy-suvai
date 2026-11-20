@@ -72,10 +72,24 @@ class _ItemListPaneState extends ConsumerState<ItemListPane> {
     );
   }
 
-  Future<void> _setAvailable(Iterable<String> ids, bool value) => runMenuAction(
-    context,
-    () => ref.read(pendingChangesProvider.notifier).setAvailability(ids, value),
-  );
+  /// Availability goes live without a publish (FR-095, BR-018), so the
+  /// publish bar does not appear. Say so, once the menu is live at all.
+  Future<void> _setAvailable(Iterable<String> ids, bool value) {
+    final list = ids.toList();
+    final published =
+        ref.read(currentRestaurantProvider).value?.publishedVersion != null;
+    return runMenuAction(
+      context,
+      () => ref
+          .read(pendingChangesProvider.notifier)
+          .setAvailability(list, value),
+      success: published
+          ? AppLocalizations.of(
+              context,
+            ).menuAvailabilityLive(list.length, value.toString())
+          : null,
+    );
+  }
 
   Future<void> _moveTo(List<String> ids, {String? exclude}) async {
     final l10n = AppLocalizations.of(context);

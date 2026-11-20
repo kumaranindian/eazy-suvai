@@ -368,6 +368,9 @@ class ProfileFormModel {
           key: ProfileKeys.visibility(f),
           contentPadding: EdgeInsetsDirectional.zero,
           title: Text(visibleFieldLabel(l10n, f)),
+          subtitle: f == VisibleField.unavailableItems
+              ? Text(l10n.visibilityUnavailableItemsHelp)
+              : null,
           value: visibility.isShown(f),
           onChanged: (shown) => visibilityChanged(f, shown),
         ),

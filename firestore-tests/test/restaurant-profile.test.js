@@ -95,7 +95,7 @@ const FULL_PROFILE = {
     sat: "07:00-22:00",
     sun: "",
   },
-  visibility: { phone: true, email: false, address: true, hours: true, social: false },
+  visibility: { phone: true, email: false, address: true, hours: true, social: false, unavailableItems: false },
   currency: "AED",
   timezone: "Asia/Dubai",
 };
@@ -116,6 +116,9 @@ describe("owner profile updates (AC-002)", () => {
     await assertSucceeds(updateDoc(ref(owner()), draft({ visibility: { phone: false } })));
     await assertFails(updateDoc(ref(owner()), draft({ visibility: { phone: "no" } })));
     await assertFails(updateDoc(ref(owner()), draft({ visibility: { menu: false } })));
+    // FR-043: show or hide unavailable items.
+    await assertSucceeds(updateDoc(ref(owner()), draft({ visibility: { unavailableItems: false } })));
+    await assertFails(updateDoc(ref(owner()), draft({ visibility: { unavailableItems: "no" } })));
   });
 
   it("an owner can remove the logo or cover, but never set an image object (M02)", async () => {

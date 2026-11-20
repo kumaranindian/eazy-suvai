@@ -120,15 +120,21 @@ class ContactInfo {
       Object.hashAll(toMap().entries.map((e) => '${e.key}=${e.value}'));
 }
 
-/// Public detail groups an owner can show or hide (FR-013).
+/// What an owner can show or hide on the public menu: the detail groups
+/// (FR-013) and unavailable items (FR-043: shown dimmed, or hidden).
 enum VisibleField {
   phone,
   email,
   address,
   hours,
-  social;
+  social,
+  unavailableItems;
 
   String get key => name;
+
+  /// Shown in the menu header (the profile preview); [unavailableItems]
+  /// is about the item list.
+  bool get isHeaderDetail => this != unavailableItems;
 }
 
 /// `visibility` on `restaurants/{rid}`. A missing entry means **shown**:

@@ -1,3 +1,4 @@
+import { platformConfigSchema } from "./catalog";
 import { canTransition, queryKind, statusAction } from "./restaurants";
 import { contribution, medianMinutes, statsDelta } from "./stats";
 
@@ -89,5 +90,19 @@ describe("FRD §13 success metrics (M13)", () => {
     ])).toBe(35);
     // Clock skew (publish before sign-up) is ignored.
     expect(medianMinutes([{ createdAt: at(10), firstPublishedAt: at(0) }])).toBeNull();
+  });
+});
+
+describe("platform settings: live-check limits on open menu pages", () => {
+  const ok = (v: unknown) => platformConfigSchema.safeParse(v).success;
+  it("accepts minutes within range and rejects the rest", () => {
+    expect(ok({ liveIdleMinutes: 30, liveMaxMinutes: 120 })).toBe(true);
+    expect(ok({ liveIdleMinutes: 1, liveMaxMinutes: 5 })).toBe(true);
+    expect(ok({ liveIdleMinutes: 240, liveMaxMinutes: 720 })).toBe(true);
+    expect(ok({ liveIdleMinutes: 0 })).toBe(false);
+    expect(ok({ liveIdleMinutes: 241 })).toBe(false);
+    expect(ok({ liveMaxMinutes: 4 })).toBe(false);
+    expect(ok({ liveMaxMinutes: 721 })).toBe(false);
+    expect(ok({ liveMaxMinutes: 12.5 })).toBe(false);
   });
 });

@@ -305,6 +305,7 @@ void main() {
           'address': true,
           'hours': true,
           'social': true,
+          'unavailableItems': true,
         },
       });
       expect(
@@ -315,6 +316,25 @@ void main() {
         findsNothing,
       );
       expect(find.text('Hidden from customers: Email'), findsOneWidget);
+    },
+  );
+
+  testWidgets(
+    'unavailable items can be hidden; on by default, not a header detail (FR-043)',
+    (tester) async {
+      final app = await openProfile(tester);
+      final key = ProfileKeys.visibility(VisibleField.unavailableItems);
+      expect(tester.widget<SwitchListTile>(find.byKey(key)).value, isTrue);
+      expect(find.textContaining('Currently unavailable'), findsOneWidget);
+
+      await app.tap(find.byKey(key));
+      await autosave(tester);
+      expect(
+        (app.restaurant.updates.single['visibility']
+            as Map)['unavailableItems'],
+        isFalse,
+      );
+      expect(find.textContaining('Hidden from customers'), findsNothing);
     },
   );
 

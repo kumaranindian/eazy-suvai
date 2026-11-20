@@ -163,14 +163,16 @@ service cloud.firestore {
         && links.matches('^' + url + '[|]' + url + '[|]' + url + '[|]' + url + '[|]' + url + '$');
     }
 
-    // FR-013: which contact details the public menu shows.
+    // FR-013: which contact details the public menu shows; FR-043:
+    // unavailableItems (false = hide unavailable items instead of dimming).
     function validVisibility(v) {
-      return v.keys().hasOnly(['phone', 'email', 'address', 'hours', 'social'])
+      return v.keys().hasOnly(['phone', 'email', 'address', 'hours', 'social', 'unavailableItems'])
         && (!('phone' in v) || v.phone is bool)
         && (!('email' in v) || v.email is bool)
         && (!('address' in v) || v.address is bool)
         && (!('hours' in v) || v.hours is bool)
-        && (!('social' in v) || v.social is bool);
+        && (!('social' in v) || v.social is bool)
+        && (!('unavailableItems' in v) || v.unavailableItems is bool);
     }
 
     // FR-011: per weekday up to 3 slots "HH:mm-HH:mm" joined with ',', or

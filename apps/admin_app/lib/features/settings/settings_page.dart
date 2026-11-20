@@ -15,6 +15,8 @@ abstract final class SettingsKeys {
   static const fonts = ValueKey('settings.fonts');
   static const currencies = ValueKey('settings.currencies');
   static const supportEmail = ValueKey('settings.supportEmail');
+  static const liveIdleMinutes = ValueKey('settings.liveIdleMinutes');
+  static const liveMaxMinutes = ValueKey('settings.liveMaxMinutes');
   static const saveConfig = ValueKey('settings.saveConfig');
   static const announcementText = ValueKey('settings.announcementText');
   static const announcementActive = ValueKey('settings.announcementActive');
@@ -42,8 +44,9 @@ final adminsProvider = FutureProvider.autoDispose<List<Map<String, dynamic>>>((
 });
 
 /// Platform settings (M11): reserved slugs, grace days (0–30, FR-100),
-/// fonts, currencies, support email, the owner-app announcement, and the
-/// admin users. Every save goes through an audit-logged callable.
+/// fonts, currencies, support email, how long an open public menu keeps
+/// checking for changes (idle and per-scan minutes), the owner-app
+/// announcement, and the admin users. Every save goes through an audit-logged callable.
 class SettingsPage extends ConsumerWidget {
   const SettingsPage({super.key});
 
@@ -95,10 +98,24 @@ class _ConfigFormState extends ConsumerState<_ConfigForm> {
   late final _support = TextEditingController(
     text: '${widget.config['supportEmail'] ?? ''}',
   );
+  late final _liveIdle = TextEditingController(
+    text: '${widget.config['liveIdleMinutes'] ?? 30}',
+  );
+  late final _liveMax = TextEditingController(
+    text: '${widget.config['liveMaxMinutes'] ?? 120}',
+  );
 
   @override
   void dispose() {
-    for (final c in [_slugs, _grace, _fonts, _currencies, _support]) {
+    for (final c in [
+      _slugs,
+      _grace,
+      _fonts,
+      _currencies,
+      _support,
+      _liveIdle,
+      _liveMax,
+    ]) {
       c.dispose();
     }
     super.dispose();
@@ -164,6 +181,30 @@ class _ConfigFormState extends ConsumerState<_ConfigForm> {
           keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(labelText: l10n.fieldSupportEmail),
         ),
+        TextField(
+          key: SettingsKeys.liveIdleMinutes,
+          controller: _liveIdle,
+          enabled: !readOnly,
+          keyboardType: TextInputType.number,
+          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+          decoration: InputDecoration(
+            labelText: l10n.fieldLiveIdleMinutes,
+            helperText: l10n.liveIdleMinutesHelp,
+            helperMaxLines: 3,
+          ),
+        ),
+        TextField(
+          key: SettingsKeys.liveMaxMinutes,
+          controller: _liveMax,
+          enabled: !readOnly,
+          keyboardType: TextInputType.number,
+          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+          decoration: InputDecoration(
+            labelText: l10n.fieldLiveMaxMinutes,
+            helperText: l10n.liveMaxMinutesHelp,
+            helperMaxLines: 3,
+          ),
+        ),
         const SizedBox(height: 12),
         if (!readOnly)
           Align(
@@ -192,6 +233,10 @@ class _ConfigFormState extends ConsumerState<_ConfigForm> {
                         'currencies': currencies,
                         if (_support.text.trim().isNotEmpty)
                           'supportEmail': _support.text.trim(),
+                        'liveIdleMinutes':
+                            int.tryParse(_liveIdle.text.trim()) ?? 30,
+                        'liveMaxMinutes':
+                            int.tryParse(_liveMax.text.trim()) ?? 120,
                       }),
                   done: l10n.saved,
                 );

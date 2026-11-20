@@ -208,6 +208,8 @@ FakeAdminApi api() => FakeAdminApi({
         'fonts': ['Poppins'],
         'currencies': {'INR': 2},
         'supportEmail': 'help@eazysuvai.com',
+        'liveIdleMinutes': 30,
+        'liveMaxMinutes': 120,
         'announcement': null,
       },
     },
@@ -537,6 +539,7 @@ void main() {
     final a = api();
     final app = await open(tester, a, Routes.settings);
     await tester.enterText(find.byKey(SettingsKeys.graceDays), '7');
+    await tester.enterText(find.byKey(SettingsKeys.liveMaxMinutes), '90');
     await app.tap(find.byKey(SettingsKeys.saveConfig));
     expect(a.callsTo('updatePlatformConfig').single, {
       'reservedSlugs': ['admin', 'api'],
@@ -544,6 +547,8 @@ void main() {
       'fonts': ['Poppins'],
       'currencies': {'INR': 2},
       'supportEmail': 'help@eazysuvai.com',
+      'liveIdleMinutes': 30,
+      'liveMaxMinutes': 90,
     });
     await tester.enterText(
       find.byKey(SettingsKeys.announcementText),

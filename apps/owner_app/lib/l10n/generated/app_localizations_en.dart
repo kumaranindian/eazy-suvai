@@ -306,6 +306,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get visibilitySocial => 'Social links';
 
   @override
+  String get visibilityUnavailableItems => 'Unavailable items';
+
+  @override
+  String get visibilityUnavailableItemsHelp =>
+      'On: shown greyed out as \"Currently unavailable\". Off: hidden from customers. Applies after you publish.';
+
+  @override
   String get previewTitle => 'Menu preview';
 
   @override
@@ -1022,6 +1029,27 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get menuFieldAvailable => 'Available';
+
+  @override
+  String menuAvailabilityLive(int count, String available) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count items available again. Live now, no publish needed.',
+      one: 'Available again. Live now, no publish needed.',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count items marked sold out. Live now, no publish needed.',
+      one: 'Marked sold out. Live now, no publish needed.',
+    );
+    String _temp2 = intl.Intl.selectLogic(available, {
+      'true': '$_temp0',
+      'other': '$_temp1',
+    });
+    return '$_temp2';
+  }
 
   @override
   String get menuFieldAvailableHelp =>

@@ -29,7 +29,7 @@ class MenuHeaderPreview extends StatelessWidget {
     final todaySlots = r.openingHours?[today];
     final hidden = [
       for (final f in VisibleField.values)
-        if (!v.isShown(f)) visibleFieldLabel(l10n, f),
+        if (f.isHeaderDetail && !v.isShown(f)) visibleFieldLabel(l10n, f),
     ];
 
     final details = <(IconData, String)>[
@@ -204,4 +204,5 @@ String visibleFieldLabel(AppLocalizations l10n, VisibleField f) => switch (f) {
   VisibleField.address => l10n.visibilityAddress,
   VisibleField.hours => l10n.visibilityHours,
   VisibleField.social => l10n.visibilitySocial,
+  VisibleField.unavailableItems => l10n.visibilityUnavailableItems,
 };

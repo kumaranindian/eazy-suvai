@@ -1264,6 +1264,30 @@ abstract class AppLocalizations {
   /// **'Support email (shown to suspended owners)'**
   String get fieldSupportEmail;
 
+  /// Field: open public menus stop checking for changes after this long without a tap or scroll.
+  ///
+  /// In en, this message translates to:
+  /// **'Live menu updates: stop when idle (minutes, 1–240)'**
+  String get fieldLiveIdleMinutes;
+
+  /// Field help.
+  ///
+  /// In en, this message translates to:
+  /// **'An open menu stops checking for price and availability changes after this long without a tap or scroll. It checks again as soon as the customer taps, scrolls or comes back to the page.'**
+  String get liveIdleMinutesHelp;
+
+  /// Field: open public menus stop checking for changes this long after they were opened.
+  ///
+  /// In en, this message translates to:
+  /// **'Live menu updates: limit per scan (minutes, 5–720)'**
+  String get fieldLiveMaxMinutes;
+
+  /// Field help.
+  ///
+  /// In en, this message translates to:
+  /// **'After this long from opening the menu, it stops checking for changes, even if the customer is still using it. Opening the link or scanning the QR code again starts a new session.'**
+  String get liveMaxMinutesHelp;
+
   /// Settings card.
   ///
   /// In en, this message translates to:

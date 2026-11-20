@@ -117,6 +117,34 @@ void main() {
       await app.dispose();
     });
 
+    testWidgets('once published, says the change is live without a publish', (
+      tester,
+    ) async {
+      final app = await pumpOwnerApp(
+        tester,
+        width: 1280,
+        signedIn: verifiedOwner(),
+        restaurant: FakeRestaurantRepository(
+          restaurantData({'publishedVersion': 1}),
+        ),
+        menu: sampleMenu(),
+      );
+      await app.go(Routes.menu);
+      await app.tap(find.byKey(MenuKeys.itemAvailable('i1')));
+      expect(
+        find.text('Marked sold out. Live now, no publish needed.'),
+        findsOneWidget,
+      );
+      await app.dispose();
+    });
+
+    testWidgets('before the first publish, says nothing', (tester) async {
+      final app = await openMenu(tester);
+      await app.tap(find.byKey(MenuKeys.itemAvailable('i1')));
+      expect(find.textContaining('Live now'), findsNothing);
+      await app.dispose();
+    });
+
     testWidgets('a failed write rolls back and says why', (tester) async {
       final menu = sampleMenu()
         ..availabilityGate = Completer()

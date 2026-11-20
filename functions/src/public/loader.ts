@@ -2,8 +2,8 @@
  * Firestore reads for the public menu (architecture §3).
  *
  * Read order for a slug: `slugs/{slug}` → `restaurants/{rid}` (status and
- * the version pointer) → `versions/{n}` with `live/availability` and the
- * plan in one `getAll`. Publishing writes the version and moves the
+ * the version pointer) → `versions/{n}` with `live/availability`, the
+ * plan and `config/platform` (live-check limits) in one `getAll`. Publishing writes the version and moves the
  * pointer in one transaction and versions are immutable, so this order
  * never mixes two versions (AC-022).
  *
@@ -15,12 +15,13 @@ import type { Firestore, Timestamp } from "firebase-admin/firestore";
 
 import { removeBrandingFrom } from "../lib/plan-limits";
 import type { MenuSnapshot } from "../publishing/snapshot";
+import { liveLimitsOf, type LiveLimits } from "./live-limits";
 import type { SitemapEntry } from "./seo";
 
 type Data = Record<string, unknown>;
 
 export type MenuLookup =
-  | { kind: "live"; restaurantId: string; slug: string; version: number; snapshot: MenuSnapshot; availability: Record<string, boolean>; branding: boolean; publishedAt: Date | null }
+  | { kind: "live"; restaurantId: string; slug: string; version: number; snapshot: MenuSnapshot; availability: Record<string, boolean>; branding: boolean; publishedAt: Date | null; limits: LiveLimits }
   | { kind: "redirect"; slug: string }
   | { kind: "coming-soon"; name: string }
   | { kind: "unavailable"; name: string }
@@ -71,10 +72,11 @@ export async function loadMenu(db: Firestore, slug: string): Promise<MenuLookup>
   if (typeof n !== "number") return { kind: "coming-soon", name };
 
   const planId = typeof r.planId === "string" && /^[A-Za-z0-9_-]{1,64}$/.test(r.planId) ? r.planId : "free";
-  const [version, live, plan] = await db.getAll(
+  const [version, live, plan, config] = await db.getAll(
     db.doc(`restaurants/${rid}/versions/${n}`),
     db.doc(`restaurants/${rid}/live/availability`),
     db.doc(`plans/${planId}`),
+    db.doc("config/platform"),
   );
   const snapshot = version.get("snapshot") as MenuSnapshot | undefined;
   if (!version.exists || !snapshot) throw new Error(`restaurants/${rid}/versions/${n} is missing`);
@@ -87,7 +89,39 @@ export async function loadMenu(db: Firestore, slug: string): Promise<MenuLookup>
     availability: availabilityOf(live.data()),
     branding: !removeBrandingFrom(planId, plan.data()),
     publishedAt: toDate(r.publishedAt) ?? toDate(version.get("publishedAt")),
+    limits: liveLimitsOf(config.data()),
   };
+}
+
+/** What the open page polls: the live version and the availability map. */
+export interface LiveState {
+  /** `publishedVersion`, or null when the slug no longer serves a live menu. */
+  v: number | null;
+  /** `live/availability.items` (item id → available). */
+  a: Record<string, boolean>;
+}
+
+/**
+ * The live state behind `/{slug}/live.json` (FR-044, FR-095). Three small
+ * reads (slug, root, availability) and never the version snapshot, so the
+ * open page can check often. A null `v` (old slug, suspended, gone) makes
+ * the page load itself again and show what the menu URL now serves.
+ *
+ * @param db Firestore.
+ * @param slug A lower-case slug.
+ * @return The version and availability.
+ */
+export async function loadLiveState(db: Firestore, slug: string): Promise<LiveState> {
+  const none: LiveState = { v: null, a: {} };
+  const slugDoc = await db.doc(`slugs/${slug}`).get();
+  const rid = slugDoc.get("restaurantId");
+  if (!slugDoc.exists || typeof rid !== "string" || rid === "") return none;
+  const [rest, live] = await db.getAll(db.doc(`restaurants/${rid}`), db.doc(`restaurants/${rid}/live/availability`));
+  if (!rest.exists) return none;
+  const r = rest.data() as Data;
+  const moved = typeof r.slug === "string" && r.slug !== "" && r.slug !== slug;
+  if (moved || r.status !== "active" || typeof r.publishedVersion !== "number") return none;
+  return { v: r.publishedVersion, a: availabilityOf(live.data()) };
 }
 
 export type QrLookup = { kind: "slug"; slug: string } | { kind: "gone" } | { kind: "not-found" };

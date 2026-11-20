@@ -688,6 +688,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get fieldSupportEmail => 'Support email (shown to suspended owners)';
 
   @override
+  String get fieldLiveIdleMinutes =>
+      'Live menu updates: stop when idle (minutes, 1–240)';
+
+  @override
+  String get liveIdleMinutesHelp =>
+      'An open menu stops checking for price and availability changes after this long without a tap or scroll. It checks again as soon as the customer taps, scrolls or comes back to the page.';
+
+  @override
+  String get fieldLiveMaxMinutes =>
+      'Live menu updates: limit per scan (minutes, 5–720)';
+
+  @override
+  String get liveMaxMinutesHelp =>
+      'After this long from opening the menu, it stops checking for changes, even if the customer is still using it. Opening the link or scanning the QR code again starts a new session.';
+
+  @override
   String get settingsAnnouncement => 'Announcement';
 
   @override

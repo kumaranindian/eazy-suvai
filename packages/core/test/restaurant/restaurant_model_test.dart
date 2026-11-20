@@ -126,7 +126,7 @@ void main() {
       expect(const ContactInfo().toMap(), isEmpty);
     });
 
-    test('PublicVisibility stores all five flags', () {
+    test('PublicVisibility stores every flag', () {
       final v = const PublicVisibility().withField(
         VisibleField.social,
         shown: false,
@@ -137,8 +137,19 @@ void main() {
         'address': true,
         'hours': true,
         'social': false,
+        'unavailableItems': true,
       });
       expect(v.withField(VisibleField.social, shown: true).hidden, isEmpty);
+    });
+
+    test('unavailable items are shown unless turned off (FR-043)', () {
+      expect(
+        const PublicVisibility().isShown(VisibleField.unavailableItems),
+        isTrue,
+      );
+      final off = PublicVisibility.fromMap({'unavailableItems': false});
+      expect(off.isShown(VisibleField.unavailableItems), isFalse);
+      expect(VisibleField.unavailableItems.isHeaderDetail, isFalse);
     });
   });
 

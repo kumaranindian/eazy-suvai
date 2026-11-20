@@ -9,6 +9,7 @@
 
 export type Route =
   | { kind: "menu"; slug: string }
+  | { kind: "live"; slug: string }
   | { kind: "qr"; code: string }
   | { kind: "sitemap" }
   | { kind: "redirect"; location: string; status: 301 }
@@ -25,6 +26,7 @@ const SLUG = /^[a-z0-9](?:[a-z0-9-]{0,62}[a-z0-9])?$/;
  *
  * - `/{slug}` → menu; `/{Slug}` or `/{slug}/` → 301 to the lower-case,
  *   slash-free form (the query string is kept).
+ * - `/{slug}/live.json` (lower-case only) → the live state for the open page.
  * - `/q/{code}` (any case) → QR lookup.
  * - `/sitemap.xml`.
  * - Anything else → not found.
@@ -47,6 +49,10 @@ export function routeOf(path: string, query = ""): Route {
     const code = qr[1].toUpperCase();
     return QR_CODE.test(code) ? { kind: "qr", code } : { kind: "not-found" };
   }
+
+  // The open page's live check: published version and availability.
+  const live = /^\/([^/]+)\/live\.json$/.exec(p);
+  if (live) return SLUG.test(live[1]) ? { kind: "live", slug: live[1] } : { kind: "not-found" };
 
   const m = /^\/([^/]+)(\/?)$/.exec(p);
   if (!m) return { kind: "not-found" };

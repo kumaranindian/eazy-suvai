@@ -55,6 +55,12 @@ export interface SnapshotProfile {
   contact: SnapshotContact;
   /** One string per weekday (architecture §4.2); absent when hidden or not set. */
   openingHours?: Record<Weekday, string>;
+  /**
+   * The owner turned off `visibility.unavailableItems`: unavailable items
+   * are hidden instead of shown dimmed (FR-043). Only written when true, so
+   * versions published before the switch existed compare equal.
+   */
+  hideUnavailable?: true;
 }
 
 export interface SnapshotTheme {
@@ -207,7 +213,10 @@ export function localeFor(country: unknown): string {
 }
 
 /** Whether a visibility group is shown: a missing flag means shown (M03). */
-export function isShown(visibility: unknown, group: "phone" | "email" | "address" | "hours" | "social"): boolean {
+export function isShown(
+  visibility: unknown,
+  group: "phone" | "email" | "address" | "hours" | "social" | "unavailableItems",
+): boolean {
   if (!visibility || typeof visibility !== "object") return true;
   return (visibility as Data)[group] !== false;
 }
@@ -287,7 +296,8 @@ export function publicItems(items: readonly DocEntry[], categories: readonly Doc
  * Builds the public snapshot from the draft (FR-062, BR-008).
  *
  * - Profile: name, business type, description, ready logo and cover, and
- *   only the contact groups and hours the owner shows (`visibility`).
+ *   only the contact groups and hours the owner shows (`visibility`), and
+ *   `hideUnavailable` when `visibility.unavailableItems` is off (FR-043).
  * - Theme: the theme's tokens copied now, the overrides, and the
  *   contrast-fixed colours.
  * - Categories: non-deleted and active, by `sequence` then id.
@@ -310,6 +320,7 @@ export function buildSnapshot(input: DraftInput): MenuSnapshot {
   };
   const description = str(r.description);
   if (description) profile.description = description;
+  if (!isShown(r.visibility, "unavailableItems")) profile.hideUnavailable = true;
   const logo = snapshotImage(r.logo, urls);
   if (logo) profile.logo = logo;
   const cover = snapshotImage(r.cover, urls);

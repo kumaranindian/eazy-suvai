@@ -79,13 +79,34 @@ describe("loader and states (FR-099, AC-024)", () => {
     expect(res.body).toContain("<h1>Spice Garden</h1>");
     expect(res.body).not.toContain("OLD VERSION");
     expect(res.body).toContain(`<link rel="canonical" href="${BASE}/spice-garden">`);
-    // tiffin-1 from the overlay, biryani-2 from the snapshot.
+    // tiffin-1 from the overlay, biryani-2 from the snapshot: shown dimmed (FR-043).
     expect(res.body.match(/<li class="item sold-out/g)).toHaveLength(2);
+    expect(res.body).toContain(" data-v=\"2\" data-live=\"/spice-garden/live.json\" data-idle=\"30\" data-max=\"120\"");
+    // An admin changes the live-check limits (config/platform).
+    await db.doc("config/platform").set({ liveIdleMinutes: 10, liveMaxMinutes: 45 }, { merge: true });
+    expect((await get("/spice-garden")).body).toContain(" data-idle=\"10\" data-max=\"45\"");
     expect(res.body).toContain("Powered by EazySuvai");
     expect(res.body).not.toContain("noindex");
 
     const again = await get("/spice-garden", { "if-none-match": res.headers.ETag });
     expect(again.status).toBe(304);
+  });
+
+  it("answers live.json with the version and availability, cached 5 s", async () => {
+    const rid = await restaurant("spice-garden", {}, "AB3K7MNP");
+    const res = await get("/spice-garden/live.json");
+    expect(res.status).toBe(200);
+    expect(res.headers["Cache-Control"]).toBe("public, max-age=0, s-maxage=5");
+    expect(res.headers["Content-Type"]).toBe("application/json; charset=utf-8");
+    expect(JSON.parse(res.body)).toEqual({ v: 2, a: { "tiffin-1": false } });
+    expect((await get("/spice-garden/live.json", { "if-none-match": res.headers.ETag })).status).toBe(304);
+
+    // Anything that no longer serves this menu says v: null, so the page reloads.
+    await db.doc(`restaurants/${rid}`).update({ slug: "new-garden" });
+    expect(JSON.parse((await get("/spice-garden/live.json")).body)).toEqual({ v: null, a: {} });
+    await db.doc(`restaurants/${rid}`).update({ slug: "spice-garden", status: "suspended" });
+    expect(JSON.parse((await get("/spice-garden/live.json")).body)).toEqual({ v: null, a: {} });
+    expect(JSON.parse((await get("/nobody/live.json")).body)).toEqual({ v: null, a: {} });
   });
 
   it("serves the grace period as live and hides branding on Pro", async () => {
@@ -221,10 +242,21 @@ describe("published through M06 (FR-044, FR-045)", () => {
     expect(res.body).toContain("+96522222222");
     expect(res.body).not.toContain("<li class=\"item sold-out");
 
-    // Availability is live (FR-095): the M04 trigger updates the overlay, the page follows.
+    // Availability is live (FR-095): the M04 trigger updates the overlay,
+    // live.json and the page follow (FR-043: dimmed, or hidden when the owner chose so).
     await db.doc(`restaurants/${RIDP}/items/${kebab}`).update({ available: false, updatedAt: Timestamp.now() });
-    res = await waitFor(() => get("/spice-garden"), (r) => r.body.includes("<li class=\"item sold-out"));
+    const state = await waitFor(() => get("/spice-garden/live.json"), (r) => JSON.parse(r.body).a?.[kebab] === false);
+    expect(JSON.parse(state.body).v).toBe(1);
+    res = await get("/spice-garden");
+    expect(res.body).toContain(`data-id="${kebab}" data-d="non-vegetarian" data-off aria-disabled="true">`);
     expect(res.body).toContain("Currently unavailable");
+
+    // The owner hides unavailable items: a draft setting, live after a publish.
+    await db.doc(`restaurants/${RIDP}`).update({ visibility: { unavailableItems: false }, draftUpdatedAt: Timestamp.now() });
+    await publishMenu(db, owner, { restaurantId: RIDP }, deps);
+    res = await get("/spice-garden");
+    expect(res.body).toContain(`data-id="${kebab}" data-d="non-vegetarian" data-off aria-disabled="true" hidden>`);
+    expect(res.body).toContain(" data-hide-off");
     expect(res.body).toContain("\"availability\":\"https://schema.org/OutOfStock\"");
   });
 });

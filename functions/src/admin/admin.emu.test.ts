@@ -217,12 +217,13 @@ describe("editors (FR-059, FR-076, FR-104)", () => {
   });
 
   it("updates platform settings and the announcement", async () => {
-    await updatePlatformConfig(db, ADMIN, { graceDays: 7, reservedSlugs: ["admin", "api", "admin"], fonts: ["Poppins", "Inter"], currencies: { INR: 2, KWD: 3 }, supportEmail: "help@eazysuvai.com" });
+    await updatePlatformConfig(db, ADMIN, { graceDays: 7, reservedSlugs: ["admin", "api", "admin"], fonts: ["Poppins", "Inter"], currencies: { INR: 2, KWD: 3 }, supportEmail: "help@eazysuvai.com", liveIdleMinutes: 15, liveMaxMinutes: 90 });
     expect(await codeOf(updatePlatformConfig(db, ADMIN, { graceDays: 45 }))).toBe("invalid-input");
+    expect(await codeOf(updatePlatformConfig(db, ADMIN, { liveMaxMinutes: 1000 }))).toBe("invalid-input");
     await setAnnouncement(db, ADMIN, { text: "Maintenance on Sunday 2 am", level: "warning", active: true });
     expect(await codeOf(setAnnouncement(db, ADMIN, { text: "", active: true }))).toBe("invalid-input");
     const { config } = (await adminListCatalog(db, ADMIN, { kind: "config" })) as { config: Record<string, any> }; // eslint-disable-line @typescript-eslint/no-explicit-any
-    expect(config).toMatchObject({ graceDays: 7, reservedSlugs: ["admin", "api"], supportEmail: "help@eazysuvai.com" });
+    expect(config).toMatchObject({ graceDays: 7, reservedSlugs: ["admin", "api"], supportEmail: "help@eazysuvai.com", liveIdleMinutes: 15, liveMaxMinutes: 90 });
     expect(config.announcement).toMatchObject({ text: "Maintenance on Sunday 2 am", level: "warning", active: true });
     expect(await auditActions()).toEqual(expect.arrayContaining(["platform.updateConfig", "platform.announcement"]));
     const { entries } = (await adminListCatalog(db, ADMIN, { kind: "themes" })) as { entries: Array<{ id: string }> };

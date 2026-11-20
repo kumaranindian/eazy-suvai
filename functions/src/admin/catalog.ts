@@ -11,6 +11,7 @@ import { writeAudit } from "../lib/audit";
 import { assertAdmin, type CallerAuth } from "../lib/auth";
 import { appError } from "../lib/errors";
 import { parseInput } from "../lib/validation";
+import { LIVE_IDLE_MINUTES, LIVE_MAX_MINUTES, liveLimitsOf } from "../public/live-limits";
 import { syncPlanFeatures } from "../subscriptions/daily";
 import { resolveTheme, parseThemeTokens } from "../theme";
 
@@ -171,11 +172,18 @@ export const platformConfigSchema = z
     fonts: z.array(z.string().regex(/^[A-Za-z][A-Za-z ]{0,39}$/)).min(1).max(100).optional(),
     currencies: z.record(z.string().regex(/^[A-Z]{3}$/), z.number().int().min(0).max(3)).optional(),
     supportEmail: z.string().email().max(200).optional(),
+    /** Open menu pages: stop checking for changes after this idle time / this long after opening. */
+    liveIdleMinutes: z.number().int().min(LIVE_IDLE_MINUTES.min).max(LIVE_IDLE_MINUTES.max).optional(),
+    liveMaxMinutes: z.number().int().min(LIVE_MAX_MINUTES.min).max(LIVE_MAX_MINUTES.max).optional(),
     reason,
   })
   .strict();
 
-/** Callable `updatePlatformConfig`: reserved slugs, grace days (0–30, FR-100), fonts, currencies, support email. */
+/**
+ * Callable `updatePlatformConfig`: reserved slugs, grace days (0–30, FR-100),
+ * fonts, currencies, support email, and the open menu page's live-check
+ * limits (idle and per-scan minutes).
+ */
 export async function updatePlatformConfig(db: Firestore, caller: CallerAuth | undefined | null, data: unknown): Promise<{ ok: true }> {
   const admin = assertAdmin(caller);
   const { reason: why, ...patch } = parseInput(platformConfigSchema, data);
@@ -223,6 +231,7 @@ export async function adminListCatalog(db: Firestore, caller: CallerAuth | undef
   if (kind === "config") {
     const c = (await db.doc("config/platform").get()).data() ?? {};
     const a = (c.announcement ?? null) as Data | null;
+    const limits = liveLimitsOf(c);
     return {
       config: {
         reservedSlugs: c.reservedSlugs ?? null,
@@ -230,6 +239,8 @@ export async function adminListCatalog(db: Firestore, caller: CallerAuth | undef
         fonts: c.fonts ?? [],
         currencies: c.currencies ?? {},
         supportEmail: c.supportEmail ?? null,
+        liveIdleMinutes: limits.idleMinutes,
+        liveMaxMinutes: limits.maxMinutes,
         announcement: a ? { ...a, updatedAt: iso(a.updatedAt) } : null,
       },
     };

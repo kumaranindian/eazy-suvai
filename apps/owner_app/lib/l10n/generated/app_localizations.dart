@@ -652,6 +652,18 @@ abstract class AppLocalizations {
   /// **'Social links'**
   String get visibilitySocial;
 
+  /// Visibility switch: show unavailable items on the public menu (FR-043).
+  ///
+  /// In en, this message translates to:
+  /// **'Unavailable items'**
+  String get visibilityUnavailableItems;
+
+  /// Help under the unavailable-items switch (FR-043).
+  ///
+  /// In en, this message translates to:
+  /// **'On: shown greyed out as \"Currently unavailable\". Off: hidden from customers. Applies after you publish.'**
+  String get visibilityUnavailableItemsHelp;
+
   /// Title of the live preview of the public menu header.
   ///
   /// In en, this message translates to:
@@ -1767,6 +1779,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Available'**
   String get menuFieldAvailable;
+
+  /// Shown after an availability switch in the item list. Availability goes live without a publish (FR-095, BR-018).
+  ///
+  /// In en, this message translates to:
+  /// **'{available, select, true{{count, plural, =1{Available again. Live now, no publish needed.} other{{count} items available again. Live now, no publish needed.}}} other{{count, plural, =1{Marked sold out. Live now, no publish needed.} other{{count} items marked sold out. Live now, no publish needed.}}}}'**
+  String menuAvailabilityLive(int count, String available);
 
   /// Help for availability (FR-095).
   ///

@@ -5,26 +5,37 @@
  * | Path | Result |
  * | --- | --- |
  * | `/{slug}` | 200 menu, or the FR-099 state page (404, 503, 410); old slug → 301 |
+ * | `/{slug}/live.json` | `{v, a}`: live version and availability, polled by the open page |
  * | `/q/{code}` | 302 to `/{slug}?src=qr` (FR-048) |
  * | `/sitemap.xml` | FRD §7.6 (`robots.txt` is a static Hosting file) |
  *
  * Every response that depends on data is `public, max-age=0, s-maxage=60`:
- * browsers revalidate, the Hosting CDN keeps it 60 s, so a publish or an
- * availability change shows within 60 s (FR-044). Each body gets an ETag
- * and a matching `If-None-Match` answers 304.
+ * browsers revalidate, the Hosting CDN keeps it 60 s. A page that is
+ * already open does not wait for that: it polls `live.json` (5 s at the CDN)
+ * and applies availability in place, or swaps in the new version from
+ * `/{slug}?v={n}` (a URL the CDN has not cached yet), so changes show in
+ * about 15 s without a reload (FR-044). Each body gets an ETag and a
+ * matching `If-None-Match` answers 304.
  */
 import { createHash } from "node:crypto";
 
 import type { Firestore } from "firebase-admin/firestore";
 
 import { BODY_SCRIPT, HEAD_SCRIPT } from "./client-script";
-import { loadMenu, resolveQr, sitemapEntries } from "./loader";
+import { loadLiveState, loadMenu, resolveQr, sitemapEntries } from "./loader";
 import { renderMenuPage } from "./render-menu";
 import { routeOf } from "./routes";
 import { sitemapXml } from "./seo";
 import { STATE_STATUS, renderStatePage, type StateKind } from "./state-pages";
 
 export const CACHE_PUBLIC = "public, max-age=0, s-maxage=60";
+
+/**
+ * `/{slug}/live.json`: the CDN keeps it 5 s, so however many customers have
+ * the menu open, each CDN location asks Firestore at most once per 5 s per
+ * menu. Browsers revalidate with the ETag (304, a few bytes).
+ */
+export const CACHE_LIVE = "public, max-age=0, s-maxage=5";
 
 /** The analytics endpoint (M09; Hosting rewrites it to `collectEvent`). */
 export const BEACON_PATH = "/e";
@@ -168,6 +179,24 @@ export async function handleMenuRequest(db: Firestore, req: MenuRequest, deps: S
         body: sitemapXml(baseUrl, await sitemapEntries(db)),
         headers: { "Content-Type": "application/xml; charset=utf-8", "Cache-Control": CACHE_PUBLIC },
       });
+    case "live": {
+      try {
+        return withEtag(req, {
+          status: 200,
+          body: JSON.stringify(await loadLiveState(db, route.slug)),
+          headers: {
+            "Content-Type": "application/json; charset=utf-8",
+            "Cache-Control": CACHE_LIVE,
+            "X-Content-Type-Options": "nosniff",
+            "X-Robots-Tag": "noindex",
+          },
+        });
+      } catch (e) {
+        // The page keeps what it shows and asks again later.
+        deps.logError?.(`renderMenu ${req.path}`, e);
+        return { status: 503, headers: { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store" }, body: "{}" };
+      }
+    }
     case "qr": {
       const qr = await resolveQr(db, route.code);
       if (qr.kind === "slug") return redirect(302, `/${qr.slug}?src=qr`);
@@ -191,6 +220,9 @@ export async function handleMenuRequest(db: Firestore, req: MenuRequest, deps: S
           canonicalUrl: `${baseUrl}/${m.slug}`,
           slug: m.slug,
           beacon: BEACON_PATH,
+          version: m.version,
+          live: `/${m.slug}/live.json`,
+          liveLimits: m.limits,
         });
         return withEtag(req, html(200, body, deps));
       }

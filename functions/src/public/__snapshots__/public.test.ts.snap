@@ -114,7 +114,7 @@ section{scroll-margin-top:16px}}</style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Restaurant","name":"Spice Garden","url":"https://menu.eazysuvai.com/spice-garden","description":"South Indian classics, biryani and filter coffee since 1998.","image":["https://img.test/cover/w1280.webp","https://img.test/logo/w1280.webp"],"logo":"https://img.test/logo/w1280.webp","telephone":"+914423456789","email":"hello@spicegarden.example","address":{"@type":"PostalAddress","streetAddress":"12 Anna Salai","addressLocality":"Chennai","postalCode":"600002","addressCountry":"IN"},"sameAs":["https://spicegarden.example/","https://instagram.com/spicegarden"],"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":"https://schema.org/Monday","opens":"07:00","closes":"11:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":"https://schema.org/Monday","opens":"18:00","closes":"23:30"},{"@type":"OpeningHoursSpecification","dayOfWeek":"https://schema.org/Tuesday","opens":"07:00","closes":"11:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":"https://schema.org/Tuesday","opens":"18:00","closes":"23:30"},{"@type":"OpeningHoursSpecification","dayOfWeek":"https://schema.org/Wednesday","opens":"07:00","closes":"11:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":"https://schema.org/Wednesday","opens":"18:00","closes":"23:30"},{"@type":"OpeningHoursSpecification","dayOfWeek":"https://schema.org/Thursday","opens":"07:00","closes":"11:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":"https://schema.org/Thursday","opens":"18:00","closes":"23:30"},{"@type":"OpeningHoursSpecification","dayOfWeek":"https://schema.org/Friday","opens":"07:00","closes":"11:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":"https://schema.org/Friday","opens":"18:00","closes":"01:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":"https://schema.org/Saturday","opens":"00:00","closes":"23:59"}],"currenciesAccepted":"INR","hasMenu":{"@type":"Menu","name":"Spice Garden – Menu","url":"https://menu.eazysuvai.com/spice-garden","inLanguage":"en-IN","hasMenuSection":[{"@type":"MenuSection","name":"Tiffin","description":"Served from 7 am to 11 am.","hasMenuItem":[{"@type":"MenuItem","name":"Idli (2 pcs)","description":"Steamed rice cakes with sambar and three chutneys.","image":"https://img.test/item-tiffin-1/w1280.webp","offers":{"@type":"Offer","price":"60.00","priceCurrency":"INR","availability":"https://schema.org/InStock"},"suitableForDiet":"https://schema.org/VegetarianDiet"},{"@type":"MenuItem","name":"Ghee Roast Dosa","description":"A crisp, golden dosa roasted in pure ghee, served with coconut chutney, tomato chutney and a bowl of hot sambar. Ask for it extra crispy if you like.","image":"https://img.test/item-tiffin-2/w1280.webp","offers":{"@type":"Offer","price":"129.00","priceCurrency":"INR","availability":"https://schema.org/InStock"},"suitableForDiet":"https://schema.org/VegetarianDiet"},{"@type":"MenuItem","name":"Medu Vada (2 pcs)","offers":{"@type":"Offer","price":"70.00","priceCurrency":"INR","availability":"https://schema.org/InStock"},"suitableForDiet":"https://schema.org/VegetarianDiet"},{"@type":"MenuItem","name":"Pongal","description":"Rice and moong dal with pepper, cumin and cashews.","image":"https://img.test/item-tiffin-4/w1280.webp","offers":{"@type":"Offer","price":"90.00","priceCurrency":"INR","availability":"https://schema.org/InStock"},"suitableForDiet":"https://schema.org/VegetarianDiet"},{"@type":"MenuItem","name":"Poori Masala","image":"https://img.test/item-tiffin-5/w1280.webp","offers":{"@type":"Offer","price":"99.00","priceCurrency":"INR","availability":"https://schema.org/InStock"},"suitableForDiet":"https://schema.org/VegetarianDiet"},{"@type":"MenuItem","name":"Rava Kesari","offers":{"@type":"Offer","price":"50.00","priceCurrency":"INR","availability":"https://schema.org/InStock"},"suitableForDiet":"https://schema.org/VegetarianDiet"}]},{"@type":"MenuSection","name":"Meals","hasMenuItem":[{"@type":"MenuItem","name":"South Indian Meals","description":"Rice, sambar, rasam, two poriyal, kootu, appalam, curd and payasam.","image":"https://img.test/item-meals-1/w1280.webp","offers":{"@type":"Offer","price":"180.00","priceCurrency":"INR","availability":"https://schema.org/InStock"},"suitableForDiet":"https://schema.org/VegetarianDiet"},{"@type":"MenuItem","name":"Chettinad Chicken Meals","image":"https://img.test/item-meals-2/w1280.webp","offers":{"@type":"Offer","price":"260.00","priceCurrency":"INR","availability":"https://schema.org/InStock"}},{"@type":"MenuItem","name":"Fish Curry Meals","description":"Tangy tamarind fish curry with rice and sides.","offers":{"@type":"Offer","price":"280.00","priceCurrency":"INR","availability":"https://schema.org/InStock"}},{"@type":"MenuItem","name":"Curd Rice","image":"https://img.test/item-meals-4/w1280.webp","offers":{"@type":"Offer","price":"90.00","priceCurrency":"INR","availability":"https://schema.org/InStock"},"suitableForDiet":"https://schema.org/VegetarianDiet"},{"@type":"MenuItem","name":"Lemon Rice","image":"https://img.test/item-meals-5/w1280.webp","offers":{"@type":"Offer","price":"90.00","priceCurrency":"INR","availability":"https://schema.org/InStock"},"suitableForDiet":"https://schema.org/VeganDiet"},{"@type":"MenuItem","name":"Sambar Rice","offers":{"@type":"Offer","price":"100.00","priceCurrency":"INR","availability":"https://schema.org/InStock"},"suitableForDiet":"https://schema.org/VegetarianDiet"}]},{"@type":"MenuSection","name":"Biryani","description":"Slow-cooked on dum, served with raita and salna.","hasMenuItem":[{"@type":"MenuItem","name":"Chicken Biryani","description":"Seeraga samba rice, country chicken, and our house masala.","image":"https://img.test/item-biryani-1/w1280.webp","offers":{"@type":"Offer","price":"240.00","priceCurrency":"INR","availability":"https://schema.org/InStock"}},{"@type":"MenuItem","name":"Mutton Biryani","image":"https://img.test/item-biryani-2/w1280.webp","offers":{"@type":"Offer","price":"320.00","priceCurrency":"INR","availability":"https://schema.org/OutOfStock"}},{"@type":"MenuItem","name":"Egg Biryani","offers":{"@type":"Offer","price":"180.00","priceCurrency":"INR","availability":"https://schema.org/InStock"}},{"@type":"MenuItem","name":"Veg Biryani","image":"https://img.test/item-biryani-4/w1280.webp","offers":{"@type":"Offer","price":"160.00","priceCurrency":"INR","availability":"https://schema.org/InStock"},"suitableForDiet":"https://schema.org/VegetarianDiet"},{"@type":"MenuItem","name":"Prawn Biryani","image":"https://img.test/item-biryani-5/w1280.webp","offers":{"@type":"Offer","price":"340.00","priceCurrency":"INR","availability":"https://schema.org/InStock"}},{"@type":"MenuItem","name":"Mushroom Biryani","offers":{"@type":"Offer","price":"170.00","priceCurrency":"INR","availability":"https://schema.org/InStock"},"suitableForDiet":"https://schema.org/VegetarianDiet"}]},{"@type":"MenuSection","name":"Indo-Chinese","hasMenuItem":[{"@type":"MenuItem","name":"Gobi Manchurian","image":"https://img.test/item-chinese-1/w1280.webp","offers":{"@type":"Offer","price":"160.00","priceCurrency":"INR","availability":"https://schema.org/InStock"},"suitableForDiet":"https://schema.org/VegetarianDiet"},{"@type":"MenuItem","name":"Chilli Chicken","image":"https://img.test/item-chinese-2/w1280.webp","offers":{"@type":"Offer","price":"220.00","priceCurrency":"INR","availability":"https://schema.org/InStock"}},{"@type":"MenuItem","name":"Veg Fried Rice","offers":{"@type":"Offer","price":"150.00","priceCurrency":"INR","availability":"https://schema.org/InStock"},"suitableForDiet":"https://schema.org/VegetarianDiet"},{"@type":"MenuItem","name":"Schezwan Noodles","image":"https://img.test/item-chinese-4/w1280.webp","offers":{"@type":"Offer","price":"160.00","priceCurrency":"INR","availability":"https://schema.org/InStock"},"suitableForDiet":"https://schema.org/VegetarianDiet"},{"@type":"MenuItem","name":"Chicken 65","description":"Deep-fried, curry leaf tempered, fiery red.","image":"https://img.test/item-chinese-5/w1280.webp","offers":{"@type":"Offer","price":"220.00","priceCurrency":"INR","availability":"https://schema.org/InStock"}},{"@type":"MenuItem","name":"Paneer Chilli","offers":{"@type":"Offer","price":"200.00","priceCurrency":"INR","availability":"https://schema.org/InStock"},"suitableForDiet":"https://schema.org/VegetarianDiet"}]},{"@type":"MenuSection","name":"Desserts","hasMenuItem":[{"@type":"MenuItem","name":"Gulab Jamun (2 pcs)","image":"https://img.test/item-desserts-1/w1280.webp","offers":{"@type":"Offer","price":"60.00","priceCurrency":"INR","availability":"https://schema.org/InStock"},"suitableForDiet":"https://schema.org/VegetarianDiet"},{"@type":"MenuItem","name":"Elaneer Payasam","description":"Tender coconut kheer, served chilled.","image":"https://img.test/item-desserts-2/w1280.webp","offers":{"@type":"Offer","price":"120.00","priceCurrency":"INR","availability":"https://schema.org/InStock"},"suitableForDiet":"https://schema.org/VegetarianDiet"},{"@type":"MenuItem","name":"Carrot Halwa","offers":{"@type":"Offer","price":"90.00","priceCurrency":"INR","availability":"https://schema.org/InStock"},"suitableForDiet":"https://schema.org/VegetarianDiet"},{"@type":"MenuItem","name":"Kulfi","image":"https://img.test/item-desserts-4/w1280.webp","offers":{"@type":"Offer","price":"80.00","priceCurrency":"INR","availability":"https://schema.org/InStock"},"suitableForDiet":"https://schema.org/VegetarianDiet"},{"@type":"MenuItem","name":"Fruit Salad with Ice Cream","image":"https://img.test/item-desserts-5/w1280.webp","offers":{"@type":"Offer","price":"110.00","priceCurrency":"INR","availability":"https://schema.org/InStock"},"suitableForDiet":"https://schema.org/VegetarianDiet"},{"@type":"MenuItem","name":"Double Ka Meetha","offers":{"@type":"Offer","price":"100.00","priceCurrency":"INR","availability":"https://schema.org/InStock"},"suitableForDiet":"https://schema.org/VegetarianDiet"}]},{"@type":"MenuSection","name":"Drinks","hasMenuItem":[{"@type":"MenuItem","name":"Filter Coffee","description":"Degree coffee, brewed fresh.","image":"https://img.test/item-drinks-1/w1280.webp","offers":{"@type":"Offer","price":"40.00","priceCurrency":"INR","availability":"https://schema.org/InStock"},"suitableForDiet":"https://schema.org/VegetarianDiet"},{"@type":"MenuItem","name":"Masala Tea","image":"https://img.test/item-drinks-2/w1280.webp","offers":{"@type":"Offer","price":"35.00","priceCurrency":"INR","availability":"https://schema.org/InStock"},"suitableForDiet":"https://schema.org/VegetarianDiet"},{"@type":"MenuItem","name":"Fresh Lime Soda","offers":{"@type":"Offer","price":"60.00","priceCurrency":"INR","availability":"https://schema.org/InStock"},"suitableForDiet":"https://schema.org/VeganDiet"},{"@type":"MenuItem","name":"Rose Milk","image":"https://img.test/item-drinks-4/w1280.webp","offers":{"@type":"Offer","price":"70.00","priceCurrency":"INR","availability":"https://schema.org/InStock"},"suitableForDiet":"https://schema.org/VegetarianDiet"},{"@type":"MenuItem","name":"Buttermilk","image":"https://img.test/item-drinks-5/w1280.webp","offers":{"@type":"Offer","price":"40.00","priceCurrency":"INR","availability":"https://schema.org/InStock"},"suitableForDiet":"https://schema.org/VegetarianDiet"},{"@type":"MenuItem","name":"Mango Lassi","offers":{"@type":"Offer","price":"90.00","priceCurrency":"INR","availability":"https://schema.org/InStock"},"suitableForDiet":"https://schema.org/VegetarianDiet"}]}]}}</script>
 
 </head>
-<body class="layout-list card-image-left mode-light" data-slug="spice-garden" data-more="more" data-less="less" data-close="Close">
+<body class="layout-list card-image-left mode-light" data-slug="spice-garden" data-more="more" data-less="less" data-close="Close" data-sold="Currently unavailable">
 <div class="splash" aria-hidden="true"><div class="sp-card"><svg class="sp-wisps" viewBox="30 16 60 34" aria-hidden="true"><g class="sp-steam" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round">
 <path d="M44 46c-6-8 6-12 0-22"/><path d="M60 42c-6-8 6-12 0-22"/><path d="M76 46c-6-8 6-12 0-22"/></g></svg><span class="sp-plate"><img class="sp-logo" src="https://img.test/logo/w640.webp" srcset="https://img.test/logo/w320.webp 320w, https://img.test/logo/w640.webp 640w, https://img.test/logo/w1280.webp 1280w" sizes="120px" width="1200" height="900" fetchpriority="high" decoding="async" alt=""></span><p class="sp-name">Spice Garden</p><p class="sp-sub">Menu</p></div></div>
 <a class="skip" href="#menu">Skip to menu</a>
@@ -206,7 +206,7 @@ section{scroll-margin-top:16px}}</style>
 <div class="item-head"><h3 class="item-name">Chicken Biryani</h3><span class="price">₹240.00</span></div>
 <p class="item-desc">Seeraga samba rice, country chicken, and our house masala.</p>
 <div class="item-meta"><span class="badge featured">Featured</span><span class="label"><svg class="mark" viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="1" width="14" height="14" fill="#fff" stroke="#8B2E16" stroke-width="2"/><path d="M8 3.5 12.5 12h-9z" fill="#8B2E16"/></svg>Non-vegetarian</span></div>
-</div></li><li class="item sold-out has-img" data-id="biryani-2" data-d="non-vegetarian" aria-disabled="true">
+</div></li><li class="item sold-out has-img" data-id="biryani-2" data-d="non-vegetarian" data-off aria-disabled="true">
 <a class="zoom" href="https://img.test/item-biryani-2/w1280.webp" aria-label="Enlarge photo of Mutton Biryani"><img class="item-img" src="https://img.test/item-biryani-2/w640.webp" srcset="https://img.test/item-biryani-2/w320.webp 320w, https://img.test/item-biryani-2/w640.webp 640w, https://img.test/item-biryani-2/w1280.webp 1280w" sizes="56px" width="1200" height="900" loading="lazy" decoding="async" alt="" data-alt="Mutton Biryani"></a><div class="item-body">
 <div class="item-head"><h3 class="item-name">Mutton Biryani</h3><span class="price">₹320.00</span></div>
 
@@ -325,6 +325,7 @@ section{scroll-margin-top:16px}}</style>
 
 <div class="item-meta"><span class="label"><svg class="mark" viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="1" width="14" height="14" fill="#fff" stroke="#0F7B0F" stroke-width="2"/><circle cx="8" cy="8" r="4" fill="#0F7B0F"/></svg>Vegetarian</span></div>
 </div></li></ul></section>
+<p class="empty" hidden>This menu has no items yet.</p>
 </main>
 </div>
 <footer class="wrap">Powered by EazySuvai · <a href="/privacy">Privacy</a> · <a href="/terms">Terms</a></footer>
@@ -332,7 +333,7 @@ section{scroll-margin-top:16px}}</style>
 var d=document,b=d.body,ds=b.dataset,w=window;
 var f=d.getElementById("es-font");if(f){if(f.sheet)f.media="all";else f.addEventListener("load",function(){f.media="all"})}
 var src=/[?&]src=qr(&|$)/.test(location.search)?"qr":"direct";
-if(src==="qr"&&history.replaceState){history.replaceState(null,"",location.pathname+location.hash)}
+if(/[?&](src|v|r)=/.test(location.search)&&history.replaceState){history.replaceState(null,"",location.pathname+location.hash)}
 var ss=null;try{ss=w.sessionStorage}catch(e){}
 function track(t,x){var u=ds.beacon;if(!u||!navigator.sendBeacon)return;
 try{if(t==="view"&&ss){var k="es_v_"+(ds.slug||""),n=Date.now(),l=+ss.getItem(k)||0;
@@ -341,37 +342,69 @@ try{var p={type:t,slug:ds.slug||"",src:src};for(var k2 in x)p[k2]=x[k2];
 navigator.sendBeacon(u,new Blob([JSON.stringify(p)],{type:"text/plain"}))}catch(e){}}
 w.esTrack=track;
 track("view",{});
-var nav=d.querySelector(".cats"),links=nav?nav.querySelectorAll("a[href^='#']"):[];
+var links=[],io=null,fb=null,chips=[],clr,nm,st,dlg=null,more=ds.more||"more",less=ds.less||"less";
 function setActive(id){for(var i=0;i<links.length;i++){var a=links[i];
 if(a.getAttribute("href")==="#"+id){a.setAttribute("aria-current","true");
 var ul=a.parentNode.parentNode;if(ul.scrollWidth>ul.clientWidth){ul.scrollLeft=a.offsetLeft-(ul.clientWidth-a.offsetWidth)/2}}
 else a.removeAttribute("aria-current")}}
-for(var i=0;i<links.length;i++){links[i].addEventListener("click",function(){var id=this.getAttribute("href").slice(1);
-setActive(id);track("cat",{id:id.replace(/^c-/,"")})})}
-if(links.length&&"IntersectionObserver" in w){var seen={};
-var io=new IntersectionObserver(function(es){es.forEach(function(e){seen[e.target.id]=e.isIntersecting});
-var secs=d.querySelectorAll("main section[id^='c-']");for(var j=0;j<secs.length;j++){if(seen[secs[j].id]){setActive(secs[j].id);break}}},
-{rootMargin:"-80px 0px -55% 0px"});
-d.querySelectorAll("main section[id^='c-']").forEach(function(s){io.observe(s)})}
-var more=ds.more||"more",less=ds.less||"less";
-d.querySelectorAll(".item-desc").forEach(function(p){if(p.scrollHeight<=p.clientHeight+2)return;
+function mores(){d.querySelectorAll(".item-desc:not([data-m])").forEach(function(p){if(!p.offsetParent)return;p.setAttribute("data-m","");if(p.scrollHeight<=p.clientHeight+2)return;
 var btn=d.createElement("button");btn.type="button";btn.className="more";btn.textContent=more;btn.setAttribute("aria-expanded","false");
 btn.addEventListener("click",function(){var o=p.classList.toggle("open");btn.textContent=o?less:more;btn.setAttribute("aria-expanded",String(o));
 if(o){var li=p.closest(".item");if(li)track("item",{id:li.getAttribute("data-id")})}});
-var meta=p.parentNode.querySelector(".item-meta");if(meta)meta.appendChild(btn);else p.parentNode.insertBefore(btn,p.nextSibling)});
-var fb=d.querySelector(".filters");if(fb){fb.hidden=false;
-var chips=fb.querySelectorAll(".chip[data-g]"),clr=fb.querySelector(".clear"),nm=d.querySelector(".no-match"),st=d.querySelector("[data-shown]");
+var meta=p.parentNode.querySelector(".item-meta");if(meta)meta.appendChild(btn);else p.parentNode.insertBefore(btn,p.nextSibling)})}
 function picked(g){var r=[];for(var i=0;i<chips.length;i++){var c=chips[i];if(c.getAttribute("data-g")===g&&c.getAttribute("aria-pressed")==="true")r.push(c.getAttribute("data-v"))}return r}
-function apply(){var D=picked("d"),T=picked("t"),on=D.length+T.length>0,n=0,its=d.querySelectorAll("main .item");
-for(var i=0;i<its.length;i++){var it=its[i],dv=it.getAttribute("data-d")||"",tv=(it.getAttribute("data-t")||"").split(" "),ok=!D.length||D.indexOf(dv)>=0;
+function refresh(){var D=picked("d"),T=picked("t"),on=D.length+T.length>0,n=0,its=d.querySelectorAll("main .item");
+for(var i=0;i<its.length;i++){var it=its[i],dv=it.getAttribute("data-d")||"",tv=(it.getAttribute("data-t")||"").split(" "),ok=!("hideOff" in ds&&it.hasAttribute("data-off"))&&(!D.length||D.indexOf(dv)>=0);
 if(ok&&T.length){ok=false;for(var j=0;j<T.length;j++){if(tv.indexOf(T[j])>=0)ok=true}}
 it.hidden=!ok;if(ok&&it.closest("section[id^='c-']"))n++}
 var secs=d.querySelectorAll("main section");for(var k=0;k<secs.length;k++){var sc=secs[k],vis=!!sc.querySelector(".item:not([hidden])");sc.hidden=!vis;
 for(var m=0;m<links.length;m++){if(links[m].getAttribute("href")==="#"+sc.id)links[m].parentNode.hidden=!vis}}
-clr.hidden=!on;nm.hidden=!on||n>0;st.textContent=on?st.getAttribute("data-shown").replace("{count}",n):""}
-for(var q=0;q<chips.length;q++){chips[q].addEventListener("click",function(){this.setAttribute("aria-pressed",String(this.getAttribute("aria-pressed")!=="true"));apply()})}
-clr.addEventListener("click",function(){for(var i=0;i<chips.length;i++)chips[i].setAttribute("aria-pressed","false");apply();if(chips[0])chips[0].focus()})}
-var dlg=d.createElement("dialog");if(!dlg.showModal)return;
+var em=d.querySelector("main .empty");if(em)em.hidden=on||n>0;
+if(fb){clr.hidden=!on;nm.hidden=!on||n>0;st.textContent=on?st.getAttribute("data-shown").replace("{count}",n):""}
+mores()}
+function init(){var nav=d.querySelector(".cats");links=nav?nav.querySelectorAll("a[href^='#']"):[];
+for(var i=0;i<links.length;i++){links[i].addEventListener("click",function(){var id=this.getAttribute("href").slice(1);
+setActive(id);track("cat",{id:id.replace(/^c-/,"")})})}
+if(io){io.disconnect();io=null}
+if(links.length&&"IntersectionObserver" in w){var seen={};
+io=new IntersectionObserver(function(es){es.forEach(function(e){seen[e.target.id]=e.isIntersecting});
+var secs=d.querySelectorAll("main section[id^='c-']");for(var j=0;j<secs.length;j++){if(seen[secs[j].id]){setActive(secs[j].id);break}}},
+{rootMargin:"-80px 0px -55% 0px"});
+d.querySelectorAll("main section[id^='c-']").forEach(function(s){io.observe(s)})}
+fb=d.querySelector(".filters");chips=[];if(fb){fb.hidden=false;
+chips=fb.querySelectorAll(".chip[data-g]");clr=fb.querySelector(".clear");nm=d.querySelector(".no-match");st=d.querySelector("[data-shown]");
+for(var q=0;q<chips.length;q++){chips[q].addEventListener("click",function(){this.setAttribute("aria-pressed",String(this.getAttribute("aria-pressed")!=="true"));refresh()})}
+clr.addEventListener("click",function(){for(var i=0;i<chips.length;i++)chips[i].setAttribute("aria-pressed","false");refresh();if(chips[0])chips[0].focus()})}
+refresh()}
+init();
+var V=+ds.v||0,busy=0,tm=0,t0=Date.now(),last=t0,over=0;
+function mins(k,x){return(+ds[k]||x)*6e4}
+function off(it,o){it.classList.toggle("sold-out",o);var bd=it.querySelector(".badge.sold"),mt=it.querySelector(".item-meta");
+if(o){it.setAttribute("data-off","");it.setAttribute("aria-disabled","true");if(!bd){bd=d.createElement("span");bd.className="badge sold";bd.textContent=ds.sold||"";
+if(!mt){mt=d.createElement("div");mt.className="item-meta";it.querySelector(".item-body").appendChild(mt)}mt.insertBefore(bd,mt.firstChild)}}
+else{it.removeAttribute("data-off");it.removeAttribute("aria-disabled");if(bd)bd.parentNode.removeChild(bd)}}
+function avail(a){if(!a)return;var its=d.querySelectorAll("main .item"),ch=0;
+for(var i=0;i<its.length;i++){var it=its[i],v=a[it.getAttribute("data-id")];if(typeof v!=="boolean"||it.hasAttribute("data-off")!==v)continue;
+ch=1;off(it,!v)}
+if(ch)refresh()}
+function swap(v,a){busy=1;fetch(location.pathname+"?v="+v,{credentials:"omit"}).then(function(r){return r.ok?r.text():""}).then(function(t){busy=0;
+var n=t?new DOMParser().parseFromString(t,"text/html"):null,nb=n&&n.body;if(!nb||!nb.querySelector("main"))return;
+var os=d.querySelector("head style"),ns=n.querySelector("head style");if(os&&ns)os.textContent=ns.textContent;d.title=n.title;
+nb.querySelectorAll("script,.splash").forEach(function(e){e.parentNode.removeChild(e)});
+for(var i=0;i<nb.attributes.length;i++)b.setAttribute(nb.attributes[i].name,nb.attributes[i].value);
+var y=w.scrollY;if(dlg&&dlg.open)dlg.close();b.innerHTML=nb.innerHTML;if(dlg)b.appendChild(dlg);
+V=+ds.v||v;init();avail(a);w.scrollTo(0,y)}).catch(function(){busy=0})}
+function poll(){var n=Date.now();if(n-t0>mins("max",120))over=1;
+if(over||n-last>mins("idle",30)){clearInterval(tm);tm=0;return}
+if(busy||d.hidden||!ds.live||!w.fetch)return;busy=1;
+fetch(ds.live,{credentials:"omit"}).then(function(r){return r.ok?r.json():null}).then(function(j){busy=0;if(!j||!("v" in j))return;
+if(j.v===null){clearInterval(tm);location.replace(location.pathname+"?r="+Date.now());return}
+if(j.v>V)swap(j.v,j.a);else avail(j.a)}).catch(function(){busy=0})}
+function sched(){clearInterval(tm);tm=0;if(!over&&!d.hidden&&ds.live){last=Date.now();tm=setInterval(poll,1e4);poll()}}
+function act(){last=Date.now();if(!tm&&!over&&!d.hidden)sched()}
+["scroll","touchstart","click","keydown"].forEach(function(t){w.addEventListener(t,act,{passive:true})});
+d.addEventListener("visibilitychange",sched);w.addEventListener("pageshow",function(e){if(e.persisted)sched()});w.addEventListener("online",poll);sched();
+dlg=d.createElement("dialog");if(!dlg.showModal){dlg=null;return}
 dlg.className="lb";dlg.innerHTML='<button type="button" class="lb-close"><span aria-hidden="true">\\u00d7</span></button><img alt="">';
 var x=dlg.firstChild,img=dlg.lastChild;x.setAttribute("aria-label",ds.close||"Close");b.appendChild(dlg);
 function shut(){img.style.transform="";if(dlg.open)dlg.close()}

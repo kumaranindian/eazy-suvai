@@ -37,6 +37,7 @@ Version 1.1 closes 18 gaps in v1.0. It defines the suspension and expiry policie
 | C-16 | Retention and deletion periods were not specified | Periods defined for each data type | BR-013, §7.7 |
 | C-17 | How paid plans are paid for in the MVP was unclear | Paid plans are activated manually after offline payment; online billing in Phase 4 | FR-083 |
 | C-18 | "Empty menu" was not defined | At least one active category with at least one item | BR-003 |
+| C-19 | Some restaurants do not want customers to see items they cannot order, and an open menu only changed after a reload | Unavailable items are shown dimmed by default; the owner can choose to hide them instead. An open menu page picks up each publish and availability change by itself, without a reload (2026-11-20, owner request) | FR-013, FR-026, FR-043, FR-044, BR-009, §3.4, §5.4 |
 
 The decisions behind C-01 to C-18 are defaults chosen for this draft. The appendix lists them for confirmation.
 
@@ -185,7 +186,7 @@ In Phase 2, staff will be able to view the dashboard and update availability. Th
 
 ### 3.4 Customer / menu visitor
 
-Customers never register or log in to view a menu. They can scan the QR code, browse categories, view images, descriptions, prices and dietary labels, see unavailable items, and share the menu URL. Customer accounts arrive only if ordering requires them (Phase 3).
+Customers never register or log in to view a menu. They can scan the QR code, browse categories, view images, descriptions, prices and dietary labels, see unavailable items (unless the restaurant hides them, FR-043), and share the menu URL. Customer accounts arrive only if ordering requires them (Phase 3).
 
 ### 3.5 Permission summary **\[v1.1\]**
 
@@ -314,7 +315,7 @@ Requirements use "must" for MVP-mandatory behaviour and "should" for behaviour t
 
 **FR-025:** Owners must be able to mark items available or unavailable. This takes effect live (FR-095).
 
-**FR-026:** Unavailable items must be visually distinguishable on the public menu.
+**FR-026:** Unavailable items must be visually distinguishable on the public menu, or hidden if the owner chooses (FR-043).
 
 **FR-027:** Owners must be able to mark items as featured.
 
@@ -363,9 +364,9 @@ The public menu is the primary customer-facing feature. URLs in this section use
 
 **FR-042:** Featured items must be visually highlighted.
 
-**FR-043:** Unavailable items must remain listed but be dimmed and labelled "Currently unavailable".
+**FR-043:** Unavailable items must remain listed but be dimmed and labelled "Currently unavailable". **[2026-11-20]** The owner can turn this off in the profile's "Show on your menu" switches ("Unavailable items"); then unavailable items are hidden, and so is a category whose items are all unavailable, with its link. The setting is part of the draft: it shows in the preview at once and on the public menu after a publish. Either way, an item that becomes available again shows normally without a publish (FR-095).
 
-**FR-044:** The public menu must reflect each publish and each availability change within 60 seconds.
+**FR-044:** The public menu must reflect each publish and each availability change within 60 seconds for a new visit. A menu page that is already open must update by itself, without a reload, within about 20 seconds while it is in view.
 
 **FR-045:** The menu must expose only the published menu version and the profile fields marked public, never draft or administration data.
 
@@ -573,7 +574,7 @@ No app installation or registration is needed.
 
 1. The owner opens the item list on their phone.
 2. Switches the item to unavailable.
-3. The public menu shows it as unavailable within 60 seconds. No publish is needed.
+3. The public menu shows it as unavailable (or hides it, if the owner chose that, FR-043) within about 20 seconds, including on phones that already have the menu open. No publish is needed.
 
 ### 5.5 Paid plan upgrade (MVP) **\[v1.1\]**
 
@@ -753,7 +754,7 @@ These periods need legal review against India's Digital Personal Data Protection
 | BR-006 **\[v1.1\]** | A restaurant's QR short code never changes, even if the content or slug changes, and is never reused. |
 | BR-007 **\[v1.1\]** | Only restaurants with status Active and at least one published version serve a live menu. All other states follow FR-099. |
 | BR-008 | Inactive categories, hidden over-limit content and draft content never appear publicly. |
-| BR-009 | Unavailable items are distinguishable from available items. |
+| BR-009 | Unavailable items are distinguishable from available items, or hidden when the owner chooses (FR-043). |
 | BR-010 | Prices are shown in the restaurant's configured currency. |
 | BR-011 **\[v1.1\]** | Plan limits are enforced by backend services, on create and on publish. Over-limit handling follows FR-101. |
 | BR-012 | One restaurant's theme never affects another tenant. |
