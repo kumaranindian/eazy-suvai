@@ -1,6 +1,6 @@
 # EazySuvai MVP – Master plan
 
-The MVP is built in 14 modules, M00 to M13, in the order below. Each module has its own plan file in this folder and an implementation prompt in `docs/prompts/module-prompts.md`.
+The MVP is built in 14 modules, M00 to M13, in the order below. M14 (business types and tags) was added after launch preparation. Each module has its own plan file in this folder and an implementation prompt in `docs/prompts/module-prompts.md`.
 
 **Update rule:** when a module changes status, update its row here and its own plan file in the same commit (see `AGENTS.md`, "Updating the plan when a module is done").
 
@@ -24,6 +24,7 @@ Status values: `Not started` · `In progress` · `Blocked` · `Done`
 | M11 | Platform administration | `M11-platform-admin.md` | M01, M03 | Done | 2026-11-15 | 2026-11-15 | Admin callables (status with reasons, revocation and `accountStatus`; search, detail, plans, labels, tags, themes, config, announcement, admin roles), `stats/platform` trigger + recompute, indexes; admin app dashboard, restaurants, detail, editors, settings (read-only < 600 px); owner announcement and blocked notice. Open: Identity Platform TOTP, deploy indexes. |
 | M12 | Audit, account lifecycle and data retention | `M12-lifecycle.md` | M10, M11 | Done | 2026-11-15 | 2026-11-15 | `exportMenu` (JSON/CSV), `requestAccountDeletion`, `purgeDaily` (soft-deleted 30 d, tenant purge 90 d with tombstone, payments archived 8 y, slugs held 12 m, audit anonymised, orphan images), TTL on audit logs, admin Audit log viewer, owner Account page and delete flow; audit coverage listed. Open: legal review, TTL/scheduler on real projects. |
 | M13 | Hardening, acceptance and launch | `M13-launch.md` | All | Done (pre-launch) | 2026-11-15 | 2026-11-15 | AC-001..030 pass (AC-009/010/014 also need devices); e2e journey + callable security sweep; owner/admin route sweeps (widths, 200 % text, RTL, a11y); App Check, Crashlytics; Lighthouse 3 menus, load test, 5–10× faster render; ops scripts for backups, restore test, monitoring, auth; legal pages; FRD §13 metrics. Open: real-project steps in `docs/launch/runbook.md`, legal review, stores. |
+| M14 | Business types, capabilities and dynamic tags | `M14-business-types-and-tags.md` | M03, M04, M06, M07, M10, M11 | In progress | 2026-11-25 | – | Approved 2026-11-25. Done: pure `computeMenuConfig` + seed (14 types, 5 capabilities, 8 tag groups) + 45 tests; plan flags `customTags`/`maxCustomTags`. Next: callables wired + emulator tests, rules, snapshot v2, owner/admin UI, migration. |
 
 M10 and M11 can be built in parallel once M04 is done; M10 needs M11's plan-editing screen only for its admin activation screen.
 
@@ -371,6 +372,7 @@ Add a dated line whenever a module changes something another module depends on.
 
 - 2026-11-15 (M11 portal layout): **`ResponsiveScaffold` (core) gains optional `leading` (app-bar leading widget, for a back button on detail routes inside a shell) and `footer` (pinned under the content on medium and expanded windows, `ResponsiveScaffold.footerKey`; not shown on compact).** Both default to null, so the owner app is unchanged. The admin app uses both; its detail routes stay inside the shell.
 - 2026-11-16 (portal header): **On expanded windows (≥ 1024 px) `ResponsiveScaffold` (core) draws a full-width portal header (`headerKey`, 64 px).** Its start segment (`headerBrandKey`) is as wide as the side menu and holds `sideMenuHeader` (the logo), so the logo no longer sits inside the side menu; the page title, back button and actions sit over the content. Applies to both the owner and admin apps. When `showAppBar` is false (owner detail pages with their own app bar), the header still shows the brand segment.
+- 2026-11-25 (M14): **Plan flags:** `plans/{id}.limits` and `restaurants/{rid}.planFeatures` gain `customTags` (bool) and `maxCustomTags` (int); Free false/0, Pro true/20 (`SEED_PLANS`, `DEFAULT_PLAN_FEATURES`). Existing restaurants get them from `scripts/backfill-plan-features.mjs`; until then a missing flag means off. `upsertPlan` accepts both as optional.
 
 ## Open decisions
 

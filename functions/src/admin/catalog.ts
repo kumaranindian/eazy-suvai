@@ -53,6 +53,9 @@ export const upsertPlanSchema = z
         analyticsDays: z.number().int().min(1).max(3660),
         qrLogo: z.boolean(),
         removeBranding: z.boolean(),
+        // M14 (D8). Optional so older admin app builds keep working.
+        customTags: z.boolean().default(false),
+        maxCustomTags: z.number().int().min(0).max(200).default(0),
       })
       .strict(),
     /** FR-077: copy the new flags to the plan's current subscribers now. */

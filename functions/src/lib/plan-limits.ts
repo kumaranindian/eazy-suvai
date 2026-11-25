@@ -96,6 +96,10 @@ export interface PlanFeatures extends PlanLimits {
   qrLogo: boolean;
   /** Hide "Powered by EazySuvai" on the public menu. */
   removeBranding: boolean;
+  /** Restaurant-defined tags allowed (M14, D8). */
+  customTags: boolean;
+  /** Most restaurant-defined tags (M14). */
+  maxCustomTags: number;
 }
 
 /** FRD §4.11 MVP plans. Categories "unlimited" is stored as 10000 in the seed. */
@@ -108,6 +112,8 @@ export const DEFAULT_PLAN_FEATURES: Readonly<Record<string, PlanFeatures>> = {
     analyticsDays: 7,
     qrLogo: false,
     removeBranding: false,
+    customTags: false,
+    maxCustomTags: 0,
   },
   pro: {
     ...DEFAULT_PLAN_LIMITS.pro,
@@ -117,6 +123,8 @@ export const DEFAULT_PLAN_FEATURES: Readonly<Record<string, PlanFeatures>> = {
     analyticsDays: 365,
     qrLogo: true,
     removeBranding: true,
+    customTags: true,
+    maxCustomTags: 20,
   },
 };
 
@@ -146,6 +154,8 @@ export function planFeaturesFrom(planId: string, data: Record<string, unknown> |
     analyticsDays: intOf(l.analyticsDays, fallback.analyticsDays, 1, 3660),
     qrLogo: boolOf(l.qrLogo, fallback.qrLogo),
     removeBranding: boolOf(l.removeBranding, fallback.removeBranding),
+    customTags: boolOf(l.customTags, fallback.customTags),
+    maxCustomTags: intOf(l.maxCustomTags, fallback.maxCustomTags, 0, 200),
   };
 }
 
@@ -167,5 +177,7 @@ export function restaurantPlanFeatures(f: PlanFeatures): Record<string, unknown>
     analyticsDays: f.analyticsDays,
     qrLogo: f.qrLogo,
     removeBranding: f.removeBranding,
+    customTags: f.customTags,
+    maxCustomTags: f.maxCustomTags,
   };
 }

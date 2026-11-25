@@ -23,7 +23,7 @@ describe("plans (FR-078)", () => {
   it("seeds Free and Pro as the FRD table says", () => {
     const [free, proPlan] = SEED_PLANS;
     expect(planFeaturesFrom("free", free)).toEqual({
-      maxItems: 50, maxCategories: 10, maxBranches: 1, premiumThemes: false, defaultThemeId: "saffron", analyticsDays: 7, qrLogo: false, removeBranding: false,
+      maxItems: 50, maxCategories: 10, maxBranches: 1, premiumThemes: false, defaultThemeId: "saffron", analyticsDays: 7, qrLogo: false, removeBranding: false, customTags: false, maxCustomTags: 0,
     });
     expect(planFeaturesFrom("pro", proPlan)).toMatchObject({ maxItems: 500, maxCategories: 10000, premiumThemes: true, analyticsDays: 365, qrLogo: true });
   });
@@ -45,7 +45,7 @@ describe("plans (FR-078)", () => {
     expect(planFeaturesFrom("pro", undefined)).toEqual(DEFAULT_PLAN_FEATURES.pro);
     expect(planFeaturesFrom("free", { limits: { analyticsDays: -3, qrLogo: "yes", defaultThemeId: "../x" } })).toEqual(DEFAULT_PLAN_FEATURES.free);
     expect(restaurantPlanFeatures(DEFAULT_PLAN_FEATURES.free)).toEqual({
-      maxItems: 50, maxCategories: 10, premiumThemes: false, analyticsDays: 7, qrLogo: false, removeBranding: false,
+      maxItems: 50, maxCategories: 10, premiumThemes: false, analyticsDays: 7, qrLogo: false, removeBranding: false, customTags: false, maxCustomTags: 0,
     });
   });
 });

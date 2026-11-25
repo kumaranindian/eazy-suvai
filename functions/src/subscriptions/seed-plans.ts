@@ -38,6 +38,8 @@ export const SEED_PLANS = [
       analyticsDays: 7,
       qrLogo: false,
       removeBranding: false,
+      customTags: false,
+      maxCustomTags: 0,
     },
   },
   {
@@ -58,6 +60,8 @@ export const SEED_PLANS = [
       analyticsDays: 365,
       qrLogo: true,
       removeBranding: true,
+      customTags: true,
+      maxCustomTags: 20,
     },
   },
 ] as const;
