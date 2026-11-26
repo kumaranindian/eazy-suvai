@@ -1822,6 +1822,12 @@ abstract class AppLocalizations {
   /// **'Your changes to this item will be lost.'**
   String get menuDiscardMessage;
 
+  /// Discard-changes dialog: stay in the editor.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep editing'**
+  String get menuKeepEditing;
+
   /// Editor: the item was deleted or moved.
   ///
   /// In en, this message translates to:

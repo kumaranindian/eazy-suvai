@@ -1384,6 +1384,10 @@
   "@menuDiscardMessage": {
     "description": "Dialog: leave the editor with unsaved edits."
   },
+  "menuKeepEditing": "Keep editing",
+  "@menuKeepEditing": {
+    "description": "Discard-changes dialog: stay in the editor."
+  },
   "menuItemGoneTitle": "Item not found",
   "@menuItemGoneTitle": {
     "description": "Editor: the item was deleted or moved."

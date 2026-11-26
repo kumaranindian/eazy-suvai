@@ -527,7 +527,12 @@ class _ItemEditorState extends ConsumerState<ItemEditor> {
                       key: ItemEditorKeys.close,
                       onPressed: _saving
                           ? null
-                          : () {
+                          : () async {
+                              // Ask first when there are unsaved edits.
+                              if (!await confirmDiscardEdits(context, ref) ||
+                                  !mounted) {
+                                return;
+                              }
                               ref.read(editorDirtyProvider.notifier).set(false);
                               widget.onDone();
                             },
@@ -563,6 +568,7 @@ Future<bool> confirmDiscardEdits(BuildContext context, WidgetRef ref) async {
     title: l10n.menuDiscardTitle,
     message: l10n.menuDiscardMessage,
     confirmLabel: l10n.actionDiscard,
+    cancelLabel: l10n.menuKeepEditing,
     destructive: true,
   );
   if (ok) ref.read(editorDirtyProvider.notifier).set(false);

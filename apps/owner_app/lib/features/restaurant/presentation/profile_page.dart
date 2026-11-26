@@ -163,9 +163,11 @@ class _ProfileEditorState extends ConsumerState<_ProfileEditor> {
                     leading: Icon(s.icon),
                     title: Text(s.title),
                     subtitle: s.subtitle == null ? null : Text(s.subtitle!),
+                    // Top gap so the first field's floating label is not
+                    // tucked under the header.
                     childrenPadding: const EdgeInsetsDirectional.fromSTEB(
                       16,
-                      0,
+                      12,
                       16,
                       16,
                     ),

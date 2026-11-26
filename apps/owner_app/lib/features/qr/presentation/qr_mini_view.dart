@@ -23,10 +23,13 @@ class QrMiniView extends StatelessWidget {
     return Semantics(
       image: true,
       label: semanticLabel,
+      // Always a square, even under a stretching parent (tight constraints
+      // would otherwise widen the box while the painter scaled by width).
       child: Container(
         width: size,
         height: size,
         padding: EdgeInsetsDirectional.all(size / 16),
+        clipBehavior: Clip.antiAlias,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(8),
@@ -46,7 +49,10 @@ class _QrPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final n = image.moduleCount;
-    final m = size.width / n;
+    final side = size.shortestSide;
+    final m = side / n;
+    // Centre the square in whatever box we were given.
+    canvas.translate((size.width - side) / 2, (size.height - side) / 2);
     final paint = Paint()..color = Colors.black;
     for (var r = 0; r < n; r++) {
       for (var c = 0; c < n; c++) {

@@ -343,14 +343,15 @@ class _QrSharePageState extends ConsumerState<QrSharePage> {
                 ref.read(qrTemplateChoiceProvider.notifier).set(s.first),
           ),
           const SizedBox(height: 12),
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            children: [
-              AppSecondaryButton(
+          // Preview and Download PDF match the full-width PNG button: equal
+          // halves of one row, stacked full width on narrow phones.
+          LayoutBuilder(
+            builder: (context, constraints) {
+              final previewButton = AppSecondaryButton(
                 key: QrKeys.previewPdf,
                 label: l10n.qrPreviewPdf,
                 icon: Icons.visibility_outlined,
+                expand: true,
                 onPressed: ready == null
                     ? null
                     : () => showQrPdfPreview(
@@ -364,11 +365,12 @@ class _QrSharePageState extends ConsumerState<QrSharePage> {
                           (v) => _savingPdf = v,
                         ),
                       ),
-              ),
-              AppPrimaryButton(
+              );
+              final pdfButton = AppPrimaryButton(
                 key: QrKeys.downloadPdf,
                 label: l10n.qrDownloadPdf,
                 icon: Icons.picture_as_pdf_outlined,
+                expand: true,
                 loading: _savingPdf,
                 onPressed: ready == null
                     ? null
@@ -378,8 +380,25 @@ class _QrSharePageState extends ConsumerState<QrSharePage> {
                         'application/pdf',
                         (v) => _savingPdf = v,
                       ),
-              ),
-            ],
+              );
+              if (constraints.maxWidth < 400) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    previewButton,
+                    const SizedBox(height: 8),
+                    pdfButton,
+                  ],
+                );
+              }
+              return Row(
+                children: [
+                  Expanded(child: previewButton),
+                  const SizedBox(width: 8),
+                  Expanded(child: pdfButton),
+                ],
+              );
+            },
           ),
         ],
       ),

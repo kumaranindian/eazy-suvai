@@ -91,12 +91,20 @@ class _QrPdfPreview extends ConsumerWidget {
         actions: [
           Padding(
             padding: const EdgeInsetsDirectional.only(end: 8),
-            child: TextButton.icon(
-              key: QrPdfPreviewKeys.download,
-              onPressed: pdf.hasValue ? onDownload : null,
-              icon: const Icon(Icons.download),
-              label: Text(l10n.qrDownloadPdf),
-            ),
+            // On phones an icon button leaves the title room to show.
+            child: Breakpoint.of(context).isCompact
+                ? IconButton(
+                    key: QrPdfPreviewKeys.download,
+                    onPressed: pdf.hasValue ? onDownload : null,
+                    icon: const Icon(Icons.download),
+                    tooltip: l10n.qrDownloadPdf,
+                  )
+                : TextButton.icon(
+                    key: QrPdfPreviewKeys.download,
+                    onPressed: pdf.hasValue ? onDownload : null,
+                    icon: const Icon(Icons.download),
+                    label: Text(l10n.qrDownloadPdf),
+                  ),
           ),
         ],
       ),

@@ -7,10 +7,13 @@
  * What it adds:
  * - Turns on the theme font stylesheet once loaded (it never blocks the
  *   first paint).
- * - Category bar: highlights the category in view (IntersectionObserver)
- *   and keeps the active pill visible (FR-039, FR-040). The zone starts
- *   8 px below the bar (sections scroll to 72 px), so the previous section
- *   ending at the bar never counts as the one in view.
+ * - Category bar: highlights the category at the top of the screen and
+ *   keeps the active pill visible (FR-039, FR-040). Active is the last
+ *   visible section whose heading is at or above the bar's bottom (or the
+ *   sections' scroll margin) + 8 px; the last one at the end of the page;
+ *   the first one above the categories. Runs on scroll (one per animation
+ *   frame), resize and filter changes. After a tap the tapped pill stays
+ *   active until the smooth scroll settles.
  * - Lightbox: a `<dialog>` with a close button, Escape, backdrop tap and
  *   swipe down (FR-041).
  * - "more" / "less" for descriptions longer than one line, placed at the
@@ -55,18 +58,22 @@ if(src==="qr"&&history.replaceState){history.replaceState(null,"",location.pathn
 ${BEACON_SCRIPT}
 w.esTrack=track;
 track("view",{});
-var nav=d.querySelector(".cats"),links=nav?nav.querySelectorAll("a[href^='#']"):[];
-function setActive(id){for(var i=0;i<links.length;i++){var a=links[i];
+var nav=d.querySelector(".cats"),links=nav?nav.querySelectorAll("a[href^='#']"):[],cur=null,lock=null,lt=0,tick=0;
+function setActive(id){if(id===cur)return;cur=id;for(var i=0;i<links.length;i++){var a=links[i];
 if(a.getAttribute("href")==="#"+id){a.setAttribute("aria-current","true");
 var ul=a.parentNode.parentNode;if(ul.scrollWidth>ul.clientWidth){ul.scrollLeft=a.offsetLeft-(ul.clientWidth-a.offsetWidth)/2}}
 else a.removeAttribute("aria-current")}}
+function spy(){tick=0;if(lock||!links.length)return;var secs=d.querySelectorAll("main section[id^='c-']:not([hidden])");if(!secs.length)return;
+var lim=parseFloat(getComputedStyle(secs[0]).scrollMarginTop)||0;
+if(getComputedStyle(nav.querySelector("ul")).flexDirection!=="column")lim=Math.max(lim,nav.getBoundingClientRect().bottom);
+lim+=8;var id=secs[0].id;
+if(w.scrollY>0&&w.innerHeight+w.scrollY>=d.documentElement.scrollHeight-2)id=secs[secs.length-1].id;
+else for(var j=0;j<secs.length;j++){if(secs[j].getBoundingClientRect().top<=lim)id=secs[j].id;else break}
+setActive(id)}
+function onScroll(){if(lock){clearTimeout(lt);lt=setTimeout(function(){lock=null},150);return}if(!tick)tick=w.requestAnimationFrame(spy)}
 for(var i=0;i<links.length;i++){links[i].addEventListener("click",function(){var id=this.getAttribute("href").slice(1);
-setActive(id);track("cat",{id:id.replace(/^c-/,"")})})}
-if(links.length&&"IntersectionObserver" in w){var seen={};
-var io=new IntersectionObserver(function(es){es.forEach(function(e){seen[e.target.id]=e.isIntersecting});
-var secs=d.querySelectorAll("main section[id^='c-']");for(var j=0;j<secs.length;j++){if(seen[secs[j].id]){setActive(secs[j].id);break}}},
-{rootMargin:"-80px 0px -55% 0px"});
-d.querySelectorAll("main section[id^='c-']").forEach(function(s){io.observe(s)})}
+lock=id;setActive(id);clearTimeout(lt);lt=setTimeout(function(){lock=null},600);track("cat",{id:id.replace(/^c-/,"")})})}
+if(links.length){w.addEventListener("scroll",onScroll,{passive:true});w.addEventListener("resize",onScroll);spy()}
 var more=ds.more||"more",less=ds.less||"less";
 d.querySelectorAll(".item-desc").forEach(function(p){if(p.scrollHeight<=p.clientHeight+2)return;
 var btn=d.createElement("button");btn.type="button";btn.className="more";btn.textContent=more;btn.setAttribute("aria-expanded","false");
@@ -82,7 +89,7 @@ if(ok&&T.length){ok=false;for(var j=0;j<T.length;j++){if(tv.indexOf(T[j])>=0)ok=
 it.hidden=!ok;if(ok&&it.closest("section[id^='c-']"))n++}
 var secs=d.querySelectorAll("main section");for(var k=0;k<secs.length;k++){var sc=secs[k],vis=!!sc.querySelector(".item:not([hidden])");sc.hidden=!vis;
 for(var m=0;m<links.length;m++){if(links[m].getAttribute("href")==="#"+sc.id)links[m].parentNode.hidden=!vis}}
-clr.hidden=!on;nm.hidden=!on||n>0;st.textContent=on?st.getAttribute("data-shown").replace("{count}",n):""}
+clr.hidden=!on;nm.hidden=!on||n>0;st.textContent=on?st.getAttribute("data-shown").replace("{count}",n):"";spy()}
 for(var q=0;q<chips.length;q++){chips[q].addEventListener("click",function(){this.setAttribute("aria-pressed",String(this.getAttribute("aria-pressed")!=="true"));apply()})}
 clr.addEventListener("click",function(){for(var i=0;i<chips.length;i++)chips[i].setAttribute("aria-pressed","false");apply();if(chips[0])chips[0].focus()})}
 var dlg=d.createElement("dialog");if(!dlg.showModal)return;

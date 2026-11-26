@@ -246,6 +246,7 @@ const CSS = `${BASE_CSS}
 .no-cover .hero-band{position:static;background:none;padding:20px 0}
 .no-cover h1{color:var(--es-on-primary);text-shadow:none}
 .logo{width:64px;height:64px;border-radius:14px;object-fit:cover;background:var(--es-surface);border:2px solid #fff;flex:none}
+@media (max-width:480px){.hero .cover{height:auto;max-height:260px;object-position:center}.hero-band{position:static;background:none;padding:12px 0}}
 .page{padding-bottom:8px}
 .cats{position:sticky;top:0;z-index:5;background:var(--es-background);border-bottom:1px solid var(--es-border);margin-inline:-16px;padding-inline:16px}
 .cats ul{position:relative;display:flex;gap:8px;list-style:none;margin:0;padding:10px 0;overflow-x:auto;scrollbar-width:none}

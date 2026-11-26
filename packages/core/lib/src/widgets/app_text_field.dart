@@ -72,6 +72,8 @@ class AppTextField extends StatelessWidget {
     decoration: InputDecoration(
       labelText: label,
       helperText: helperText,
+      // Long helpers wrap instead of being cut off by the counter.
+      helperMaxLines: 2,
       hintText: hintText,
       prefixIcon: prefixIcon == null ? null : Icon(prefixIcon),
       suffixIcon: suffix,

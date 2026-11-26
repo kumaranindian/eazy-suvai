@@ -372,13 +372,18 @@ class _QrCard extends StatelessWidget {
         Text(l10n.qrCode(restaurant.qrCode), style: theme.textTheme.bodySmall),
         const SizedBox(height: 12),
         // A live preview of the permanent /q/ code (M08); tap for downloads.
-        InkWell(
-          key: const ValueKey('dashboard.qrPreview'),
-          borderRadius: BorderRadius.circular(8),
-          onTap: () => context.go(Routes.share),
-          child: QrMiniView(
-            data: qrUrlFor(restaurant.qrCode),
-            semanticLabel: l10n.qrImageLabel(qrUrlFor(restaurant.qrCode)),
+        // Centre keeps the card's stretch constraints off the QR so it
+        // stays square (it used to be widened and spill below the card).
+        Center(
+          child: InkWell(
+            key: const ValueKey('dashboard.qrPreview'),
+            borderRadius: BorderRadius.circular(8),
+            onTap: () => context.go(Routes.share),
+            child: QrMiniView(
+              data: qrUrlFor(restaurant.qrCode),
+              size: 160,
+              semanticLabel: l10n.qrImageLabel(qrUrlFor(restaurant.qrCode)),
+            ),
           ),
         ),
         const SizedBox(height: 12),

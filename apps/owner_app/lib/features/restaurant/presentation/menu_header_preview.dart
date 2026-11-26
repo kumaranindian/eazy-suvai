@@ -91,22 +91,24 @@ class MenuHeaderPreview extends StatelessWidget {
                   PositionedDirectional(
                     start: 16,
                     top: 72,
+                    // A ring around a ClipOval: the logo is clipped to the
+                    // circle itself, with no filled box behind it.
                     child: Container(
                       width: 88,
                       height: 88,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: theme.colorScheme.surface,
                         border: Border.all(
                           color: theme.colorScheme.surface,
                           width: 4,
                         ),
                       ),
-                      clipBehavior: Clip.antiAlias,
-                      child: ResponsiveImage(
-                        image: r.logo,
-                        semanticLabel: l10n.fieldLogo,
-                        placeholderIcon: Icons.storefront_outlined,
+                      child: ClipOval(
+                        child: ResponsiveImage(
+                          image: r.logo,
+                          semanticLabel: l10n.fieldLogo,
+                          placeholderIcon: Icons.storefront_outlined,
+                        ),
                       ),
                     ),
                   ),

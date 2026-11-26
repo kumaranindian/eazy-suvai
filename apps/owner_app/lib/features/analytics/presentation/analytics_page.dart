@@ -308,6 +308,7 @@ class _AnalyticsPageState extends ConsumerState<AnalyticsPage> {
         const SizedBox(height: 16),
         Card(
           key: AnalyticsKeys.months,
+          margin: EdgeInsets.zero,
           child: Padding(
             padding: const EdgeInsetsDirectional.all(16),
             child: Column(
@@ -390,9 +391,15 @@ class _ChartCard extends StatelessWidget {
         ? BrandColors.greenOnDark
         : BrandColors.greenText;
     final points = summary.series;
-    final maxY = math
-        .max(4, points.fold<int>(0, (m, p) => math.max(m, p.views)))
-        .toDouble();
+    final peak = math.max(
+      4,
+      points.fold<int>(0, (m, p) => math.max(m, math.max(p.views, p.qrVisits))),
+    );
+    // Counts: whole-number grid lines and a "nice" top (8 views -> 10,
+    // not 9.2), with ~15% headroom above the peak.
+    final yInterval = _niceStep((peak * 1.15).ceil() / 4);
+    final maxY = ((peak * 1.15) / yInterval).ceil() * yInterval;
+    final count = NumberFormat.decimalPattern(locale);
     final short = DateFormat.MMMd(locale);
     final step = math.max(1, (points.length / 6).ceil());
     LineChartBarData line(List<FlSpot> spots, Color color) => LineChartBarData(
@@ -404,6 +411,7 @@ class _ChartCard extends StatelessWidget {
     );
     return Card(
       key: AnalyticsKeys.chart,
+      margin: EdgeInsets.zero,
       child: Padding(
         padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 8),
         child: Column(
@@ -432,17 +440,33 @@ class _ChartCard extends StatelessWidget {
                 child: LineChart(
                   LineChartData(
                     minY: 0,
-                    maxY: maxY * 1.15,
-                    gridData: const FlGridData(drawVerticalLine: false),
+                    maxY: maxY.toDouble(),
+                    gridData: FlGridData(
+                      drawVerticalLine: false,
+                      horizontalInterval: yInterval.toDouble(),
+                    ),
                     borderData: FlBorderData(show: false),
                     lineTouchData: const LineTouchData(enabled: true),
                     titlesData: FlTitlesData(
                       topTitles: const AxisTitles(),
                       rightTitles: const AxisTitles(),
-                      leftTitles: const AxisTitles(
+                      leftTitles: AxisTitles(
                         sideTitles: SideTitles(
                           showTitles: true,
                           reservedSize: 36,
+                          interval: yInterval.toDouble(),
+                          getTitlesWidget: (value, meta) {
+                            if (value != value.roundToDouble()) {
+                              return const SizedBox.shrink();
+                            }
+                            return SideTitleWidget(
+                              meta: meta,
+                              child: Text(
+                                count.format(value.round()),
+                                style: theme.textTheme.bodySmall,
+                              ),
+                            );
+                          },
                         ),
                       ),
                       bottomTitles: AxisTitles(
@@ -558,6 +582,7 @@ class _UpgradeCard extends StatelessWidget {
     final theme = Theme.of(context);
     return Card(
       key: AnalyticsKeys.upgrade,
+      margin: EdgeInsets.zero,
       color: theme.colorScheme.secondaryContainer,
       child: Padding(
         padding: const EdgeInsetsDirectional.all(16),
@@ -598,6 +623,7 @@ class _Notice extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Card(
+      margin: EdgeInsets.zero,
       color: theme.colorScheme.surfaceContainerHighest,
       child: Padding(
         padding: const EdgeInsetsDirectional.all(12),
@@ -610,5 +636,17 @@ class _Notice extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+/// The smallest of 1, 2, 5, 10, 20, 50, ... that is at least [raw]: a
+/// whole-number axis step for count data.
+int _niceStep(double raw) {
+  var magnitude = 1;
+  while (true) {
+    for (final m in const [1, 2, 5]) {
+      if (m * magnitude >= raw) return m * magnitude;
+    }
+    magnitude *= 10;
   }
 }

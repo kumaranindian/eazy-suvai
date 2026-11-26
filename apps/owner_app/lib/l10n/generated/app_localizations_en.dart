@@ -1055,6 +1055,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get menuDiscardMessage => 'Your changes to this item will be lost.';
 
   @override
+  String get menuKeepEditing => 'Keep editing';
+
+  @override
   String get menuItemGoneTitle => 'Item not found';
 
   @override

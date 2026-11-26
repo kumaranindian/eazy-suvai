@@ -77,6 +77,9 @@ class OwnerShell extends ConsumerWidget {
     return ResponsiveScaffold(
       title: section.label(l10n),
       showAppBar: showAppBar,
+      // Detail pages have a back arrow; on phones the bottom navigation
+      // would only eat height (with the save bar, ~145 px of 685).
+      showBottomNavigation: showAppBar,
       actions: [
         AppIconButton(
           key: signOutKey,

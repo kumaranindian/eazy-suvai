@@ -34,6 +34,7 @@ class ResponsiveScaffold extends StatelessWidget {
     this.floatingActionButton,
     this.sideMenuHeader,
     this.showAppBar = true,
+    this.showBottomNavigation = true,
     this.banner,
     this.leading,
     this.footer,
@@ -58,6 +59,11 @@ class ResponsiveScaffold extends StatelessWidget {
   /// False when the page inside [body] brings its own app bar (for example
   /// a detail page with a back button).
   final bool showAppBar;
+
+  /// False hides the compact bottom navigation (for example on a detail
+  /// page with a back arrow, where it would only take screen height). The
+  /// rail and side menu on wider windows are not affected.
+  final bool showBottomNavigation;
 
   /// A persistent strip (for example M06's "Unpublished changes" bar):
   /// above the bottom navigation on compact windows, at the top of the
@@ -133,19 +139,20 @@ class ResponsiveScaffold extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               if (banner case final b?) KeyedSubtree(key: bannerKey, child: b),
-              NavigationBar(
-                key: bottomBarKey,
-                selectedIndex: selectedIndex,
-                onDestinationSelected: onDestinationSelected,
-                destinations: [
-                  for (final d in destinations)
-                    NavigationDestination(
-                      icon: Icon(d.icon),
-                      selectedIcon: Icon(d.selectedIcon),
-                      label: d.label,
-                    ),
-                ],
-              ),
+              if (showBottomNavigation)
+                NavigationBar(
+                  key: bottomBarKey,
+                  selectedIndex: selectedIndex,
+                  onDestinationSelected: onDestinationSelected,
+                  destinations: [
+                    for (final d in destinations)
+                      NavigationDestination(
+                        icon: Icon(d.icon),
+                        selectedIcon: Icon(d.selectedIcon),
+                        label: d.label,
+                      ),
+                  ],
+                ),
             ],
           ),
         );
